@@ -1,0 +1,40 @@
+name: "Code scanning and security analysis"
+
+on:
+  push:
+    branches:
+      - '!main'
+      - '!developer'
+      - '*'
+    paths:
+      - 'client/**'
+  pull_request:
+    branches:
+      - main
+      - developer
+    paths:
+      - 'client/**'
+
+jobs: #Each job has its own runner
+  analyze:
+    name: Analyze code
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    strategy:
+      fail-fast: false
+      
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v3
+      with:
+        languages: javascript
+        
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v3
