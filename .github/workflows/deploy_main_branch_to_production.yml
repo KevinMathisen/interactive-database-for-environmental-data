@@ -11,7 +11,7 @@ jobs: #Each job has its own runner
     steps:
 
     - name: Checkout Repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Set up SSH key
       run: |
