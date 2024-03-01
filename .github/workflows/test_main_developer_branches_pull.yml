@@ -15,7 +15,7 @@ jobs: # Every job has its own runner
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install Dependencies
         run: npm install
@@ -30,7 +30,7 @@ jobs: # Every job has its own runner
       runs-on: ubuntu-latest
       steps:
         - name: Checkout repository
-          uses: actions/checkout@v3
+          uses: actions/checkout@v4
   
         - name: Install Dependencies
           run: npm install
