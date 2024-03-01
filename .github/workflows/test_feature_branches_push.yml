@@ -1,4 +1,4 @@
-name: Tests feature branch js code on push
+name: Tests webaplicaiton for feature branches on push
 
 # The workflow event listens to push requests for every new feature branch
 on:
@@ -6,15 +6,15 @@ on:
     branches:
       - '!main'
       - '!developer'
-      - 'feature/*'
+      - '*'
     paths:
       - 'client/**'
   workflow_dispatch: # To test the code manually
 
 # Jobs executed (each job has its own runner)
 jobs:
-  test-web-server: 
-    name: 'Run unit tests for web-server' # Runs unit tests found in the test directory
+  test-web-application: 
+    name: 'Run unit tests for web-application' # Runs unit tests found in the test directory
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -28,8 +28,8 @@ jobs:
         run: npm run test # Calls a script called test from package.json
         working-directory: ./client
         
-  lint-web-server:
-      name: 'Lint code for web-server' # Checks linting issues and fixes them
+  lint-web-application:
+      name: 'Lint code for web-application' # Checks linting issues and fixes them
       runs-on: ubuntu-latest
       steps:
         - name: Checkout repository
@@ -61,10 +61,10 @@ jobs:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           working-directory: ./client
         
-  Format-web-server:
-    name: 'Prettify code for web-server' # Cheks prettify issues and beautifies code following the StandardJS coding convention
+  Format-web-application:
+    name: 'Prettify code for web-application' # Cheks prettify issues and beautifies code following the StandardJS coding convention
     runs-on: ubuntu-latest
-    needs: lint-web-server
+    needs: lint-web-application
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
