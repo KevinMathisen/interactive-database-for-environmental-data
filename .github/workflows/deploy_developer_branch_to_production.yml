@@ -1,11 +1,11 @@
-name: Update application on developer branch
+name: Deploy developer branch
 on:
   pull_request:
     branches:
       - developer  
-  workflow_dispatch:  # This enables manual triggering of the workflow
+  workflow_dispatch:
 
-jobs: #Each job has its own runner
+jobs: 
   update-server:
     runs-on: ubuntu-latest
     steps:
