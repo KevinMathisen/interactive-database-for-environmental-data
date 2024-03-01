@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - '*'
-    branches-ignore:
-      - 'main'
-      - 'developer'
     paths:
       - 'client/**'
   pull_request:
