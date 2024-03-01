@@ -10,7 +10,7 @@ on:
       - 'developer'
     paths:
       - 'client/**'
-  workflow_dispatch: # To test the code manually
+  workflow_dispatch: 
 # Jobes executed
 jobs:
   test-web-application: 
