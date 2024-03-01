@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap'); /* Font for all text */
+
+/* ----------------- PRE-SET -----------------*/
+
+html {
+    box-sizing: border-box;       
+    margin: 0;                          /* Remove default margin */
+    padding: 0;                         /* Remove default padding */
+    font-family: "Inter", sans-serif;   /* Sets font for all text */
+    font-weight: 540;                   /* Sets font weight for all text */
+}
+
+
+body {
+    margin: inherit;                    /* Remove default margin */
+    display: flex;                      /* Makes the body a flex container */
+    flex-direction: column;             /* Orders the items in the body vertically  */
+    background-color: var(--SCOLOR);    /* Sets the secondary color of the body */
+}
