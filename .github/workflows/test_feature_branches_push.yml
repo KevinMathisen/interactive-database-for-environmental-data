@@ -1,0 +1,103 @@
+name: Webapp-test on feature branches
+
+# The workflow event listens to push requests for every branch except main and developer
+on:
+  push:
+    branches:
+      - '*'
+      - '!main'
+      - '!developer'
+    paths:
+      - 'client/**'
+  workflow_dispatch: 
+# Jobes executed
+jobs:
+  test-web-application: 
+    name: 'Run unit tests for web-application'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        run: npm install
+        working-directory: ./client
+
+      - name: Run Tests
+        run: npm run test 
+        working-directory: ./client
+        
+  lint-web-application:
+      name: 'Lint code for web-application' 
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v4
+  
+        - name: Install Dependencies
+          run: npm install
+          working-directory: ./client
+  
+        - name: Auto-fix linting issues
+          run: npm run lint -- --fix 
+          working-directory: ./client
+  
+        - name: Check if there are linting changes 
+          id: git-check-lint
+          run: |
+            git diff --exit-code || echo "::set-output name=changed::true"
+          working-directory: ./client
+  
+        - name: Commit linting changes
+          if: steps.git-check-lint.outputs.changed == 'true'
+          run: |
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git config user.name "github-actions[bot]"
+            changed_files=$(git diff --name-only)
+            git commit -am "style: lint fix $changed_files"
+            git push
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          working-directory: ./client
+        
+  Format-web-application:
+    name: 'Prettify code for web-application' # Cheks prettify issues and beautifies code following the StandardJS coding convention
+    runs-on: ubuntu-latest
+    needs: lint-web-application
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Ensures all branches and tags are fetched
+  
+      - name: Install Dependencies
+        run: npm install
+        working-directory: ./client
+  
+      - name: Pull latest changes
+        run: |
+          git pull origin ${GITHUB_REF#refs/heads/} --rebase
+        working-directory: ./client
+  
+      - name: Prettify code
+        run: npm run format 
+        working-directory: ./client
+  
+      - name: Check if there are changes
+        id: git-check
+        run: |
+          git diff --exit-code || echo "::set-output name=changed::true"
+        working-directory: ./client
+  
+      - name: Commit changes
+        if: steps.git-check.outputs.changed == 'true'
+        run: |
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          changed_files=$(git diff --name-only)
+          git commit -am "style: prettify fix $changed_files"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        working-directory: ./client
+
