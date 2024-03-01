@@ -6,7 +6,7 @@
 /client/coverage
 
 # production build
-/client/public
+/client/build
 
 # logs
 logs
