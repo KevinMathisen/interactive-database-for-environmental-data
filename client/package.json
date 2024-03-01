@@ -9,7 +9,7 @@
 		"test": "npm run test:integration && npm run test:unit",
 		"test:integration": "playwright test",
 		"test:unit": "vitest",
-		"lint": "prettier --check .",
+		"lint": "npx standard --fix",
 		"format": "prettier --write ."
 	},
 	"devDependencies": {

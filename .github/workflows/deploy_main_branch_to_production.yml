@@ -1,0 +1,27 @@
+name: Update application on main branch
+on:
+  pull_request:
+    branches:
+      - main  
+  workflow_dispatch:  # This enables manual triggering of the workflow
+
+jobs: #Each job has its own runner
+  update-server:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Set up SSH key
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan ${{ secrets.SERVER_MAIN_IP }} >> ~/.ssh/known_hosts
+        chmod 644 ~/.ssh/known_hosts
+
+    - name: Update Application
+      run: |
+        # Run the update script on your server via SSH
+        ssh -i ~/.ssh/id_rsa ubuntu@${{ secrets.SERVER_MAIN_IP }} '/home/ubuntu/Interactive-Database-for-Environmental-Data/scripts/deploy_main.sh'

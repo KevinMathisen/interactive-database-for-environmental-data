@@ -1,0 +1,41 @@
+name: Tests webapplication for main and developer branches on pull requests
+
+on:
+  pull_request:
+    branches:
+      - main
+      - developer
+    paths:
+      - 'client/**'
+  workflow_dispatch:
+
+jobs: # Every job has its own runner
+  test-web-application:
+    name: 'Run unit tests for web-application'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        run: npm install
+        working-directory: ./client
+
+      - name: Run Tests
+        run: npm run test
+        working-directory: ./client
+        
+  lint-web-application:
+      name: 'Lint code for web-application'
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v4
+  
+        - name: Install Dependencies
+          run: npm install
+          working-directory: ./client
+  
+        - name: Check for linting issues
+          run: npm run lint
+          working-directory: ./client
