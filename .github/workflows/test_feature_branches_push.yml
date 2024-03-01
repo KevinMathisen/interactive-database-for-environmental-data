@@ -5,9 +5,8 @@ on:
   push:
     branches:
       - '*'
-    branches-ignore:
-      - 'main'
-      - 'developer'
+      - '!main'
+      - '!developer'
     paths:
       - 'client/**'
   workflow_dispatch: 
