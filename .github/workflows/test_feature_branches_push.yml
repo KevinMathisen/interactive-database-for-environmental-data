@@ -1,20 +1,20 @@
-name: Tests webaplicaiton for feature branches on push
+name: Webapp-test on feature branches
 
-# The workflow event listens to push requests for every new feature branch
+# The workflow event listens to push requests for every branch except main and developer
 on:
   push:
     branches:
-      - '!main'
-      - '!developer'
       - '*'
+    branches-ignore:
+      - 'main'
+      - 'developer'
     paths:
       - 'client/**'
-  workflow_dispatch: # To test the code manually
-
-# Jobs executed (each job has its own runner)
+  workflow_dispatch: 
+# Jobes executed
 jobs:
   test-web-application: 
-    name: 'Run unit tests for web-application' # Runs unit tests found in the test directory
+    name: 'Run unit tests for web-application'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -25,11 +25,11 @@ jobs:
         working-directory: ./client
 
       - name: Run Tests
-        run: npm run test # Calls a script called test from package.json
+        run: npm run test 
         working-directory: ./client
         
   lint-web-application:
-      name: 'Lint code for web-application' # Checks linting issues and fixes them
+      name: 'Lint code for web-application' 
       runs-on: ubuntu-latest
       steps:
         - name: Checkout repository
@@ -40,16 +40,16 @@ jobs:
           working-directory: ./client
   
         - name: Auto-fix linting issues
-          run: npm run lint -- --fix # Calls a script called lint from package.json
+          run: npm run lint -- --fix 
           working-directory: ./client
   
-        - name: Check if there are linting changes # Checks if any files are modified
+        - name: Check if there are linting changes 
           id: git-check-lint
           run: |
             git diff --exit-code || echo "::set-output name=changed::true"
           working-directory: ./client
   
-        - name: Commit linting changes # Allows the bot/workflow to apply the changes and commit to the repository
+        - name: Commit linting changes
           if: steps.git-check-lint.outputs.changed == 'true'
           run: |
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -81,16 +81,16 @@ jobs:
         working-directory: ./client
   
       - name: Prettify code
-        run: npm run format # Calls a script called prettify from package.json
+        run: npm run format 
         working-directory: ./client
   
-      - name: Check if there are changes # Checks if any files are modified
+      - name: Check if there are changes
         id: git-check
         run: |
           git diff --exit-code || echo "::set-output name=changed::true"
         working-directory: ./client
   
-      - name: Commit changes # Allows the bot/workflow to apply the changes and commit to the repository
+      - name: Commit changes
         if: steps.git-check.outputs.changed == 'true'
         run: |
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -102,6 +102,3 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         working-directory: ./client
 
-        
-  
-# Commented out the 'api-server' related jobs

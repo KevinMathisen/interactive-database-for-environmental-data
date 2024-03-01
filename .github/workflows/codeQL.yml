@@ -1,11 +1,12 @@
-name: "Code scanning and security analysis"
+name: "CodeQL"
 
 on:
   push:
     branches:
-      - '!main'
-      - '!developer'
       - '*'
+    branches-ignore:
+      - 'main'
+      - 'developer'
     paths:
       - 'client/**'
   pull_request:
@@ -15,7 +16,7 @@ on:
     paths:
       - 'client/**'
 
-jobs: #Each job has its own runner
+jobs:
   analyze:
     name: Analyze code
     runs-on: ubuntu-latest
