@@ -9,8 +9,9 @@ cd /home/ubuntu/Interactive-Database-for-Environmental-Data
 git pull origin main
 
 # Stops and removes the container if it exists and ignores errors if it's not running
-sudo docker stop interactive_database:latest || true
-sudo docker rm interactive_database:latest || true
+container_id=$(sudo docker ps -qf "ancestor=interactive_database:latest")
+sudo docker stop $container_id || true
+sudo docker rm $container_id || true
 
 # Build the Docker image
 sudo docker build -t "interactive_database:latest" .
