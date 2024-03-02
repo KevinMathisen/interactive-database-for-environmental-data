@@ -25,6 +25,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"exceljs": "^4.4.0",
 		"leaflet": "^1.9.4"
 	}
 }
