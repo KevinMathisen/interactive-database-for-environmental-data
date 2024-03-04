@@ -1,0 +1,152 @@
+[
+	{
+		"id": "1",
+		"name": "Hallingdalselva 1",
+		"start_lat": 60.59684,
+		"start_long": 9.08298,
+		"end_lat": 60.58357,
+		"end_long": 9.09239,
+		"date": "2014-09-16",
+		"species": ["Ørret"]
+	},
+	{ 
+		"id": "2",
+		"name": "Hallingdalselva 2",
+		"start_lat": 60.58054,
+		"start_long": 9.10351,
+		"end_lat": 60.57863,
+		"end_long": 9.10339,
+		"date": "2014-09-16",
+		"species": ["Ørekyt"]
+	},
+ 	{
+		"id": "3",
+		"name": "Hallingdalselva 3",
+		"start_lat": 60.57728,
+		"start_long": 9.10554,
+		"end_lat": 60.5753,
+		"end_long": 9.10979,
+		"date": "2014-09-16",
+		"species": []
+	},
+	{
+		"id": "4",
+		"name": "Hallingdalselva 4",
+		"start_lat": 60.57569,
+		"start_long": 9.11068,
+		"end_lat": 60.57314,
+		"end_long": 9.11481,
+		"date": "2014-09-16",
+		"species": ["Ørret", "Gjedde"]
+	},
+	{
+		"id": "5",
+		"name": "Hallingdalselva 5",
+		"start_lat": 60.57138,
+		"start_long": 9.11578,
+		"end_lat": 60.56557,
+		"end_long": 9.11962,
+		"date": "2014-09-16",
+		"species": ["Gjedde"]
+	},
+	{
+		"id": "6",
+		"name": "Hallingdalselva 1",
+		"start_lat": 60.47652,
+		"start_long": 9.22950,
+		"end_lat": 60.47488,
+		"end_long": 9.22725,
+		"date": "2021-09-21",
+		"species": ["Ørret"]
+	},
+	{ 
+		"id": "7",
+		"name": "Hallingdalselva 2",
+		"start_lat": 60.47348,
+		"start_long": 9.22883,
+		"end_lat": 60.47060,
+		"end_long": 9.23723,
+		"date": "2021-09-21",
+		"species": ["Ørret", "Ørekyt"]
+	},
+ 	{
+		"id": "8",
+		"name": "Hallingdalselva 3",
+		"start_lat": 60.46973,
+		"start_long": 9.24360,
+		"end_lat": 60.46632,
+		"end_long": 9.25783,
+		"date": "2021-09-21",
+		"species": ["Ørret"]
+	},
+	{
+		"id": "9",
+		"name": "Hallingdalselva 4",
+		"start_lat": 60.46592,
+		"start_long": 9.25637,
+		"end_lat": 60.46438,
+		"end_long": 9.25627,
+		"date": "2021-09-21",
+		"species": []
+	},
+	{
+		"id": "10",
+		"name": "Hallingdalselva 5",
+		"start_lat": 60.45262,
+		"start_long": 9.27808,
+		"end_lat": 60.44892,
+		"end_long": 9.29768,
+		"date": "2021-09-21",
+		"species": ["Ørret", "Ørekyt"]
+	},
+	{
+		"id": "11",
+		"name": "Gaula 1",
+		"start_lat": 63.25848,
+		"start_long": 10.25962,
+		"end_lat": 63.25887,
+		"end_long": 10.26344,
+		"date": "2021-09-30",
+		"species": ["Aure", "Laks", "3-pigga stingsild", "Skrubbe"]
+	},
+	{ 
+		"id": "12",
+		"name": "Gaula 2",
+		"start_lat": 63.25626,
+		"start_long": 10.25584,
+		"end_lat": 63.25789,
+		"end_long": 10.26170,
+		"date": "2021-09-30",
+		"species": ["Aure", "Laks"]
+	},
+	{
+		"id": "13",
+		"name": "Gaula 3",
+		"start_lat": 63.25856,
+		"start_long": 10.26769,
+		"end_lat": 63.25894,
+		"end_long": 10.27621,
+		"date": "2021-09-30",
+		"species": ["Aure", "Laks"]
+	},
+	{
+		"id": "14",
+		"name": "Gaula 4",
+		"start_lat": 63.25922,
+		"start_long": 10.26851,
+		"end_lat": 63.25911,
+		"end_long": 10.27604,
+		"date": "2021-09-30",
+		"species": ["Laks"]
+	},
+	{
+		"id": "15",
+		"name": "Gaula 5",
+		"start_lat": 63.25896,
+		"start_long": 10.27703,
+		"end_lat": 63.25936,
+		"end_long": 10.28131,
+		"date": "2021-09-30",
+		"species": ["Aure", "Laks"]
+	}
+]
