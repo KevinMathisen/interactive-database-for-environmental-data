@@ -1,29 +1,38 @@
 [
 	{
-		"id": "1",
+		"id": 1,
 		"name": "Hallingdalselva",
-		"lat": 60.59684,
-		"long": 9.08298,
+		"pos": {
+			"type": "Point",
+			"coordinates": [9.08298, 60.59684]
+		},
 		"start_date": "2014-09-16",
 		"end_date": "2014-09-16",
-		"species": ["Ørekyt", "Gjedde", "Ørret", "Abbor", "Sik"]
+		"species": ["Ørekyt", "Gjedde", "Ørret", "Abbor", "Sik"],
+		"project_id": ""
 	},
 	{
-		"id": "2",
+		"id": 2,
 		"name": "Hallingdalselva",
-		"lat": 60.47652,
-		"long": 9.22950,
+		"pos": {
+			"type": "Point",
+			"coordinates": [9.22950, 60.47652]
+		},
 		"start_date": "2021-09-21",
 		"end_date": "2021-09-21",
-		"species": ["Ørekyt", "Gjedde", "Ørret", "Abbor"]
+		"species": ["Ørekyt", "Gjedde", "Ørret", "Abbor"],
+		"project_id": ""
 	},
 	{
-		"id": "3",
+		"id": 3,
 		"name": "Gaula",
-		"lat": 63.25848,
-		"long": 10.25962,
+		"pos": {
+			"type": "Point",
+			"coordinates": [10.25962, 63.25848]
+		},
 		"start_date": "2021-09-30",
 		"end_date": "2021-09-30",
-		"species": ["Aure", "Laks", "3-pigga stingsild", "Skrubbe"]
+		"species": ["Aure", "Laks", "3-pigga stingsild", "Skrubbe"],
+		"project_id": "Restaureringsprosjektet"
 	}
 ]

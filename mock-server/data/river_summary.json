@@ -1,6 +1,6 @@
 [
 	{
-		"id": "3",
+		"id": 3,
 		"name": "Gaula",
 		"start_date": "2021-09-30",
 		"end_date": "2021-09-30",
@@ -11,6 +11,6 @@
 		"crew2": "Erik Lie",
 		"crew3": "",
 		"comment": "Testdatasett",
-		"stations": ["11", "12", "13", "14", "15"]
+		"stations": [11, 12, 13, 14, 15]
 	}
 ]
