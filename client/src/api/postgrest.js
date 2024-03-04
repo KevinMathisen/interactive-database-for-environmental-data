@@ -64,3 +64,82 @@ async function handleResponse(response) {
 	return response.json();
 }
 
+/*
+ * Fetches all rivers from PostgREST API on the rivers endpoint
+ *
+ * @returns {Promise} - A promise which resolves to json data
+ * @async
+ */
+export async function fetchRivers() {
+	return fetchFromPostgrest(RIVERS_ENDPOINT);
+}
+
+/*
+ * Fetches all stations from PostgREST API on the stations endpoint
+ *
+ * @returns {Promise} - A promise which resolves to json data
+ * @async
+ */
+export async function fetchStations() {
+	return fetchFromPostgrest(STATIONS_ENDPOINT);
+}
+
+/*
+ * Fetches a river with specified ID from PostgREST API on the river summary endpoint
+ *
+ * @param {number} id - The id of the river to fetch data for
+ * @returns {Promise} - A promise which resolves to json data
+ * @async
+ */
+export async function fetchRiverSummary(id) {
+	const endpoint = `${RIVER_SUMMARY_ENDPOINT}?id=eq.${id}`;
+	return fetchFromPostgrest(endpoint);
+}
+
+/*
+ * Fetches a station with specified ID from PostgREST API on the station summary endpoint
+ *
+ * @param {number} id - The id of the station to fetch data for
+ * @returns {Promise} - A promise which resolves to json data
+ * @async
+ */
+export async function fetchStationSummary(id) {
+	const endpoint = `${STATION_SUMMARY_ENDPOINT}?id=eq.${id}`;
+	return fetchFromPostgrest(endpoint);
+}
+
+/*
+ * Fetches all data to the river specified with ID from PostgREST API 
+ *
+ * @param {number} id - The id of the river to fetch data for
+ * @returns {Promise} - A promise which resolves to json data
+ * @async
+ */
+export async function fetchAllRiver(id) {
+	const endpoint = `${RIVER_ENDPOINT}?id=eq.${id}&`;
+	return fetchFromPostgrest(endpoint);
+}
+
+/*
+ * Fetches all data to the station specified with ID from PostgREST API 
+ *
+ * @param {number} id - The id of the station to fetch data for
+ * @returns {Promise} - A promise which resolves to json data
+ * @async
+ */
+export async function fetchAllStation(id) {
+	const endpoint = `${STATION_ENDPOINT}?id=eq.${id}`;
+	return fetchFromPostgrest(endpoint);
+}
+
+/*
+ * Fetches all data to the observation specified with a station ID from PostgREST API 
+ *
+ * @param {number} id - The id of the station to fetch observations for
+ * @returns {Promise} - A promise which resolves to json data
+ * @async
+ */
+export async function fetchAllObservation(id) {
+	const endpoint = `${OBSERVATION_ENDPOINT}?stasjon=eq.${id}`;
+	return fetchFromPostgrest(endpoint);
+}
