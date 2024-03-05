@@ -41,3 +41,29 @@ export function doesAllStationsExistInStore() {
 	return doesDataInStoreExist(stationStore);
 }
 
+/**
+ * Check if an object with a given key exists in specific store, 
+ *   and if the object has a given property defined
+ * 
+ * @param {store} store - The store to check
+ * @param {int} key - The key to check for
+ * @param {string} prop - The property to check for
+ * @returns {boolean} - True if the property is defined, else false
+ */
+function checkIfObjectHasProperty(store, key, prop) {
+	// Retrive map of data
+	const dataMap = store.get();
+
+	// If no object with key given exists, return false
+	if (dataMap.has(key) == false) {
+		return false;
+	}
+
+	// Retrieve object with key given
+	const data = dataMap.get(key);
+
+	// If the object does not have the property defined, return false
+	return data[prop] !== null
+
+}
+
