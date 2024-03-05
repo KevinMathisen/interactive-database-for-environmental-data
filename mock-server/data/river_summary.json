@@ -7,9 +7,8 @@
 		"project_id": "Restaureringsprosjektet",
 		"waterflow": 320,
 		"boat_type": "Volt Maria",
-		"crew1": "Tobias Holter",
-		"crew2": "Erik Lie",
-		"crew3": "",
+		"skipper": "Jon Museth", 
+		"crew": ["Tobias Holter", "Erik Lie", ""],
 		"comment": "Testdatasett",
 		"stations": [11, 12, 13, 14, 15]
 	}
