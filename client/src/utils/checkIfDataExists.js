@@ -21,3 +21,23 @@ function doesDataInStoreExist(store) {
 	return store.get().values().next().value.coordinates !== null;
 }
 
+/**
+ * Checks if the store contains sufficient data for all rivers to display
+ *    them on the map and list page
+ * 
+ * @returns {boolean} - True if the store contains river data for all rivers, else false
+ */
+export function doesAllRiversExistInStore() {
+	return doesDataInStoreExist(riverStore);
+}
+
+/**
+ * Checks if the store contains sufficient data for all stations to display 
+ *   them on the map and list page
+ * 
+ * @returns {boolean} - True if the store contains station data for all stations, else false
+ */
+export function doesAllStationsExistInStore() {
+	return doesDataInStoreExist(stationStore);
+}
+
