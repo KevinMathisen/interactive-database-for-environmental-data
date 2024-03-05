@@ -81,3 +81,136 @@ function updateStoreWithObject(store, object, Class) {
 	});
 }
 
+/**
+ * Ensures that all rivers are stored in the river store such that the
+ *   map and list page can display them
+ * 
+ * @returns 
+ */
+export async function getRivers() {
+	// Check if rivers exists, if they do, return
+	if (doesAllRiversExistInStore()) {
+		return;
+	}
+
+	try {
+		// Get rivers
+		const fetchedRivers = await fetchRivers();
+
+		// Update store
+		updateStoreWithObjects(riverStore, fetchedRivers, River);
+
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+/**
+ * Ensures that all stations are stored in the station store such that the
+ *    map and list page can display them
+ * 
+ * @returns 
+ */
+export async function getStations() {
+	// Check if stations exists, if they do, return
+	if (doesAllStationsExistInStore()) {
+		return;
+	}
+
+	try {
+		// Get stations
+		const fetchedStations = await fetchStations();
+
+		// Update store
+		updateStoreWithObjects(stationStore, fetchedStations, Station);
+
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+/**
+ * Ensures that a river summary and its underlying stations are stored 
+ *   in the river store such that the river summary page can display them
+ * 
+ * @param {int} id - The id of the river to get the summary for
+ * @returns 
+ */
+export async function getRiverSummary(id) {
+	// Check if river summary exists, if it does, return
+	if (checkIfRiverSummaryExists(id)) {
+		return;
+	}
+
+	try {
+		// Get river summary data
+		const fetchedRiverSummary = await fetchRiverSummary(id);
+
+		// Update store with river
+		updateStoreWithObject(riverStore, fetchedRiverSummary, River);
+
+		// Get data for stations under river
+		const fetchedStations = await fetchStationSummary(fetchRiverSummary.stations);
+
+		// Update store with the stations
+		updateStoreWithObjects(stationStore, fetchedStations, Station);
+
+	} catch (error) {
+		console.error(error);
+	}
+
+}
+
+/**
+ * Ensures that a station summary is stored in the station store such that
+ *  the station summary page can display it
+ * 
+ * @param {int} id - The id of the station to get the summary for 
+ */
+export async function getStationSummary(id) {
+	// Check if station summary exists, if it does, return
+	if (checkIfStationSummaryExists(id)) {
+		return;
+	}
+
+	try {
+		// Get station summary
+		const fetchedStationSummary = await fetchStationSummary([id]);
+
+		// Update store
+		updateStoreWithObject(stationStore, fetchedStationSummary, Station);
+
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+// TODO: Implement function for creating "getRiverForDownload" function
+
+/**
+ * Ensures that a station is stored in the station store such that
+ *   the station can be downloaded
+ * 
+ * @param {int} id - The id of the station to get the data for 
+ * @returns 
+ */
+export async function getStationForDownload(id) {
+	// Check if station download exists, if it does, return
+	if (checkIfStationDownloadExists(id)) {
+		return;
+	}
+
+	try {
+		// Get station
+		const fetchedStation = await fetchAllRiver(id);
+
+		// Update store
+		updateStoreWithObject(stationStore, fetchedStation, Station);
+
+		// TODO: Also fetch individual observations for the station
+
+	} catch (error) {
+		console.error(error);
+	}
+}
+
