@@ -1,4 +1,4 @@
-/*
+/**
  * postgrest.js
  * Module which exports functions which fetches data from the PostgREST API
  */
@@ -12,7 +12,7 @@ const RIVER_ENDPOINT = import.meta.env.VITE_POSTGREST_RIVER_ENDPOINT
 const STATION_ENDPOINT = import.meta.env.VITE_POSTGREST_STATION_ENDPOINT
 const OBSERVATION_ENDPOINT = import.meta.env.VITE_POSTGREST_OBSERVATION_ENDPOINT
 
-/*
+/**
  * Fetches data from the PostgREST API on the endpoint specified
  *
  * @param {string} endpoint - The endpoint with optional parameters 
@@ -20,7 +20,6 @@ const OBSERVATION_ENDPOINT = import.meta.env.VITE_POSTGREST_OBSERVATION_ENDPOINT
  * @returns {Promise} - A promise which resolves to json data
  * @throws {Error} - Thrown if the fetch fails
  * @async
- * @private
  */
 async function fetchFromPostgrest(endpoint) {
 	// Tries to fetch data, catches any errors 
@@ -37,7 +36,7 @@ async function fetchFromPostgrest(endpoint) {
 	}
 }
 
-/*
+/**
  * Handles the response from the fetch request by checking for any errors and
  *   returning json data if none are found
  *
@@ -45,7 +44,6 @@ async function fetchFromPostgrest(endpoint) {
  * @returns {Promise} - A promise which resolves to json data
  * @throws {Error} - Thrown if the response status is not ok
  * @async
- * @private
  */
 async function handleResponse(response) {
 	// If response status is not ok, throw an error
@@ -64,7 +62,7 @@ async function handleResponse(response) {
 	return response.json();
 }
 
-/*
+/**
  * Fetches all rivers from PostgREST API on the rivers endpoint
  *
  * @returns {Promise} - A promise which resolves to json data
@@ -74,7 +72,7 @@ export async function fetchRivers() {
 	return fetchFromPostgrest(RIVERS_ENDPOINT);
 }
 
-/*
+/**
  * Fetches all stations from PostgREST API on the stations endpoint
  *
  * @returns {Promise} - A promise which resolves to json data
@@ -84,7 +82,7 @@ export async function fetchStations() {
 	return fetchFromPostgrest(STATIONS_ENDPOINT);
 }
 
-/*
+/**
  * Fetches a river with specified ID from PostgREST API on the river summary endpoint
  *
  * @param {number} id - The id of the river to fetch data for
@@ -96,7 +94,7 @@ export async function fetchRiverSummary(id) {
 	return fetchFromPostgrest(endpoint);
 }
 
-/*
+/**
  * Fetches a station with specified ID from PostgREST API on the station summary endpoint
  *
  * @param {number} id - The id of the station to fetch data for
@@ -104,11 +102,19 @@ export async function fetchRiverSummary(id) {
  * @async
  */
 export async function fetchStationSummary(id) {
-	const endpoint = `${STATION_SUMMARY_ENDPOINT}?id=eq.${id}`;
+	// checks if the id array is length 1, if so, fetch the station with the id
+	if (id.length === 1) {
+		const endpoint = `${STATION_SUMMARY_ENDPOINT}?id=eq.${id}`;
+	}
+	// else, fetch the stations with the ids in the array
+	else {
+		const endpoint = `${STATION_SUMMARY_ENDPOINT}?id=in.(${id.join(',')})`;
+	} 
+
 	return fetchFromPostgrest(endpoint);
 }
 
-/*
+/**
  * Fetches all data to the river specified with ID from PostgREST API 
  *
  * @param {number} id - The id of the river to fetch data for
@@ -120,7 +126,7 @@ export async function fetchAllRiver(id) {
 	return fetchFromPostgrest(endpoint);
 }
 
-/*
+/**
  * Fetches all data to the station specified with ID from PostgREST API 
  *
  * @param {number} id - The id of the station to fetch data for
@@ -132,7 +138,7 @@ export async function fetchAllStation(id) {
 	return fetchFromPostgrest(endpoint);
 }
 
-/*
+/**
  * Fetches all data to the observation specified with a station ID from PostgREST API 
  *
  * @param {number} id - The id of the station to fetch observations for
