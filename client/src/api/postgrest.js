@@ -8,9 +8,7 @@ const RIVERS_ENDPOINT = import.meta.env.VITE_POSTGREST_RIVERS_ENDPOINT;
 const STATIONS_ENDPOINT = import.meta.env.VITE_POSTGREST_STATIONS_ENDPOINT;
 const RIVER_SUMMARY_ENDPOINT = import.meta.env.VITE_POSTGREST_RIVER_SUMMARY_ENDPOINT;
 const STATION_SUMMARY_ENDPOINT = import.meta.env.VITE_POSTGREST_STATION_SUMMARY_ENDPOINT;
-const RIVER_ENDPOINT = import.meta.env.VITE_POSTGREST_RIVER_ENDPOINT
-const STATION_ENDPOINT = import.meta.env.VITE_POSTGREST_STATION_ENDPOINT
-const OBSERVATION_ENDPOINT = import.meta.env.VITE_POSTGREST_OBSERVATION_ENDPOINT
+const STATION_DOWNLOAD_ENDPOINT = import.meta.env.VITE_POSTGREST_STATION_DOWNLOAD_ENDPOINT
 
 /**
  * Fetches data from the PostgREST API on the endpoint specified
@@ -85,7 +83,7 @@ export async function fetchStations() {
 /**
  * Fetches a river with specified ID from PostgREST API on the river summary endpoint
  *
- * @param {number} id - The id of the river to fetch data for
+ * @param {int} id - The id of the river to fetch data for
  * @returns {Promise} - A promise which resolves to json data
  * @async
  */
@@ -97,19 +95,13 @@ export async function fetchRiverSummary(id) {
 /**
  * Fetches a station with specified ID from PostgREST API on the station summary endpoint
  *
- * @param {number} id - The id of the station to fetch data for
+ * @param {array} id - The id of the station to fetch data for
  * @returns {Promise} - A promise which resolves to json data
  * @async
  */
 export async function fetchStationSummary(id) {
-	// checks if the id array is length 1, if so, fetch the station with the id
-	if (id.length === 1) {
-		const endpoint = `${STATION_SUMMARY_ENDPOINT}?id=eq.${id}`;
-	}
-	// else, fetch the stations with the ids in the array
-	else {
-		const endpoint = `${STATION_SUMMARY_ENDPOINT}?id=in.(${id.join(',')})`;
-	} 
+	// Create endpoint for either single station or array of stations
+	const endpoint = createEndpointForArray(id, STATION_SUMMARY_ENDPOINT);
 
 	return fetchFromPostgrest(endpoint);
 }
@@ -117,7 +109,7 @@ export async function fetchStationSummary(id) {
 /**
  * Fetches all data to the river specified with ID from PostgREST API 
  *
- * @param {number} id - The id of the river to fetch data for
+ * @param {int} id - The id of the river to fetch data for
  * @returns {Promise} - A promise which resolves to json data
  * @async
  */
@@ -129,23 +121,46 @@ export async function fetchAllRiver(id) {
 /**
  * Fetches all data to the station specified with ID from PostgREST API 
  *
- * @param {number} id - The id of the station to fetch data for
+ * @param {array} id - The id of the station to fetch data for
  * @returns {Promise} - A promise which resolves to json data
  * @async
  */
 export async function fetchAllStation(id) {
-	const endpoint = `${STATION_ENDPOINT}?id=eq.${id}`;
+	// Create endpoint for either single station or array of stations
+	const endpoint = createEndpointForArray(id, STATION_DOWNLOAD_ENDPOINT);
+	
 	return fetchFromPostgrest(endpoint);
 }
 
 /**
  * Fetches all data to the observation specified with a station ID from PostgREST API 
  *
- * @param {number} id - The id of the station to fetch observations for
+ * @param {array} id - The id of the station to fetch observations for
  * @returns {Promise} - A promise which resolves to json data
  * @async
  */
 export async function fetchAllObservation(id) {
-	const endpoint = `${OBSERVATION_ENDPOINT}?stasjon=eq.${id}`;
+	// Create endpoint for either single station or array of stations
+	const endpoint = createEndpointForArray(id, OBSERVATION_ENDPOINT);
+
 	return fetchFromPostgrest(endpoint);
+}
+
+/**
+ * Creates a postgrest endpoint for either a single id or an array of ids
+ * 
+ * @param {array} id - The id of the object to fetch data for
+ * @param {string} endpoint - The endpoint to fetch data from
+ * @returns {string} - The endpoint with the id or ids added
+ */
+function createEndpointForArray(id, endpoint) {	
+	if (id.length === 1) {
+		return `${endpoint}?id=eq.${id[0]}`;
+	} 
+
+	if (id.length === 0) {
+		throw new Error('No id given');
+	}
+		
+	return `${endpoint}?id=in.(${id.join(',')})`;
 }
