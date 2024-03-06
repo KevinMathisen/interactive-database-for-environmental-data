@@ -3,12 +3,14 @@
  * Module which exports functions which fetches data from the PostgREST API
  */
 
-const POSTGREST_URL = import.meta.env.VITE_POSTGREST_URL
-const RIVERS_ENDPOINT = import.meta.env.VITE_POSTGREST_RIVERS_ENDPOINT
-const STATIONS_ENDPOINT = import.meta.env.VITE_POSTGREST_STATIONS_ENDPOINT
-const RIVER_SUMMARY_ENDPOINT = import.meta.env.VITE_POSTGREST_RIVER_SUMMARY_ENDPOINT
-const STATION_SUMMARY_ENDPOINT = import.meta.env.VITE_POSTGREST_STATION_SUMMARY_ENDPOINT
-const STATION_DOWNLOAD_ENDPOINT = import.meta.env.VITE_POSTGREST_STATION_DOWNLOAD_ENDPOINT
+import {
+  POSTGREST_URL,
+  RIVERS_ENDPOINT,
+  STATIONS_ENDPOINT,
+  RIVER_SUMMARY_ENDPOINT,
+  STATION_SUMMARY_ENDPOINT,
+  STATION_DOWNLOAD_ENDPOINT
+} from '../constants/constants.js'
 
 /**
  * Fetches data from the PostgREST API on the endpoint specified
