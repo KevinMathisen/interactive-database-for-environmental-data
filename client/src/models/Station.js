@@ -21,7 +21,10 @@ class Station {
 		pulse = null,
 		conductivity = null,
 		species = null,
-		observations = null
+		observations = null,
+		transect_length = null,
+		display = null,
+		gpx_file = null
 	} = {}) {
 		this.id = id;
 		this.name = name;
@@ -42,6 +45,9 @@ class Station {
 		this.conductivity = conductivity;
 		this.species = species;
 		this.observations = observations ? observations.map(observation => new Observation(observation)) : null;
+		this.transectLength = transect_length;
+		this.display = display;
+		this.gpxFile = gpx_file;
 	}
 }
 
@@ -50,12 +56,28 @@ class Station {
  */
 class Observation {
 	constructor({
+		id = null,
+		station = null,
+		round = null,
 		species = null,
-		size = null,
-		count = null
+		length = null,
+		count = null,
+		gender = null,
+		age = null,
+		released = null,
+		sample_type = null,
+		comment = null
 	} = {}) {
+		this.id = id;
+		this.station = station;
+		this.round = round;
 		this.species = species;
-		this.size = size;
+		this.length = length;
 		this.count = count;
+		this.gender = gender;
+		this.age = age;
+		this.released = released;
+		this.sampleType = sample_type;
+		this.comment = comment;
 	}
 }
