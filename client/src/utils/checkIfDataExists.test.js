@@ -117,3 +117,30 @@ describe('test checkIfStationSummaryExists function', () => {
 
 });
 
+describe('test checkIfStationDownloadExists function', () => {
+	it('should return false if no station exists', () => {
+	  // Mock the get method to return an empty map
+	  get.mockReturnValue(new Map());
+	  expect(checkIfStationDownloadExists(1)).toBe(false);
+	});
+  
+	it('should return false if no station with given key exists', () => {
+	  // Mock the get method to return a map without a station with key 1
+	  get.mockReturnValue(new Map().set(2, { id: 2, display: true }));
+	  expect(checkIfStationDownloadExists(1)).toBe(false);
+	});
+  
+	it('should return false if there exists a station with the key, but it does not have display defined', () => {
+	  // Mock the get method to return a map with an object with no display
+	  get.mockReturnValue(new Map().set(1, { id: 1, display: null }));
+  
+	  expect(checkIfStationDownloadExists(1)).toBe(false);
+	});
+  
+	it('should return true if stationStore exists, and has display defined', () => {
+	  // Mock the get method to return a map with an object with display
+	  get.mockReturnValue(new Map().set(1, { id: 1, display: true }));
+  
+	  expect(checkIfStationDownloadExists(1)).toBe(true);
+	});
+  });
