@@ -1,5 +1,6 @@
 import { riverStore } from '../stores/riverStore'
 import { stationStore } from '../stores/stationStore'
+import { get } from 'svelte/store'
 
 /**
  * Check if the store contains any data, and if it contains any data,
@@ -13,12 +14,12 @@ import { stationStore } from '../stores/stationStore'
  */
 function doesDataInStoreExist (store) {
   // checks if the store is empty, if so return false
-  if (store.get().size === 0) {
+  if (get(store).size === 0) {
     return false
   }
 
   // if the first object in the store does not have coordinates, return false
-  return store.get().values().next().value.coordinates !== null
+  return get(store).values().next().value.coordinates !== null
 }
 
 /**
@@ -52,7 +53,7 @@ export function doesAllStationsExistInStore () {
  */
 function checkIfObjectHasProperty (store, key, prop) {
   // Retrive map of data
-  const dataMap = store.get()
+  const dataMap = get(store)
 
   // If no object with key given exists, return false
   if (dataMap.has(key) === false) {
