@@ -156,4 +156,77 @@ describe('test fetchStations function', {}, () => {
 	});
 });
 
+describe('test fetchRiverSummary function', {}, () => {
+	beforeEach(() => {
+		// Clear all mocks
+		vi.clearAllMocks();
+	});
+
+	it('fetchRiverSummary should call fetch with the correct URL', async () => {
+		// Arrange
+		const id = 1;
+		const endpoint = `${RIVER_SUMMARY_ENDPOINT}?id=eq.${id}`;
+		const expectedUrl = `${POSTGREST_URL}/${endpoint}`;
+		const mockResponse = { data: 'example-data'};
+		global.fetch.mockResolvedValue({
+			ok: true,
+			json: vi.fn().mockResolvedValue(mockResponse),
+		});
+
+		// Act
+		await fetchRiverSummary(id);
+
+		// Assert
+		expect(global.fetch).toHaveBeenCalledWith(expectedUrl, { method: 'GET' });
+	});
+
+	it('fetchRiverSummary should return the correct response as JSON', async () => {
+		// Arrange
+		const mockResponse = { data: 'example-data'};
+		global.fetch.mockResolvedValue({
+			ok: true,
+			json: vi.fn().mockResolvedValue(mockResponse),
+		});
+
+		// Act
+		const result = await fetchRiverSummary(1);
+
+		// Assert
+		expect(result).toEqual(mockResponse);
+	});
+
+	it('fetchRiverSummary should throw an error if the response status is not ok', async () => {
+		// Arrange
+		const mockResponse = { statusText: 'Not Found' };
+		global.fetch.mockResolvedValue({
+			status: 404,
+			statusText: mockResponse.statusText,
+			json: vi.fn().mockResolvedValue(mockResponse),
+		});
+
+		// Act and Assert
+		await expect(fetchRiverSummary(1)).rejects.toThrowError(
+			mockResponse.statusText
+		);
+	});
+
+	it('fetchRiverSummary should return null if the response status is 204', async () => {
+		// Arrange
+		const mockResponse = { statusText: 'No Content' };
+		global.fetch.mockResolvedValue({
+			status: 204,
+			ok: true,
+			statusText: mockResponse.statusText,
+			json: vi.fn().mockResolvedValue(mockResponse),
+		});
+
+		// Act
+		const result = await fetchRiverSummary(1);
+
+		// Assert
+		expect(result).toBeNull();
+	});
+});
+
+
 
