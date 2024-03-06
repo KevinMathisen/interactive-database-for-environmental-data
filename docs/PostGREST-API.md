@@ -156,48 +156,95 @@ jsonb_agg(jsonb_build_object('species', individdata.art, 'size', individdata.len
 FROM stasjonsdata INNER JOIN elvedata ON stasjonsdata.elvedata = elvedata.id INNER JOIN individdata ON stasjonsdata.id = individdata.stasjon;
 ```
 
+### Download information for River
+There is no need for a sql view for river download data, as the river summary page already exposes all of the required data for download. Therefore the river_summary view should be used for this purpose. 
+
+### Download information for Station
+All the station information not included in the summary view. Includes all the observation data. 
+```sql
+CREATE VIEW station_download AS
+SELECT stasjonsdata.id AS id, 
+stasjonsdata.posisjon_start AS start_pos,
+stasjonsdata.posisjon_stop AS end_pos,
+stasjonsdata.transektlengde AS transect_length
+stasjonsdata.display AS display,
+stasjonsdata.gpx_file AS gpx_file,
+jsonb_agg(
+  jsonb_build_object(
+    'id', individdata.id,
+    'station', individdata.stasjon,
+    'round', individdata.omgang,
+    'species', individdata.art,
+    'length', individdata.lengde,
+    'count', individdata.antall,
+    'gender', individdata.kjoenn,
+    'age', individdata.alder,
+    'released', individdata.gjenutsatt,
+    'sample_type', individdata.proevetype,
+    'comment', individdata.kommentar
+    )
+  ) AS observations 
+FROM stasjonsdata INNER JOIN elvedata ON stasjonsdata.elvedata = elvedata.id INNER JOIN individdata ON stasjonsdata.id = individdata.stasjon;
+```
+
 ### Observations under River
-Ask for the stations under the river with observations, and use these for each river.
+To get the obsevations under a river, ask for the observations for the stations under the river. 
 
 ### Observations under Station
-Use the summary information endpoint. 
+When using data for the webpage, which includes showing summary information and graphs, the properties `species`, `size`, and `amount` are needed. Because of this the endpoint `station_summary` will return sufficient data for the observations.
+When using the data for downloading csv and xlsx files, all the properties of observations are needed. Here the endpoint `station_download` should be used.
+
+
 
 ## Data structure
 There will be a map of River objects, and a map of station objects. Both will use the river and station IDs as keys.
 
 River object:
 - ID (Non-nullable)
-- Date
 - Name
+- Start Date
+- End Date
 - Project ID
-- Coordinates
-- Water flow
-- Boat type
-- Crew
+- Water Flow
+- Boat Type
+- Crew (List of crew members)
+- Position
+- Comment
 - Species (List)
-- Comments
 - Stations (List of their IDs):
 
 Station object:
 - ID (Non-nullable)
+- Name
 - Date
+- Start Position
+- End Position
 - Time of day
-- Start and stop coordinates
-- Station number
-- Project ID
-- Station description
-- Conditions
-  - Rivertype
-  - Weather
-  - Water temperature
-  - Air temperature
-  - Time spent fishing
+- River ID
+- Description
+- Comment
+- River Type
+- Weather
+- Water Temperature
+- Air Temperature
+- Time spent fishing
 - Power setting
   - Voltage
   - Pulse (DC)
   - Conductivity
 - Species (List)
 - Observations (List)
+  - ID
+  - Station
+  - Round
   - Species
-  - Size
-  - Amount
+  - Length
+  - Count
+  - Gender
+  - Age
+  - Released
+  - Sample Type
+  - Comment
+- Transect Length
+- Display
+- GPX File
