@@ -5,6 +5,7 @@ import { riverStore } from './stores/riverStore.js';
 import { stationStore } from './stores/stationStore.js';
 import { River } from './models/River.js';
 import { Station } from './models/Station.js';
+import { fetchAllStation } from '../api/postgrest.js';
 
 /**
  * Updates a store with given objects converted to a given class
@@ -15,7 +16,7 @@ import { Station } from './models/Station.js';
  * @param {store} store - The store to update
  * @param {array} objects - The objects to update the store with
  * @param {class} Class - The class to convert the objects to
- * @returns 
+ * @returns {void}
  */
 function updateStoreWithObjects(store, objects, Class) {
 	// If the store is empty, simply set the store with the objects converted to the class
@@ -58,7 +59,7 @@ function updateStoreWithObjects(store, objects, Class) {
  * @param {store} store - The store to update
  * @param {array} object - The object to update the store with
  * @param {class} Class - The class to convert the object to
- * @returns 
+ * @returns {void}
  */
 function updateStoreWithObject(store, object, Class) {
 
@@ -85,7 +86,7 @@ function updateStoreWithObject(store, object, Class) {
  * Ensures that all rivers are stored in the river store such that the
  *   map and list page can display them
  * 
- * @returns 
+ * @returns {void}
  */
 export async function getRivers() {
 	// Check if rivers exists, if they do, return
@@ -109,7 +110,7 @@ export async function getRivers() {
  * Ensures that all stations are stored in the station store such that the
  *    map and list page can display them
  * 
- * @returns 
+ * @returns {void}
  */
 export async function getStations() {
 	// Check if stations exists, if they do, return
@@ -134,7 +135,7 @@ export async function getStations() {
  *   in the river store such that the river summary page can display them
  * 
  * @param {int} id - The id of the river to get the summary for
- * @returns 
+ * @returns {void}
  */
 export async function getRiverSummary(id) {
 	// Check if river summary exists, if it does, return
@@ -185,14 +186,45 @@ export async function getStationSummary(id) {
 	}
 }
 
-// TODO: Implement function for creating "getRiverForDownload" function
+/**
+ * Ensures that all stations under a river has their data stored in the store
+ *   for the river to be downloaded
+ * 
+ * @param {int} id - The id of the river to get the data for 
+ * @returns {void}
+ */
+export async function getRiverForDownload(id) {
+	// Ensure that river summary is stored
+	getRiverSummary(id);
+
+	const river = get(riverStore).get(id);
+	
+	// Get which stations does not have all of their data ready for download
+	let stationsNotFetchedForDownload = river.stations.filter(stationId => !checkIfStationDownloadExists(stationId));
+
+	// Exit the function of all stations are ready for download
+	if (stationsNotFetchedForDownload.length === 0) {
+		return;
+	}
+
+	try {
+		// Get all download data for all stations under river
+		const fetchedStations = await fetchAllStation(stationsNotFetchedForDownload);
+
+		// Update store with the new station data
+		updateStoreWithObjects(stationStore, fetchedStations, Station);
+
+	} catch (error) {
+		console.error(error);
+	}
+}
 
 /**
  * Ensures that a station is stored in the station store such that
  *   the station can be downloaded
  * 
  * @param {int} id - The id of the station to get the data for 
- * @returns 
+ * @returns {void}
  */
 export async function getStationForDownload(id) {
 	// Check if station download exists, if it does, return
@@ -202,12 +234,10 @@ export async function getStationForDownload(id) {
 
 	try {
 		// Get station
-		const fetchedStation = await fetchAllRiver(id);
+		const fetchedStation = await fetchAllStation({id});
 
 		// Update store
 		updateStoreWithObject(stationStore, fetchedStation, Station);
-
-		// TODO: Also fetch individual observations for the station
 
 	} catch (error) {
 		console.error(error);
