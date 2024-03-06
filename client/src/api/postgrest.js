@@ -61,7 +61,7 @@ async function handleResponse(response) {
 }
 
 /**
- * Fetches all rivers from PostgREST API on the rivers endpoint
+ * Fetches data needed for the rivers on the map and list page
  *
  * @returns {Promise} - A promise which resolves to json data
  * @async
@@ -71,7 +71,7 @@ export async function fetchRivers() {
 }
 
 /**
- * Fetches all stations from PostgREST API on the stations endpoint
+ * Fetches data needed for the stations on the map and list page
  *
  * @returns {Promise} - A promise which resolves to json data
  * @async
@@ -81,7 +81,7 @@ export async function fetchStations() {
 }
 
 /**
- * Fetches a river with specified ID from PostgREST API on the river summary endpoint
+ * Fetches all station data needed for the summary page
  *
  * @param {int} id - The id of the river to fetch data for
  * @returns {Promise} - A promise which resolves to json data
@@ -93,7 +93,7 @@ export async function fetchRiverSummary(id) {
 }
 
 /**
- * Fetches a station with specified ID from PostgREST API on the station summary endpoint
+ * Fetches all station data needed for the summary page
  *
  * @param {array} id - The id of the station to fetch data for
  * @returns {Promise} - A promise which resolves to json data
@@ -107,42 +107,16 @@ export async function fetchStationSummary(id) {
 }
 
 /**
- * Fetches all data to the river specified with ID from PostgREST API 
- *
- * @param {int} id - The id of the river to fetch data for
- * @returns {Promise} - A promise which resolves to json data
- * @async
- */
-export async function fetchAllRiver(id) {
-	const endpoint = `${RIVER_ENDPOINT}?id=eq.${id}&`;
-	return fetchFromPostgrest(endpoint);
-}
-
-/**
- * Fetches all data to the station specified with ID from PostgREST API 
+ * Fetches all data required to download a station specified with ID 
  *
  * @param {array} id - The id of the station to fetch data for
  * @returns {Promise} - A promise which resolves to json data
  * @async
  */
-export async function fetchAllStation(id) {
+export async function fetchStationDownload(id) {
 	// Create endpoint for either single station or array of stations
 	const endpoint = createEndpointForArray(id, STATION_DOWNLOAD_ENDPOINT);
 	
-	return fetchFromPostgrest(endpoint);
-}
-
-/**
- * Fetches all data to the observation specified with a station ID from PostgREST API 
- *
- * @param {array} id - The id of the station to fetch observations for
- * @returns {Promise} - A promise which resolves to json data
- * @async
- */
-export async function fetchAllObservation(id) {
-	// Create endpoint for either single station or array of stations
-	const endpoint = createEndpointForArray(id, OBSERVATION_ENDPOINT);
-
 	return fetchFromPostgrest(endpoint);
 }
 
@@ -154,13 +128,16 @@ export async function fetchAllObservation(id) {
  * @returns {string} - The endpoint with the id or ids added
  */
 function createEndpointForArray(id, endpoint) {	
+	// If id is a single number, return endpoint with id
 	if (id.length === 1) {
 		return `${endpoint}?id=eq.${id[0]}`;
 	} 
 
+	// If no id is given, throw an error
 	if (id.length === 0) {
 		throw new Error('No id given');
 	}
 		
+	// If id is an array of numbers, return endpoint with all ids
 	return `${endpoint}?id=in.(${id.join(',')})`;
 }
