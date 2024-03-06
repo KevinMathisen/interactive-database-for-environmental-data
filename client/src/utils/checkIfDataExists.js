@@ -4,8 +4,8 @@ import { get } from 'svelte/store'
 
 /**
  * Check if the store contains any data, and if it contains any data,
- *   check if the objects in the store has coordinates
- * Assumes that if the first object in the store does not have any coordinates
+ *   check if the objects in the store has species defined.
+ * Assumes that if the first object in the store does not have any species
  *   that there is not sufficient data in the store to display the data
  *     on the map or list page
  *
@@ -18,8 +18,8 @@ function doesDataInStoreExist (store) {
     return false
   }
 
-  // if the first object in the store does not have coordinates, return false
-  return get(store).values().next().value.coordinates !== null
+  // if the first object in the store does not have species, return false
+  return get(store).values().next().value.species !== null
 }
 
 /**
@@ -88,7 +88,7 @@ export function checkIfRiverSummaryExists (id) {
  * @returns {boolean} - True if store contains station summary info, else false
  */
 export function checkIfStationSummaryExists (id) {
-  return checkIfObjectHasProperty(stationStore, id, 'sec_fished')
+  return checkIfObjectHasProperty(stationStore, id, 'secFished')
 }
 
 /**
