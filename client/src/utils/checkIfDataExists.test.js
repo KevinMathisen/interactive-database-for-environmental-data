@@ -6,9 +6,9 @@ import { doesAllRiversExistInStore, doesAllStationsExistInStore, checkIfRiverSum
 vi.mock('svelte/store', () => ({
   get: vi.fn(),
   writable: vi.fn(() => ({
-	  subscribe: vi.fn(),
-	  set: vi.fn(),
-	  update: vi.fn()
+    subscribe: vi.fn(),
+    set: vi.fn(),
+    update: vi.fn()
   }))
 }))
 
@@ -57,90 +57,87 @@ describe('test doesAllStationsExistInStore function', () => {
 })
 
 describe('test checkIfRiverSummaryExists function', () => {
-	it('should return false if riverStore does not contain any rivers', () => {
-	  // Mock the get method to return a map without a river with key 1
-	  get.mockReturnValue(new Map());
-	  expect(checkIfRiverSummaryExists(1)).toBe(false);
-	});
+  it('should return false if riverStore does not contain any rivers', () => {
+    // Mock the get method to return a map without a river with key 1
+    get.mockReturnValue(new Map())
+    expect(checkIfRiverSummaryExists(1)).toBe(false)
+  })
 
-	it('should return false if riverStore does not contain a river with given key', () => {
-	  // Mock the get method to return a map without a river with key 1
-	  get.mockReturnValue(new Map().set(2, { id: 2, skipper: 'test' }));
-	  expect(checkIfRiverSummaryExists(1)).toBe(false);
-	});
+  it('should return false if riverStore does not contain a river with given key', () => {
+    // Mock the get method to return a map without a river with key 1
+    get.mockReturnValue(new Map().set(2, { id: 2, skipper: 'test' }))
+    expect(checkIfRiverSummaryExists(1)).toBe(false)
+  })
 
-	it('should return false if river with key exists, but does not have skipper defined', () => {
-	  // Mock the get method to return a map with an object with no skipper
-	  get.mockReturnValue(new Map().set(1, { id: 1, skipper: null }));
-  
-	  expect(checkIfRiverSummaryExists(1)).toBe(false);
-	});
-  
-	// Should return true if a river with skipper exists
-	it('should return true if riverStore exists, and has skipper defined', () => {
-	  // Mock the get method to return a map with an object with skipper
-	  get.mockReturnValue(new Map().set(1, { id: 1, skipper: 'test' }));
-  
-	  expect(checkIfRiverSummaryExists(1)).toBe(true);
-	});
-  
-});
-  
+  it('should return false if river with key exists, but does not have skipper defined', () => {
+    // Mock the get method to return a map with an object with no skipper
+    get.mockReturnValue(new Map().set(1, { id: 1, skipper: null }))
+
+    expect(checkIfRiverSummaryExists(1)).toBe(false)
+  })
+
+  // Should return true if a river with skipper exists
+  it('should return true if riverStore exists, and has skipper defined', () => {
+    // Mock the get method to return a map with an object with skipper
+    get.mockReturnValue(new Map().set(1, { id: 1, skipper: 'test' }))
+
+    expect(checkIfRiverSummaryExists(1)).toBe(true)
+  })
+})
 
 describe('test checkIfStationSummaryExists function', () => {
   it('should return false if no station exists', () => {
-	// Mock the get method to return an empty map
-	get.mockReturnValue(new Map());
-	expect(checkIfStationSummaryExists(1)).toBe(false);
-  });
+    // Mock the get method to return an empty map
+    get.mockReturnValue(new Map())
+    expect(checkIfStationSummaryExists(1)).toBe(false)
+  })
 
   it('should return false if no station with given key exists', () => {
-	// Mock the get method to return a map without a station with key 1
-	get.mockReturnValue(new Map().set(2, { id: 2, secFished: 10 }));
-	expect(checkIfStationSummaryExists(1)).toBe(false);
-  });
+    // Mock the get method to return a map without a station with key 1
+    get.mockReturnValue(new Map().set(2, { id: 2, secFished: 10 }))
+    expect(checkIfStationSummaryExists(1)).toBe(false)
+  })
 
   it('should return false if there exists a station with the key, but it does not have seconds fished defined', () => {
-	// Mock the get method to return a map with an object with no skipper
-	get.mockReturnValue(new Map().set(1, { id: 1, secFished: null }));
+    // Mock the get method to return a map with an object with no skipper
+    get.mockReturnValue(new Map().set(1, { id: 1, secFished: null }))
 
-	expect(checkIfStationSummaryExists(1)).toBe(false);
-  });
+    expect(checkIfStationSummaryExists(1)).toBe(false)
+  })
 
   // Should return true if stationStore exists, and has skipper defined
   it('should return true if stationStore exists, and has skipper defined', () => {
-	// Mock the get method to return a map with an object with skipper
-	get.mockReturnValue(new Map().set(1, { id: 1, skipper: 'test' }));
+    // Mock the get method to return a map with an object with skipper
+    get.mockReturnValue(new Map().set(1, { id: 1, skipper: 'test' }))
 
-	expect(checkIfStationSummaryExists(1)).toBe(true);
-  });
-
-});
+    expect(checkIfStationSummaryExists(1)).toBe(true)
+  })
+})
 
 describe('test checkIfStationDownloadExists function', () => {
-	it('should return false if no station exists', () => {
-	  // Mock the get method to return an empty map
-	  get.mockReturnValue(new Map());
-	  expect(checkIfStationDownloadExists(1)).toBe(false);
-	});
-  
-	it('should return false if no station with given key exists', () => {
-	  // Mock the get method to return a map without a station with key 1
-	  get.mockReturnValue(new Map().set(2, { id: 2, display: true }));
-	  expect(checkIfStationDownloadExists(1)).toBe(false);
-	});
-  
-	it('should return false if there exists a station with the key, but it does not have display defined', () => {
-	  // Mock the get method to return a map with an object with no display
-	  get.mockReturnValue(new Map().set(1, { id: 1, display: null }));
-  
-	  expect(checkIfStationDownloadExists(1)).toBe(false);
-	});
-  
-	it('should return true if stationStore exists, and has display defined', () => {
-	  // Mock the get method to return a map with an object with display
-	  get.mockReturnValue(new Map().set(1, { id: 1, display: true }));
-  
-	  expect(checkIfStationDownloadExists(1)).toBe(true);
-	});
-  });
+  it('should return false if no station exists', () => {
+    // Mock the get method to return an empty map
+    get.mockReturnValue(new Map())
+    expect(checkIfStationDownloadExists(1)).toBe(false)
+  })
+
+  it('should return false if no station with given key exists', () => {
+    // Mock the get method to return a map without a station with key 1
+    get.mockReturnValue(new Map().set(2, { id: 2, display: true }))
+    expect(checkIfStationDownloadExists(1)).toBe(false)
+  })
+
+  it('should return false if there exists a station with the key, but it does not have display defined', () => {
+    // Mock the get method to return a map with an object with no display
+    get.mockReturnValue(new Map().set(1, { id: 1, display: null }))
+
+    expect(checkIfStationDownloadExists(1)).toBe(false)
+  })
+
+  it('should return true if stationStore exists, and has display defined', () => {
+    // Mock the get method to return a map with an object with display
+    get.mockReturnValue(new Map().set(1, { id: 1, display: true }))
+
+    expect(checkIfStationDownloadExists(1)).toBe(true)
+  })
+})

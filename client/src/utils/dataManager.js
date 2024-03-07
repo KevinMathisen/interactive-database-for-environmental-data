@@ -1,6 +1,18 @@
 import { get } from 'svelte/store'
-import { fetchRivers, fetchStations, fetchRiverSummary, fetchStationSummary, fetchStationDownload } from '../api/postgrest.js'
-import { doesAllRiversExistInStore, doesAllStationsExistInStore, checkIfRiverSummaryExists, checkIfStationSummaryExists, checkIfStationDownloadExists } from './checkIfDataExists.js'
+import {
+  fetchRivers,
+  fetchStations,
+  fetchRiverSummary,
+  fetchStationSummary,
+  fetchStationDownload
+} from '../api/postgrest.js'
+import {
+  doesAllRiversExistInStore,
+  doesAllStationsExistInStore,
+  checkIfRiverSummaryExists,
+  checkIfStationSummaryExists,
+  checkIfStationDownloadExists
+} from './checkIfDataExists.js'
 import { riverStore } from '../stores/riverStore.js'
 import { stationStore } from '../stores/stationStore.js'
 import { River } from '../models/River.js'
@@ -201,7 +213,7 @@ export async function getRiverForDownload (id) {
 
   try {
     // Get all download data for all stations under river
-    const fetchedStations = await fetchAllStation(stationsNotFetchedForDownload)
+    const fetchedStations = await fetchStationDownload(stationsNotFetchedForDownload)
 
     // Update store with the new station data
     updateStoreWithObjects(stationStore, fetchedStations, Station)
@@ -225,7 +237,7 @@ export async function getStationForDownload (id) {
 
   try {
     // Get station
-    const fetchedStation = await fetchAllStation({ id })
+    const fetchedStation = await fetchStationDownload({ id })
 
     // Update store
     updateStoreWithObject(stationStore, fetchedStation, Station)
