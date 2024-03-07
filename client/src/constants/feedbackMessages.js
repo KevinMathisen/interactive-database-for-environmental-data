@@ -1,7 +1,14 @@
+export const FEEDBACK_TYPES = {
+  SUCCESS: 'SUCCESS',
+  INFO: 'INFO',
+  ERROR: 'ERROR',
+}
+
 export const FEEDBACK_CODES = {	
-  GENERIC: 'GENERIC',
   CREATED: 'CREATED',
   NO_CONTENT: 'NO_CONTENT',
+  INFO: 'INFO',
+  GENERIC: 'GENERIC',
   NOT_FOUND: 'NOT_FOUND',
   FORBIDDEN: 'FORBIDDEN',
   UNAUTHORIZED: 'UNAUTHORIZED',
@@ -10,8 +17,8 @@ export const FEEDBACK_CODES = {
 }
 
 export const FEEDBACK_MESSAGES = {
-	GENERIC: 'En feil oppstod',
 	CREATED: 'Opplasting vellykket',
+	GENERIC: 'En feil oppstod',
 	NO_CONTENT: 'Fant ikke det du lette etter',
 	NOT_FOUND: 'Kunne ikke finne den forespurte ressursen',
 	FORBIDDEN: 'Handlingen du utførte ble ikke akseptert',
