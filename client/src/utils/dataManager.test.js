@@ -495,3 +495,67 @@ describe('test getStationSummary function', () => {
   })
 })  
 
+describe('test getRiverForDownload function', () => {
+  beforeEach(() => {
+    vi.resetModules()
+    vi.clearAllMocks()
+  })
+
+  it('should exit function if all stations under river are ready for download', async () => {
+    // Set up test
+    checkIfDataExists.checkIfRiverSummaryExists.mockReturnValue(true)
+    checkIfDataExists.checkIfStationDownloadExists.mockReturnValue(true)
+    const initialRiverMap = new Map([[1, new River({ id: 1, name: 'River Test', stations: [1, 2] })]])
+    vi.mocked(get).mockReturnValue(initialRiverMap)
+
+    // Run function
+    await getRiverForDownload(1)
+
+    // Assert
+    expect(postgrest.fetchStationDownload).not.toHaveBeenCalled()
+  })
+
+  it('should exit and log error if fetchStationDownload throws an error', async () => {
+    // Set up test
+    checkIfDataExists.checkIfRiverSummaryExists.mockReturnValue(true)
+    checkIfDataExists.checkIfStationDownloadExists.mockReturnValue(false)
+    postgrest.fetchStationDownload.mockRejectedValue(new Error('Test Error'))
+
+    // Run function
+    await getRiverForDownload(1)
+
+    // Assert
+    expect(addFeedbackToStore.addFeedbackToStore).toHaveBeenCalled()
+  })
+
+  it('should fetch and add station download to store if station download does not exist', async () => {
+    // set up test
+    checkIfDataExists.checkIfRiverSummaryExists.mockReturnValue(true)
+    checkIfDataExists.checkIfStationDownloadExists.mockReturnValue(false)
+    const initialRiverMap = new Map([[1, new River({ id: 1, name: 'River Test', stations: [1, 2] })]])
+    vi.mocked(get).mockReturnValue(initialRiverMap)
+
+    const mockedStationDownload = [{ id: 1, name: 'Station Test' }, { id: 2, name: 'Station Test 2' }]
+    postgrest.fetchStationDownload.mockResolvedValue(mockedStationDownload)
+
+    // capture updates
+    let capturedUpdate
+    stationStore.update.mockImplementationOnce(updateFn => {
+      capturedUpdate = updateFn
+    })
+
+    // Run function
+    await getRiverForDownload(1)
+
+    // Assert
+    expect(postgrest.fetchStationDownload).toHaveBeenCalledWith([1, 2])
+    expect(stationStore.update).toHaveBeenCalled()
+
+    // create updated map by using the captured logic
+    const updatedStationMap = capturedUpdate(new Map())
+
+    expect(updatedStationMap.has(1)).toBe(true)
+    expect(updatedStationMap.get(1).name).toEqual('Station Test')
+  })
+})
+
