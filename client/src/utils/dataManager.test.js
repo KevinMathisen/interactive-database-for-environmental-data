@@ -361,7 +361,7 @@ describe('test getRiverSummary function', () => {
     expect(stationStore.set).toHaveBeenCalledWith(expectedStationMap)
   })
 
-  it('should fetch and add river summary to store if river summary and stations overlap', async () => {
+  it('should fetch and add river summary to store if river summary and stations summaries overlap', async () => {
     // set up test
     checkIfDataExists.checkIfRiverSummaryExists.mockReturnValue(false)
     const mockedRiverSummary = [{ id: 1, name: 'River Test', stations: [1] }]
@@ -408,3 +408,90 @@ describe('test getRiverSummary function', () => {
     expect(updatedStationMap.get(1).observations[0].count).toEqual(1)
   })
 })
+
+describe('test getStationSummary function', () => {
+  beforeEach(() => {
+    vi.resetModules()
+    vi.clearAllMocks()
+  })
+
+  it('should not fetch station summary if it already exists in store', async () => {
+    // Set up test
+    checkIfDataExists.checkIfStationSummaryExists.mockReturnValue(true)
+
+    // Run function
+    await getStationSummary(1)
+
+    // Assert
+    expect(postgrest.fetchStationSummary).not.toHaveBeenCalled()
+  })
+
+  it('should catch and log error if fetchStationSummary throws an error', async () => {
+    // Set up test
+    checkIfDataExists.checkIfStationSummaryExists.mockReturnValue(false)
+    postgrest.fetchStationSummary.mockRejectedValue(new Error('Test Error'))
+
+    // Run function
+    await getStationSummary(1)
+
+    // Assert
+    expect(addFeedbackToStore.addFeedbackToStore).toHaveBeenCalled()
+  })
+
+  it('should fetch and add station summary to store if station summary does not exist', async () => {
+    // set up test
+    checkIfDataExists.checkIfStationSummaryExists.mockReturnValue(false)
+    const mockedStationSummary = [{ id: 1, name: 'Station Test' }]
+    postgrest.fetchStationSummary.mockResolvedValue(mockedStationSummary)
+    vi.mocked(get).mockReturnValue(new Map())
+
+    // capture updates
+    let capturedUpdate
+    stationStore.update.mockImplementationOnce(updateFn => {
+      capturedUpdate = updateFn
+    })
+
+    // Run function
+    await getStationSummary(1)
+
+    // Assert
+    expect(postgrest.fetchStationSummary).toHaveBeenCalledWith([1])
+    expect(stationStore.update).toHaveBeenCalled()
+
+    // create updated map by using the captured logic
+    const updatedStationMap = capturedUpdate(new Map())
+
+    expect(updatedStationMap.has(1)).toBe(true)
+    expect(updatedStationMap.get(1).name).toEqual('Station Test')
+  })
+
+  it('should fetch and add station summary to store if station summary and stations overlap', async () => {
+    // set up test
+    checkIfDataExists.checkIfStationSummaryExists.mockReturnValue(false)
+    const mockedStationSummary = [{ id: 1, name: 'Station Test', observations: [{ species: 'Species 1', count: 1 }] }]
+    postgrest.fetchStationSummary.mockResolvedValue(mockedStationSummary)
+    const initialStationMap = new Map([[1, new Station({ id: 1, name: 'Station Test' })], [2, new Station({ id: 2, name: 'Station Test 2' })]])
+    vi.mocked(get).mockReturnValue(initialStationMap)
+
+    // capture updates
+    let capturedUpdate
+    stationStore.update.mockImplementationOnce(updateFn => {
+      capturedUpdate = updateFn
+    })
+
+    // Run function
+    await getStationSummary(1)
+
+    // Assert
+    expect(postgrest.fetchStationSummary).toHaveBeenCalledWith([1])
+    expect(stationStore.update).toHaveBeenCalled()
+
+    // create updated map by using the captured logic
+    const updatedStationMap = capturedUpdate(initialStationMap)
+
+    expect(updatedStationMap.has(1)).toBe(true)
+    expect(updatedStationMap.get(1).name).toEqual('Station Test')
+    expect(updatedStationMap.get(1).observations[0].count).toEqual(1)
+  })
+})  
+
