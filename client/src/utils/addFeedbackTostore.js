@@ -1,5 +1,5 @@
 import { userFeedbackStore } from '../stores/userFeedbackStore'
-import { UserFeedback } from '../models/userFeedback'
+import { UserFeedback } from '../models/UserFeedback'
 
 /**
  * Adds a feedback message to the userFeedbackStore which will be displayed to the user
