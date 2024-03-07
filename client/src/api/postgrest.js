@@ -10,7 +10,9 @@ import {
   RIVER_SUMMARY_ENDPOINT,
   STATION_SUMMARY_ENDPOINT,
   STATION_DOWNLOAD_ENDPOINT
-} from '../constants/constants.js'
+} from '../constants/endpoints.js'
+import { addFeedbackToStore } from '../utils/addFeedbackTostore.js'
+import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/feedbackMessages'
 
 /**
  * Fetches data from the PostgREST API on the endpoint specified
@@ -31,7 +33,7 @@ async function fetchFromPostgrest (endpoint) {
     // Return the response
     return handleResponse(response)
   } catch (error) {
-    console.error(error)
+    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.POSTGREST_UNAVAILABLE, FEEDBACK_MESSAGES.POSTGREST_UNAVAILABLE)
   }
 }
 
@@ -47,8 +49,6 @@ async function fetchFromPostgrest (endpoint) {
 async function handleResponse (response) {
   // If response status is not ok, throw an error
   if (!response.ok) {
-    // const errMessage = await response.text()
-    // const errorDetails = errMessage ? `: ${errMessage}` : ''
     throw new Error(response.statusText)
   }
 
