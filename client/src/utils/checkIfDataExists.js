@@ -14,19 +14,18 @@ import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/
  * @param {store} store - The store to check if data exists in
  * @returns {boolean} - True if the store contains suficient data, else false
  */
-function doesDataInStoreExist(store) {
+function doesDataInStoreExist (store) {
   try {
     // checks if the store is empty, if so return false
     if (get(store).size === 0) {
-      return false;
+      return false
     }
 
     // if the first object in the store does not have species, return false
-    return get(store).values().next().value.species !== null;
-
+    return get(store).values().next().value.species !== null
   } catch (error) {
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
-    return false;
+    return false
   }
 }
 
@@ -59,25 +58,24 @@ export function doesAllStationsExistInStore () {
  * @param {string} prop - The property to check for
  * @returns {boolean} - True if the property is defined, else false
  */
-function checkIfObjectHasProperty(store, key, prop) {
+function checkIfObjectHasProperty (store, key, prop) {
   try {
     // Retrieve map of data
-    const dataMap = get(store);
+    const dataMap = get(store)
 
     // If no object with key given exists, return false
     if (dataMap.has(key) === false) {
-      return false;
+      return false
     }
 
     // Retrieve object with key given
-    const data = dataMap.get(key);
+    const data = dataMap.get(key)
 
     // If the object does not have the property defined, return false
-    return data[prop] !== null;
-    
+    return data[prop] !== null
   } catch (error) {
-    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC);
-    return false;
+    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
+    return false
   }
 }
 
