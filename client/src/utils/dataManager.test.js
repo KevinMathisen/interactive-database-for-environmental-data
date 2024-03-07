@@ -139,7 +139,7 @@ describe('test getRivers function', () => {
 
     expect(updatedRiverMap.has(1)).toBe(true)
     expect(updatedRiverMap.get(1).name).toEqual('River Test')
-    expect(updatedRiverMap.has(2)).toBe(true) 
+    expect(updatedRiverMap.has(2)).toBe(true)
     expect(updatedRiverMap.get(2).name).toEqual('River Test 2')
   })
 
@@ -259,7 +259,7 @@ describe('test getStations function', () => {
 
     expect(updatedStationMap.has(1)).toBe(true)
     expect(updatedStationMap.get(1).observations[0].species).toEqual('Species 1')
-    expect(updatedStationMap.has(2)).toBe(true) 
+    expect(updatedStationMap.has(2)).toBe(true)
     expect(updatedStationMap.get(2).name).toEqual('Station Test 2')
   })
 
@@ -493,7 +493,7 @@ describe('test getStationSummary function', () => {
     expect(updatedStationMap.get(1).name).toEqual('Station Test')
     expect(updatedStationMap.get(1).observations[0].count).toEqual(1)
   })
-})  
+})
 
 describe('test getRiverForDownload function', () => {
   beforeEach(() => {
@@ -559,3 +559,60 @@ describe('test getRiverForDownload function', () => {
   })
 })
 
+describe('test getStationForDownload function', () => {
+  beforeEach(() => {
+    vi.resetModules()
+    vi.clearAllMocks()
+  })
+
+  it('should exit function if station is ready for download', async () => {
+    // Set up test
+    checkIfDataExists.checkIfStationDownloadExists.mockReturnValue(true)
+
+    // Run function
+    await getStationForDownload(1)
+
+    // Assert
+    expect(postgrest.fetchStationDownload).not.toHaveBeenCalled()
+  })
+
+  it('should exit and log error if fetchStationDownload throws an error', async () => {
+    // Set up test
+    checkIfDataExists.checkIfStationDownloadExists.mockReturnValue(false)
+    postgrest.fetchStationDownload.mockRejectedValue(new Error('Test Error'))
+
+    // Run function
+    await getStationForDownload(1)
+
+    // Assert
+    expect(addFeedbackToStore.addFeedbackToStore).toHaveBeenCalled()
+  })
+
+  it('should fetch and add station download to store if station overlap exists', async () => {
+    // set up test
+    checkIfDataExists.checkIfStationDownloadExists.mockReturnValue(false)
+    const mockedStationDownload = [{ id: 1, name: 'Station Test', observations: [{ species: 'Species 1', count: 1 }] }]
+    postgrest.fetchStationDownload.mockResolvedValue(mockedStationDownload)
+    const initialStationMap = new Map([[1, new Station({ id: 1, name: 'Station Test' })]])
+    vi.mocked(get).mockReturnValue(initialStationMap)
+
+    // capture updates
+    let capturedUpdate
+    stationStore.update.mockImplementationOnce(updateFn => {
+      capturedUpdate = updateFn
+    })
+
+    // Run function
+    await getStationForDownload(1)
+
+    // Assert
+    expect(postgrest.fetchStationDownload).toHaveBeenCalledWith([1])
+    expect(stationStore.update).toHaveBeenCalled()
+
+    // create updated map by using the captured logic
+    const updatedStationMap = capturedUpdate(initialStationMap)
+
+    expect(updatedStationMap.has(1)).toBe(true)
+    expect(updatedStationMap.get(1).observations[0].species).toEqual('Species 1')
+  })
+})
