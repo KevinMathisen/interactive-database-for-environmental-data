@@ -154,13 +154,13 @@ export async function getRiverSummary (id) {
 
   try {
     // Get river summary data
-    const fetchedRiverSummary = await fetchRiverSummary(id)
+    const fetchedRiversSummary = await fetchRiverSummary(id)
 
     // Update store with river
-    updateStoreWithObject(riverStore, fetchedRiverSummary[0], River)
+    updateStoreWithObject(riverStore, fetchedRiversSummary[0], River)
 
     // Get data for stations under river
-    const fetchedStations = await fetchStationSummary(fetchRiverSummary.stations)
+    const fetchedStations = await fetchStationSummary(fetchedRiversSummary[0].stations)
 
     // Update store with the stations
     updateStoreWithObjects(stationStore, fetchedStations, Station)
@@ -183,10 +183,10 @@ export async function getStationSummary (id) {
 
   try {
     // Get station summary
-    const fetchedStationSummary = await fetchStationSummary([id])
+    const fetchedStationsSummary = await fetchStationSummary([id])
 
     // Update store
-    updateStoreWithObject(stationStore, fetchedStationSummary[0], Station)
+    updateStoreWithObject(stationStore, fetchedStationsSummary[0], Station)
   } catch (error) {
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
   }
@@ -239,10 +239,10 @@ export async function getStationForDownload (id) {
 
   try {
     // Get station
-    const fetchedStation = await fetchStationDownload({ id })
+    const fetchedStations = await fetchStationDownload([id])
 
     // Update store
-    updateStoreWithObject(stationStore, fetchedStation[0], Station)
+    updateStoreWithObject(stationStore, fetchedStations[0], Station)
   } catch (error) {
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
   }
