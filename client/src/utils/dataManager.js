@@ -17,6 +17,8 @@ import { riverStore } from '../stores/riverStore.js'
 import { stationStore } from '../stores/stationStore.js'
 import { River } from '../models/River.js'
 import { Station } from '../models/Station.js'
+import { addFeedbackToStore } from '../utils/addFeedbackTostore.js'
+import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/feedbackMessages'
 
 /**
  * Updates a store with given objects converted to a given class
@@ -110,7 +112,7 @@ export async function getRivers () {
     // Update store
     updateStoreWithObjects(riverStore, fetchedRivers, River)
   } catch (error) {
-    console.error(error)
+    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
   }
 }
 
@@ -133,7 +135,7 @@ export async function getStations () {
     // Update store
     updateStoreWithObjects(stationStore, fetchedStations, Station)
   } catch (error) {
-    console.error(error)
+    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
   }
 }
 
@@ -163,7 +165,7 @@ export async function getRiverSummary (id) {
     // Update store with the stations
     updateStoreWithObjects(stationStore, fetchedStations, Station)
   } catch (error) {
-    console.error(error)
+    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
   }
 }
 
@@ -186,7 +188,7 @@ export async function getStationSummary (id) {
     // Update store
     updateStoreWithObject(stationStore, fetchedStationSummary, Station)
   } catch (error) {
-    console.error(error)
+    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
   }
 }
 
@@ -218,7 +220,7 @@ export async function getRiverForDownload (id) {
     // Update store with the new station data
     updateStoreWithObjects(stationStore, fetchedStations, Station)
   } catch (error) {
-    console.error(error)
+    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
   }
 }
 
@@ -242,6 +244,6 @@ export async function getStationForDownload (id) {
     // Update store
     updateStoreWithObject(stationStore, fetchedStation, Station)
   } catch (error) {
-    console.error(error)
+    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
   }
 }
