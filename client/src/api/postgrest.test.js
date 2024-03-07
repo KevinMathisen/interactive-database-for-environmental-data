@@ -7,7 +7,7 @@ import {
   RIVER_SUMMARY_ENDPOINT,
   STATION_SUMMARY_ENDPOINT,
   STATION_DOWNLOAD_ENDPOINT
-} from '../constants/constants.js'
+} from '../constants/endpoints.js'
 
 // Mock the fetch function
 global.fetch = vi.fn()
@@ -19,7 +19,7 @@ describe('test fetchRivers function', {}, () => {
   })
 
   it('fetchRivers should call fetch with the correct URL', async () => {
-    // Arrange
+    // Set up test
     const endpoint = RIVERS_ENDPOINT
     const expectedUrl = `${POSTGREST_URL}/${endpoint}`
     const mockResponse = { data: 'example-data' }
@@ -28,7 +28,7 @@ describe('test fetchRivers function', {}, () => {
       json: vi.fn().mockResolvedValue(mockResponse)
     })
 
-    // Act
+    // Run function
     await fetchRivers()
 
     // Assert
@@ -36,14 +36,14 @@ describe('test fetchRivers function', {}, () => {
   })
 
   it('fetchRivers should return the correct response as JSON', async () => {
-    // Arrange
+    // Set up test
     const mockResponse = { data: 'example-data' }
     global.fetch.mockResolvedValue({
       ok: true,
       json: vi.fn().mockResolvedValue(mockResponse)
     })
 
-    // Act
+    // Run function
     const result = await fetchRivers()
 
     // Assert
@@ -51,7 +51,7 @@ describe('test fetchRivers function', {}, () => {
   })
 
   it('fetchRivers should throw an error if the response status is not ok', async () => {
-    // Arrange
+    // Set up test
     const mockResponse = { statusText: 'Not Found' }
     global.fetch.mockResolvedValue({
       status: 404,
@@ -60,14 +60,14 @@ describe('test fetchRivers function', {}, () => {
       json: vi.fn().mockResolvedValue(mockResponse)
     })
 
-    // Act and Assert
+    // Run function and Assert
     await expect(fetchRivers()).rejects.toThrowError(
       mockResponse.statusText
     )
   })
 
   it('fetchRivers should return null if the response status is 204', async () => {
-    // Arrange
+    // Set up test
     const mockResponse = { statusText: 'No Content' }
     global.fetch.mockResolvedValue({
       status: 204,
@@ -76,7 +76,7 @@ describe('test fetchRivers function', {}, () => {
       json: vi.fn().mockResolvedValue(mockResponse)
     })
 
-    // Act
+    // Run function
     const result = await fetchRivers()
 
     // Assert
@@ -91,7 +91,7 @@ describe('test fetchStations function', {}, () => {
   })
 
   it('fetchStations should call fetch with the correct URL', async () => {
-    // Arrange
+    // Set up test
     const endpoint = STATIONS_ENDPOINT
     const expectedUrl = `${POSTGREST_URL}/${endpoint}`
     const mockResponse = { data: 'example-data' }
@@ -100,7 +100,7 @@ describe('test fetchStations function', {}, () => {
       json: vi.fn().mockResolvedValue(mockResponse)
     })
 
-    // Act
+    // Run function
     await fetchStations()
 
     // Assert
@@ -108,14 +108,14 @@ describe('test fetchStations function', {}, () => {
   })
 
   it('fetchStations should return the correct response as JSON', async () => {
-    // Arrange
+    // Set up test
     const mockResponse = { data: 'example-data' }
     global.fetch.mockResolvedValue({
       ok: true,
       json: vi.fn().mockResolvedValue(mockResponse)
     })
 
-    // Act
+    // Run function
     const result = await fetchStations()
 
     // Assert
@@ -123,7 +123,7 @@ describe('test fetchStations function', {}, () => {
   })
 
   it('fetchStations should throw an error if the response status is not ok', async () => {
-    // Arrange
+    // Set up test
     const mockResponse = { statusText: 'Not Found' }
     global.fetch.mockResolvedValue({
       status: 404,
@@ -131,14 +131,14 @@ describe('test fetchStations function', {}, () => {
       json: vi.fn().mockResolvedValue(mockResponse)
     })
 
-    // Act and Assert
+    // Run function and Assert
     await expect(fetchStations()).rejects.toThrowError(
       mockResponse.statusText
     )
   })
 
   it('fetchStations should return null if the response status is 204', async () => {
-    // Arrange
+    // Set up test
     const mockResponse = { statusText: 'No Content' }
     global.fetch.mockResolvedValue({
       status: 204,
@@ -147,7 +147,7 @@ describe('test fetchStations function', {}, () => {
       json: vi.fn().mockResolvedValue(mockResponse)
     })
 
-    // Act
+    // Run function
     const result = await fetchStations()
 
     // Assert
@@ -162,7 +162,7 @@ describe('test fetchRiverSummary function', {}, () => {
   })
 
   it('fetchRiverSummary should call fetch with the correct URL', async () => {
-    // Arrange
+    // Set up test
     const id = 1
     const endpoint = `${RIVER_SUMMARY_ENDPOINT}?id=eq.${id}`
     const expectedUrl = `${POSTGREST_URL}/${endpoint}`
@@ -172,7 +172,7 @@ describe('test fetchRiverSummary function', {}, () => {
       json: vi.fn().mockResolvedValue(mockResponse)
     })
 
-    // Act
+    // Run function
     await fetchRiverSummary(id)
 
     // Assert
@@ -180,14 +180,14 @@ describe('test fetchRiverSummary function', {}, () => {
   })
 
   it('fetchRiverSummary should return the correct response as JSON', async () => {
-    // Arrange
+    // Set up test
     const mockResponse = { data: 'example-data' }
     global.fetch.mockResolvedValue({
       ok: true,
       json: vi.fn().mockResolvedValue(mockResponse)
     })
 
-    // Act
+    // Run function
     const result = await fetchRiverSummary(1)
 
     // Assert
@@ -195,7 +195,7 @@ describe('test fetchRiverSummary function', {}, () => {
   })
 
   it('fetchRiverSummary should throw an error if the response status is not ok', async () => {
-    // Arrange
+    // Set up test
     const mockResponse = { statusText: 'Not Found' }
     global.fetch.mockResolvedValue({
       status: 404,
@@ -203,14 +203,14 @@ describe('test fetchRiverSummary function', {}, () => {
       json: vi.fn().mockResolvedValue(mockResponse)
     })
 
-    // Act and Assert
+    // Run function and Assert
     await expect(fetchRiverSummary(1)).rejects.toThrowError(
       mockResponse.statusText
     )
   })
 
   it('fetchRiverSummary should return null if the response status is 204', async () => {
-    // Arrange
+    // Set up test
     const mockResponse = { statusText: 'No Content' }
     global.fetch.mockResolvedValue({
       status: 204,
@@ -219,7 +219,7 @@ describe('test fetchRiverSummary function', {}, () => {
       json: vi.fn().mockResolvedValue(mockResponse)
     })
 
-    // Act
+    // Run function
     const result = await fetchRiverSummary(1)
 
     // Assert
@@ -234,7 +234,7 @@ describe('test fetchStationSummary function', {}, () => {
   })
 
   it('fetchStationSummary should call fetch with the correct URL when 1 id', async () => {
-    // Arrange
+    // Set up test
     const id = [1]
     const endpoint = `${STATION_SUMMARY_ENDPOINT}?id=eq.${id[0]}`
     const expectedUrl = `${POSTGREST_URL}/${endpoint}`
@@ -244,7 +244,7 @@ describe('test fetchStationSummary function', {}, () => {
       json: vi.fn().mockResolvedValue(mockResponse)
     })
 
-    // Act
+    // Run function
     await fetchStationSummary(id)
 
     // Assert
@@ -252,7 +252,7 @@ describe('test fetchStationSummary function', {}, () => {
   })
 
   it('fetchStationSummary should call fetch with the correct URL when multiple ids', async () => {
-    // Arrange
+    // Set up test
     const id = [1, 2, 3]
     const endpoint = `${STATION_SUMMARY_ENDPOINT}?id=in.(${id.join(',')})`
     const expectedUrl = `${POSTGREST_URL}/${endpoint}`
@@ -262,7 +262,7 @@ describe('test fetchStationSummary function', {}, () => {
       json: vi.fn().mockResolvedValue(mockResponse)
     })
 
-    // Act
+    // Run function
     await fetchStationSummary(id)
 
     // Assert
@@ -270,14 +270,14 @@ describe('test fetchStationSummary function', {}, () => {
   })
 
   it('fetchStationSummary should return the correct response as JSON', async () => {
-    // Arrange
+    // Set up test
     const mockResponse = { data: 'example-data' }
     global.fetch.mockResolvedValue({
       ok: true,
       json: vi.fn().mockResolvedValue(mockResponse)
     })
 
-    // Act
+    // Run function
     const result = await fetchStationSummary([1])
 
     // Assert
@@ -285,7 +285,7 @@ describe('test fetchStationSummary function', {}, () => {
   })
 
   it('fetchStationSummary should throw an error if the response status is not ok', async () => {
-    // Arrange
+    // Set up test
     const mockResponse = { statusText: 'Not Found' }
     global.fetch.mockResolvedValue({
       status: 404,
@@ -293,14 +293,14 @@ describe('test fetchStationSummary function', {}, () => {
       json: vi.fn().mockResolvedValue(mockResponse)
     })
 
-    // Act and Assert
+    // Run function and Assert
     await expect(fetchStationSummary([1])).rejects.toThrowError(
       mockResponse.statusText
     )
   })
 
   it('fetchStationSummary should return null if the response status is 204', async () => {
-    // Arrange
+    // Set up test
     const mockResponse = { statusText: 'No Content' }
     global.fetch.mockResolvedValue({
       status: 204,
@@ -309,7 +309,7 @@ describe('test fetchStationSummary function', {}, () => {
       json: vi.fn().mockResolvedValue(mockResponse)
     })
 
-    // Act
+    // Run function
     const result = await fetchStationSummary([1])
 
     // Assert
@@ -324,7 +324,7 @@ describe('test fetchStationDownload function', {}, () => {
   })
 
   it('fetchStationDownload should call fetch with the correct URL when 1 id', async () => {
-    // Arrange
+    // Set up test
     const id = [1]
     const endpoint = `${STATION_DOWNLOAD_ENDPOINT}?id=eq.${id[0]}`
     const expectedUrl = `${POSTGREST_URL}/${endpoint}`
@@ -334,7 +334,7 @@ describe('test fetchStationDownload function', {}, () => {
       json: vi.fn().mockResolvedValue(mockResponse)
     })
 
-    // Act
+    // Run function
     await fetchStationDownload(id)
 
     // Assert
@@ -342,7 +342,7 @@ describe('test fetchStationDownload function', {}, () => {
   })
 
   it('fetchStationDownload should call fetch with the correct URL when multiple ids', async () => {
-    // Arrange
+    // Set up test
     const id = [1, 2, 3]
     const endpoint = `${STATION_DOWNLOAD_ENDPOINT}?id=in.(${id.join(',')})`
     const expectedUrl = `${POSTGREST_URL}/${endpoint}`
@@ -352,7 +352,7 @@ describe('test fetchStationDownload function', {}, () => {
       json: vi.fn().mockResolvedValue(mockResponse)
     })
 
-    // Act
+    // Run function
     await fetchStationDownload(id)
 
     // Assert
@@ -360,14 +360,14 @@ describe('test fetchStationDownload function', {}, () => {
   })
 
   it('fetchStationDownload should return the correct response as JSON', async () => {
-    // Arrange
+    // Set up test
     const mockResponse = { data: 'example-data' }
     global.fetch.mockResolvedValue({
       ok: true,
       json: vi.fn().mockResolvedValue(mockResponse)
     })
 
-    // Act
+    // Run function
     const result = await fetchStationDownload([1])
 
     // Assert
@@ -375,7 +375,7 @@ describe('test fetchStationDownload function', {}, () => {
   })
 
   it('fetchStationDownload should throw an error if the response status is not ok', async () => {
-    // Arrange
+    // Set up test
     const mockResponse = { statusText: 'Not Found' }
     global.fetch.mockResolvedValue({
       status: 404,
@@ -383,14 +383,14 @@ describe('test fetchStationDownload function', {}, () => {
       json: vi.fn().mockResolvedValue(mockResponse)
     })
 
-    // Act and Assert
+    // Run function and Assert
     await expect(fetchStationDownload([1])).rejects.toThrowError(
       mockResponse.statusText
     )
   })
 
   it('fetchStationDownload should return null if the response status is 204', async () => {
-    // Arrange
+    // Set up test
     const mockResponse = { statusText: 'No Content' }
     global.fetch.mockResolvedValue({
       status: 204,
@@ -399,7 +399,7 @@ describe('test fetchStationDownload function', {}, () => {
       json: vi.fn().mockResolvedValue(mockResponse)
     })
 
-    // Act
+    // Run function
     const result = await fetchStationDownload([1])
 
     // Assert
