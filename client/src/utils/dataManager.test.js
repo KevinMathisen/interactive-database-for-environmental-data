@@ -137,9 +137,9 @@ describe('test getRivers function', () => {
     // create updated map by using the captured logic on the initialRiverMap
     const updatedRiverMap = capturedUpdate(initialRiverMap)
 
-    expect(updatedRiverMap.has(1)).toBe(true) // The new river
+    expect(updatedRiverMap.has(1)).toBe(true)
     expect(updatedRiverMap.get(1).name).toEqual('River Test')
-    expect(updatedRiverMap.has(2)).toBe(true) // The initially existing river
+    expect(updatedRiverMap.has(2)).toBe(true) 
     expect(updatedRiverMap.get(2).name).toEqual('River Test 2')
   })
 
@@ -257,9 +257,9 @@ describe('test getStations function', () => {
     // create updated map by using the captured logic on the initialStationMap
     const updatedStationMap = capturedUpdate(initialStationMap)
 
-    expect(updatedStationMap.has(1)).toBe(true) // The new station
+    expect(updatedStationMap.has(1)).toBe(true)
     expect(updatedStationMap.get(1).observations[0].species).toEqual('Species 1')
-    expect(updatedStationMap.has(2)).toBe(true) // The initially existing station
+    expect(updatedStationMap.has(2)).toBe(true) 
     expect(updatedStationMap.get(2).name).toEqual('Station Test 2')
   })
 
@@ -292,5 +292,119 @@ describe('test getStations function', () => {
     expect(updatedStationMap.get(1).observations[0].count).toEqual(2)
     expect(updatedStationMap.has(2)).toBe(true)
     expect(updatedStationMap.get(2).name).toEqual('Station Test 2')
+  })
+})
+
+describe('test getRiverSummary function', () => {
+  beforeEach(() => {
+    vi.resetModules()
+    vi.clearAllMocks()
+  })
+
+  it('should not fetch river summary if it already exists in store', async () => {
+    // Set up test
+    checkIfDataExists.checkIfRiverSummaryExists.mockReturnValue(true)
+
+    // Run function
+    await getRiverSummary(1)
+
+    // Assert
+    expect(postgrest.fetchRiverSummary).not.toHaveBeenCalled()
+  })
+
+  it('should catch and log error if fetchRiverSummary throws an error', async () => {
+    // Set up test
+    checkIfDataExists.checkIfRiverSummaryExists.mockReturnValue(false)
+    postgrest.fetchRiverSummary.mockRejectedValue(new Error('Test Error'))
+
+    // Run function
+    await getRiverSummary(1)
+
+    // Assert
+    expect(addFeedbackToStore.addFeedbackToStore).toHaveBeenCalled()
+  })
+
+  it('should fetch and add river summary to store if river summary does not exist', async () => {
+    // set up test
+    checkIfDataExists.checkIfRiverSummaryExists.mockReturnValue(false)
+    const mockedRiverSummary = [{ id: 1, name: 'River Test', stations: [1, 2] }]
+    postgrest.fetchRiverSummary.mockResolvedValue(mockedRiverSummary)
+    const mockedStationSummary = [{ id: 1, name: 'Station Test' }, { id: 2, name: 'Station Test 2' }]
+    postgrest.fetchStationSummary.mockResolvedValue(mockedStationSummary)
+
+    vi.mocked(get).mockReturnValue(new Map())
+
+    // capture updates
+    let capturedUpdateRiver
+    riverStore.update.mockImplementationOnce(updateFn => {
+      capturedUpdateRiver = updateFn
+    })
+
+    // Run function
+    await getRiverSummary(1)
+
+    // Assert the river summary
+    expect(postgrest.fetchRiverSummary).toHaveBeenCalledWith(1)
+    // expect the riverStore to have a river in its store
+    expect(riverStore.update).toHaveBeenCalled()
+
+    // create updated map by using the captured logic
+    const updatedRiverMap = capturedUpdateRiver(new Map())
+    expect(updatedRiverMap.has(1)).toBe(true)
+    expect(updatedRiverMap.get(1).name).toEqual('River Test')
+
+    // Assert the station summary
+    expect(postgrest.fetchStationSummary).toHaveBeenCalledWith([1, 2])
+    expect(stationStore.set).toHaveBeenCalled()
+
+    const expectedStationMap = new Map(mockedStationSummary.map(station => [station.id, new Station(station)]))
+    expect(stationStore.set).toHaveBeenCalledWith(expectedStationMap)
+  })
+
+  it('should fetch and add river summary to store if river summary and stations overlap', async () => {
+    // set up test
+    checkIfDataExists.checkIfRiverSummaryExists.mockReturnValue(false)
+    const mockedRiverSummary = [{ id: 1, name: 'River Test', stations: [1] }]
+    postgrest.fetchRiverSummary.mockResolvedValue(mockedRiverSummary)
+    const initialRiverMap = new Map([[1, new River({ id: 1, name: 'River Test' })], [2, new River({ id: 2, name: 'River Test 2' })]])
+
+    const mockedStationSummary = [{ id: 1, name: 'Station Test', observations: [{ species: 'Species 1', count: 1 }] }]
+    postgrest.fetchStationSummary.mockResolvedValue(mockedStationSummary)
+    const initialStationMap = new Map([[1, new Station({ id: 1, name: 'Station Test' })], [2, new Station({ id: 2, name: 'Station Test 2' })]])
+
+    // Does not matter that 'get()' is not returning the initialStationMap, as get is only used for both rivers and stations for checking if there exists any objects in the store
+    vi.mocked(get).mockReturnValue(initialRiverMap)
+
+    // capture updates
+    let capturedUpdateRiver
+    riverStore.update.mockImplementationOnce(updateFn => {
+      capturedUpdateRiver = updateFn
+    })
+    let capturedUpdateStation
+    stationStore.update.mockImplementationOnce(updateFn => {
+      capturedUpdateStation = updateFn
+    })
+
+    // Run function
+    await getRiverSummary(1)
+
+    // Assert the river summary
+    expect(postgrest.fetchRiverSummary).toHaveBeenCalledWith(1)
+    // expect the riverStore to have a river in its store
+    expect(riverStore.update).toHaveBeenCalled()
+
+    // create updated map by using the captured logic
+    const updatedRiverMap = capturedUpdateRiver(initialRiverMap)
+    expect(updatedRiverMap.has(1)).toBe(true)
+    expect(updatedRiverMap.get(1).stations[0]).toEqual(1)
+
+    // Assert the station summary
+    expect(postgrest.fetchStationSummary).toHaveBeenCalledWith([1])
+    expect(stationStore.update).toHaveBeenCalled()
+
+    // create updated map by using the captured logic
+    const updatedStationMap = capturedUpdateStation(initialStationMap)
+    expect(updatedStationMap.has(1)).toBe(true)
+    expect(updatedStationMap.get(1).observations[0].count).toEqual(1)
   })
 })
