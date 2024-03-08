@@ -11,7 +11,7 @@ import {
   STATION_SUMMARY_ENDPOINT,
   STATION_DOWNLOAD_ENDPOINT
 } from '../constants/endpoints.js'
-import { addFeedbackToStore } from '../utils/addFeedbackTostore.js'
+import { addFeedbackToStore } from '../utils/addFeedbackToStore.js'
 import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/feedbackMessages'
 
 /**
