@@ -94,3 +94,37 @@ function filterObjectsBasedOnSpecies (objects, speciesToFilterOn) {
     object[attributesToFilterOn.SPECIES].some(objectSpecies => speciesToFilterOnSet.has(objectSpecies)))
 }
 
+/**
+ * Filters rivers based on a searchQuery
+ *
+ * @param {River[]} rivers - The list of rivers to filter
+ * @param {string} searchQuery - The search query
+ * @returns {River[]} - A filtered list of rivers
+ */
+export function filterRiversBySearch (rivers, searchQuery) {
+  try {
+    // Filters rivers based on if the searchQuery is a substring of their name or projectId
+    return filterDataBasedOnAttributeSubstring(rivers, attributesToFilterOn.RIVER_SEARCH, searchQuery)
+  } catch (error) {
+    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
+    return []
+  }
+}
+
+/**
+ * Filters stations based on a searchQuery
+ *
+ * @param {Station[]} stations - The list of stations to filter
+ * @param {*} searchQuery - The search query
+ * @returns {Station[]} - A filtered list of stations
+ */
+export function filterStationsBySearch (stations, searchQuery) {
+  try {
+    // Filters stations based on if the searchQuery is a substring of their name or projectId
+    return filterDataBasedOnAttributeSubstring(stations, attributesToFilterOn.STATION_SEARCH, searchQuery)
+  } catch (error) {
+    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
+    return []
+  }
+}
+
