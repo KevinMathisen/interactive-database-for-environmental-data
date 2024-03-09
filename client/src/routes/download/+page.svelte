@@ -18,12 +18,12 @@
             fileData = await generateExcelFile(sampleData); // Generate Excel file
                 // Create a blob from the Excel file data
             blob = new Blob([fileData], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-            fileName = 'example.xlsx';
+            fileName = 'data.xlsx';
         } else if (selectedFormat === 'csv') {
             fileData = await generateCSVFile(sampleData); // Generate CSV content
                 // Create a Blob from the CSV content
             blob = new Blob([fileData], { type: 'text/csv' });
-            fileName = 'example.csv';
+            fileName = 'data.csv';
         } else {
             console.log("No format selected!");
             return 0;
@@ -166,11 +166,6 @@
     .downloadDataBox h3 {
         color: #435768;
         font-size: 2rem;
-    }
-
-    .downloadDataBox p {
-        color: #435768;
-        font-size: 1.8rem;
     }
 
     .dowloadBoxGeneral {
