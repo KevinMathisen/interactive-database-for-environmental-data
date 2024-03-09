@@ -29,4 +29,17 @@ function filterDataBasedOnAttributeInList (objects, attribute, values) {
   return objects.filter(object => values.includes(object[attribute]))
 }
 
+/**
+ * Checks if a date is between a start and end date
+ *
+ * @param {string} date - The date to check
+ * @param {date} startDate - The start date
+ * @param {date} endDate - The end date
+ * @returns {boolean} - True if the date is between the start and end date
+ */
+function checkIfDateIsBetween (date, startDate, endDate) {
+  const dateObj = new Date(date)
+
+  return dateObj >= startDate && dateObj <= endDate
+}
 
