@@ -176,3 +176,19 @@ export function filterStationsByDateAndSpecies (stations, species, startDate, en
   }
 }
 
+/**
+ * Filters observations based on their species
+ *
+ * @param {Observation[]} observations - The list of observations to filter
+ * @param {string[]} species - The species to filter on
+ * @returns {Observation[]} - A filtered list of observations
+ */
+export function filterObservationsBySpecies (observations, species) {
+  try {
+    // Filter observations based on if they have a species that is in the species list
+    return filterDataBasedOnAttributeInList(observations, attributesToFilterOn.SPECIES, species)
+  } catch (error) {
+    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
+    return []
+  }
+}
