@@ -1,12 +1,11 @@
-export const FEEDBACK_TYPES = {
+const FEEDBACK_TYPES = {
   SUCCESS: 'SUCCESS',
   INFO: 'INFO',
   ERROR: 'ERROR'
 }
 
-export const FEEDBACK_CODES = {
+const FEEDBACK_CODES = {
   CREATED: 'CREATED',
-  NO_CONTENT: 'NO_CONTENT',
   INFO: 'INFO',
   GENERIC: 'GENERIC',
   NOT_FOUND: 'NOT_FOUND',
@@ -18,10 +17,9 @@ export const FEEDBACK_CODES = {
   AUTH_UNAVAILABLE: 'AUTH_UNAVAILABLE'
 }
 
-export const FEEDBACK_MESSAGES = {
+const FEEDBACK_MESSAGES = {
   CREATED: 'Opplasting vellykket',
   GENERIC: 'En feil oppstod',
-  NO_CONTENT: 'Fant ikke det du lette etter',
   NOT_FOUND: 'Kunne ikke finne den forespurte ressursen',
   FORBIDDEN: 'Handlingen du utførte ble ikke akseptert',
   UNAUTHORIZED: 'Du har ikke tillatelse til å utføre handlingen du forsøkte',
@@ -30,3 +28,5 @@ export const FEEDBACK_MESSAGES = {
   POSTGREST_UNAVAILABLE: 'Kunne ikke hente data fra serveren, prøv igjen senere',
   AUTH_UNAVAILABLE: 'Kunne ikke autentisere brukeren, prøv igjen senere'
 }
+
+export default { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES }
