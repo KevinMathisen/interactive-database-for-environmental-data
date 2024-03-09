@@ -128,3 +128,51 @@ export function filterStationsBySearch (stations, searchQuery) {
   }
 }
 
+/**
+ * Filters rivers based on their species and date
+ *
+ * @param {River[]} rivers - The list of rivers to filter
+ * @param {string[]} species - The species to filter on
+ * @param {string} startDate - The start of the date interval to filter on
+ * @param {string} endDate - The end of the date interval to filter on
+ * @returns {River[]} - A filtered list of rivers
+ */
+export function filterRiversByDateAndSpecies (rivers, species, startDate, endDate) {
+  try {
+    // Filter rivers based on if they are between or have overlap with the start and end date
+    const filteredDateRivers = filterRiversBasedOnDates(rivers, startDate, endDate)
+
+    // Filter rivers based on if they have a species that is in the species list
+    const filteredSpeciesAndDateRivers = filterObjectsBasedOnSpecies(filteredDateRivers, species)
+
+    return filteredSpeciesAndDateRivers
+  } catch (error) {
+    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
+    return []
+  }
+}
+
+/**
+ * Filters stations based on their species and date
+ *
+ * @param {Station[]} stations - The list of stations to filter
+ * @param {string[]} species - The species to filter on
+ * @param {string} startDate - The start of the date interval to filter on
+ * @param {string} endDate - The end of the date interval to filter on
+ * @returns {Station[]} - A filtered list of stations
+ */
+export function filterStationsByDateAndSpecies (stations, species, startDate, endDate) {
+  try {
+    // Filter stations based on if they are between the start and end date
+    const filteredDateStations = filterStationsBasedOnDate(stations, startDate, endDate)
+
+    // Filter stations based on if they have a species that is in the species list
+    const filteredSpeciesAndDateStations = filterObjectsBasedOnSpecies(filteredDateStations, species)
+
+    return filteredSpeciesAndDateStations
+  } catch (error) {
+    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
+    return []
+  }
+}
+
