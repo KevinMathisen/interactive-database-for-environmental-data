@@ -43,3 +43,38 @@ function checkIfDateIsBetween (date, startDate, endDate) {
   return dateObj >= startDate && dateObj <= endDate
 }
 
+/**
+ * Filters rivers based on if they are between or have overlap with the start and end date
+ *
+ * @param {River[]} rivers - The list of rivers to filter
+ * @param {string} startDate - The start date
+ * @param {string} endDate - The end date
+ * @returns {River[]} - A filtered list of rivers
+ */
+function filterRiversBasedOnDates (rivers, startDate, endDate) {
+  const startDateObj = new Date(startDate)
+  const endDateObj = new Date(endDate)
+
+  // For each river, check if it is between or has overlap with the start and end date
+  return rivers.filter(river =>
+    checkIfDateIsBetween(river[attributesToFilterOn.RIVER_START_DATE], startDateObj, endDateObj) ||
+      checkIfDateIsBetween(river[attributesToFilterOn.RIVER_END_DATE], startDateObj, endDateObj))
+}
+
+/**
+ * Filters stations based on if they are between the start and end date
+ *
+ * @param {Station[]} stations - The list of stations to filter
+ * @param {string} startDate - The start date
+ * @param {string} endDate - The end date
+ * @returns {Station[]} - A filtered list of stations
+ */
+function filterStationsBasedOnDate (stations, startDate, endDate) {
+  const startDateObj = new Date(startDate)
+  const endDateObj = new Date(endDate)
+
+  // For each station, check if it is between the start and end date
+  return stations.filter(station =>
+    checkIfDateIsBetween(station[attributesToFilterOn.STATION_DATE], startDateObj, endDateObj))
+}
+
