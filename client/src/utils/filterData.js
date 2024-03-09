@@ -78,3 +78,19 @@ function filterStationsBasedOnDate (stations, startDate, endDate) {
     checkIfDateIsBetween(station[attributesToFilterOn.STATION_DATE], startDateObj, endDateObj))
 }
 
+/**
+ * Returns objects which have a species that is in the speciesToFilterOn
+ *
+ * @param {object[]} objects - The list of objects to filter
+ * @param {string[]} speciesToFilterOn - The species to filter on
+ * @returns {object[]} - A filtered list of objects
+ */
+function filterObjectsBasedOnSpecies (objects, speciesToFilterOn) {
+  // Use set instead of array for faster lookups
+  const speciesToFilterOnSet = new Set(speciesToFilterOn)
+
+  // Return objects which have a species that is in the speciesToFilterOn
+  return objects.filter(object =>
+    object[attributesToFilterOn.SPECIES].some(objectSpecies => speciesToFilterOnSet.has(objectSpecies)))
+}
+
