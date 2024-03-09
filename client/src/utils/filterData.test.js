@@ -85,3 +85,18 @@ describe('test filterStationsByDateAndSpecies function', () => {
 	})
 })
 
+describe('test filterObservationsBySpecies function', () => {
+	it('should return an empty array if the input is an empty array', () => {
+		expect(filterObservationsBySpecies([], ['species'])).toEqual([])
+	})
+
+	it('should return the whole array if the species is the same', () => {
+		const observations = [new Observation({species: 'species1'})]
+		expect(filterObservationsBySpecies(observations, ['species1'])).toEqual(observations)
+	})
+
+	it('should return an empty array if the species is not the same', () => {
+		const observations = [new Observation({species: 'species1'})]
+		expect(filterObservationsBySpecies(observations, ['species2'])).toEqual([])
+	})
+})
