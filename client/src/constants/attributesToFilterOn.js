@@ -1,4 +1,4 @@
-const RIVER_SEARCH = ['name','project_id']
+const RIVER_SEARCH = ['name','projectId']
 const STATION_SEARCH = ['name']
 const RIVER_START_DATE = 'startDate'
 const RIVER_END_DATE = 'endDate'
