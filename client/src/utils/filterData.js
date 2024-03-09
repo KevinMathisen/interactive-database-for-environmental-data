@@ -1,4 +1,4 @@
-import * as attributesToFilterOn from '../constants/attributesToFilterOn'
+import attributesToFilterOn from '../constants/attributesToFilterOn'
 import { addFeedbackToStore } from './addFeedbackToStore.js'
 import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/feedbackMessages'
 
