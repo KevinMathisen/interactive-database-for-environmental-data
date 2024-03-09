@@ -24,9 +24,7 @@
 </div>
 
 <!-- Defines the upload files button -->     
-<div class="uploadFilesButton">
-    <p>Last opp</p>
-</div>
+<button class="uploadButton">Last opp</button>
 
 <style> 
     .uploadBody {
@@ -68,7 +66,7 @@
         width: 900px;
     }
 
-    .uploadFilesButton {
+    .uploadButton {
         position: fixed;
         right: 500px;
         bottom: 100px;
@@ -76,6 +74,7 @@
         background-color: tomato;
         border-radius: 1rem;
         width: 200px;
+        height:60px;
         display: flex;
         justify-content: center;
         align-items: center;
