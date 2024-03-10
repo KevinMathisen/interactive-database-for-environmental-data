@@ -17,7 +17,7 @@ import { riverStore } from '../stores/riverStore.js'
 import { stationStore } from '../stores/stationStore.js'
 import { River } from '../models/River.js'
 import { Station } from '../models/Station.js'
-import { addFeedbackToStore } from '../utils/addFeedbackTostore.js'
+import { addFeedbackToStore } from './addFeedbackToStore.js'
 import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/feedbackMessages'
 
 /**

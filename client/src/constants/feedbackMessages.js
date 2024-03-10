@@ -6,7 +6,6 @@ export const FEEDBACK_TYPES = {
 
 export const FEEDBACK_CODES = {
   CREATED: 'CREATED',
-  NO_CONTENT: 'NO_CONTENT',
   INFO: 'INFO',
   GENERIC: 'GENERIC',
   NOT_FOUND: 'NOT_FOUND',
@@ -21,7 +20,6 @@ export const FEEDBACK_CODES = {
 export const FEEDBACK_MESSAGES = {
   CREATED: 'Opplasting vellykket',
   GENERIC: 'En feil oppstod',
-  NO_CONTENT: 'Fant ikke det du lette etter',
   NOT_FOUND: 'Kunne ikke finne den forespurte ressursen',
   FORBIDDEN: 'Handlingen du utførte ble ikke akseptert',
   UNAUTHORIZED: 'Du har ikke tillatelse til å utføre handlingen du forsøkte',

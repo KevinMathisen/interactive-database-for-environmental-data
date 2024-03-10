@@ -1,7 +1,7 @@
 import { riverStore } from '../stores/riverStore'
 import { stationStore } from '../stores/stationStore'
 import { get } from 'svelte/store'
-import { addFeedbackToStore } from '../utils/addFeedbackTostore.js'
+import { addFeedbackToStore } from './addFeedbackToStore.js'
 import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/feedbackMessages'
 
 /**

@@ -57,7 +57,7 @@ export class Station {
 /*
  * Observation model
  */
-class Observation {
+export class Observation {
   constructor ({
     id = null,
     station = null,
