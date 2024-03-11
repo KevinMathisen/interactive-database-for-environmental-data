@@ -2,6 +2,8 @@
     import Papa from 'papaparse';
     import ExcelJS from 'exceljs';
 
+    import { validateFile, fileExistsInArray } from  '/src/utils/fileHandler';
+
     let filesArray = [];
 
     function selectFile() {
@@ -15,14 +17,7 @@
             const uploadFilesUploaded = document.querySelector('#filesChosen');
             for (let i = 0; i < files.length; i++) {
                 const file = files[i];
-                // Check if the file type is valid (extra layer of protection)
-                if (!['.csv', '.xlsx'].includes(file.name.slice(file.name.lastIndexOf('.')))) {
-                    alert('Invalid file type. Only .csv and .xlsx files are allowed.');
-                    return;
-                }
-                // Check if the file size exceeds the limit 
-                if (file.size > 10 * 1024 * 1024) {
-                    alert('File size exceeds the maximum limit of 5MB.');
+                if (!validateFile(file) || fileExistsInArray(file, filesArray)) {
                     return;
                 }
                 const fileDiv = document.createElement('div');
@@ -61,7 +56,6 @@
                 reader.readAsArrayBuffer(file);
             }
         }
-        console.log('Uploading files...');
     }   
 </script>
  
