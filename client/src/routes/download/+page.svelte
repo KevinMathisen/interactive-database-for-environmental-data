@@ -1,6 +1,6 @@
 <script>
-    import { generateExcelFile, generateCSVFile } from '$lib/excelUtils'; // Import the function to generate Excel file
-
+    import { generateExcelFile, generateCSVFile } from  '/src/utils/fileHandler';
+    
     let selectedFormat = '';
 
     const sampleData = [
@@ -25,7 +25,7 @@
             blob = new Blob([fileData], { type: 'text/csv' });
             fileName = 'data.csv';
         } else {
-            console.log("No format selected!");
+            alert("No format selected!");
             return 0;
         }
 
