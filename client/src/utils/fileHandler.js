@@ -1,6 +1,6 @@
-// excelUtils.js
 import ExcelJS from 'exceljs';
 
+//  - - - - DOWNLOAD FUNCTIONALITY - - - -
 export async function generateExcelFile(data) {
     const workbook = new ExcelJS.Workbook();
 
@@ -24,4 +24,24 @@ export async function generateCSVFile(data) {
     const csvContent = data.map(row => Object.values(row).join(',')).join('\n');
 
     return csvContent;
+}
+
+//  - - - - UPLOAD FUNCTIONALITY - - - -
+
+export function validateFile(file) {
+    // Check if the file type is valid
+    if (!['.csv', '.xlsx'].includes(file.name.slice(file.name.lastIndexOf('.')))) {
+        alert('Invalid file type. Only .csv and .xlsx files are allowed.');
+        return false;
+    }
+    // Check if the file size exceeds the limit 
+    if (file.size > 10 * 1024 * 1024) {
+        alert('File size exceeds the maximum limit of 5MB.');
+        return false;
+    }
+    return true;
+}
+
+export function fileExistsInArray(file, filesArray) {
+    return filesArray.some(existingFile => existingFile.name === file.name);
 }
