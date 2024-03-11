@@ -1,8 +1,4 @@
-<script>
-    // https://khromov.se/using-leaflet-with-sveltekit/
-    // https://svelte.dev/repl/62271e8fda854e828f26d75625286bc3?version=4.2.12
-    // https://www.reddit.com/r/sveltejs/comments/11czcoj/should_i_use_leaflet_with_svelte/
-    
+<script>    
     import { onMount, onDestroy } from 'svelte';
     import { browser } from '$app/environment';
 
@@ -34,13 +30,11 @@
 </script>
 
 
-<main>
-    <div bind:this={mapElement}></div>
-</main>
+<div class=leaflet bind:this={mapElement}></div>
 
 <style>
     @import 'leaflet/dist/leaflet.css';
-    main div {
+    .leaflet {
         height: calc(100vh - 80px); 
         width: 100%;
     }
