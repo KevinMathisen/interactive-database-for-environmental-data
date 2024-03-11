@@ -4,6 +4,36 @@
     import DateInput from "./DateInput.svelte";
     import SpeciesInput from "./SpeciesInput.svelte";
 
+    export let showCloseButton = false; // If the close button should be visible
+    export let selectableSpecies = [];  // Species the user can choose 
+
+    // User input exported to the page
+    export let dataType = "river";      
+    export let selectedStartDate = "";
+	export let selectedEndDate = "";
+    export let selectedSpecies = [];
+
+    let chooseAll = true;               // If the user wants to choose all species
+    let customSpecies = [];             // Species the user has chosen
+
+    // Species the user has choosen; either all or the custom ones
+    $: selectedSpecies = chooseAll ? selectableSpecies : customSpecies;
+
+    let showFilter = true;              // If the sidebar is visible
+
+    // Options when choosing data type
+    let dataOptions = [
+        {value: "river", label: "Elvedata"},
+        {value: "station", label: "Stasjonsdata"}
+    ];
+
+    /**
+     * Toggles if the sidebar is shown
+     */
+    function toggleFilter() {
+        showFilter = !showFilter;
+    }
+
 </script>
 
 <div class=container style="width: {showFilter ? "20em" : "0px"}">
