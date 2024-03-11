@@ -1,0 +1,15 @@
+[
+	{
+		"id": 3,
+		"name": "Gaula",
+		"start_date": "2021-09-30",
+		"end_date": "2021-09-30",
+		"project_id": "Restaureringsprosjektet",
+		"waterflow": 320,
+		"boat_type": "Volt Maria",
+		"skipper": "Jon Museth", 
+		"crew": ["Tobias Holter", "Erik Lie", ""],
+		"comment": "Testdatasett",
+		"stations": [11, 12, 13, 14, 15]
+	}
+]

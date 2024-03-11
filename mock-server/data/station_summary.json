@@ -1,0 +1,451 @@
+[
+	{
+		"id": 11,
+		"name": "Gaula 1",
+		"date": "2021-09-30",
+		"time": "8:00",
+		"river_id": 3,
+		"description": "Oppstrøms planlagt tiltaksområde, elvevenstre, Hofstadmoen",
+		"comment": "Elve-venstre, forbygning, 200-600 mm substrat",
+		"river_type": "Glattstrøm",
+		"weather": "Snø",
+		"water_temp": 8.0,
+		"air_temp": -1,
+		"sec_fished": 550,
+		"voltage": 1000,
+		"pulse": 60,
+		"conductivity": 77,
+		"observations": [
+			{
+				"species": "Aure",
+				"size": 176,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 128,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 166,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 171,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 158,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 92,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 260,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 128,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 149,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 115,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 150,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 154,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 169,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 150,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 165,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 115,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 80,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 152,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 102,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 99,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 60,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 58,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 58,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 180,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 78,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 126,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 151,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 55,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 88,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 99,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 72,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 78,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 136,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 196,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 125,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 60,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 138,
+				"count": 1
+			},
+			{
+				"species": "Laks",
+				"size": 118,
+				"count": 1
+			},
+			{
+				"species": "Laks",
+				"size": 111,
+				"count": 1
+			},
+			{
+				"species": "Laks",
+				"size": 89,
+				"count": 1
+			},
+			{
+				"species": "Laks",
+				"size": 113,
+				"count": 1
+			},
+			{
+				"species": "Laks",
+				"size": 95,
+				"count": 1
+			},
+			{
+				"species": "Laks",
+				"size": 121,
+				"count": 1
+			},
+			{
+				"species": "Laks",
+				"size": 122,
+				"count": 1
+			},
+			{
+				"species": "Laks",
+				"size": 140,
+				"count": 1
+			},
+			{
+				"species": "Laks",
+				"size": 118,
+				"count": 1
+			},
+			{
+				"species": "Laks",
+				"size": 86,
+				"count": 1
+			},
+			{
+				"species": "Laks",
+				"size": 85,
+				"count": 1
+			},
+			{
+				"species": "Laks",
+				"size": 82,
+				"count": 1
+			},
+			{
+				"species": "Laks",
+				"size": 101,
+				"count": 1
+			},
+			{
+				"species": "Laks",
+				"size": 117,
+				"count": 1
+			},
+			{
+				"species": "Laks",
+				"size": 78,
+				"count": 1
+			},
+			{
+				"species": "Laks",
+				"size": 121,
+				"count": 1
+			},
+			{
+				"species": "Laks",
+				"size": 117,
+				"count": 1
+			},
+			{
+				"species": "Laks",
+				"size": 71,
+				"count": 1
+			},
+			{
+				"species": "Laks",
+				"size": 43,
+				"count": 1
+			},
+			{
+				"species": "Laks",
+				"size": 90,
+				"count": 1
+			},
+			{
+				"species": "3-pigga stingsild",
+				"size": 25,
+				"count": 1
+			},
+			{
+				"species": "3-pigga stingsild",
+				"size": 35,
+				"count": 1
+			},
+			{
+				"species": "3-pigga stingsild",
+				"size": 29,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 108,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 90,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 65,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 108,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 52,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 135,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 53,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 165,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 71,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 69,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 117,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 64,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 218,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 126,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 133,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 87,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 133,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 115,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 56,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 65,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 55,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 104,
+				"count": 1
+			},
+			{
+				"species": "Aure",
+				"size": 104,
+				"count": 1
+			},
+			{
+				"species": "Skrubbe",
+				"size": 110,
+				"count": 1
+			},
+			{
+				"species": "Skrubbe",
+				"size": 114,
+				"count": 1
+			},
+			{
+				"species": "Skrubbe",
+				"size": 86,
+				"count": 1
+			}
+		]
+	}
+]

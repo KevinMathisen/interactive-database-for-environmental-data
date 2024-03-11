@@ -1,4 +1,46 @@
-<script> // Download page logic here 
+<script>
+    import { generateExcelFile, generateCSVFile } from '$lib/excelUtils'; // Import the function to generate Excel file
+
+    let selectedFormat = '';
+
+    const sampleData = [
+            { name: 'John Doe', age: 30, email: 'john@example.com' },
+            { name: 'Jane Smith', age: 25, email: 'jane@example.com' },
+            { name: 'Bob Johnson', age: 40, email: 'bob@example.com' }
+        ];
+  
+    const downloadFile = async () => {
+        let fileName = '';
+        let blob = null;
+        let fileData = null;
+
+        if (selectedFormat === 'xlsx') {
+            fileData = await generateExcelFile(sampleData); // Generate Excel file
+                // Create a blob from the Excel file data
+            blob = new Blob([fileData], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+            fileName = 'data.xlsx';
+        } else if (selectedFormat === 'csv') {
+            fileData = await generateCSVFile(sampleData); // Generate CSV content
+                // Create a Blob from the CSV content
+            blob = new Blob([fileData], { type: 'text/csv' });
+            fileName = 'data.csv';
+        } else {
+            console.log("No format selected!");
+            return 0;
+        }
+
+        const url = URL.createObjectURL(blob);
+            // Create a temporary anchor element
+        const a = document.createElement('a');
+        a.href = url;
+
+        a.download = fileName; // Set the filename
+        document.body.appendChild(a);
+            // Programmatically click the anchor element to trigger the download
+        a.click();
+            // Remove the anchor element from the DOM
+        document.body.removeChild(a);
+    }    
 </script>
     
 <div>
@@ -42,7 +84,7 @@
 
             <!-- Defines the first area where you can select which stations to include -->
         <div class="dowloadBoxGeneral">
-            <p>Stasjoner</p>
+            <h3>Stasjoner</h3>
             <div>
                 <label for="stationOptions"></label>
                 <select id="stationOptions" name="stationOptions">
@@ -57,7 +99,7 @@
 
             <!-- Defines the fourth area where you can select which species to include -->
         <div class="dowloadBoxGeneral">
-            <p>Egendefinerte arter</p>
+            <h3>Egendefinerte arter</h3>
             <div>
                 <label for="artOptions"></label>
                 <select id="artOptions" name="artOptions">
@@ -69,8 +111,26 @@
                 </select>
             </div>
         </div>
+        <div class="dowloadBoxGeneral">
+            <h3>Format</h3>
+            <form action=" ">
+                <div>
+                    <div class="setWidthForButtonsUpload"><label for="formatXlsx">xlsx</label></div>
+                    <input type="radio" id="formatXlsx" name="color" value="xlsx" bind:group={selectedFormat}>
+                </div>
+                
+                <div>
+                    <div class="setWidthForButtonsUpload"><label for="formatCsv">csv</label></div>
+                    <input type="radio" id="formatCsv" name="color" value="csv" bind:group={selectedFormat}>
+                </div>            
+            </form>
+        </div>
     </div>
 </div>
+
+<button class="downloadButton" on:click={downloadFile}>Last ned</button>
+
+
 
 <style> 
     #downloadDataTopText {
@@ -92,11 +152,11 @@
     .downloadDataBox {
         display: grid;
         flex-direction: row;
-        grid-template-areas: 
-        "b1 b2"                   
-        "b3 b4";
+        /* grid-template-areas: 
+        "b1 b2 b21"                   
+        "b3 b4 b41"; */
         grid-template-rows: 250px 300px;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
         width: 1300px;
         font-size: 1.2rem;
         gap: 2rem;
@@ -108,11 +168,6 @@
         font-size: 2rem;
     }
 
-    .downloadDataBox p {
-        color: #435768;
-        font-size: 1.8rem;
-    }
-
     .dowloadBoxGeneral {
         width: 400px;
         display: flex;
@@ -120,7 +175,7 @@
         align-items: center;
     }
 
-    .downloadDataBox:nth-child(1){
+/*     .downloadDataBox:nth-child(1){
         grid-area: b1;
     }
     .downloadDataBox:nth-child(2){
@@ -131,10 +186,24 @@
     }
     .downloadDataBox:nth-child(4){
         grid-area: b4;
-    }
+    } */
 
     .setWidthForButtonsUpload {
         width: 150px;
         display: inline-block;
+    }
+
+    .downloadButton {
+        position: fixed;
+        right: 500px;
+        bottom: 100px;
+        font-size: 1.2rem;
+        background-color: tomato;
+        border-radius: 1rem;
+        width: 200px;
+        height: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 </style>
