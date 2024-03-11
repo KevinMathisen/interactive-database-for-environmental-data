@@ -192,3 +192,20 @@ export function filterObservationsBySpecies (observations, species) {
     return []
   }
 }
+
+/**
+ * Finds all unqiue species from a list of rivers
+ * 
+ * @param {River[]} rivers - The list of rivers to find species from
+ * @returns {string[]} - A list of unique species
+ */
+export function getSelectableSpecies(rivers) {
+  // Use set instead of array for faster lookups
+  const speciesSet = new Set()
+
+  rivers.forEach(river => {
+    river[attributesToFilterOn.SPECIES].forEach(species => speciesSet.add(species))
+  })
+
+  return Array.from(speciesSet)
+}
