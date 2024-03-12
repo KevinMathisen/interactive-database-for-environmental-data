@@ -1,23 +1,27 @@
 <script>
-	import { userFeedbackStore } from '../store/userFeedbackStore.js';
+	//import { use } from 'express/lib/application.js';
+	import { userFeedbackStore } from '../stores/userFeedbackStore.js';
 	import Modal from './Modal.svelte';
 	import { onDestroy } from 'svelte';
 	//import { get } from 'svelte/store';
 
-	export let type;
+	let type = '';
 
-	let showModal = true;
+	let showModal = false;
 	let userFeedbackMessage = '';
 
-	const unsubscribeFeedback = userFeedbackStore.subscribe((feedback) => {
-		if (feedback[type]) {
-			userFeedbackMessage = feedback[type].message;
-		}
-	});
+	$: userFeedback = $userFeedbackStore;
 
-	onDestroy(() => {
-		unsubscribeFeedback();
-	});
+	function handleUserFeedback(userFeedback) {
+		if (userFeedback.length > 0) {
+			userFeedbackMessage = userFeedback[0].message;
+			type = userFeedback[0].type;
+      console.log(userFeedback);
+			showModal = true;
+		}
+	}
+
+	$: handleUserFeedback(userFeedback);
 
 	function handleClose() {
 		showModal = false;
@@ -27,3 +31,5 @@
 {#if showModal}
 	<Modal {showModal} message={userFeedbackMessage} {type} on:close={handleClose} />
 {/if}
+
+
