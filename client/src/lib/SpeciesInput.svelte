@@ -13,28 +13,28 @@
 	 * Adds the species the user has written in the input field to the custom species
 	 */
 	function addSpecies() {
-		let capitalizedInputSpecies = capitalizeFirstLetter(inputSpecies);
+		let lowercaseInputSpecies = inputSpecies.toLowerCase();
 
 		// If the input is empty, do nothing
-		if (capitalizedInputSpecies.trim().length === 0) {
+		if (lowercaseInputSpecies.trim().length === 0) {
 			return;
 		}
 
 		// If the input is not a selectable species, display an error
-		if (!selectableSpecies.includes(capitalizedInputSpecies)) {
+		if (!selectableSpecies.includes(lowercaseInputSpecies)) {
 			displayError("Art finnes ikke");
 			return;
 		}
 
 		// If the input is already chosen, display an error
-		if (customSpecies.includes(capitalizedInputSpecies)) {
+		if (customSpecies.includes(lowercaseInputSpecies)) {
 			displayError("Art allerede valgt");
 			return;
 		}
 
 		// Remove error message, add the species to the custom species and reset the input field
 		displayError("");		
-		customSpecies = [...customSpecies, capitalizedInputSpecies];
+		customSpecies = [...customSpecies, lowercaseInputSpecies];
 		inputSpecies = "";
 	}
 
@@ -76,7 +76,7 @@
 
 	// Get the species to suggest to the user based on the input
 	$: suggestSpecies = selectableSpecies.filter((species) => 
-		species.toLowerCase().includes(inputSpecies.toLowerCase())
+		species.includes(inputSpecies.toLowerCase())
 		&& !customSpecies.includes(species)
 	);
 
@@ -111,7 +111,7 @@
 	<!-- Suggestions based on user input -->
 	{#if showSuggestions}
 		<ul>
-			{#each filteredSpecies as species}
+			{#each suggestSpecies as species}
 				<li on:click={() => {inputSpecies = capitalizeFirstLetter(species); addSpecies()}}>{capitalizeFirstLetter(species)}</li>
 			{/each}
 		</ul>

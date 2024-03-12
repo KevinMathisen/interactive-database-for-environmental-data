@@ -12,7 +12,7 @@
 		},
 		"date": "2014-09-16",
 		"time": "",
-		"species": ["Ørret"]
+		"species": ["ørret"]
 	},
 	{ 
 		"id": 2,
@@ -27,7 +27,7 @@
 		},
 		"date": "2014-09-16",
 		"time": "",
-		"species": ["Ørekyt"]
+		"species": ["ørekyt"]
 	},
 	{
 		"id": 3,
@@ -57,7 +57,7 @@
 		},
 		"date": "2014-09-16",
 		"time": "",
-		"species": ["Ørret", "Gjedde"]
+		"species": ["ørret", "gjedde"]
 	},
 	{
 		"id": 5,
@@ -72,7 +72,7 @@
 		},
 		"date": "2014-09-16",
 		"time": "",
-		"species": ["Gjedde"]
+		"species": ["gjedde"]
 	},
 	{
 		"id": 6,
@@ -87,7 +87,7 @@
 		},
 		"date": "2021-09-21",
 		"time": "15:00",
-		"species": ["Ørret"]
+		"species": ["ørret"]
 	},
 	{ 
 		"id": 7,
@@ -102,7 +102,7 @@
 		},
 		"date": "2021-09-21",
 		"time": "16:11",
-		"species": ["Ørret", "Ørekyt"]
+		"species": ["ørret", "ørekyt"]
 	},
 	{
 		"id": 8,
@@ -117,7 +117,7 @@
 		},
 		"date": "2021-09-21",
 		"time": "16:53",
-		"species": ["Ørret"]
+		"species": ["ørret"]
 	},
 	{
 		"id": 9,
@@ -147,7 +147,7 @@
 		},
 		"date": "2021-09-21",
 		"time": "17:30",
-		"species": ["Ørret", "Ørekyt"]
+		"species": ["ørret", "ørekyt"]
 	},
 	{
 		"id": 11,
@@ -162,7 +162,7 @@
 		},
 		"date": "2021-09-30",
 		"time": "08:00",
-		"species": ["Aure", "Laks", "3-pigga stingsild", "Skrubbe"]
+		"species": ["aure", "laks", "3-pigga stingsild", "skrubbe"]
 	},
 	{
 		"id": 12,
@@ -177,7 +177,7 @@
 		},
 		"date": "2021-09-30",
 		"time": "09:00",
-		"species": ["Aure", "Laks"]
+		"species": ["aure", "laks"]
 	},
 	{
 		"id": 13,
@@ -192,7 +192,7 @@
 		},
 		"date": "2021-09-30",
 		"time": "10:00",
-		"species": ["Aure", "Laks"]
+		"species": ["aure", "laks"]
 	},
 	{
 		"id": 14,
@@ -207,7 +207,7 @@
 		},
 		"date": "2021-09-30",
 		"time": "11:00",
-		"species": ["Laks"]
+		"species": ["laks"]
 	},
 	{
 		"id": 15,
@@ -222,6 +222,6 @@
 		},
 		"date": "2021-09-30",
 		"time": "12:00",
-		"species": ["Aure", "Laks"]
+		"species": ["aure", "laks"]
 	}
 ]
