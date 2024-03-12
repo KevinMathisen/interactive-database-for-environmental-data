@@ -2,6 +2,7 @@
     import Filter from '$lib/filter.svelte'; 
     import Table from '../../lib/Table.svelte';
     import SearchBar from '../../lib/SearchBar.svelte';
+    import Sidebar from '../../lib/Sidebar.svelte';
     import { getRivers, getStations } from '../../utils/dataManager.js';
     import { getSelectableSpecies, filterRiversByDateAndSpecies, filterStationsByDateAndSpecies, filterRiversBySearch, filterStationsBySearch } from '../../utils/filterData.js';
     import { formatRiversForTable, formatStationsForTable } from '../../utils/formatData.js';
@@ -73,13 +74,18 @@
 </script>
 
 <!-- Filter sidebar -->
-<Filter 
-    showCloseButton={false} 
-    {selectableSpecies}
-    bind:dataType
-    bind:selectedSpecies 
-    bind:selectedStartDate 
-    bind:selectedEndDate/>
+<div class="sidebar">
+    <Sidebar title="Filter">
+        <Filter 
+            showCloseButton=true 
+            {selectableSpecies}
+            bind:dataType
+            bind:selectedSpecies 
+            bind:selectedStartDate 
+            bind:selectedEndDate/>
+    </Sidebar>
+</div>
+
 
 <div class=tablecontainer>
     <!-- Search bar -->
@@ -97,6 +103,14 @@
 </div>
 
 <style>
+    .sidebar {
+        position: absolute;
+        top: 80px;
+        left: 0;
+        height: calc(100vh - 80px);
+        width: 20em;
+    }
+    
     .tablecontainer {
         padding-left: 450px;
         padding-right: 100px;
