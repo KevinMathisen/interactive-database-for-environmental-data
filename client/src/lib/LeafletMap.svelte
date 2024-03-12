@@ -1,9 +1,18 @@
 <script>    
     import { onMount, onDestroy } from 'svelte';
     import { browser } from '$app/environment';
+    import { stationStore } from '/src/stores/stationStore';
+    import { createEventDispatcher } from 'svelte';
 
+	const dispatch = createEventDispatcher();
     let mapElement;
     let map;
+
+    let stations = [
+        { name: 'Station in Norway', lat: 61.041926, lon: 10.001893 },
+        { name: 'Another Station', lat: 60.123456, lon: 11.123456 },
+        { name: 'Yet Another Station', lat: 59.123456, lon: 12.123456 }
+    ];
 
     onMount(async () => {
         if(browser) {
@@ -15,9 +24,8 @@
                 attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(map);
 
-            leaflet.marker([61.041926, 10.001893]).addTo(map)
-                .bindPopup('Station in Norway')
-                .openPopup();
+            addData(leaflet);
+            map.on('click', onMapClick);            
         }
     });
 
@@ -27,6 +35,30 @@
             map.remove();
         }
     });
+
+    function onMapClick(e) {
+        dispatch('map');
+    }
+
+    function addData(leaflet) {
+        stations.forEach(station => {
+            console.log('Adding station', station);
+            const marker = leaflet.marker([station.lat, station.lon]).addTo(map);
+            marker.on('click', () => {
+                stationSelected(station, leaflet);
+            });
+        });
+    }
+
+    function stationSelected(station, leaflet) {
+        dispatch('message', {
+			text: station.name
+		});
+        
+        // alert(`Marker ${station.name} clicked`);
+    }
+
+    
 </script>
 
 
