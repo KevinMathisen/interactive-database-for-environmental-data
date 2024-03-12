@@ -23,8 +23,8 @@
   
     function stationClicked(event) {
           // denne kalles også når kartet klikkes, må fikses
-      sideBar = true;
-          sideBarTitle = event.detail.text;
+        sideBar = true;
+        sideBarTitle = event.detail.text;
     }
 
       function mapClicked(event) {
@@ -44,6 +44,7 @@
     $: filteredRivers = filterRiversByDateAndSpecies(rivers, selectedSpecies, selectedStartDate, selectedEndDate);
     $: filteredStations = filterStationsByDateAndSpecies(stations, selectedSpecies, selectedStartDate, selectedEndDate);
 
+
 </script>
 
 <Filter 
@@ -54,7 +55,7 @@
     bind:selectedStartDate 
     bind:selectedEndDate/>
 
-<LeafletMap {dataType} {filteredRivers} {filteredStations} on:map={mapClicked} on:message={stationClicked}/>
+<LeafletMap {dataType} {rivers} {stations} on:map={mapClicked} on:message={stationClicked}/>
 
 
 

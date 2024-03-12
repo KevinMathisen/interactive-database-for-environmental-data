@@ -1,18 +1,25 @@
 <script>    
     import { onMount, onDestroy } from 'svelte';
     import { browser } from '$app/environment';
-    import { stationStore } from '/src/stores/stationStore';
     import { createEventDispatcher } from 'svelte';
+
+    export let stations;
+    export let rivers;
+    export let dataType;
+
+    
 
 	const dispatch = createEventDispatcher();
     let mapElement;
     let map;
 
-    let stations = [
+    let stations2 = [
         { name: 'Station in Norway', lat: 61.041926, lon: 10.001893 },
         { name: 'Another Station', lat: 60.123456, lon: 11.123456 },
         { name: 'Yet Another Station', lat: 59.123456, lon: 12.123456 }
     ];
+
+    
 
     onMount(async () => {
         if(browser) {
@@ -42,8 +49,9 @@
 
     function addData(leaflet) {
         stations.forEach(station => {
-            console.log('Adding station', station);
-            const marker = leaflet.marker([station.lat, station.lon]).addTo(map);
+            let coordinate1 = average(station.startPos.coordinates[0], station.endPos.coordinates[0]);
+            let coordinate2 = average(station.startPos.coordinates[1], station.endPos.coordinates[1]);
+            const marker = leaflet.marker([coordinate2 , coordinate1]).addTo(map);
             marker.on('click', () => {
                 stationSelected(station, leaflet);
             });
@@ -58,6 +66,9 @@
         // alert(`Marker ${station.name} clicked`);
     }
 
+    function average(num1, num2) {
+        return (num1 + num2) / 2;
+    }
     
 </script>
 
