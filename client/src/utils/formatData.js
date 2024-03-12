@@ -37,7 +37,7 @@ export function formatStationsForTable (stations) {
     rows.push([
       station.id,
       station.name,
-      station.startDate,
+      station.date,
       station.time
     ])
   })
