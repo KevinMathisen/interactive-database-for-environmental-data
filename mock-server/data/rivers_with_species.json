@@ -8,7 +8,7 @@
 		},
 		"start_date": "2014-09-16",
 		"end_date": "2014-09-16",
-		"species": ["Ørekyt", "Gjedde", "Ørret", "Abbor", "Sik"],
+		"species": ["ørekyt", "gjedde", "ørret", "abbor", "sik"],
 		"project_id": ""
 	},
 	{
@@ -20,7 +20,7 @@
 		},
 		"start_date": "2021-09-21",
 		"end_date": "2021-09-21",
-		"species": ["Ørekyt", "Gjedde", "Ørret", "Abbor"],
+		"species": ["ørekyt", "gjedde", "ørret", "abbor"],
 		"project_id": ""
 	},
 	{
@@ -32,7 +32,7 @@
 		},
 		"start_date": "2021-09-30",
 		"end_date": "2021-09-30",
-		"species": ["Aure", "Laks", "3-pigga stingsild", "Skrubbe"],
+		"species": ["aure", "laks", "3-pigga stingsild", "skrubbe"],
 		"project_id": "Restaureringsprosjektet"
 	}
 ]
