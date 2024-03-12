@@ -1,8 +1,10 @@
 <script> // List page logic here
     import Filter from '$lib/filter.svelte'; 
     import Table from '../../lib/Table.svelte';
+    import SearchBar from '../../lib/SearchBar.svelte';
     import { getRivers, getStations } from '../../utils/dataManager.js';
     import { getSelectableSpecies, filterRiversByDateAndSpecies, filterStationsByDateAndSpecies, filterRiversBySearch, filterStationsBySearch } from '../../utils/filterData.js';
+    import { formatRiversForTable, formatStationsForTable } from '../../utils/formatData.js';
     import { riverStore } from '../../stores/riverStore.js';
     import { stationStore } from '../../stores/stationStore.js';
 
@@ -14,14 +16,14 @@
     let selectedSpecies;    // Species user wants to look at
     let selectedStartDate;  // Start date for the time user wants to look at
 	let selectedEndDate;    // End date for the time user wants to look at
-    let searchQuery;        // Search query from user
+    let searchQuery = '';   // Search query from user
 
     let filteredRivers;     // Rivers filtered by date and species
     let filteredStations;   // Stations filtered by date and species
     let filteredBySearchRivers;     // Rivers filtered by search
     let filteredBySearchStations;   // Stations filtered by search
-    let header;            // Header for the table
-    let rows;              // Rows for the table
+    let headers = [];       // Header for the table
+    let rows = [];          // Rows for the table
 
     // Get rivers and stations from API
     getRivers();
@@ -39,31 +41,56 @@
     $: filteredBySearchRivers = filterRiversBySearch(filteredRivers, searchQuery);
     $: filteredBySearchStations = filterStationsBySearch(filteredStations, searchQuery);
 
+    /**
+     * Log the river/station clicked by the user, 
+     * TODO: should open a new page with the data
+     */
     function handleRowClick(event) {
         console.log('Row clicked:', event.detail);
     }
+
+    /**
+     * Create the header and data for the table
+     * 
+     * @param {string} dataType - "river" or "station"
+     * @param {Map<int, River>} filteredBySearchRivers - Rivers filtered by search
+     * @param {Map<int, Station} filteredBySearchStations - Stations filtered by search
+     * @returns {{headers: string[], rows: string[][]}} - Headers and rows for the table
+     */
+    function createHeaderAndData(dataType, filteredBySearchRivers, filteredBySearchStations) {
+        console.log('createHeaderAndData:', dataType, filteredBySearchRivers, filteredBySearchStations);
+        if (dataType === 'river') {
+            return formatRiversForTable(filteredBySearchRivers);
+        } else if (dataType === 'station') {
+            return formatStationsForTable(filteredBySearchStations);
+        }
+        return { headers: [], rows: [] };
+    }
+
+    // Update the table when the user input changes
+    $: ({headers, rows} = createHeaderAndData(dataType, filteredBySearchRivers, filteredBySearchStations));
+
 </script>
 
-<Filter/>
-
-
-<div id="listSearchField">
-    <label for="listSearch"></label>
-    <input type="search" id="listSearch" name="listSearch" placeholder="Søk etter Elv navn eller prosjektnummer:" />
-    <div id="listSearchBottomText"> Bruk filter for å filtrere resultat</div>
-</div>
-
+<!-- Filter sidebar -->
+<Filter 
+    showCloseButton={false} 
+    {selectableSpecies}
+    bind:dataType
+    bind:selectedSpecies 
+    bind:selectedStartDate 
+    bind:selectedEndDate/>
 
 <div class=tablecontainer>
+    <!-- Search bar -->
+    <SearchBar 
+        bind:searchQuery 
+        bind:dataType/>
+
+    <!-- Table with Rivers or Stations -->
     <Table 
-        headers={['Stasjon Navn', 'Kl.']}
-        rows={[
-            [1, 'Stasjon 1', '15:00'],
-            [2, 'Stasjon 2', '12:00'],
-            [3, 'Stasjon 3', '07:00'],
-            [4, 'Stasjon 4', '19:00'],
-            [5, 'Stasjon 5', '18:00']
-        ]}
+        {headers}
+        {rows}
         clickable=true
         on:rowClick={handleRowClick}
     />
@@ -72,72 +99,7 @@
 <style>
     .tablecontainer {
         padding-left: 450px;
+        padding-right: 100px;
         padding-top: 30px;
-    }
-    /* ----------------- SEARCHFIELD -----------------*/
-
-    #listSearchField {
-        padding-left: 500px;
-        padding-top: 15px;
-    }
-
-    #listSearchBottomText {
-        padding-top: 5px;
-    }
-
-    input[type="search"] {
-        width: 600px; 
-        height: 45px;
-        padding: 8px; 
-        border: 1px solid black; 
-        border-radius: 10px; 
-        background-color: #ebebeb;     /* Color for the searchfield */
-        outline: none; 
-        font-size: 16px; 
-        color: #000000;
-    }
-
-    /* ----------------- TABLE -----------------*/
-
-    #listTable {
-        padding-left: 450px;
-        padding-top: 30px;
-    }
-
-    table {
-        border-collapse: collapse;   /* Used to avoid all borders being double-lined */
-        font-size: 1.2rem;
-    }
-
-    th {
-        border-bottom: 1px solid black;
-        padding: 8px;
-        text-align: center;
-        background-color: #bdbcbc;  /* Color for the searchfield */
-    }
-
-
-        /* Defines the width of each column in the table */
-    th:nth-child(1), td:nth-child(1) {
-        width: 500px;
-    }
-    th:nth-child(2), td:nth-child(2) {
-        width: 150px;
-    }
-    th:nth-child(3), td:nth-child(3) {
-        width: 200px;
-    }
-    th:nth-child(4), td:nth-child(4) {
-        width: 300px;
-    }
-
-
-    td {
-        text-align: center;
-        padding: 8px;
-    }
-
-    tr:nth-child(even) {
-        background-color: #f2f2f2;  /* Color for the even numbered rows */
     }
 </style>
