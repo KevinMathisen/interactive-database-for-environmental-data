@@ -1,19 +1,51 @@
 <script> // List page logic here
     import Filter from '$lib/filter.svelte'; 
+    import Table from '../../lib/Table.svelte';
+    import { getRivers, getStations } from '../../utils/dataManager.js';
+    import { getSelectableSpecies, filterRiversByDateAndSpecies, filterStationsByDateAndSpecies, filterRiversBySearch, filterStationsBySearch } from '../../utils/filterData.js';
+    import { riverStore } from '../../stores/riverStore.js';
+    import { stationStore } from '../../stores/stationStore.js';
 
-        // Define a function to generate table rows
-    function generateRows() {
-        const rows = [];
-        for (let i = 1; i <= 5; i++) {
-        const cells = [];
-        for (let j = 1; j <= 4; j++) {
-            cells.push(`Row ${i}, Col ${j}`);
-        }
-        rows.push(cells);
-        }
-        return rows;
+    let rivers;             // Rivers with coordinates
+    let stations;           // Stations with coordinates
+    let selectableSpecies;  // All unique species
+
+    let dataType;           // "river" or "station", chosen by user
+    let selectedSpecies;    // Species user wants to look at
+    let selectedStartDate;  // Start date for the time user wants to look at
+	let selectedEndDate;    // End date for the time user wants to look at
+    let searchQuery;        // Search query from user
+
+    let filteredRivers;     // Rivers filtered by date and species
+    let filteredStations;   // Stations filtered by date and species
+    let filteredBySearchRivers;     // Rivers filtered by search
+    let filteredBySearchStations;   // Stations filtered by search
+    let header;            // Header for the table
+    let rows;              // Rows for the table
+
+    // Get rivers and stations from API
+    getRivers();
+    getStations();
+
+    // Get rivers and stations from stores
+    $: rivers = $riverStore;
+    $: stations = $stationStore;
+    $: selectableSpecies = getSelectableSpecies(rivers);
+
+    // Find which rivers and stations to show on the map based on user input
+    $: filteredRivers = filterRiversByDateAndSpecies(rivers, selectedSpecies, selectedStartDate, selectedEndDate);
+    $: filteredStations = filterStationsByDateAndSpecies(stations, selectedSpecies, selectedStartDate, selectedEndDate);
+
+    $: filteredBySearchRivers = filterRiversBySearch(filteredRivers, searchQuery);
+    $: filteredBySearchStations = filterStationsBySearch(filteredStations, searchQuery);
+
+    function handleRowClick(event) {
+        console.log('Row clicked:', event.detail);
     }
 </script>
+
+<Filter/>
+
 
 <div id="listSearchField">
     <label for="listSearch"></label>
@@ -21,36 +53,27 @@
     <div id="listSearchBottomText"> Bruk filter for å filtrere resultat</div>
 </div>
 
-    <!-- Table containing the list of station/riverdata -->
-<div id="listTable">
-    <table>
-        <thead>
-            <tr>
-                <th>Stasjon Navn</th>
-                <th>Kl.</th>
-                <th>Dato</th>
-                <th>Prosjektnummer</th>
-            </tr>
-        </thead>
-        <tbody>
-            {#each generateRows() as row, i}
-                <tr key={i}>
-                    {#each row as cell, j}
-                    <td key={j}>{cell}</td>
-                    {/each}
-                </tr>
-            {/each}
-        </tbody>
-    </table>
+
+<div class=tablecontainer>
+    <Table 
+        headers={['Stasjon Navn', 'Kl.']}
+        rows={[
+            [1, 'Stasjon 1', '15:00'],
+            [2, 'Stasjon 2', '12:00'],
+            [3, 'Stasjon 3', '07:00'],
+            [4, 'Stasjon 4', '19:00'],
+            [5, 'Stasjon 5', '18:00']
+        ]}
+        clickable=true
+        on:rowClick={handleRowClick}
+    />
 </div>
 
-<Filter/>
-
-  <!-- Defines the filter options at the left side of the page -->
-
-
-
 <style>
+    .tablecontainer {
+        padding-left: 450px;
+        padding-top: 30px;
+    }
     /* ----------------- SEARCHFIELD -----------------*/
 
     #listSearchField {
