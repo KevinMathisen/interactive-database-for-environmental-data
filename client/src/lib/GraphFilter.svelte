@@ -78,8 +78,6 @@
 </div>
 
 <style>
-    /* ----------------- FILTER -----------------*/
-
     .main {
         height: 100%;
         width: 100%;
@@ -89,57 +87,4 @@
         overflow: auto;
     }
 
-    .graphFilterDataContainer {
-        font-size: 1rem;
-        padding: 0 0 0 1rem;
-    }
-
-    #graphSearchField {
-        padding: 0 0 0 1rem;
-    }
-
-    #graphSearchField2 {
-        padding: 0 0 0 1rem;
-        width: 50px;
-    }
-
-    #graphStationSearchField[type="search"] {
-        width: 200px; 
-        height: 25px;
-        padding: 8px; 
-        border: 1px solid black; 
-        border-radius: 3px; 
-        background-color: #ebebeb;     /* Color for the searchfield */
-        outline: none; 
-        color: #000000;
-    }
-
-    #graphStationSearchField2[type="search"] {
-        width: 70px; 
-        height: 25px;
-        padding: 8px;
-        border: 1px solid black;
-        border-radius: 3px; 
-        background-color: #ebebeb;     /* Color for the searchfield */
-        outline: none; 
-        color: #000000;
-    }
-    h3 {
-        color: #435768;
-        font-size: 1.5rem;
-        padding-left: 1rem;
-        margin: 1rem 0 0.5rem 0;
-    }
-
-    .graphFilter p {
-        font-size: 1.2rem;
-        padding: 0.5rem 0 0 1rem;
-        margin: 0;
-        text-decoration: underline;
-    }
-
-    .graphSetWidthForButtons { /* Used to position the radio buttons */
-        width: 120px;
-        display: inline-block;
-    }
 </style>
