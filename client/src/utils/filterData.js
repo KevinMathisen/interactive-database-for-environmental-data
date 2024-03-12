@@ -3,31 +3,38 @@ import { addFeedbackToStore } from './addFeedbackToStore.js'
 import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/feedbackMessages'
 
 /**
- * Filters a list of objects based on if a value given exists as a substring for a given attribute
+ * Filters a map of objects based on if a value given exists as a substring for a given attribute
  *
- * @param {object[]} objects - The list of objects to filter
+ * @param {Map<int, object>} objectsMap - The map of objects to filter
  * @param {string[]} attributes - The attributes to filter on
  * @param {string} value - The value which should exist in the attribute value
- * @returns {object[]} - A filtered list of objects
+ * @returns {Map<int, object>} - A filtered map of objects
  */
-function filterDataBasedOnAttributeSubstring (objects, attributes, value) {
+function filterDataBasedOnAttributeSubstring(objectsMap, attributes, value) {
   // Checks for each object if the value is a subtext of the attributes, ignoring case
-  return objects.filter(object =>
-    attributes.some(attribute => object[attribute].toLowerCase().includes(value.toLowerCase())))
+  return new Map([...objectsMap].filter(([key, object]) =>
+    attributes.some(attribute => 
+      object[attribute] && 
+      object[attribute].toLowerCase().includes(value.toLowerCase())
+    )
+  ));
 }
 
 /**
- * Filters a list of objects based on if a given attribute is in a list of values
+ * Filters a map of objects based on if a given attribute is in a list of values
  *
- * @param {object[]} objects - The list of objects to filter
+ * @param {Map<int, object>} objectsMap - The map of objects to filter
  * @param {string} attribute - The attribute to filter on
- * @param {string[]} value - The value which should be equal to the attribute value
- * @returns {object[]} - A filtered list of objects
+ * @param {string[]} values - The list of values which should be equal to the attribute value
+ * @returns {Map<int, object>} - A filtered map of objects
  */
-function filterDataBasedOnAttributeInList (objects, attribute, values) {
+function filterDataBasedOnAttributeInList(objectsMap, attribute, values) {
   // return the objects which have an attribute that is in the values list
-  return objects.filter(object => values.includes(object[attribute]))
+  return new Map([...objectsMap].filter(([key, object]) => 
+    values.includes(object[attribute])
+  ));
 }
+
 
 /**
  * Checks if a date is between a start and end date
@@ -46,60 +53,64 @@ function checkIfDateIsBetween (date, startDate, endDate) {
 /**
  * Filters rivers based on if they are between or have overlap with the start and end date
  *
- * @param {River[]} rivers - The list of rivers to filter
+ * @param {Map<int, River>} riversMap - The map of rivers to filter
  * @param {string} startDate - The start date
  * @param {string} endDate - The end date
- * @returns {River[]} - A filtered list of rivers
+ * @returns {Map<int, River>} - A filtered map of rivers
  */
-function filterRiversBasedOnDates (rivers, startDate, endDate) {
-  const startDateObj = new Date(startDate)
-  const endDateObj = new Date(endDate)
+function filterRiversBasedOnDates(riversMap, startDate, endDate) {
+  const startDateObj = new Date(startDate);
+  const endDateObj = new Date(endDate);
 
-  // For each river, check if it is between or has overlap with the start and end date
-  return rivers.filter(river =>
+  // For each river, check if its dates overlap with the start and end date
+  return new Map([...riversMap].filter(([key, river]) =>
     checkIfDateIsBetween(river[attributesToFilterOn.RIVER_START_DATE], startDateObj, endDateObj) ||
-      checkIfDateIsBetween(river[attributesToFilterOn.RIVER_END_DATE], startDateObj, endDateObj))
+    checkIfDateIsBetween(river[attributesToFilterOn.RIVER_END_DATE], startDateObj, endDateObj)
+  ));
 }
 
 /**
  * Filters stations based on if they are between the start and end date
  *
- * @param {Station[]} stations - The list of stations to filter
+ * @param {Map<int, Station>} stationsMap - The map of stations to filter
  * @param {string} startDate - The start date
  * @param {string} endDate - The end date
- * @returns {Station[]} - A filtered list of stations
+ * @returns {Map<int, Station>} - A filtered map of stations
  */
-function filterStationsBasedOnDate (stations, startDate, endDate) {
-  const startDateObj = new Date(startDate)
-  const endDateObj = new Date(endDate)
+function filterStationsBasedOnDate(stationsMap, startDate, endDate) {
+  const startDateObj = new Date(startDate);
+  const endDateObj = new Date(endDate);
 
-  // For each station, check if it is between the start and end date
-  return stations.filter(station =>
-    checkIfDateIsBetween(station[attributesToFilterOn.STATION_DATE], startDateObj, endDateObj))
+  // For each station, check if the date is between the start and end date
+  return new Map([...stationsMap].filter(([key, station]) =>
+    checkIfDateIsBetween(station[attributesToFilterOn.STATION_DATE], startDateObj, endDateObj)
+  ));
 }
 
 /**
  * Returns objects which have a species that is in the speciesToFilterOn
  *
- * @param {object[]} objects - The list of objects to filter
+ * @param {Map<int, object>} objectsMap - The map of objects to filter
  * @param {string[]} speciesToFilterOn - The species to filter on
- * @returns {object[]} - A filtered list of objects
+ * @returns {Map<int, object>} - A filtered map of objects
  */
-function filterObjectsBasedOnSpecies (objects, speciesToFilterOn) {
+function filterObjectsBasedOnSpecies(objectsMap, speciesToFilterOn) {
   // Use set instead of array for faster lookups
-  const speciesToFilterOnSet = new Set(speciesToFilterOn)
+  const speciesToFilterOnSet = new Set(speciesToFilterOn);
 
   // Return objects which have a species that is in the speciesToFilterOn
-  return objects.filter(object =>
-    object[attributesToFilterOn.SPECIES].some(objectSpecies => speciesToFilterOnSet.has(objectSpecies)))
+  return new Map([...objectsMap].filter(([key, object]) =>
+    object[attributesToFilterOn.SPECIES] && 
+    object[attributesToFilterOn.SPECIES].some(objectSpecies => speciesToFilterOnSet.has(objectSpecies))
+  ));
 }
 
 /**
  * Filters rivers based on a searchQuery
  *
- * @param {River[]} rivers - The list of rivers to filter
+ * @param {Map<int, River>} rivers - The map of rivers to filter, keyed by a unique identifier
  * @param {string} searchQuery - The search query
- * @returns {River[]} - A filtered list of rivers
+ * @returns {Map<int, River>} - A filtered map of rivers
  */
 export function filterRiversBySearch (rivers, searchQuery) {
   try {
@@ -107,16 +118,16 @@ export function filterRiversBySearch (rivers, searchQuery) {
     return filterDataBasedOnAttributeSubstring(rivers, attributesToFilterOn.RIVER_SEARCH, searchQuery)
   } catch (error) {
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
-    return []
+    return new Map()
   }
 }
 
 /**
  * Filters stations based on a searchQuery
  *
- * @param {Station[]} stations - The list of stations to filter
- * @param {*} searchQuery - The search query
- * @returns {Station[]} - A filtered list of stations
+ * @param {Map<int, Station>} stations - The map of stations to filter, keyed by a unique identifier
+ * @param {string} searchQuery - The search query
+ * @returns {Map<int, Station>} - A filtered map of stations
  */
 export function filterStationsBySearch (stations, searchQuery) {
   try {
@@ -124,18 +135,18 @@ export function filterStationsBySearch (stations, searchQuery) {
     return filterDataBasedOnAttributeSubstring(stations, attributesToFilterOn.STATION_SEARCH, searchQuery)
   } catch (error) {
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
-    return []
+    return new Map()
   }
 }
 
 /**
  * Filters rivers based on their species and date
  *
- * @param {River[]} rivers - The list of rivers to filter
+ * @param {Map<int, River>} rivers - The map of rivers to filter, keyed by a unique identifier
  * @param {string[]} species - The species to filter on
  * @param {string} startDate - The start of the date interval to filter on
  * @param {string} endDate - The end of the date interval to filter on
- * @returns {River[]} - A filtered list of rivers
+ * @returns {Map<int, River>} - A filtered map of rivers
  */
 export function filterRiversByDateAndSpecies (rivers, species, startDate, endDate) {
   try {
@@ -148,18 +159,18 @@ export function filterRiversByDateAndSpecies (rivers, species, startDate, endDat
     return filteredSpeciesAndDateRivers
   } catch (error) {
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
-    return []
+    return new Map()
   }
 }
 
 /**
  * Filters stations based on their species and date
  *
- * @param {Station[]} stations - The list of stations to filter
+ * @param {Map<int, Station>} stations - The map of stations to filter, keyed by a unique identifier
  * @param {string[]} species - The species to filter on
  * @param {string} startDate - The start of the date interval to filter on
  * @param {string} endDate - The end of the date interval to filter on
- * @returns {Station[]} - A filtered list of stations
+ * @returns {Map<int, Station>} - A filtered map of stations
  */
 export function filterStationsByDateAndSpecies (stations, species, startDate, endDate) {
   try {
@@ -172,7 +183,7 @@ export function filterStationsByDateAndSpecies (stations, species, startDate, en
     return filteredSpeciesAndDateStations
   } catch (error) {
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
-    return []
+    return new Map()
   }
 }
 
@@ -196,7 +207,7 @@ export function filterObservationsBySpecies (observations, species) {
 /**
  * Finds all unqiue species from a list of rivers
  * 
- * @param {River[]} rivers - The list of rivers to find species from
+ * @param {Map<string, River>} rivers - The list of rivers to find species from
  * @returns {string[]} - A list of unique species
  */
 export function getSelectableSpecies(rivers) {
