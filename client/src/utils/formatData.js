@@ -2,35 +2,45 @@ import { addFeedbackToStore } from './addFeedbackToStore.js'
 import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/feedbackMessages'
 
 /**
- * Converts the river objects into arrays for display in a table
+ * Converts river objects into arrays for display in a table
  * 
- * @param {River[]} rivers - The rivers to convert to array
- * @returns - The rivers as arrays
+ * @param {Map<int, River>} rivers - The rivers to convert to array
+ * @returns {{headers: string[], rows: string[][]}} - Headers and rows for the table
  */
 export function formatRiversForTable (rivers) {
-  return rivers.map(river => {
-	return [
-	  river.id,
-	  river.name,
-	  river.startDate,
-	  river.projectId
-	]
+  let headers = ['Navn', 'Dato', 'Projektnummer']
+
+  let rows = []
+  rivers.forEach(river => {
+    rows.push([
+      river.id,
+      river.name,
+      river.startDate,
+      river.projectId
+    ])
   })
+
+  return {headers, rows}
 }
 
 /**
- * Converts the station objects into arrays for display in a table
+ * Converts station objects into arrays for display in a table
  * 
- * @param {Station[]} stations - The stations to convert to array
- * @returns - The stations as arrays
+ * @param {Map<int, Station>} stations - The stations to convert to array
+ * @returns {{headers: string[], rows: string[][]}} - Headers and rows for the table
  */
 export function formatStationsForTable (stations) {
-  return stations.map(station => {
-	return [
-	  station.id,
-	  station.name,
-	  station.startDate,
-	  station.time
-	]
+  let headers = ['Navn', 'Dato', 'Kl.']
+  
+  let rows = []
+  stations.forEach(station => {
+    rows.push([
+      station.id,
+      station.name,
+      station.startDate,
+      station.time
+    ])
   })
+
+  return {headers, rows}
 }
