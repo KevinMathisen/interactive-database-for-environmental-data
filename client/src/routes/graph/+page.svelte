@@ -1,5 +1,6 @@
 <script> // Graph page logic here 
-    import Graph from '$lib/optionsGraph.svelte'
+    import Graph from '$lib/optionsGraph.svelte';
+    import PlotlyComponent from './PlotlyComponent.svelte';
 </script>
     
 <div class="graphMain">
@@ -7,12 +8,15 @@
 
     <div class="graphBox1">
         <h3>FORDELING AV ARTER</h3>
+        <PlotlyComponent type={'bar'}/>                 <!--Bar chart-->
     </div>
 
     <div class="graphBox2">
         <h3>FORDELING AV LENGDE</h3>
+        <PlotlyComponent type={'box'}/>                 <!--Box plot-->
     </div>
 </div>
+
 
 <style> 
     .graphMain {
