@@ -2,6 +2,7 @@
     import { onMount, onDestroy } from 'svelte';
     import { browser } from '$app/environment';
     import { createEventDispatcher } from 'svelte';
+    import leaflet from 'leaflet';
 
     export let stations;
     export let rivers;
@@ -10,32 +11,25 @@
     
 
 	const dispatch = createEventDispatcher();
-    let mapElement;
     let map;
+    let mapElement;
+    let markers = [];
 
-    let stations2 = [
-        { name: 'Station in Norway', lat: 61.041926, lon: 10.001893 },
-        { name: 'Another Station', lat: 60.123456, lon: 11.123456 },
-        { name: 'Yet Another Station', lat: 59.123456, lon: 12.123456 }
-    ];
-
-    
 
     onMount(async () => {
-        if(browser) {
-            const leaflet = await import('leaflet');
+        // Initialize your map here
+        map = leaflet.map(mapElement).setView([60.5, 12.09], 7);
 
-            map = leaflet.map(mapElement).setView([60.5, 12.09], 7);
+        leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
 
-            leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(map);
-
-            addData(leaflet);
-            map.on('click', onMapClick);            
-        }
+        map.on('click', onMapClick);
+        addStations(leaflet);
+        
     });
 
+    
     onDestroy(async () => {
         if(map) {
             console.log('Unloading Leaflet map.');
@@ -43,11 +37,21 @@
         }
     });
 
+    $: if (dataType) {
+        if(dataType === 'station') {
+            removeMarkers();
+            addStations(leaflet);
+        } else if(dataType === 'river') {
+            removeMarkers();
+            addRivers(leaflet);
+        }
+    }   
+
     function onMapClick(e) {
         dispatch('map');
     }
 
-    function addData(leaflet) {
+    function addStations(leaflet) {
         stations.forEach(station => {
             let coordinate1 = average(station.startPos.coordinates[0], station.endPos.coordinates[0]);
             let coordinate2 = average(station.startPos.coordinates[1], station.endPos.coordinates[1]);
@@ -55,6 +59,7 @@
             marker.on('click', () => {
                 stationSelected(station, leaflet);
             });
+            markers.push(marker);
         });
     }
 
@@ -64,6 +69,24 @@
 		});
         
         // alert(`Marker ${station.name} clicked`);
+    }
+
+    function addRivers(leaflet) {
+        rivers.forEach(river => {
+            console.log(river);
+            let coordinate1 = river.position.coordinates[0];
+            let coordinate2 = river.position.coordinates[1];
+            const marker = leaflet.marker([coordinate2 , coordinate1]).addTo(map);
+            markers.push(marker);
+        });
+    }
+
+
+    function removeMarkers() {
+        markers.forEach(marker => {
+            map.removeLayer(marker);
+        });
+        markers = [];
     }
 
     function average(num1, num2) {
