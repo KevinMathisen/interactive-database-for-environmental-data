@@ -22,9 +22,8 @@
     let sideBarTitle = 'Sidebar';
   
     function stationClicked(event) {
-          // denne kalles også når kartet klikkes, må fikses
         sideBar = true;
-        sideBarTitle = event.detail.text;
+        sideBarTitle = event.detail.text.name;
     }
 
       function mapClicked(event) {
