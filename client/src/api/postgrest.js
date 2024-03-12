@@ -27,7 +27,7 @@ async function fetchFromPostgrest (endpoint) {
   // Tries to fetch data, catches any errors
   try {
     // Fetch data from given url and endpoint
-    const response = await fetch(`${POSTGREST_URL}/${endpoint}`, {
+    const response = await fetch(`${POSTGREST_URL}${endpoint}`, {
       method: 'GET'
     })
     // Return the response
