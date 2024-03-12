@@ -31,7 +31,8 @@
     }
 
     function uploadFile() {
-        // need to validate that the files are actually csv or xls files
+        // need to validate that the files are actually csv or xls files. Do this by converting to json
+        // and checking if the json data follows the format we have specified
         for (let file of filesArray) {
             // Parse CSV file
             if (file.name.endsWith('.csv')) {
