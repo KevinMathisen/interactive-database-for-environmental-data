@@ -19,7 +19,7 @@
 	let sortedRows = [];		// Rows sorted based on sortKey and sortDirection
 
 	// Sort rows based on sortKey and sortDirection
-	$: sortedRows = sortRows(sortDirection, sortKey);
+	$: [headers, rows, sortDirection, sortKey], sortedRows = sortRows(); 
 
 	/**
 	 * Sort order of rows based on selected header and direction
