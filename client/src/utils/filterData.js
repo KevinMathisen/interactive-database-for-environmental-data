@@ -5,14 +5,14 @@ import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/
 /**
  * Filters a map of objects based on if a value given exists as a substring for a given attribute
  *
- * @param {Map<int, object>} objectsMap - The map of objects to filter
+ * @param {Map<int, object>} objects - The map of objects to filter
  * @param {string[]} attributes - The attributes to filter on
  * @param {string} value - The value which should exist in the attribute value
  * @returns {Map<int, object>} - A filtered map of objects
  */
-function filterDataBasedOnAttributeSubstring(objectsMap, attributes, value) {
+function filterDataBasedOnAttributeSubstring(objects, attributes, value) {
   // Checks for each object if the value is a subtext of the attributes, ignoring case
-  return new Map([...objectsMap].filter(([key, object]) =>
+  return new Map([...objects].filter(([key, object]) =>
     attributes.some(attribute => 
       object[attribute] && 
       object[attribute].toLowerCase().includes(value.toLowerCase())
@@ -23,14 +23,14 @@ function filterDataBasedOnAttributeSubstring(objectsMap, attributes, value) {
 /**
  * Filters a map of objects based on if a given attribute is in a list of values
  *
- * @param {Map<int, object>} objectsMap - The map of objects to filter
+ * @param {Map<int, object>} objects - The map of objects to filter
  * @param {string} attribute - The attribute to filter on
  * @param {string[]} values - The list of values which should be equal to the attribute value
  * @returns {Map<int, object>} - A filtered map of objects
  */
-function filterDataBasedOnAttributeInList(objectsMap, attribute, values) {
+function filterDataBasedOnAttributeInList(objects, attribute, values) {
   // return the objects which have an attribute that is in the values list
-  return new Map([...objectsMap].filter(([key, object]) => 
+  return new Map([...objects].filter(([key, object]) => 
     values.includes(object[attribute])
   ));
 }
@@ -53,17 +53,24 @@ function checkIfDateIsBetween (date, startDate, endDate) {
 /**
  * Filters rivers based on if they are between or have overlap with the start and end date
  *
- * @param {Map<int, River>} riversMap - The map of rivers to filter
+ * @param {Map<int, River>} rivers - The map of rivers to filter
  * @param {string} startDate - The start date
  * @param {string} endDate - The end date
  * @returns {Map<int, River>} - A filtered map of rivers
  */
-function filterRiversBasedOnDates(riversMap, startDate, endDate) {
+function filterRiversBasedOnDates(rivers, startDate, endDate) {
+  // Return all rivers if no start and no end date is given
+  if (!startDate && !endDate) return rivers
+
+  // If only one date is set, set the other to the earliest or latest possible date
+  if (!startDate) startDate = '1970-01-01'
+  else if (!endDate) endDate = '2100-01-01'
+
   const startDateObj = new Date(startDate);
   const endDateObj = new Date(endDate);
 
   // For each river, check if its dates overlap with the start and end date
-  return new Map([...riversMap].filter(([key, river]) =>
+  return new Map([...rivers].filter(([key, river]) =>
     checkIfDateIsBetween(river[attributesToFilterOn.RIVER_START_DATE], startDateObj, endDateObj) ||
     checkIfDateIsBetween(river[attributesToFilterOn.RIVER_END_DATE], startDateObj, endDateObj)
   ));
@@ -72,17 +79,24 @@ function filterRiversBasedOnDates(riversMap, startDate, endDate) {
 /**
  * Filters stations based on if they are between the start and end date
  *
- * @param {Map<int, Station>} stationsMap - The map of stations to filter
+ * @param {Map<int, Station>} stations - The map of stations to filter
  * @param {string} startDate - The start date
  * @param {string} endDate - The end date
  * @returns {Map<int, Station>} - A filtered map of stations
  */
-function filterStationsBasedOnDate(stationsMap, startDate, endDate) {
+function filterStationsBasedOnDate(stations, startDate, endDate) {
+  // Return all stations if no start and no end date is given
+  if (!startDate && !endDate) return stations
+
+  // If only one date is set, set the other to the earliest or latest possible date
+  if (!startDate) startDate = '1970-01-01'
+  else if (!endDate) endDate = '2100-01-01'
+
   const startDateObj = new Date(startDate);
   const endDateObj = new Date(endDate);
 
   // For each station, check if the date is between the start and end date
-  return new Map([...stationsMap].filter(([key, station]) =>
+  return new Map([...stations].filter(([key, station]) =>
     checkIfDateIsBetween(station[attributesToFilterOn.STATION_DATE], startDateObj, endDateObj)
   ));
 }
@@ -90,16 +104,16 @@ function filterStationsBasedOnDate(stationsMap, startDate, endDate) {
 /**
  * Returns objects which have a species that is in the speciesToFilterOn
  *
- * @param {Map<int, object>} objectsMap - The map of objects to filter
+ * @param {Map<int, object>} objects - The map of objects to filter
  * @param {string[]} speciesToFilterOn - The species to filter on
  * @returns {Map<int, object>} - A filtered map of objects
  */
-function filterObjectsBasedOnSpecies(objectsMap, speciesToFilterOn) {
+function filterObjectsBasedOnSpecies(objects, speciesToFilterOn) {
   // Use set instead of array for faster lookups
   const speciesToFilterOnSet = new Set(speciesToFilterOn);
 
   // Return objects which have a species that is in the speciesToFilterOn
-  return new Map([...objectsMap].filter(([key, object]) =>
+  return new Map([...objects].filter(([key, object]) =>
     object[attributesToFilterOn.SPECIES] && 
     object[attributesToFilterOn.SPECIES].some(objectSpecies => speciesToFilterOnSet.has(objectSpecies))
   ));
