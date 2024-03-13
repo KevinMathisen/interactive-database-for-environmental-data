@@ -4,15 +4,16 @@
     import { createEventDispatcher } from 'svelte';
     import leaflet from 'leaflet';
    
-    export let stations;    // imported data containg station objects
-    export let rivers;      // imported data containg river objects
-    export let dataType;    // defines data type chosen by user
+    export let stations;    // Imported data containg station objects
+    export let rivers;      // Imported data containg river objects
+    export let dataType;    // Defines data type chosen by user
     
 
 	const dispatch = createEventDispatcher();
     let map;       
-    let mapElement;     // used to bind the map to the page
-    let markers = [];   // Array to store markers used by the map
+    let mapElement;     // Used to bind the map to the page
+    let stationMarkers = [];   // Array to store stationmarkers used by the map
+    let riverMarkers =  [];    // Array to store river markers used by the map
     let lines = [];     // Array to store lines used by the map
     let zoomChanged = 0;
     let clickedMarker;
@@ -53,8 +54,6 @@
             // calls function when the map is clicked
         map.on('click', onMapClick);
 
-        map.on('zoomend', mapZoomed);
-
             // waits for data to be loaded before adding markers to the map
         while (rivers.size === 0) {
             await new Promise(resolve => setTimeout(resolve, 100));
@@ -77,7 +76,6 @@
             addStations(leaflet);
         } else if(dataType === 'river') { // handles everything when user choses to view river data
             removeMarkers();
-            removeLines();
             addRivers(leaflet);
         }
     }   
@@ -86,94 +84,60 @@
     function onMapClick(e) {
         dispatch('map');
     }
-
-    function mapZoomed(e) {
-        if(dataType === 'river') {
-            let zoomLevel = map.getZoom();
-            if (zoomLevel > 10 && zoomChanged !== 1) {
-                zoomChanged = 1;
-                removeMarkers();
-                addStations(leaflet, true);
-            } else if (zoomLevel <= 10 && zoomChanged !== 0){
-                zoomChanged = 0;
-                removeMarkers();
-                removeLines();
-                addStations(leaflet);
-            }
-        }
-    }
-    
+        
         // adds station markers to the map
-    function addStations(leaflet, zoomDetail = false) {
-        let zoom = true;
+    function addStations(leaflet) {
             // loops through all stations and adds a marker for each
         stations.forEach(station => {
-            if (zoom) {
-                const startMarker = leaflet.marker([station.startPos.coordinates[1] , station.startPos.coordinates[0]], { icon: redIcon }).addTo(map);
-                const endMarker = leaflet.marker([station.endPos.coordinates[1] , station.endPos.coordinates[0]], { icon: redIcon }).addTo(map);
+            
+            const startMarker = leaflet.marker([station.startPos.coordinates[1] , station.startPos.coordinates[0]], { icon: redIcon }).addTo(map);
+            const endMarker = leaflet.marker([station.endPos.coordinates[1] , station.endPos.coordinates[0]], { icon: redIcon }).addTo(map);
         
-                    // drawing the line between the start and end position of the station
-                let positions =  [    
-                    [station.startPos.coordinates[1], station.startPos.coordinates[0]], 
-                    [station.endPos.coordinates[1], station.endPos.coordinates[0]]
-                ];
-                let polyline = leaflet.polyline(positions, {color: 'red'}).addTo(map);
+                // drawing the line between the start and end position of the station
+            let positions =  [    
+                [station.startPos.coordinates[1], station.startPos.coordinates[0]], 
+                [station.endPos.coordinates[1], station.endPos.coordinates[0]]
+            ];
+            let polyline = leaflet.polyline(positions, {color: 'red'}).addTo(map);
 
-                startMarker.on('click', (e) => { // handles clicks events for each station
-                    stationSelected(station, leaflet, e, true);
-                });
-                endMarker.on('click', (e) => { // handles clicks events for each station
-                    stationSelected(station, leaflet, e, true);
-                });
-
-                lines.push(polyline);
-                markers.push(startMarker);     
-                markers.push(endMarker);
-            }
-            else {
-                let coordinate1 = average(station.startPos.coordinates[1], station.endPos.coordinates[1]);
-                let coordinate2 = average(station.startPos.coordinates[0], station.endPos.coordinates[0]);
-                const marker = leaflet.marker([coordinate1, coordinate2], { icon: redIcon }).addTo(map);
-                marker.on('click', (e) => { // handles clicks events for each station
-                    stationSelected(station, leaflet, e, false);
-                });
-                markers.push(marker);
-            }
-                   
+            startMarker.on('click', (e) => { // handles clicks events for each station
+                console.log('startMarker clicked');
+                stationSelected(station, leaflet, e);
+            });
+            endMarker.on('click', (e) => { // handles clicks events for each station
+                stationSelected(station, leaflet, e);
+            });
+            lines.push(polyline);
+            stationMarkers.push(startMarker);     
+            stationMarkers.push(endMarker);                   
         });
     }
-        // called when a station marker is clicked
-    function stationSelected(station, leaflet, e, detail) {
-        if(!detail) {
-            if(clickedMarker) {
-                clickedMarker.setIcon(redIcon); 
-            }
-            clickedMarker = e.target;
-            clickedMarker.setIcon(blueIcon);
+        // Called when a station marker is clicked
+    function stationSelected(station, leaflet, e) {
+            // calculate which points need to be turned red
+        markerIndex = stationMarkers.indexOf(clickedMarker);
+        if(clickedMarker) {
+            clickedMarker.setIcon(redIcon);
+            (markerIndex % 2 === 0) ? stationMarkers[markerIndex + 1].setIcon(redIcon) : stationMarkers[markerIndex - 1].setIcon(redIcon); 
         }
-        else{
-            markerIndex = markers.indexOf(clickedMarker);
-            if(clickedMarker) {
-                clickedMarker.setIcon(redIcon);
-                (markerIndex % 2 === 0) ? markers[markerIndex + 1].setIcon(redIcon) : markers[markerIndex - 1].setIcon(redIcon); 
-            }
-            if(lineIndex) {
-                lines[lineIndex].setStyle({color: 'red'});
-            }
-            clickedMarker = e.target;
-            markerIndex = markers.indexOf(clickedMarker);
-            clickedMarker.setIcon(blueIcon);
-            (markerIndex % 2 === 0) ? markers[markerIndex + 1].setIcon(blueIcon) : markers[markerIndex - 1].setIcon(blueIcon);            
-            clickedMarker.setIcon(blueIcon);
-            if (markerIndex <= 1) {
-                lineIndex = 0;
-            } else if (markerIndex % 2 === 0) {
-                lineIndex = markerIndex / 2;
-            } else {
-                lineIndex = (markerIndex - 1) / 2;
-            }
-            lines[lineIndex].setStyle({color: 'blue'});
+        if(lineIndex) {
+            lines[lineIndex].setStyle({color: 'red'});
         }
+            // calculate which points need to be turned blue
+        clickedMarker = e.target;
+        markerIndex = stationMarkers.indexOf(clickedMarker);
+        clickedMarker.setIcon(blueIcon);
+        (markerIndex % 2 === 0) ? stationMarkers[markerIndex + 1].setIcon(blueIcon) : stationMarkers[markerIndex - 1].setIcon(blueIcon);            
+        clickedMarker.setIcon(blueIcon);
+        if (markerIndex <= 1) {
+            lineIndex = 0;
+        } else if (markerIndex % 2 === 0) {
+            lineIndex = markerIndex / 2;
+        } else {
+            lineIndex = (markerIndex - 1) / 2;
+        }
+        lines[lineIndex].setStyle({color: 'blue'});
+            // Sends the station name to the parent component
         dispatch('message', {
 			text: station
 		});
@@ -185,29 +149,26 @@
             let coordinate1 = river.position.coordinates[0];
             let coordinate2 = river.position.coordinates[1];
             const marker = leaflet.marker([coordinate2 , coordinate1]).addTo(map);
-            markers.push(marker);
+            riverMarkers.push(marker);
         });
     }
 
-        // removes all markers from the map
+        // removes relevant markers from the map
     function removeMarkers() {
-        markers.forEach(marker => {
-            map.removeLayer(marker);
-        });
-        markers = [];
+        if(dataType === 'river') { // removes station markers and lines from the map
+            stationMarkers.forEach(marker => {
+                map.removeLayer(marker);
+            });
+            lines.forEach(line => {
+                map.removeLayer(line);
+            });
+        } else if(dataType === 'station') { //removes river markers from the map
+            riverMarkers.forEach(marker => {
+                map.removeLayer(marker);
+            });
+        }
     }
 
-    function removeLines() {
-        lines.forEach(line => {
-            map.removeLayer(line);
-        });
-        markers = [];
-    }
-
-    function average(num1, num2) {
-        return (num1 + num2) / 2;
-    }
-    
 </script>
 
 
