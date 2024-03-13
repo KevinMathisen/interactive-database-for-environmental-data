@@ -6,7 +6,7 @@
     import { stationStore } from '../../stores/stationStore.js';
     import { getRivers, getStations } from '../../utils/dataManager.js';
     import { getSelectableSpecies } from '../../utils/filterData.js';
-    
+    import { onMount } from 'svelte';
 
     let rivers = new Map();
     let stations = new Map();
@@ -24,6 +24,12 @@
     let showPlotB;
     let intervallPlotB;
     let plotTypeB;
+
+    onMount(async () => {
+        // Get rivers and stations from API
+        getRivers();
+        getStations();
+    });
 
     // Get rivers and stations from stores
     $: rivers = $riverStore;

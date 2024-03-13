@@ -6,6 +6,7 @@
     import { riverStore } from '../stores/riverStore.js';
     import { stationStore } from '../stores/stationStore.js';
 	import Sidebar from '../lib/Sidebar.svelte';
+    import { onMount } from 'svelte';
 
     let rivers;             // Rivers with coordinates
     let stations;           // Stations with coordinates
@@ -19,9 +20,11 @@
     let filteredRivers;     // Rivers filtered by date and species
     let filteredStations;   // Stations filtered by date and species
 
-    // Get rivers and stations from API
-    getRivers();
-    getStations();
+    onMount(async () => {
+        // Get rivers and stations from API
+        getRivers();
+        getStations();
+    });
 
     // Get rivers and stations from stores
     $: rivers = $riverStore;

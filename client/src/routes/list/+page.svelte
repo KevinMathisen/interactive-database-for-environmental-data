@@ -8,6 +8,7 @@
     import { formatRiversForTable, formatStationsForTable } from '../../utils/formatData.js';
     import { riverStore } from '../../stores/riverStore.js';
     import { stationStore } from '../../stores/stationStore.js';
+    import { onMount } from 'svelte';
 
     let rivers;             // Rivers with coordinates
     let stations;           // Stations with coordinates
@@ -26,9 +27,11 @@
     let headers = [];       // Header for the table
     let rows = [];          // Rows for the table
 
-    // Get rivers and stations from API
-    getRivers();
-    getStations();
+    onMount(async () => {
+        // Get rivers and stations from API
+        getRivers();
+        getStations();
+    });
 
     // Get rivers and stations from stores
     $: rivers = $riverStore;
