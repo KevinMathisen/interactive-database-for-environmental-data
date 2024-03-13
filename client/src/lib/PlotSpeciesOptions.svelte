@@ -20,7 +20,7 @@
 
 <label for="showPlotA">
 	Vis
-	<input type="checkbox" id="showPlotA" name="showPlotA" bind:value={showPlotA}>
+	<input type="checkbox" id="showPlotA" name="showPlotA" bind:checked={showPlotA}>
 </label>
 
 
