@@ -12,7 +12,8 @@
 		"test": "npm run test:integration && npm run test:unit",
 		"test:integration": "playwright test",
 		"test:unit": "vitest",
-		"lint": "eslint '**/*.{js,svelte}'",
+		"lint": "eslint **/*.{js,svelte}",
+		"lint:fix": "eslint **/*.{js,svelte} --fix",
 		"format": "prettier --write ."
 	},
 	"devDependencies": {
