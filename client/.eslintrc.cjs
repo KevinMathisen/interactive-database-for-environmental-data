@@ -9,7 +9,6 @@ module.exports = {
   },
   extends: [
     'eslint:recommended',
-    'plugin:standard/recommended',
     'plugin:svelte/recommended',
   ],
   plugins: [
