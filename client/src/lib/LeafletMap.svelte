@@ -71,16 +71,19 @@
         }
     });
 
+    function updateMap() {
+        if (dataType) {
+            if(dataType === 'station') {  // handles everything when user choses to view station data
+                removeMarkers();
+                addStations(leaflet);
+            } else if(dataType === 'river') { // handles everything when user choses to view river data
+                removeMarkers();
+                addRivers(leaflet);
+            }
+        } 
+    }
         // called when the data type is changed
-    $: if (dataType) {
-        if(dataType === 'station') {  // handles everything when user choses to view station data
-            removeMarkers();
-            addStations(leaflet);
-        } else if(dataType === 'river') { // handles everything when user choses to view river data
-            removeMarkers();
-            addRivers(leaflet);
-        }
-    }   
+    $: [rivers, stations, dataType], updateMap();
 
         // called when the map is clicked
     function onMapClick(e) {
@@ -173,20 +176,17 @@
 		});
     }
 
-        // removes relevant markers from the map
+        // removes markers from the map
     function removeMarkers() {
-        if(dataType === 'river') { // removes station markers and lines from the map
-            stationMarkers.forEach(marker => {
-                map.removeLayer(marker);
-            });
-            lines.forEach(line => {
-                map.removeLayer(line);
-            });
-        } else if(dataType === 'station') { //removes river markers from the map
-            riverMarkers.forEach(marker => {
-                map.removeLayer(marker);
-            });
-        }
+        stationMarkers.forEach(marker => {
+            map.removeLayer(marker);
+        });
+        lines.forEach(line => {
+            map.removeLayer(line);
+        });
+        riverMarkers.forEach(marker => {
+            map.removeLayer(marker);
+        });
     }
 
 </script>
