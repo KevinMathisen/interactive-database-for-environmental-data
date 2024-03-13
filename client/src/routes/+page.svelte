@@ -19,6 +19,14 @@
 
     let filteredRivers;     // Rivers filtered by date and species
     let filteredStations;   // Stations filtered by date and species
+  
+    let sideBar = false;
+    let sideBarTitle = 'Sidebar';
+  
+    function stationClicked(event) {
+        sideBar = true;
+        sideBarTitle = event.detail.text.name;
+    }
 
     onMount(async () => {
         // Get rivers and stations from API
@@ -35,11 +43,12 @@
     $: filteredRivers = filterRiversByDateAndSpecies(rivers, selectedSpecies, selectedStartDate, selectedEndDate);
     $: filteredStations = filterStationsByDateAndSpecies(stations, selectedSpecies, selectedStartDate, selectedEndDate);
 
+
 </script>
 
 
 
-<LeafletMap {dataType} {filteredRivers} {filteredStations}/>
+<LeafletMap {dataType} {rivers} {stations} on:map={mapClicked} on:stationClicked={stationClicked} on:riverClicked={stationClicked}/>
 
 <div class="sidebar">
     <Sidebar title="Filter" typeClose="cross">
