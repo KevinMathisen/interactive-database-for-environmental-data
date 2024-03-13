@@ -164,7 +164,23 @@
         align-items: center;
     }
 
+    .downloadMain {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
 
+    .row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin: 10px;
+    }
+
+    .rowItem {
+        margin: 20px;
+    }
 
     .setWidthForButtonsUpload {
         width: 150px;
