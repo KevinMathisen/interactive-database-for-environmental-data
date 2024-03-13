@@ -1,10 +1,11 @@
 module.exports = {
   parserOptions: {
-    ecmaVersion: 2024,
+    ecmaVersion: "latest",
     sourceType: 'module',
   },
   env: {
     browser: true,
+    es2021: true,
     node: true,
   },
   extends: [
@@ -22,9 +23,12 @@ module.exports = {
     },
   ],
   rules: {
-    'jsdoc/check-alignment': 1, 
-    'jsdoc/check-param-names': 1,
-    'jsdoc/check-tag-names': 1,
+    'jsdoc/check-alignment': 'warn', 
+    'jsdoc/check-param-names': 'warn',
+    'jsdoc/check-tag-names': 'warn',
+    'indent': ['error', 2],
+    'quotes': ['error', 'single'],
+    'semi': ['error', 'always'],
   },
   settings: {
     "svelte/ignore-styles": () => true,
