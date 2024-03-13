@@ -2,16 +2,20 @@
     import GraphFilter from '$lib/GraphFilter.svelte'
 	import Sidebar from '../../lib/Sidebar.svelte';
     import PlotlyComponent from './PlotlyComponent.svelte';
+    import Modal from '../../lib/Modal.svelte';
+    import SelectRiverAndStation from '../../lib/SelectRiverAndStation.svelte';
     import { riverStore } from '../../stores/riverStore.js';
     import { stationStore } from '../../stores/stationStore.js';
     import { getRivers, getStations } from '../../utils/dataManager.js';
     import { getSelectableSpecies } from '../../utils/filterData.js';
     import { onMount } from 'svelte';
 
+    let showSelectRiverAndStationModal = false;
+
     let rivers = new Map();
     let stations = new Map();
-    let selectedRivers;
-    let selectedStations;
+    let selectedRivers = new Map();
+    let selectedStations = new Map();
     let selectableSpecies;
 
     let dataType;
@@ -49,7 +53,27 @@
         }
     }
 
+    function handleClose() {
+        showSelectRiverAndStationModal = false;
+    }
+
+    function handleSelectRiverStation() {
+        showSelectRiverAndStationModal = true;
+    }
+
 </script>
+
+{#if showSelectRiverAndStationModal}
+    <Modal on:close={handleClose} large={true}>
+        <SelectRiverAndStation 
+            {rivers} 
+            {stations} 
+            bind:dataType 
+            bind:selectedRivers 
+            bind:selectedStations
+            />
+    </Modal>
+{/if}
     
 <div class="graphPage">
     <div class="filterContainer">
@@ -66,6 +90,7 @@
                 bind:showPlotB
                 bind:intervallPlotB
                 bind:plotTypeB
+                on:selectRiverAndStation={handleSelectRiverStation}
                 />
         </Sidebar>
     </div>
