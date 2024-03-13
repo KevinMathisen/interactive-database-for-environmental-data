@@ -1,13 +1,15 @@
 <script>
     import LeafletMap from '$lib/LeafletMap.svelte';
-    import Filter from '$lib/filter.svelte'; 
+    import Filter from '$lib/filter.svelte';
     import { getRivers, getStations } from '../utils/dataManager.js';
     import { getSelectableSpecies, filterRiversByDateAndSpecies, filterStationsByDateAndSpecies } from '../utils/filterData.js';
     import { riverStore } from '../stores/riverStore.js';
     import { stationStore } from '../stores/stationStore.js';
+	import Sidebar from '../lib/Sidebar.svelte';
+    import { onMount } from 'svelte';
 
-    let rivers;             // Rivers with coordinates
-    let stations;           // Stations with coordinates
+    let rivers = new Map();             // Rivers with coordinates
+    let stations = new Map();           // Stations with coordinates
     let selectableSpecies;  // All unique species
 
     let dataType;           // "river" or "station", chosen by user
@@ -26,13 +28,15 @@
         sideBarTitle = event.detail.text.name;
     }
 
-      function mapClicked(event) {
-          sideBar = false;
+    function mapClicked(event) {
+        sideBar = false;
     }
 
-    // Get rivers and stations from API
-    getRivers();
-    getStations();
+    onMount(async () => {
+        // Get rivers and stations from API
+        getRivers();
+        getStations();
+    });
 
     // Get rivers and stations from stores
     $: rivers = $riverStore;
@@ -46,25 +50,35 @@
 
 </script>
 
-<Filter 
-    showCloseButton=true 
-    {selectableSpecies}
-    bind:dataType
-    bind:selectedSpecies 
-    bind:selectedStartDate 
-    bind:selectedEndDate/>
-
-<LeafletMap {dataType} {rivers} {stations} on:map={mapClicked} on:stationClicked={stationClicked} on:riverClicked={stationClicked}/>
 
 
+<LeafletMap {dataType} rivers={filteredRivers} stations={filteredStations} on:map={mapClicked} on:stationClicked={stationClicked} on:riverClicked={stationClicked}/>
+
+<div class="sidebar">
+    <Sidebar title="Filter" typeClose="cross">
+        <Filter 
+            showCloseButton=true 
+            {selectableSpecies}
+            bind:dataType
+            bind:selectedSpecies 
+            bind:selectedStartDate 
+            bind:selectedEndDate/>
+    </Sidebar>
+</div>
 
 {#if sideBar}
-    <div class="sidebar">{sideBarTitle}</div>
+    <div class="sidebar2">{sideBarTitle}</div>
 {/if}
-
 
 <style>
     .sidebar {
+        position: absolute;
+        top: 80px;
+        left: 0;
+        height: calc(100vh - 80px);
+        width: 20em;
+    }
+    .sidebar2 {
         position: absolute;
         top: 80px;
         right: 0;

@@ -2,16 +2,22 @@
 	import { fly } from "svelte/transition";
 
 	export let title = "";
+	export let collapsable = true;
+
 	let isCollapsed = false;
 
 	function toggleCollapse() {
+		if (!collapsable) return;
+
 		isCollapsed = !isCollapsed;
 	}
 </script>
 
 <div class=collapsibleSection>
 	<div class=collapsibleSection-header on:click={toggleCollapse}>
-		<i class="arrow" class:collapsed={isCollapsed} class:not-collapsed={!isCollapsed}></i>
+		{#if collapsable}
+			<i class="arrow" class:collapsed={isCollapsed} class:not-collapsed={!isCollapsed}></i>
+		{/if}
 		<h3>{title}</h3>
 	</div>
 	{#if !isCollapsed}

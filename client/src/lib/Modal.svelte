@@ -1,13 +1,14 @@
 <script>
-	import { createEventDispatcher } from 'svelte';
+	import { createEventDispatcher } from 'svelte'; 
 	import { SVG_PATHS } from '../constants/svgPaths';
-
-	export let showModal = false;
-	export let message = '';
-	export let type; 
 
 	// Dispatcher to close the modal
 	const dispatch = createEventDispatcher();
+
+	export let large = false;
+
+	let width;
+	let height;
 
 	/**
 	 * Closes the modal on click event
@@ -16,21 +17,27 @@
 		dispatch('close');
 	}
 
-	$: iconPath = type ? SVG_PATHS[type] : SVG_PATHS.close;
+	function handleKeyDown(event) {
+		if (event.key === 'Enter' || event.key === 'Escape') {
+			handleClose();
+		}
+	}
+
+	$: width = large ? 800 : 500;
+	$: height = large ? 500 : 300;
+
 </script>
 
-{#if showModal}
-	<div class="backdrop" on:click={handleClose}>
-	
-		<div class="modal" on:click|stopPropagation>
-			<img src={iconPath} alt={type} class="icon" />
-			<h3>{message}</h3>
-			<button class="close" on:click={handleClose}>
-				<img src={SVG_PATHS.close} alt="Close" />
-			</button>
-		</div>
+
+<div class="backdrop" on:click|self={handleClose} on:keydown={handleKeyDown} role="presentation">
+	<div class="modal" style="width: {width}px; height: {height}px;">
+		<slot></slot>
+		<button class="close" on:click={handleClose}>
+			<img src={SVG_PATHS.close} alt="Close" />
+		</button>
 	</div>
-{/if}
+</div>
+
 
 <style>
 	.backdrop {
@@ -43,7 +50,7 @@
 		width: 100vw;
 		height: 100vh;
 		background-color: rgba(0, 0, 0, 0.5);
-		z-index: 1000;
+		z-index: 9000;
 	}
 
 	.modal {
@@ -53,8 +60,6 @@
 		align-items: center;
 		justify-content: space-around;
 		width: 90%;
-		max-width: 500px;
-		max-height: 300px;
 		padding: 20px;
 		background-color: #fff;
 		border-radius: 10px;

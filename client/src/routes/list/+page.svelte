@@ -2,11 +2,13 @@
     import Filter from '$lib/filter.svelte'; 
     import Table from '../../lib/Table.svelte';
     import SearchBar from '../../lib/SearchBar.svelte';
+    import Sidebar from '../../lib/Sidebar.svelte';
     import { getRivers, getStations } from '../../utils/dataManager.js';
     import { getSelectableSpecies, filterRiversByDateAndSpecies, filterStationsByDateAndSpecies, filterRiversBySearch, filterStationsBySearch } from '../../utils/filterData.js';
     import { formatRiversForTable, formatStationsForTable } from '../../utils/formatData.js';
     import { riverStore } from '../../stores/riverStore.js';
     import { stationStore } from '../../stores/stationStore.js';
+    import { onMount } from 'svelte';
 
     let rivers;             // Rivers with coordinates
     let stations;           // Stations with coordinates
@@ -25,9 +27,11 @@
     let headers = [];       // Header for the table
     let rows = [];          // Rows for the table
 
-    // Get rivers and stations from API
-    getRivers();
-    getStations();
+    onMount(async () => {
+        // Get rivers and stations from API
+        getRivers();
+        getStations();
+    });
 
     // Get rivers and stations from stores
     $: rivers = $riverStore;
@@ -73,13 +77,18 @@
 </script>
 
 <!-- Filter sidebar -->
-<Filter 
-    showCloseButton={false} 
-    {selectableSpecies}
-    bind:dataType
-    bind:selectedSpecies 
-    bind:selectedStartDate 
-    bind:selectedEndDate/>
+<div class="sidebar">
+    <Sidebar title="Filter">
+        <Filter 
+            showCloseButton=true 
+            {selectableSpecies}
+            bind:dataType
+            bind:selectedSpecies 
+            bind:selectedStartDate 
+            bind:selectedEndDate/>
+    </Sidebar>
+</div>
+
 
 <div class=tablecontainer>
     <!-- Search bar -->
@@ -97,6 +106,14 @@
 </div>
 
 <style>
+    .sidebar {
+        position: absolute;
+        top: 80px;
+        left: 0;
+        height: calc(100vh - 80px);
+        width: 20em;
+    }
+    
     .tablecontainer {
         padding-left: 450px;
         padding-right: 100px;

@@ -3,7 +3,7 @@ import { addFeedbackToStore } from './addFeedbackToStore.js'
 import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/feedbackMessages'
 
 /**
- * Filters a map of objects based on if a value given exists as a substring for a given attribute
+ * Filters a map of objects based on if a value given exists as a substring for given attributes
  *
  * @param {Map<int, object>} objects - The map of objects to filter
  * @param {string[]} attributes - The attributes to filter on
@@ -17,7 +17,23 @@ function filterDataBasedOnAttributeSubstring(objects, attributes, value) {
       object[attribute] && 
       object[attribute].toLowerCase().includes(value.toLowerCase())
     )
-  ));
+  ))
+}
+
+/**
+ * Filters a map of objects based on if a value given exists as a substring for two given attributes
+ *
+ * @param {Map<int, object>} objects - The map of objects to filter
+ * @param {string[]} attributes - The two attributes to filter on
+ * @param {string} value - The value which should exist in the combined attributes value
+ * @returns {Map<int, object>} - A filtered map of objects
+ */
+function filterDataBasedOnAttributeCombinationSubstring(objects, attributes, value) {
+  // Checks for each object if the value is a subtext of the attributes, ignoring case
+  return new Map([...objects].filter(([key, object]) =>
+      (object[attributes[0]].toLowerCase()+" "+object[attributes[1]].toLowerCase()).includes(value.toLowerCase())
+    )
+  )
 }
 
 /**
@@ -109,6 +125,9 @@ function filterStationsBasedOnDate(stations, startDate, endDate) {
  * @returns {Map<int, object>} - A filtered map of objects
  */
 function filterObjectsBasedOnSpecies(objects, speciesToFilterOn) {
+  // If no species are given, don't filter on species
+  if (speciesToFilterOn.length === 0) return objects
+
   // Use set instead of array for faster lookups
   const speciesToFilterOnSet = new Set(speciesToFilterOn);
 
@@ -221,7 +240,7 @@ export function filterObservationsBySpecies (observations, species) {
 /**
  * Finds all unqiue species from a list of rivers
  * 
- * @param {Map<string, River>} rivers - The list of rivers to find species from
+ * @param {Map<int, River>} rivers - The list of rivers to find species from
  * @returns {string[]} - A list of unique species
  */
 export function getSelectableSpecies (rivers) {
@@ -233,4 +252,38 @@ export function getSelectableSpecies (rivers) {
   })
 
   return Array.from(speciesSet)
+}
+
+/**
+ * Filters rivers based on if the searchQuery is a substring of their name and date combined
+ * 
+ * @param {Map<int, River} rivers - The map of rivers to filter
+ * @param {string} searchQuery - The search query
+ * @returns {Map<int, River>} - A filtered map of rivers
+ */
+export function filterRiversByNameAndDateCombined(rivers, searchQuery) {
+  try {
+    // Filters rivers based on if the searchQuery is a substring of their name and date combined
+    return filterDataBasedOnAttributeCombinationSubstring(rivers, [attributesToFilterOn.RIVER_NAME, attributesToFilterOn.RIVER_START_DATE], searchQuery)
+  } catch (error) {
+    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
+    return new Map()
+  }
+}
+
+/**
+ * Filters stations based on if the searchQuery is a substring of their name and date combined
+ * 
+ * @param {Map<int, Station} stations - The map of stations to filter
+ * @param {string} searchQuery - The search query
+ * @returns {Map<int, Station>} - A filtered map of stations
+ */
+export function filterStationsByNameAndDateCombined(stations, searchQuery) {
+  try {
+    // Filters stations based on if the searchQuery is a substring of their name and date combined
+    return filterDataBasedOnAttributeCombinationSubstring(stations, [attributesToFilterOn.STATION_NAME, attributesToFilterOn.STATION_DATE], searchQuery)
+  } catch (error) {
+    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
+    return new Map()
+  }
 }

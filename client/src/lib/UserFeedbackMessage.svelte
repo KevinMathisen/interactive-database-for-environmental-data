@@ -1,6 +1,7 @@
 <script>
 	import { userFeedbackStore } from '../stores/userFeedbackStore.js';
 	import Modal from './Modal.svelte';
+	import { SVG_PATHS } from '../constants/svgPaths';
 
 	let type = '';
 
@@ -23,8 +24,13 @@
 	function handleClose() {
 	  showModal = false;
 	}
+
+	
 </script>
 
 {#if showModal}
-	<Modal {showModal} message={userFeedbackMessage} {type} on:close={handleClose} />
+	<Modal on:close={handleClose}>
+		<img src={type ? SVG_PATHS[type] : SVG_PATHS.close} alt={type} class="icon" />
+		<h3>{userFeedbackMessage}</h3>
+	</Modal>
 {/if}
