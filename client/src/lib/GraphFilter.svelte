@@ -27,9 +27,8 @@
     // Species the user has choosen; either all or the custom ones
     $: selectedSpecies = chooseAll ? selectableSpecies : customSpecies;
 
-    function editChoosenPoints() {
-        dispatch("editChoosenPoints");
-        console.log('editChoosenPoints');
+    function handleSelectRiverStation() {
+        dispatch("selectRiverAndStation");
     }
 
 </script>
@@ -37,22 +36,21 @@
 <div class="main">
     <!-- Input for opening selection of river or stations -->
     <CollapsibleSection title="{dataType === 'river' ? 'Elver' : 'Stasjoner'} valgt">
-        <button on:click={editChoosenPoints}>Rediger {dataType === 'river' ? 'elver' : 'stasjoner'}</button>
-        <!-- <ul>
+        <button on:click={handleSelectRiverStation}>Rediger {dataType === 'river' ? 'elver' : 'stasjoner'}</button>
+        <ul>
             {#if dataType === 'river'}
                 <p>Elver valgt</p>
-                {#each selectedRivers as river}
-                    <li>{river.name}</li>
+                {#each Array.from(selectedRivers.entries()) as [_, river]}
+                    <li>{river.name + " " + river.startDate}</li>
                 {/each}
             {:else}
                 <p>Stasjoner valgt</p>
-                {#each selectedStations as station}
-                    <li>{station.name}</li>
+                {#each Array.from(selectedStations.entries()) as [_, station]}
+                    <li>{station.name + " " + station.date}</li>
                 {/each}
             {/if}
-        </ul> -->
+        </ul>
     </CollapsibleSection>
-    
 
     <!-- Input for choosing species -->
     <CollapsibleSection title="Art">
