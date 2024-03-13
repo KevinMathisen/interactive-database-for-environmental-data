@@ -8,8 +8,8 @@
 	import Sidebar from '../lib/Sidebar.svelte';
     import { onMount } from 'svelte';
 
-    let rivers;             // Rivers with coordinates
-    let stations;           // Stations with coordinates
+    let rivers = new Map();             // Rivers with coordinates
+    let stations = new Map();           // Stations with coordinates
     let selectableSpecies;  // All unique species
 
     let dataType;           // "river" or "station", chosen by user
@@ -26,6 +26,10 @@
     function stationClicked(event) {
         sideBar = true;
         sideBarTitle = event.detail.text.name;
+    }
+
+    function mapClicked(event) {
+        sideBar = false;
     }
 
     onMount(async () => {
@@ -48,7 +52,7 @@
 
 
 
-<LeafletMap {dataType} {rivers} {stations} on:map={mapClicked} on:stationClicked={stationClicked} on:riverClicked={stationClicked}/>
+<LeafletMap {dataType} rivers={filteredRivers} stations={filteredStations} on:map={mapClicked} on:stationClicked={stationClicked} on:riverClicked={stationClicked}/>
 
 <div class="sidebar">
     <Sidebar title="Filter" typeClose="cross">
@@ -62,6 +66,9 @@
     </Sidebar>
 </div>
 
+{#if sideBar}
+    <div class="sidebar2">{sideBarTitle}</div>
+{/if}
 
 <style>
     .sidebar {
@@ -70,5 +77,16 @@
         left: 0;
         height: calc(100vh - 80px);
         width: 20em;
+    }
+    .sidebar2 {
+        position: absolute;
+        top: 80px;
+        right: 0;
+        width: 200px;
+        height: calc(100vh - 200px);
+        background-color: #f4f4f4;
+        z-index: 1000;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 </style>
