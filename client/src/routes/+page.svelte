@@ -54,7 +54,7 @@
     bind:selectedStartDate 
     bind:selectedEndDate/>
 
-<LeafletMap {dataType} {rivers} {stations} on:map={mapClicked} on:message={stationClicked}/>
+<LeafletMap {dataType} {rivers} {stations} on:map={mapClicked} on:stationClicked={stationClicked} on:riverClicked={stationClicked}/>
 
 
 

@@ -17,12 +17,14 @@
     let lines = [];     // Array to store lines used by the map
     let zoomChanged = 0;
     let clickedMarker;
+    let clickedRiver;
     let markerIndex;
     let lineIndex;
+    let riverIndex;
     
 
         //custom icon for the stations
-     const redIcon = new L.Icon({ 
+    const redIcon = new L.Icon({ 
         iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
         shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
         iconSize: [25, 41],
@@ -138,7 +140,7 @@
         }
         lines[lineIndex].setStyle({color: 'blue'});
             // Sends the station name to the parent component
-        dispatch('message', {
+        dispatch('stationClicked', {
 			text: station
 		});
     }
@@ -150,7 +152,25 @@
             let coordinate2 = river.position.coordinates[1];
             const marker = leaflet.marker([coordinate2 , coordinate1]).addTo(map);
             riverMarkers.push(marker);
+            marker.on('click', (e) => { // handles clicks events for each river
+                riverSelected(river, leaflet, e);
+            });
         });
+    }
+
+    function riverSelected(river, leaflet, e) {
+            // calculate which river needs to be turned red
+        if(clickedRiver) {
+            riverMarkers[riverIndex].setIcon(blueIcon);
+        }
+            // calculate which river needs to be turned blue
+        clickedRiver = e.target;
+        riverIndex = riverMarkers.indexOf(clickedRiver);
+        riverMarkers[riverIndex].setIcon(redIcon);
+            // Sends the river name to the parent component
+        dispatch('riverClicked', { 
+			text: river
+		});
     }
 
         // removes relevant markers from the map
