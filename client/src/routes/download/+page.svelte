@@ -11,7 +11,7 @@
     import { stationStore } from '../../stores/stationStore.js';
     import { onMount } from 'svelte';
 
-
+    let showSelectRiverAndStationModal = false;
 
     let rivers = new Map();             // Rivers with coordinates
     let stations = new Map();           // Stations with coordinates
@@ -61,7 +61,13 @@
         }
     }
 
+    function handleClose() {
+        showSelectRiverAndStationModal = false;
+    }
 
+    function handleSelectRiverStation() {
+        showSelectRiverAndStationModal = true;
+    }
 
     const sampleData = [
             { name: 'John Doe', age: 30, email: 'john@example.com' },
@@ -103,7 +109,17 @@
     }    
 </script>
 
-
+{#if showSelectRiverAndStationModal}
+    <Modal on:close={handleClose} large={true}>
+        <SelectRiverAndStation 
+            {rivers} 
+            {stations} 
+            bind:dataType 
+            bind:selectedRivers 
+            bind:selectedStations
+            />
+    </Modal>
+{/if}
     
 <div>
     <div id="downloadHeader">Last ned data</div>
