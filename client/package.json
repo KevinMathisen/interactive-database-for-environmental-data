@@ -12,7 +12,7 @@
 		"test": "npm run test:integration && npm run test:unit",
 		"test:integration": "playwright test",
 		"test:unit": "vitest",
-		"lint": "npx standard --fix",
+		"lint": "eslint '**/*.{js,svelte}'",
 		"format": "prettier --write ."
 	},
 	"devDependencies": {
