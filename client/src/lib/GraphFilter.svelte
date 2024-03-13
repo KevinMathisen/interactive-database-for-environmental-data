@@ -6,8 +6,8 @@
     import { createEventDispatcher } from "svelte";
     const dispatch = createEventDispatcher();
 
-    export let riversChosen;
-    export let stationsChosen;
+    export let selectedRivers;
+    export let selectedStations;
     export let selectableSpecies = [];  // Species the user can choose
     export let dataType = "river";
 
@@ -41,13 +41,13 @@
         <!-- <ul>
             {#if dataType === 'river'}
                 <p>Elver valgt</p>
-                {#each riversChosen as river}
-                    <li>{river}</li>
+                {#each selectedRivers as river}
+                    <li>{river.name}</li>
                 {/each}
             {:else}
                 <p>Stasjoner valgt</p>
-                {#each stationsChosen as station}
-                    <li>{station}</li>
+                {#each selectedStations as station}
+                    <li>{station.name}</li>
                 {/each}
             {/if}
         </ul> -->
