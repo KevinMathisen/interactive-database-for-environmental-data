@@ -112,19 +112,81 @@
 	{#if showSuggestions}
 		<ul>
 			{#each suggestSpecies as species}
-				<li on:click={() => {inputSpecies = capitalizeFirstLetter(species); addSpecies()}}>{capitalizeFirstLetter(species)}</li>
+				<li class='suggestSpecies' on:click={() => {inputSpecies = capitalizeFirstLetter(species); addSpecies()}}>
+					{capitalizeFirstLetter(species)}
+				</li>
 			{/each}
 		</ul>
 	{/if}
 
 	<!-- Custom species choosen by user -->
-	<p>Valgte arter:</p>
-	<ul>
-		{#each customSpecies as species}
-			<li>{capitalizeFirstLetter(species)} <button on:click={() => removeSpecies(species)}>x</button></li>
-		{/each}
-	</ul>
+	{#if customSpecies.length > 0}
+		<p>Valgte arter:</p>
+		<ul>
+			{#each customSpecies as species}
+				<li>{capitalizeFirstLetter(species)} <button on:click={() => removeSpecies(species)}>x</button></li>
+			{/each}
+		</ul>
+	{/if}
 {/if}
 
+<style>
+	label {
+		display: block;
+		padding: 0.5em;
+		font-size: 1.2rem;
+		cursor: pointer;
+		border-radius: 0.5em;
+	}
 
+	/* Show when a user hovers over the label */
+	label:hover {
+		background-color: #435768;
+		color: white;
+	}
+
+	input[type="radio"] {
+		/* Make the input radio button larger */
+		transform: scale(1.25);
+	}
+
+	input[type="text"] {
+		width: 60%;
+		font-size: 16px;
+		padding: 0.5em;
+		margin: 0.5em 0;
+		border-radius: 0.5em;
+	}
+
+	button {
+		padding: 0.5em;
+		margin: 0.5em 0;
+		border-radius: 0.5em;
+		cursor: pointer;
+	}
+
+	/* Show when a user hovers over the button */
+	button:hover {
+		background-color: #435768;
+		color: white;
+	}
+
+	ul {
+		list-style: none;
+		padding: 0;
+		margin-top: 0;
+	}
+
+	.suggestSpecies {
+		padding: 0.5em;
+		border-radius: 0.5em;
+		cursor: pointer;
+	}
+
+	/* Show when a user hovers over the li */
+	.suggestSpecies:hover {
+		background-color: #435768;
+		color: white;
+	}
+</style>
 
