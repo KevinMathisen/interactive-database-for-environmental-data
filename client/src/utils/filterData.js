@@ -224,7 +224,7 @@ export function filterObservationsBySpecies (observations, species) {
  * @param {Map<string, River>} rivers - The list of rivers to find species from
  * @returns {string[]} - A list of unique species
  */
-export function getSelectableSpecies(rivers) {
+export function getSelectableSpecies (rivers) {
   // Use set instead of array for faster lookups
   const speciesSet = new Set()
 
