@@ -5,6 +5,11 @@
 	// Dispatcher to close the modal
 	const dispatch = createEventDispatcher();
 
+	export let large = false;
+
+	let width;
+	let height;
+
 	/**
 	 * Closes the modal on click event
 	 */
