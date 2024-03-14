@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - VITE_POSTGREST_URL=${VITE_POSTGREST_URL}
+    ports:
+      - "80:80"
+    depends_on:
+      - mock-server
+
+  mock-server:
+    build:
+      context: ./mock-server
+      dockerfile: Dockerfile
+    expose:
+      - "3000"
