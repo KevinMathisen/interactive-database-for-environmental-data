@@ -3,34 +3,39 @@
 	import Modal from './Modal.svelte';
 	import { SVG_PATHS } from '../constants/svgPaths';
 
-	let type = '';
-
-	let showModal = false;
-	let userFeedbackMessage = '';
-
 	$: userFeedback = $userFeedbackStore;
 
-	function handleUserFeedback(userFeedback) {
-	  if (userFeedback.length > 0) {
-	    userFeedbackMessage = userFeedback[0].message;
-	    type = userFeedback[0].type;
-	    console.log(userFeedback);
-	    showModal = true;
-	  }
-	}
-
-	$: handleUserFeedback(userFeedback);
-
 	function handleClose() {
-	  showModal = false;
+		userFeedbackStore.update((feedback) => {
+			feedback.pop();
+			return feedback;
+		});
 	}
-
-	
 </script>
 
-{#if showModal}
-	<Modal on:close={handleClose}>
-		<img src={type ? SVG_PATHS[type] : SVG_PATHS.close} alt={type} class="icon" />
-		<h3>{userFeedbackMessage}</h3>
-	</Modal>
-{/if}
+{#each userFeedback as feedback}
+	{#if feedback.message}
+		<Modal on:close={handleClose}>
+			<img
+				src={feedback.type ? SVG_PATHS[feedback.type] : SVG_PATHS.CLOSE}
+				alt={feedback.type}
+				class="icon"
+			/>
+			<h3>{feedback.message}</h3>
+		</Modal>
+	{/if}
+{/each}
+
+<style>
+	h3 {
+		margin: 20px 0;
+		text-align: center;
+		color: #333;
+		font-size: 1.5rem;
+	}
+
+	.icon {
+		width: 80px;
+		height: 80px;
+	}
+</style>

@@ -9,15 +9,10 @@ cd /home/ubuntu/Interactive-Database-for-Environmental-Data
 git checkout developer
 git pull origin developer
 
-# Stops and removes the container if it exists and ignores errors if it's not running
-container_id=$(sudo docker ps -qf "ancestor=interactive_database:latest")
-sudo docker stop $container_id || true
-sudo docker rm $container_id || true
+# Stop and remove previous containers and networks if any exists and ignores errors if it's not running
+sudo docker-compose down || true
 
-# Build the Docker image
-sudo docker build -t "interactive_database:latest" .
-
-# Run the Docker container
-sudo docker run --restart=always -p 80:80 -d interactive_database:latest
+# Build and run the docker containers
+sudo docker-compose up --build -d
 
 echo "Svelte application sucessfully started on developer!"
