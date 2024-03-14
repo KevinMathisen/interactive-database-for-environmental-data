@@ -1,9 +1,9 @@
-const svgBasePath = '/'; // Assuming your SVGs are stored in /static/
+const svgBasePath = '/'; 
 
 export const SVG_PATHS = {
-    error: `${svgBasePath}errorIcon.svg`,
-    success: `${svgBasePath}successIcon.svg`,
-    close: `${svgBasePath}closeIcon.svg`
+    ERROR: `${svgBasePath}errorIcon.svg`,
+    SUCCESS: `${svgBasePath}successIcon.svg`,
+    CLOSE: `${svgBasePath}closeIcon.svg`
 };
 
 
