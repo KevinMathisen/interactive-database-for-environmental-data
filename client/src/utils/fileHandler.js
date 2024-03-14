@@ -1,4 +1,10 @@
 import ExcelJS from 'exceljs'
+import {
+  FEEDBACK_TYPES,
+  FEEDBACK_CODES,
+  FEEDBACK_MESSAGES
+} from '../constants/feedbackMessages.js';
+import { addFeedbackToStore } from './addFeedbackToStore';
 
 //  - - - - DOWNLOAD FUNCTIONALITY - - - -
 export async function generateExcelFile (data) {
@@ -22,7 +28,7 @@ export async function generateExcelFile (data) {
 export async function generateCSVFile (data) {
   // Generate CSV content
   const csvContent = data.map(row => Object.values(row).join(',')).join('\n')
-
+  
   return csvContent
 }
 
@@ -31,12 +37,13 @@ export async function generateCSVFile (data) {
 export function validateFile (file) {
   // Check if the file type is valid
   if (!['.csv', '.xlsx'].includes(file.name.slice(file.name.lastIndexOf('.')))) {
-    alert('Invalid file type. Only .csv and .xlsx files are allowed.')
+    
+    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.UNSUPPORTED_CONTENT_TYPE, FEEDBACK_MESSAGES.UNSUPPORTED_CONTENT_TYPE)
     return false
   }
   // Check if the file size exceeds the limit
   if (file.size > 10 * 1024 * 1024) {
-    alert('File size exceeds the maximum limit of 5MB.')
+    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.CONTENT_TO_LARGE, FEEDBACK_MESSAGES.CONTENT_TO_LARGE)
     return false
   }
   return true
