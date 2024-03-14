@@ -33,7 +33,7 @@
 	<div class="modal" style="width: {width}px; height: {height}px;">
 		<slot></slot>
 		<button class="close" on:click={handleClose}>
-			<img src={SVG_PATHS.close} alt="Close" />
+			<img src={SVG_PATHS.CLOSE} alt="Close" />
 		</button>
 	</div>
 </div>
@@ -66,18 +66,6 @@
 		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 	}
 
-	.modal h3 {
-		margin: 20px 0;
-		text-align: center;
-		color: #333;
-		font-size: 1.5rem;
-	}
-
-	.icon {
-		width: 48px;
-		height: 48px;
-	}
-
 	.close {
 		position: absolute;
 		top: 10px;
@@ -94,22 +82,10 @@
 		height: 100%;
 	}
 
-	.success-icon {
-		fill: green;
-	}
-
-	.error-icon {
-		fill: red;
-	}
-
 	@media (max-width: 600px) {
 		.modal {
 			max-width: 90%;
 			padding: 15px;
-		}
-
-		.modal h3 {
-			font-size: 1.2rem;
 		}
 	}
 </style>

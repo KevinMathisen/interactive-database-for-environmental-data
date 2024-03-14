@@ -18,8 +18,10 @@ export const FEEDBACK_CODES = {
 }
 
 export const FEEDBACK_MESSAGES = {
-  CREATED: 'Opplasting vellykket',
+  UPLOAD_SUCCESS: 'Opplasting vellykket',
   GENERIC: 'En feil oppstod',
+  NO_FILE_SELCETED: 'Velg en fil før du klikker last opp',
+  NO_FILE_FORMAT_SELECTED: 'Ingen filformat valgt, velg enten .xslx eller .csv for å laste ned',
   NOT_FOUND: 'Kunne ikke finne den forespurte ressursen',
   FORBIDDEN: 'Handlingen du utførte ble ikke akseptert',
   UNAUTHORIZED: 'Du har ikke tillatelse til å utføre handlingen du forsøkte',
