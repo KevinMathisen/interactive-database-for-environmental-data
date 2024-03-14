@@ -28,7 +28,7 @@ export async function generateExcelFile (data) {
 export async function generateCSVFile (data) {
   // Generate CSV content
   const csvContent = data.map(row => Object.values(row).join(',')).join('\n')
-  
+
   return csvContent
 }
 
