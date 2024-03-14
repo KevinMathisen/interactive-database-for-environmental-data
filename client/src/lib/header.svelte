@@ -1,5 +1,6 @@
 <script>
     import { page} from '$app/stores';   
+    import Button from './Button.svelte';
 </script>
 
 <header>
@@ -8,27 +9,22 @@
         <p>Nina</p>
     </div>  
     <div class="centerItem" class:active={$page.url.pathname === '/'}>
-        <a href="/" >Kart</a>
-        <img src="/mapIcon.svg" alt="listIcon" height="60px" class="headerIcon">
+        <Button color="none" href="/">Kart<img src="/mapIcon.svg" alt="listIcon" height="50px" class="headerIcon"></Button>
     </div> 
     <div class="centerItem" class:active={$page.url.pathname === '/list'}>
-        <a href="/list">List</a>
-        <img src="/listIcon.svg" alt="listIcon" height="60px" class="headerIcon">
+        <Button color="none" href="/list">Liste<img src="/listIcon.svg" alt="listIcon" height="50px" class="headerIcon"></Button>
     </div>
     <div class="centerItem" class:active={$page.url.pathname === '/graph'}>
-        <a href="/graph">Grafer</a>
-        <img src="/graphIcon.svg" alt="listIcon" height="60px" class="headerIcon">
+        <Button color="none" href="/graph">Graph<img src="/graphIcon.svg" alt="listIcon" height="50px" class="headerIcon"></Button>
     </div>
     <div class="centerItem" class:active={$page.url.pathname === '/upload'}>
-        <a href="/upload">Last opp</a>
-        <img src="/uploadIcon.svg" alt="listIcon" height="60px" class="headerIcon">
+        <Button color="none" href="/upload">Last opp<img src="/uploadIcon.svg" alt="listIcon" height="50px" class="headerIcon"></Button>
     </div>
     <div class="centerItem" class:active={$page.url.pathname === '/download'}>
-        <a href="/download">Last ned</a>
-        <img src="/dowloadIcon.svg" alt="listIcon" height="60px" class="headerIcon">
+        <Button color="none" href="/download">Last ned<img src="/dowloadIcon.svg" alt="listIcon" height="50px" class="headerIcon"></Button>
     </div>
     <div class="LogOut centerItem">
-        Logg ut
+        <Button color="blue">Logg ut</Button>
     </div>
 </header>
 
@@ -69,25 +65,28 @@
         height: 60px;
         margin-right: 1.5rem;
     }
-
+    /*
     .LogOut {
         color:white;
         background-color: #435768;
         border-radius: 5px;
     }
+    */
 
     .centerItem {
         display: flex;
         justify-content: center;
         align-items: center;
     }   
-
+    /*
     a {
-        color: #000; /* Change links color to black */
-        text-decoration: none; /* Optionally remove underline */
+        color: #000; Change links color to black
+        text-decoration: none; Optionally remove underline
     }
-
+    */
+    
     .active {
         text-decoration: underline;
     }
+    
 </style>
