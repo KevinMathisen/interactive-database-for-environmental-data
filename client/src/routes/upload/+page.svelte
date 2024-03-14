@@ -14,7 +14,6 @@
 
 	let filesArray = [];
 	let isUploading = false;
-	let showModal = false;
 
 	function selectFile() {
 		const fileInput = document.createElement('input');
@@ -53,7 +52,6 @@
 		// need to validate that the files are actually csv or xls files. Do this by converting to json
 		// and checking if the json data follows the format we have specified
 		let allFilesValid = true;
-		showModal = true;
 		for (let file of filesArray) {
 			// Parse CSV file
 			if (file.name.endsWith('.csv')) {
@@ -76,14 +74,18 @@
 					console.log(jsonData);
 				};
 				reader.readAsArrayBuffer(file);
-			}else {
+			} else {
 				allFilesValid = false;
 				break;
 			}
 		}
 
 		if (allFilesValid) {
-			addFeedbackToStore(FEEDBACK_TYPES.SUCCESS, FEEDBACK_CODES.CREATED, FEEDBACK_MESSAGES.UPLOAD_SUCCESS);
+			addFeedbackToStore(
+				FEEDBACK_TYPES.SUCCESS,
+				FEEDBACK_CODES.CREATED,
+				FEEDBACK_MESSAGES.UPLOAD_SUCCESS
+			);
 		} else {
 			addFeedbackToStore(
 				FEEDBACK_TYPES.ERROR,
