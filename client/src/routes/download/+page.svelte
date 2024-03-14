@@ -1,5 +1,5 @@
 <script>
-    import CollapsibleSection from '../../lib/CollapsibleSection.svelte';
+	import CollapsibleSection from '../../lib/CollapsibleSection.svelte';
 	import RadioInput from '../../lib/RadioInput.svelte';
     import SpeciesInput from '../../lib/SpeciesInput.svelte';
     import Modal from '../../lib/Modal.svelte';
@@ -10,6 +10,13 @@
     import { riverStore } from '../../stores/riverStore.js';
     import { stationStore } from '../../stores/stationStore.js';
     import { onMount } from 'svelte';
+	import UserFeedbackMessage from '../../lib/UserFeedbackMessage.svelte';
+	import {
+		FEEDBACK_TYPES,
+		FEEDBACK_CODES,
+		FEEDBACK_MESSAGES
+	} from '../../constants/feedbackMessages.js';
+	import { addFeedbackToStore } from '../../utils/addFeedbackToStore';
 
     let showSelectRiverAndStationModal = false;
 
@@ -24,6 +31,7 @@
     let selectedSpecies = [];
 
     let selectedFormat = '';
+	let isDownloading = false;
 
     let chooseAll = true;               // If the user wants to choose all species
     let customSpecies = [];             // Species the user has chosen
@@ -74,40 +82,51 @@
             { name: 'Jane Smith', age: 25, email: 'jane@example.com' },
             { name: 'Bob Johnson', age: 40, email: 'bob@example.com' }
         ];
-  
-    const downloadFile = async () => {
-        let fileName = '';
-        let blob = null;
-        let fileData = null;
 
-        if (selectedFormat === 'xlsx') {
-            fileData = await generateExcelFile(sampleData); // Generate Excel file
-                // Create a blob from the Excel file data
-            blob = new Blob([fileData], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-            fileName = 'data.xlsx';
-        } else if (selectedFormat === 'csv') {
-            fileData = await generateCSVFile(sampleData); // Generate CSV content
-                // Create a Blob from the CSV content
-            blob = new Blob([fileData], { type: 'text/csv' });
-            fileName = 'data.csv';
-        } else {
-            alert("No format selected!");
-            return 0;
-        }
+	const downloadFile = async () => {
+		isDownloading = true;
+		if (selectedFormat === '' && isDownloading) {
+			addFeedbackToStore(
+				FEEDBACK_TYPES.ERROR,
+				FEEDBACK_CODES.NOT_FOUND,
+				FEEDBACK_MESSAGES.NO_FILE_FORMAT_SELECTED
+			);
+		}
+		let fileName = '';
+		let blob = null;
+		let fileData = null;
 
-        const url = URL.createObjectURL(blob);
-            // Create a temporary anchor element
-        const a = document.createElement('a');
-        a.href = url;
+		if (selectedFormat === 'xlsx') {
+			fileData = await generateExcelFile(sampleData); // Generate Excel file
+			// Create a blob from the Excel file data
+			blob = new Blob([fileData], {
+				type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+			});
+			fileName = 'data.xlsx';
+		} else if (selectedFormat === 'csv') {
+			fileData = await generateCSVFile(sampleData); // Generate CSV content
+			// Create a Blob from the CSV content
+			blob = new Blob([fileData], { type: 'text/csv' });
+			fileName = 'data.csv';
+		}
 
-        a.download = fileName; // Set the filename
-        document.body.appendChild(a);
-            // Programmatically click the anchor element to trigger the download
-        a.click();
-            // Remove the anchor element from the DOM
-        document.body.removeChild(a);
-    }    
+		const url = URL.createObjectURL(blob);
+		// Create a temporary anchor element
+		const a = document.createElement('a');
+		a.href = url;
+
+		a.download = fileName; // Set the filename
+		document.body.appendChild(a);
+		// Programmatically click the anchor element to trigger the download
+		a.click();
+		// Remove the anchor element from the DOM
+		document.body.removeChild(a);
+	};
 </script>
+
+{#if isDownloading}
+	<UserFeedbackMessage />
+{/if}
 
 {#if showSelectRiverAndStationModal}
     <Modal on:close={handleClose} large={true}>
@@ -166,9 +185,7 @@
 
 <button class="downloadButton" on:click={downloadFile}>Last ned</button>
 
-
-
-<style> 
+<style>
     #downloadHeader {
         height: 100px;
         font-size:3rem;
@@ -198,22 +215,17 @@
         margin: 20px;
     }
 
-    .setWidthForButtonsUpload {
-        width: 150px;
-        display: inline-block;
-    }
-
-    .downloadButton {
-        position: fixed;
-        right: 500px;
-        bottom: 100px;
-        font-size: 1.2rem;
-        background-color: tomato;
-        border-radius: 1rem;
-        width: 200px;
-        height: 60px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+	.downloadButton {
+		position: fixed;
+		right: 500px;
+		bottom: 100px;
+		font-size: 1.2rem;
+		background-color: tomato;
+		border-radius: 1rem;
+		width: 200px;
+		height: 60px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
 </style>
