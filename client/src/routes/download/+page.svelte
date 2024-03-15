@@ -1,79 +1,192 @@
-<script> // Download page logic here 
+<script>
+	import CollapsibleSection from '../../lib/CollapsibleSection.svelte';
+	import RadioInput from '../../lib/RadioInput.svelte';
+    import SpeciesInput from '../../lib/SpeciesInput.svelte';
+    import Modal from '../../lib/Modal.svelte';
+    import SelectRiverAndStation from '../../lib/SelectRiverAndStation.svelte';
+    import { generateExcelFile, generateCSVFile } from  '/src/utils/fileHandler';
+    import { getRivers, getStations } from '../../utils/dataManager.js';
+    import { getSelectableSpecies } from '../../utils/filterData.js';
+    import { riverStore } from '../../stores/riverStore.js';
+    import { stationStore } from '../../stores/stationStore.js';
+    import { onMount } from 'svelte';
+	import UserFeedbackMessage from '../../lib/UserFeedbackMessage.svelte';
+	import {
+		FEEDBACK_TYPES,
+		FEEDBACK_CODES,
+		FEEDBACK_MESSAGES
+	} from '../../constants/feedbackMessages.js';
+	import { addFeedbackToStore } from '../../utils/addFeedbackToStore.js';
+
+    let showSelectRiverAndStationModal = false;
+
+    let rivers = new Map();             // Rivers with coordinates
+    let stations = new Map();           // Stations with coordinates
+    let selectableSpecies = [];              // All unique species
+
+    let dataType;                       // "river" or "station", chosen by user
+    let selectedRivers = new Map();     // Rivers the user has chosen
+    let selectedStations = new Map();   // Stations the user has chosen
+
+    let selectedSpecies = [];
+
+    let selectedFormat = '';
+	let isDownloading = false;
+
+    let chooseAll = true;               // If the user wants to choose all species
+    let customSpecies = [];             // Species the user has chosen
+
+    // Species the user can choose
+    $: selectableSpecies = dataType === 'river' ? getSelectableSpecies(rivers) : getSelectableSpecies(stations);
+
+    // Species the user has choosen; either all or the custom ones
+    $: selectedSpecies = chooseAll ? selectableSpecies : customSpecies;
+
+    
+    let formatOptions = [
+        {value: "xlsx", label: "xlsx"},
+        {value: "csv", label: "csv"}
+    ];
+
+    onMount(async () => {
+        // Get rivers and stations from API
+        getRivers();
+        getStations();
+    });
+
+    // Get rivers and stations from stores
+    $: rivers = $riverStore;
+    $: stations = $stationStore;
+
+    function onSelectRiverStation() {
+        // should get the selected rivers and stations from event
+        if (dataType === 'river') {
+            selectedRivers = new Map(rivers[3])
+            selectableSpecies = getSelectableSpecies(rivers)
+        } else {
+            selectedStations = new Map(stations[11])
+            selectableSpecies = getSelectableSpecies(stations)
+        }
+    }
+
+    function handleClose() {
+        showSelectRiverAndStationModal = false;
+    }
+
+    function handleSelectRiverStation() {
+        showSelectRiverAndStationModal = true;
+    }
+
+    const sampleData = [
+            { name: 'John Doe', age: 30, email: 'john@example.com' },
+            { name: 'Jane Smith', age: 25, email: 'jane@example.com' },
+            { name: 'Bob Johnson', age: 40, email: 'bob@example.com' }
+        ];
+
+	const downloadFile = async () => {
+		isDownloading = true;
+		if (selectedFormat === '' && isDownloading) {
+			addFeedbackToStore(
+				FEEDBACK_TYPES.ERROR,
+				FEEDBACK_CODES.NOT_FOUND,
+				FEEDBACK_MESSAGES.NO_FILE_FORMAT_SELECTED
+			);
+		}
+		let fileName = '';
+		let blob = null;
+		let fileData = null;
+
+		if (selectedFormat === 'xlsx') {
+			fileData = await generateExcelFile(sampleData); // Generate Excel file
+			// Create a blob from the Excel file data
+			blob = new Blob([fileData], {
+				type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+			});
+			fileName = 'data.xlsx';
+		} else if (selectedFormat === 'csv') {
+			fileData = await generateCSVFile(sampleData); // Generate CSV content
+			// Create a Blob from the CSV content
+			blob = new Blob([fileData], { type: 'text/csv' });
+			fileName = 'data.csv';
+		}
+
+		const url = URL.createObjectURL(blob);
+		// Create a temporary anchor element
+		const a = document.createElement('a');
+		a.href = url;
+
+		a.download = fileName; // Set the filename
+		document.body.appendChild(a);
+		// Programmatically click the anchor element to trigger the download
+		a.click();
+		// Remove the anchor element from the DOM
+		document.body.removeChild(a);
+	};
 </script>
+
+{#if isDownloading}
+	<UserFeedbackMessage />
+{/if}
+
+{#if showSelectRiverAndStationModal}
+    <Modal on:close={handleClose} large={true}>
+        <SelectRiverAndStation 
+            {rivers} 
+            {stations} 
+            bind:dataType 
+            bind:selectedRivers 
+            bind:selectedStations
+            />
+    </Modal>
+{/if}
     
 <div>
-    <div id="downloadDataTopText">Last ned data</div>
+    <div class="downloadHeader">Last ned data</div>
 </div>
 
     <!-- Defines the area containing the options for dowloading -->
-<div class="downloadBody">
-    <div class="downloadDataBox">
-            <!-- Defines the first area, containing options between riverdata and stationdata -->
-        <div class="dowloadBoxGeneral">
-            <h3>Type data</h3>
-            <form action=" ">
-                <div>
-                    <div class="setWidthForButtonsUpload"><label for="StasjonsdataUpload">Stasjonsdata</label></div>
-                    <input type="radio" id="StasjonsdataUpload" name="color" value="StasjonsdataUpload">
-                </div>
-                
-                <div>
-                    <div class="setWidthForButtonsUpload"><label for="ElvedataUpload">Elvedata</label></div>
-                    <input type="radio" id="ElvedataUpload" name="color" value="ElvedataUpload">
-                </div>            
-            </form>
+<div class="downloadMain">
+    <div class="row">
+        <div class="rowItem">
+            <!-- Input for opening selection of river or stations -->
+            <CollapsibleSection title="{dataType === 'river' ? 'Elver' : 'Stasjoner'} valgt">
+                <button on:click={handleSelectRiverStation}>Rediger {dataType === 'river' ? 'elver' : 'stasjoner'}</button>
+                <ul>
+                    {#if dataType === 'river'}
+                        <p>Elver valgt</p>
+                        {#each Array.from(selectedRivers.entries()) as [_, river]}
+                            <li>{river.name + " " + river.startDate}</li>
+                        {/each}
+                    {:else}
+                        <p>Stasjoner valgt</p>
+                        {#each Array.from(selectedStations.entries()) as [_, station]}
+                            <li>{station.name + " " + station.date}</li>
+                        {/each}
+                    {/if}
+                </ul>
+            </CollapsibleSection>
         </div>
 
-            <!-- Defines the second area, containing options between all species or self-specified species -->
-        <div class="dowloadBoxGeneral">
-            <h3>Art</h3>
-            <form action=" ">
-                <div>
-                    <div class="setWidthForButtonsUpload"><label for="velgAlleArterUpload">Velg alle arter</label></div>
-                    <input type="radio" id="velgAlleArterUpload" name="color" value="velgAlleArterUpload">
-                </div>
-                
-                <div>
-                    <div class="setWidthForButtonsUpload"><label for="egendefinerteArterUpload">Egendefinerte arter</label></div>
-                    <input type="radio" id="egendefinerteArterUpload" name="color" value="egendefinerteArterUpload">
-                </div>            
-            </form>
+        <div class="rowItem">
+            <!-- Input for choosing species -->
+            <CollapsibleSection title="Art">
+                <SpeciesInput {selectableSpecies} bind:chooseAll bind:customSpecies />
+            </CollapsibleSection>
         </div>
+    </div>
 
-            <!-- Defines the first area where you can select which stations to include -->
-        <div class="dowloadBoxGeneral">
-            <p>Stasjoner</p>
-            <div>
-                <label for="stationOptions"></label>
-                <select id="stationOptions" name="stationOptions">
-                    <option value="Sei">Sei</option>
-                    <option value="Flyndre">Flyndre</option>
-                    <option value="Torsk">Torsk</option>
-                    <option value="Makrell">Makrell</option>
-                    <option value="Steinbit">Steinbit</option>
-                </select>
-            </div>
-        </div>
-
-            <!-- Defines the fourth area where you can select which species to include -->
-        <div class="dowloadBoxGeneral">
-            <p>Egendefinerte arter</p>
-            <div>
-                <label for="artOptions"></label>
-                <select id="artOptions" name="artOptions">
-                    <option value="Sei">Sei</option>
-                    <option value="Flyndre">Flyndre</option>
-                    <option value="Torsk">Torsk</option>
-                    <option value="Makrell">Makrell</option>
-                    <option value="Steinbit">Steinbit</option>
-                </select>
-            </div>
-        </div>
+    <div class="row">
+        <!-- Input for choosing file format -->
+        <CollapsibleSection title="Format">
+            <RadioInput name="format" options={formatOptions} bind:selected={selectedFormat} />
+        </CollapsibleSection>
     </div>
 </div>
 
-<style> 
-    #downloadDataTopText {
+<button class="downloadButton" on:click={downloadFile}>Last ned</button>
+
+<style>
+    .downloadHeader {
         height: 100px;
         font-size:3rem;
         width: 100vw;
@@ -84,57 +197,35 @@
         align-items: center;
     }
 
-    .downloadBody {
+    .downloadMain {
         display: flex;
         justify-content: center;
-    }
-
-    .downloadDataBox {
-        display: grid;
-        flex-direction: row;
-        grid-template-areas: 
-        "b1 b2"                   
-        "b3 b4";
-        grid-template-rows: 250px 300px;
-        grid-template-columns: 1fr 1fr;
-        width: 1300px;
-        font-size: 1.2rem;
-        gap: 2rem;
-        justify-items: center;
-    }
-
-    .downloadDataBox h3 {
-        color: #435768;
-        font-size: 2rem;
-    }
-
-    .downloadDataBox p {
-        color: #435768;
-        font-size: 1.8rem;
-    }
-
-    .dowloadBoxGeneral {
-        width: 400px;
-        display: flex;
         flex-direction: column;
+    }
+
+    .row {
+        display: flex;
+        justify-content: center;
         align-items: center;
+        width: 100%;
+        margin: 10px;
     }
 
-    .downloadDataBox:nth-child(1){
-        grid-area: b1;
-    }
-    .downloadDataBox:nth-child(2){
-        grid-area: b2;
-    }
-    .downloadDataBox:nth-child(3){
-        grid-area: b3;
-    }
-    .downloadDataBox:nth-child(4){
-        grid-area: b4;
+    .rowItem {
+        margin: 20px;
     }
 
-    .setWidthForButtonsUpload {
-        width: 150px;
-        display: inline-block;
-    }
+	.downloadButton {
+		position: fixed;
+		right: 500px;
+		bottom: 100px;
+		font-size: 1.2rem;
+		background-color: tomato;
+		border-radius: 1rem;
+		width: 200px;
+		height: 60px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
 </style>

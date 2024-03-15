@@ -1,0 +1,74 @@
+events {
+	worker_connections 1024;
+}
+
+http {
+	sendfile on;
+	tcp_nopush on;
+	tcp_nodelay on;
+	keepalive_timeout 65;
+	types_hash_max_size 2048;
+
+	include /etc/nginx/mime.types;
+    default_type application/octet-stream;
+
+	# enable GZIP compression
+	gzip on;
+    gzip_vary on;
+	gzip_disable "msie6";
+    gzip_proxied any;
+    gzip_comp_level 6;
+    gzip_buffers 16 8k;
+    gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+
+	# set headers for security
+	add_header X-Frame-Options "SAMEORIGIN";
+	add_header X-Content-Type-Options "nosniff";
+	add_header X-XSS-Protection "1; mode=block";
+	add_header Referrer-Policy "no-referrer-when-downgrade";
+	add_header Content-Security-Policy "default-src 'self'; img-src 'self' data: https://*.tile.openstreetmap.org; font-src 'self' data: https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';";
+
+	# disable server tokens to hide server version
+	server_tokens off;
+
+	# logging files
+    access_log /var/log/nginx/access.log;
+    error_log /var/log/nginx/error.log;
+
+
+	server {
+		listen 80;
+		server_name ${SERVER_NAME}; # Set server name to environment variable
+
+		# root directory
+		root /usr/share/nginx/html;
+		# index file
+		index index.html;
+
+		# serve svelte
+		location / {
+			try_files $uri $uri/ /index.html =404;
+		}
+
+		# error pages
+		error_page 404 /404.html;
+		location = /404.html {
+			internal;
+		}
+		error_page 500 502 503 504 /500.html;
+		location = /500.html {
+			internal;
+		}
+
+		location /api/ {
+			proxy_pass http://mock-server:3000/;
+			proxy_http_version 1.1;
+			proxy_set_header Upgrade $http_upgrade;
+			proxy_set_header Connection 'upgrade';
+			proxy_set_header Host $host;
+			proxy_cache_bypass $http_upgrade;
+		}
+
+	}
+
+}

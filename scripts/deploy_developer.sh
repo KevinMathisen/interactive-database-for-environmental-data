@@ -6,16 +6,13 @@ set -euo pipefail  # Exists the script if any command fail along the way
 cd /home/ubuntu/Interactive-Database-for-Environmental-Data
 
 # Pull the latest from the developer branch
+git checkout developer
 git pull origin developer
 
-# Stops and removes the container if it exists and ignores errors if it's not running
-docker stop staticwebserver:latest || true
-docker rm staticwebserver:latest || true
+# Stop and remove previous containers and networks if any exists and ignores errors if it's not running
+sudo docker-compose down || true
 
-# Build the Docker image
-docker build -t "staticwebserver:latest" ./web-server
-
-# Run the Docker container
-docker run --restart=always -p 3000:3000 -d staticwebserver:latest
+# Build and run the docker containers
+sudo docker-compose up --build -d
 
 echo "Svelte application sucessfully started on developer!"

@@ -1,12 +1,13 @@
 # dependencies
 /client/node_modules
 /server/node_modules
+/mock-server/node_modules
 
 # testing
 /client/coverage
 
 # production build
-/server/public
+/client/build
 
 # logs
 logs

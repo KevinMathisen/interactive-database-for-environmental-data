@@ -1,0 +1,38 @@
+[
+	{
+		"id": 1,
+		"name": "Hallingdalselva",
+		"pos": {
+			"type": "Point",
+			"coordinates": [9.08298, 60.59684]
+		},
+		"start_date": "2014-09-16",
+		"end_date": "2014-09-16",
+		"species": ["ørekyt", "gjedde", "ørret", "abbor", "sik"],
+		"project_id": ""
+	},
+	{
+		"id": 2,
+		"name": "Hallingdalselva",
+		"pos": {
+			"type": "Point",
+			"coordinates": [9.22950, 60.47652]
+		},
+		"start_date": "2021-09-21",
+		"end_date": "2021-09-21",
+		"species": ["ørekyt", "gjedde", "ørret", "abbor"],
+		"project_id": ""
+	},
+	{
+		"id": 3,
+		"name": "Gaula",
+		"pos": {
+			"type": "Point",
+			"coordinates": [10.25962, 63.25848]
+		},
+		"start_date": "2021-09-30",
+		"end_date": "2021-09-30",
+		"species": ["aure", "laks", "3-pigga stingsild", "skrubbe"],
+		"project_id": "Restaureringsprosjektet"
+	}
+]
