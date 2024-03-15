@@ -4,8 +4,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    environment:
-      - VITE_POSTGREST_URL=${VITE_POSTGREST_URL}
+      args:
+        - VITE_POSTGREST_URL=${VITE_POSTGREST_URL}
     ports:
       - "80:80"
     depends_on:
