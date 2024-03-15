@@ -11,6 +11,7 @@
 	import UserFeedbackMessage from '../../lib/UserFeedbackMessage.svelte';
 
 	import { validateFile, fileExistsInArray } from '/src/utils/fileHandler.js';
+    import Button from '../../lib/Button.svelte';
 
 	let filesArray = [];
 	let isUploading = false;
@@ -103,7 +104,9 @@
 	<div class="uploadFilesBox">
 		<img src="/uploadCloudIcon.svg" alt="listIcon" height="60px" id="uploadCloudIcon" />
 		<p>Dra og slipp filer eller</p>
-		<button id="uploadFilesBoxButton" on:click={selectFile}>Bla gjennom Filer </button>
+		<br>
+		<!-- <button id="uploadFilesBoxButton" on:click={selectFile}>Bla gjennom Filer </button> -->
+		<Button color="blue" on:downloadFile={downloadFile} ifNotPicture={true}>Bla gjennom Filer </Button>
 	</div>
 
 	<!-- Defines the text under the upload files box -->
@@ -120,7 +123,8 @@
 </div>
 
 <!-- Defines the upload files button -->
-<button class="uploadButton" on:click={uploadFile}>Last opp</button>
+<!-- <button class="uploadButton" on:click={uploadFile}>Last opp</button> -->
+<Button type="uploadButton" color="orange" on:downloadFile={downloadFile}>Last opp <img src="/uploadIcon.svg" alt="listIcon" height="50px" class="headerIcon"></Button>
 
 <style>
 	.uploadBody {
@@ -136,6 +140,7 @@
 		flex-direction: column;
 		align-items: center;
 		width: 900px;
+		height: 13em;
 		font-size: 1.5rem;
 	}
 
@@ -169,19 +174,5 @@
 
 	#filesChosen {
 		font-size: 1rem;
-	}
-
-	.uploadButton {
-		position: fixed;
-		right: 500px;
-		bottom: 100px;
-		font-size: 1.2rem;
-		background-color: tomato;
-		border-radius: 1rem;
-		width: 200px;
-		height: 60px;
-		display: flex;
-		justify-content: center;
-		align-items: center;
 	}
 </style>
