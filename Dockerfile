@@ -6,7 +6,7 @@ RUN npm install
 COPY client/. .
 # Inject environment variable into .env
 ARG VITE_POSTGREST_URL
-RUN echo "VITE_POSTGREST_URL=${VITE_POSTGREST_URL}" > ./client/.env
+RUN if [ -n "$VITE_POSTGREST_URL" ]; then echo "VITE_POSTGREST_URL=${VITE_POSTGREST_URL}" > ./client/.env; fi
 
 RUN npm run build
 
