@@ -4,6 +4,10 @@ WORKDIR /app
 COPY client/package*.json ./
 RUN npm install
 COPY client/. .
+# Inject environment variable into .env
+ARG VITE_POSTGREST_URL
+RUN echo "VITE_POSTGREST_URL=${VITE_POSTGREST_URL}" > ./client/.env
+
 RUN npm run build
 
 # Production stage
