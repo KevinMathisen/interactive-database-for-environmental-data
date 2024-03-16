@@ -98,7 +98,12 @@
 		let fileData = null;
 
 		if (selectedFormat === 'xlsx') {
-			fileData = await generateExcelFile(selectedStations); // Generate Excel file
+            if (dataType === 'river') { // Generate Excel file
+                fileData = await generateExcelFile(selectedRivers, dataType); 
+            } else {
+                fileData = await generateExcelFile(selectedStations, dataType);
+            }
+            
 			// Create a blob from the Excel file data
 			blob = new Blob([fileData], {
 				type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
