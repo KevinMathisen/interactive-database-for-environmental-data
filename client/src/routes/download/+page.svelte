@@ -16,7 +16,7 @@
 		FEEDBACK_CODES,
 		FEEDBACK_MESSAGES
 	} from '../../constants/feedbackMessages.js';
-	import { addFeedbackToStore } from '../../utils/addFeedbackToStore';
+	import { addFeedbackToStore } from '../../utils/addFeedbackToStore.js';
 
     let showSelectRiverAndStationModal = false;
 
@@ -141,7 +141,7 @@
 {/if}
     
 <div>
-    <div id="downloadHeader">Last ned data</div>
+    <div class="downloadHeader">Last ned data</div>
 </div>
 
     <!-- Defines the area containing the options for dowloading -->
@@ -186,7 +186,7 @@
 <button class="downloadButton" on:click={downloadFile}>Last ned</button>
 
 <style>
-    #downloadHeader {
+    .downloadHeader {
         height: 100px;
         font-size:3rem;
         width: 100vw;
