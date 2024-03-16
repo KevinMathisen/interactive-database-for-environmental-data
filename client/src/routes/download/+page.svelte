@@ -75,6 +75,7 @@
 
     function handleSelectRiverStation() {
         showSelectRiverAndStationModal = true;
+        console.log(selectedStations)
     }
 
     const sampleData = [
@@ -97,7 +98,7 @@
 		let fileData = null;
 
 		if (selectedFormat === 'xlsx') {
-			fileData = await generateExcelFile(sampleData); // Generate Excel file
+			fileData = await generateExcelFile(selectedStations); // Generate Excel file
 			// Create a blob from the Excel file data
 			blob = new Blob([fileData], {
 				type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'

@@ -65,7 +65,6 @@
         // called when this component is unmounted
     onDestroy(async () => {
         if(map) {
-            console.log('Unloading Leaflet map.');
             map.remove();
         }
     });
@@ -92,6 +91,9 @@
             let coordinate2 = river.position.coordinates[1];
             const marker = leaflet.marker([coordinate2 , coordinate1]);
             riverMarkers.push(marker);
+            marker.on('click', (e) => { // handles clicks events for each river
+                riverSelected(river, e);
+            });
             });
 
         stations.forEach(station => {
@@ -105,22 +107,25 @@
             let polyline = leaflet.polyline(positions, {color: 'red'});
 	        lines.push(polyline);
             stationMarkers.push(startMarker);     
-            stationMarkers.push(endMarker);                               
+            stationMarkers.push(endMarker);
+            startMarker.on('click', (e) => { // handles clicks events for each station
+                stationSelected(startMarker, e);
+            });
+            endMarker.on('click', (e) => { // handles clicks events for each station
+                stationSelected(endMarker, e);
+            });                               
         });
         addRivers();   
     }
         
         // adds station markers to the map
     function addStations() {
-            // loops through all stations and adds a marker for each
+            // loops through all stations and adds a marker and line for each
         lines.forEach(polyline => {
             polyline.addTo(map);
         });
         stationMarkers.forEach(marker => {
             marker.addTo(map);
-            marker.on('click', (e) => { // handles clicks events for each station
-                stationSelected(marker, e);
-            });
         });
     }
         // Called when a station marker is clicked
@@ -158,9 +163,6 @@
     function addRivers() {
         riverMarkers.forEach(marker => {
             marker.addTo(map);
-            marker.on('click', (e) => { // handles clicks events for each river
-                riverSelected(marker, e);
-            });
         });
     }
 
