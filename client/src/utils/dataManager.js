@@ -232,6 +232,11 @@ export async function getRiverForDownload (id) {
  * @returns {void}
  */
 export async function getStationForDownload (id) {
+  const station = get(stationStore).get(id)
+
+  // Ensure that river summary for station is stored
+  getRiverSummary(station.riverId)
+
   // Check if station download exists, if it does, return
   if (checkIfStationDownloadExists(id)) {
     return
