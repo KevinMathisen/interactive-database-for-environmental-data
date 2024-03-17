@@ -39,16 +39,17 @@ function filterDataBasedOnAttributeCombinationSubstring(objects, attributes, val
 /**
  * Filters a map of objects based on if a given attribute is in a list of values
  *
- * @param {Map<int, object>} objects - The map of objects to filter
+ * @param {object[]} objects - The array of objects to filter
  * @param {string} attribute - The attribute to filter on
  * @param {string[]} values - The list of values which should be equal to the attribute value
- * @returns {Map<int, object>} - A filtered map of objects
+ * @returns {object[]} - A filtered array of objects
  */
 function filterDataBasedOnAttributeInList(objects, attribute, values) {
+  // Return all objects if no values are given
+  if (values.length === 0) return objects
+
   // return the objects which have an attribute that is in the values list
-  return new Map([...objects].filter(([key, object]) => 
-    values.includes(object[attribute])
-  ));
+  return objects.filter(object => values.includes(object[attribute]));
 }
 
 
@@ -244,14 +245,19 @@ export function filterObservationsBySpecies (observations, species) {
  * @returns {string[]} - A list of unique species
  */
 export function getSelectableSpecies (rivers) {
-  // Use set instead of array for faster lookups
-  const speciesSet = new Set()
+  try {
+    // Use set instead of array for faster lookups
+    const speciesSet = new Set()
 
-  rivers.forEach(river => {
-    river[attributesToFilterOn.SPECIES].forEach(species => speciesSet.add(species))
-  })
+    rivers.forEach(river => {
+      river[attributesToFilterOn.SPECIES].forEach(species => speciesSet.add(species))
+    })
 
-  return Array.from(speciesSet)
+    return Array.from(speciesSet)
+  } catch (error) {
+    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
+    return []
+  }
 }
 
 /**
