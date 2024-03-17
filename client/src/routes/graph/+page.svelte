@@ -43,7 +43,7 @@
     $: selectableSpecies = dataType === 'river' ? getSelectableSpecies(rivers) : getSelectableSpecies(stations);
 
     /**
-     *
+     * Get the selectable species from the rivers or stations
      */
     function onSelectRiverStation() {
         // should get the selected rivers and stations from event
@@ -57,14 +57,14 @@
     }
 
     /**
-     *
+     * Handles the close event from the modal
      */
     function handleClose() {
         showSelectRiverAndStationModal = false;
     }
 
     /**
-     *
+     * Handles the clikc event on a river
      */
     function handleSelectRiverStation() {
         showSelectRiverAndStationModal = true;
