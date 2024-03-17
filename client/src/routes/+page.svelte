@@ -23,12 +23,20 @@
     let sideBar = false;
     let sideBarTitle = 'Sidebar';
   
+    /**
+     * Handles the clikc event on a station
+     * @param {Event} event - The click event
+     */
     function stationClicked(event) {
         sideBar = true;
         sideBarTitle = event.detail.text.name;
     }
 
-    function mapClicked(event) {
+    /**
+     * Handles the clikc event on a river
+     * @param {Event} _ - The click event
+     */
+    function mapClicked(_) {
         sideBar = false;
     }
 
