@@ -4,7 +4,7 @@
     import SpeciesInput from '../../lib/SpeciesInput.svelte'
     import Modal from '../../lib/Modal.svelte'
     import SelectRiverAndStation from '../../lib/SelectRiverAndStation.svelte'
-    import { generateExcelFile, generateCSVFile } from '../../../../../src/utils/fileHandler'
+    import { generateExcelFile, generateCSVFile } from '../../src/utils/fileHandler'
     import {
       getRivers, getStations,
       getRiverForDownload,
