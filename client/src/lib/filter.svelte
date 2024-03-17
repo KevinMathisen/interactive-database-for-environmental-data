@@ -1,15 +1,15 @@
 <script>
-    import CollapsibleSection from "./CollapsibleSection.svelte";
-    import RadioInput from "./RadioInput.svelte";
-    import DateInput from "./DateInput.svelte";
-    import SpeciesInput from "./SpeciesInput.svelte";
+    import CollapsibleSection from './CollapsibleSection.svelte';
+    import RadioInput from './RadioInput.svelte';
+    import DateInput from './DateInput.svelte';
+    import SpeciesInput from './SpeciesInput.svelte';
 
     export let selectableSpecies = [];  // Species the user can choose 
 
     // User input exported to the page
-    export let dataType = "river";      
-    export let selectedStartDate = "";
-	export let selectedEndDate = "";
+    export let dataType = 'river';      
+    export let selectedStartDate = '';
+	export let selectedEndDate = '';
     export let selectedSpecies = [];
 
     let chooseAll = true;               // If the user wants to choose all species
@@ -20,8 +20,8 @@
 
     // Options when choosing data type
     let dataOptions = [
-        {value: "river", label: "Elvedata"},
-        {value: "station", label: "Stasjonsdata"}
+        {value: 'river', label: 'Elvedata'},
+        {value: 'station', label: 'Stasjonsdata'}
     ];
 
 </script>
