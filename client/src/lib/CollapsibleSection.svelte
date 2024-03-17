@@ -8,7 +8,6 @@
 
 	/**
 	 * Toggle the collapse state
-	 * 
 	 * @returns {void}
 	 */
 	function toggleCollapse() {

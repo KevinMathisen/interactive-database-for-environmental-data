@@ -7,7 +7,6 @@
 
 	/**
 	 * Handles the close event of the modal
-	 * 
 	 * @returns {void}
 	 */
 	function handleClose() {

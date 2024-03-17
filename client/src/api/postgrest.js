@@ -38,7 +38,6 @@ async function fetchFromPostgrest (endpoint) {
 /**
  * Handles the response from the fetch request by checking for any errors and
  * returning json data if none are found
- * 
  * @param {Response} response - The response from the fetch request
  * @returns {Promise} - A promise which resolves to json data
  * @throws {Error} - Thrown if the response status is not ok
@@ -61,7 +60,6 @@ async function handleResponse (response) {
 
 /**
  * Fetches data needed for the rivers on the map and list page
- * 
  * @returns {Promise} - A promise which resolves to json data
  * @async
  */
@@ -71,7 +69,6 @@ export async function fetchRivers () {
 
 /**
  * Fetches data needed for the stations on the map and list page
- * 
  * @returns {Promise} - A promise which resolves to json data
  * @async
  */
@@ -81,7 +78,6 @@ export async function fetchStations () {
 
 /**
  * Fetches all station data needed for the summary page
- * 
  * @param {number} id - The id of the river to fetch data for
  * @returns {Promise} - A promise which resolves to json data
  * @async
@@ -93,7 +89,6 @@ export async function fetchRiverSummary (id) {
 
 /**
  * Fetches all station data needed for the summary page
- * 
  * @param {Array} id - The id of the station to fetch data for
  * @returns {Promise} - A promise which resolves to json data
  * @async
@@ -107,7 +102,6 @@ export async function fetchStationSummary (id) {
 
 /**
  * Fetches all data required to download a station specified with ID
- * 
  * @param {Array} id - The id of the station to fetch data for
  * @returns {Promise} - A promise which resolves to json data
  * @async
@@ -121,7 +115,6 @@ export async function fetchStationDownload (id) {
 
 /**
  * Creates a postgrest endpoint for either a single id or an array of ids
- * 
  * @param {Array} id - The id of the object to fetch data for
  * @param {string} endpoint - The endpoint to fetch data from
  * @returns {string} - The endpoint with the id or ids added

@@ -92,7 +92,6 @@
         // called when the map is clicked
     /**
      * Dispatches an event to the parent component
-     * 
      * @param {Event} _ - The event object
      */
     function onMapClick(_) {
@@ -102,7 +101,6 @@
 
     /**
      * Adds station markers to the map
-     * 
      * @param {object} leaflet - Object used to create markers
      */
     function addStations(leaflet) {
@@ -134,7 +132,6 @@
         
     /**
      * Called when a station marker is clicked
-     * 
      * @param {object} station - The station data
      * @param {object} leaflet - The Leaflet object uses to create markers
      * @param {Event} e - The event object
@@ -175,7 +172,6 @@
      *
      * Iterates the rivers array and adds a marker for each river
      * Also sets up a click even handler for each marker
-     * 
      * @param {object} leaflet - The Leaflet object uses to create markers
      */
     function addRivers(leaflet) {
@@ -192,7 +188,6 @@
 
     /**
      * Handles click events for each river marker
-     * 
      * @param {object} river - The river data
      * @param {object} leaflet - The Leaflet object uses to create markers
      * @param {Event} e - The event object

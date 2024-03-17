@@ -10,7 +10,7 @@ import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/
  * Assumes that if the first object in the store does not have any species
  * that there is not sufficient data in the store to display the data
  * on the map or list page
- * @param {Object} store - The store to check if data exists in
+ * @param {object} store - The store to check if data exists in
  * @returns {boolean} - True if the store contains suficient data, else false
  */
 function doesDataInStoreExist (store) {
