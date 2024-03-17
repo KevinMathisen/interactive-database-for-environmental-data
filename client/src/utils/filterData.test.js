@@ -143,6 +143,11 @@ describe('test filterObservationsBySpecies function', () => {
     const observations = [new Observation({ species: 'species1' })]
     expect(filterObservationsBySpecies(observations, ['species1'])).toEqual(observations)
   })
+  
+  it('should return the whole array if the species is empty', () => {
+    const observations = [new Observation({ species: 'species1' })]
+    expect(filterObservationsBySpecies(observations, [])).toEqual(observations)
+  })
 
   it('should return an empty array if the species is not the same', () => {
     const observations = [new Observation({ species: 'species1' })]
