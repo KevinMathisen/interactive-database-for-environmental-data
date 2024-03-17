@@ -5,6 +5,11 @@
 
 	$: userFeedback = $userFeedbackStore;
 
+	/**
+	 * Handles the close event of the modal
+	 * 
+	 * @returns {void}
+	 */
 	function handleClose() {
 		userFeedbackStore.update((feedback) => {
 			feedback.pop();
