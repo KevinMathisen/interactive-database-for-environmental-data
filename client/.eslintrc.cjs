@@ -1,3 +1,5 @@
+const standard = require('eslint-config-standard');
+
 module.exports = {
   parserOptions: {
     ecmaVersion: "latest",
@@ -9,6 +11,7 @@ module.exports = {
     node: true,
   },
   extends: [
+    'standard',
     'eslint:recommended',
     'plugin:svelte/recommended',
     'plugin:jsdoc/recommended',
@@ -30,7 +33,6 @@ module.exports = {
     'jsdoc/check-tag-names': 'warn',
     'jsdoc/check-indentation': 'warn',
     'quotes': ['error', 'single'],
-    'semi': ['error', 'always'],
     'no-unused-vars': ['error', { 'argsIgnorePattern': '^_' }],
   },
   settings: {
