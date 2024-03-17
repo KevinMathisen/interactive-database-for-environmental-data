@@ -1,13 +1,13 @@
 <script>
-	import CollapsibleSection from "./CollapsibleSection.svelte";
-	import RadioInput from "./RadioInput.svelte";
-	import DateInput from "./DateInput.svelte";
-	import SearchForRiverAndStation from "./SearchForRiverAndStation.svelte";
+	import CollapsibleSection from './CollapsibleSection.svelte';
+	import RadioInput from './RadioInput.svelte';
+	import DateInput from './DateInput.svelte';
+	import SearchForRiverAndStation from './SearchForRiverAndStation.svelte';
 
 	export let rivers;
 	export let stations;
 
-	export let dataType = "river";
+	export let dataType = 'river';
 	export let selectedRivers = new Map();
 	export let selectedStations = new Map();
 	
@@ -15,8 +15,8 @@
 	let selectedEndDate;
 
 	let dataOptions = [
-		{value: "river", label: "Elvedata"},
-		{value: "station", label: "Stasjonsdata"}
+		{value: 'river', label: 'Elvedata'},
+		{value: 'station', label: 'Stasjonsdata'}
 	];
 
 </script>
