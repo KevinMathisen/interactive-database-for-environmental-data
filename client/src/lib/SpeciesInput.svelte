@@ -4,9 +4,9 @@
 	export let chooseAll = true;		// If the user wants to choose all species
 	export let customSpecies = [];		// Custom species the user has chosen
 
-	let inputSpecies = "";				// Input in add species field
+	let inputSpecies = '';				// Input in add species field
 	let showSuggestions = false;		// If suggestions should be displayed
-	let showError = "";					// Error message to display to the user
+	let showError = '';					// Error message to display to the user
 	let suggestSpecies = [];			// Species to suggest to the user
 
 	/**
@@ -22,25 +22,25 @@
 
 		// If the input is not a selectable species, display an error
 		if (!selectableSpecies.includes(lowercaseInputSpecies)) {
-			displayError("Art finnes ikke");
+			displayError('Art finnes ikke');
 			return;
 		}
 
 		// If the input is already chosen, display an error
 		if (customSpecies.includes(lowercaseInputSpecies)) {
-			displayError("Art allerede valgt");
+			displayError('Art allerede valgt');
 			return;
 		}
 
 		// Remove error message, add the species to the custom species and reset the input field
-		displayError("");		
+		displayError('');		
 		customSpecies = [...customSpecies, lowercaseInputSpecies];
-		inputSpecies = "";
+		inputSpecies = '';
 	}
 
 	/**
 	 * Displays an error message to the user
-	 * @param message - The message to display
+	 * @param {string} message - The message to display
 	 */
 	function displayError(message) {
 		showError = message;
@@ -48,7 +48,7 @@
 
 	/**
 	 * Removes a species from the custom species
-	 * @param speciesToRemove - The species to remove
+	 * @param {string} speciesToRemove - The species to remove
 	 */
 	function removeSpecies(speciesToRemove) {
 		customSpecies = customSpecies.filter((species) => species !== speciesToRemove);
@@ -56,19 +56,19 @@
 
 	/**
 	 * Handles the keydown event on the input field, 
-	 *    adds a species if the user presses enter
-	 * @param event - The event
+	 * adds a species if the user presses enter
+	 * @param {KeyboardEvent} event - The event
 	 */
 	function handleKeydown(event) {
-		if (event.key === "Enter") {
+		if (event.key === 'Enter') {
 			addSpecies();
 		}
 	}
 
 	/**
 	 * Capitalizes the first letter of a string
-	 * @param string - The string to capitalize
-	 * @returns The string with the first letter capitalized
+	 * @param {string} string - The string to capitalize
+	 * @returns {string} - The string with the first letter capitalized
 	 */
 	function capitalizeFirstLetter(string) {
 		return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
@@ -112,7 +112,7 @@
 	{#if showSuggestions}
 		<ul>
 			{#each suggestSpecies as species}
-				<li class='suggestSpecies' on:click={() => {inputSpecies = capitalizeFirstLetter(species); addSpecies()}}>
+				<li class='suggestSpecies' on:click={() => {inputSpecies = capitalizeFirstLetter(species); addSpecies();}}>
 					{capitalizeFirstLetter(species)}
 				</li>
 			{/each}

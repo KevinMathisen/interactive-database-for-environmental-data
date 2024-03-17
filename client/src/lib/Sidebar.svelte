@@ -2,12 +2,15 @@
 	import { createEventDispatcher } from 'svelte';
 	const dispatch = createEventDispatcher();
 
-	export let title = ""; 
-	export let typeClose = "";	// which way to close the sidebar, "cross" or "sideButton"
+	export let title = ''; 
+	export let typeClose = '';	// which way to close the sidebar, "cross" or "sideButton"
 
+	/**
+	 *
+	 */
 	function handleClick() {
 		dispatch('close');
-		console.log("Close");
+		console.log('Close');
 	}
 </script>
 
@@ -15,7 +18,7 @@
 	<!-- Header with title and optional close button -->
 	<div class="header">
 		<h1>{title}</h1>
-		{#if typeClose === "cross"}
+		{#if typeClose === 'cross'}
 			<div class="crossButton" on:click={handleClick}></div>
 		{/if}
 	</div>
@@ -26,7 +29,7 @@
 	</div>
 
 	<!-- Optional close button on side -->
-	{#if typeClose == "sideButton"}
+	{#if typeClose == 'sideButton'}
 		<button class="sideButton" on:click={handleClick}>&gt;</button>
 	{/if}
 </div>
