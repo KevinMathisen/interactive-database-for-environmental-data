@@ -36,18 +36,17 @@ function filterDataBasedOnAttributeCombinationSubstring (objects, attributes, va
 
 /**
  * Filters a map of objects based on if a given attribute is in a list of values
- *
  * @param {object[]} objects - The array of objects to filter
  * @param {string} attribute - The attribute to filter on
  * @param {string[]} values - The list of values which should be equal to the attribute value
  * @returns {object[]} - A filtered array of objects
  */
-function filterDataBasedOnAttributeInList(objects, attribute, values) {
+function filterDataBasedOnAttributeInList (objects, attribute, values) {
   // Return all objects if no values are given
   if (values.length === 0) return objects
 
   // return the objects which have an attribute that is in the values list
-  return objects.filter(object => values.includes(object[attribute]));
+  return objects.filter(object => values.includes(object[attribute]))
 }
 
 /**

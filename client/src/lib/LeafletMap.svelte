@@ -7,17 +7,15 @@
     export let rivers // Imported data containg river objects
     export let dataType // Defines data type chosen by user
 
-	  const dispatch = createEventDispatcher();
-    let map       
-    let mapElement     // Used to bind the map to the page
-    let stationMarkers = []   // Array to store stationmarkers used by the map
-    let riverMarkers =  []    // Array to store river markers used by the map
-    let lines = []     // Array to store lines used by the map
+    const dispatch = createEventDispatcher()
+    let map
+    let mapElement // Used to bind the map to the page
+    let stationMarkers = [] // Array to store stationmarkers used by the map
+    let riverMarkers = [] // Array to store river markers used by the map
+    let lines = [] // Array to store lines used by the map
     let stationIndex
     let lineIndex = -1
     let riverIndex = -1
-    
-    
 
         // custom icon for the stations
     const redIcon = new leaflet.Icon({
@@ -39,14 +37,14 @@
       shadowSize: [41, 41]
     })
 
-    const greenIcon = new L.Icon({ 
-        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
-        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34],
-        shadowSize: [41, 41]
-    });
+    const greenIcon = new leaflet.Icon({
+      iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+      shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41]
+    })
 
         // called when this component is mounted
     onMount(async () => {
@@ -77,12 +75,13 @@
     })
 
     /**
-     *
+     * Updates the map based on the data type chosen by the user
      */
     function updateMap () {
       if (!dataType) {
         return
       }
+
       if (dataType === 'station') { // handles everything when user choses to view station data
         removeMarkers()
         addStations()
@@ -90,81 +89,75 @@
         removeMarkers()
         addRivers()
       }
-      
     }
         // called when the data type is changed
-    $: {
+    $: if (rivers || stations || dataType) {
       updateMap()
     }
 
     /**
      * Handles the click event on the map
      */
-    function onMapClick() {
-        dispatch('map');
+    function onMapClick () {
+      dispatch('map')
     }
-        
-    
+
     /**
      * Adds station markers to the map
-     * @param {object} leaflet - Object used to create markers
      */
-    function addStations() {
-            // loops through all stations and adds a marker for each
-        stations.forEach(station => {
-            
-            const startMarker = leaflet.marker([station.startPos.coordinates[1] , station.startPos.coordinates[0]], { icon: redIcon }).addTo(map);
-            const endMarker = leaflet.marker([station.endPos.coordinates[1] , station.endPos.coordinates[0]], { icon: redIcon }).addTo(map);
-        
-                // drawing the line between the start and end position of the station
-            let positions =  [    
-                [station.startPos.coordinates[1], station.startPos.coordinates[0]], 
-                [station.endPos.coordinates[1], station.endPos.coordinates[0]]
-            ];
-            let polyline = leaflet.polyline(positions, {color: 'red'}).addTo(map);
+    function addStations () {
+      // loops through all stations and adds a marker for each
+      stations.forEach(station => {
+        const startMarker = leaflet.marker([station.startPos.coordinates[1], station.startPos.coordinates[0]], { icon: redIcon }).addTo(map)
+        const endMarker = leaflet.marker([station.endPos.coordinates[1], station.endPos.coordinates[0]], { icon: redIcon }).addTo(map)
 
-            startMarker.on('click', (e) => { // handles click events for each station
-                stationSelected(station, e);
-            });
-            endMarker.on('click', (e) => { // handles click events for each station
-                stationSelected(station, e);
-            });
-            lines.push(polyline);
-            stationMarkers.push(startMarker);     
-            stationMarkers.push(endMarker);                   
-        });
+        // drawing the line between the start and end position of the station
+        const positions = [
+          [station.startPos.coordinates[1], station.startPos.coordinates[0]],
+          [station.endPos.coordinates[1], station.endPos.coordinates[0]]
+        ]
+        const polyline = leaflet.polyline(positions, { color: 'red' }).addTo(map)
+
+        startMarker.on('click', (e) => { // handles click events for each station
+          stationSelected(station, e)
+        })
+        endMarker.on('click', (e) => { // handles click events for each station
+          stationSelected(station, e)
+        })
+        lines.push(polyline)
+        stationMarkers.push(startMarker)
+        stationMarkers.push(endMarker)
+      })
     }
 
     /**
      * Called when a station marker is clicked
      * @param {object} station - The station data
-     * @param {object} leaflet - The Leaflet object uses to create markers
      * @param {Event} e - The event object
      */
-    function stationSelected(station, e) {
+    function stationSelected (station, e) {
+      // calculate which points need to be turned red
+      if (lineIndex >= 0) {
+        stationMarkers[stationIndex].setIcon(redIcon);
+        (stationIndex % 2 === 0) ? stationMarkers[stationIndex + 1].setIcon(redIcon) : stationMarkers[stationIndex - 1].setIcon(redIcon)
+        lines[lineIndex].setStyle({ color: 'red' })
+      }
 
-            // calculate which points need to be turned red
-        if(lineIndex >= 0) {
-            stationMarkers[stationIndex].setIcon(redIcon);
-            (stationIndex % 2 === 0) ? stationMarkers[stationIndex + 1].setIcon(redIcon) : stationMarkers[stationIndex - 1].setIcon(redIcon); 
-            lines[lineIndex].setStyle({color: 'red'});
-        }
-
-        stationIndex = stationMarkers.indexOf(e.target);
-        stationMarkers[stationIndex].setIcon(greenIcon);
-        (stationIndex % 2 === 0) ? stationMarkers[stationIndex + 1].setIcon(greenIcon) : stationMarkers[stationIndex - 1].setIcon(greenIcon);            
-        if (stationIndex <= 1) {
-            lineIndex = 0;
-        } else if (stationIndex % 2 === 0) {
-            lineIndex = stationIndex / 2;
-        } else {
-            lineIndex = (stationIndex - 1) / 2;
-        }
-        lines[lineIndex].setStyle({color: 'green'});
-            // Sends the station name to the parent component
-        dispatch('stationClicked', {
-			text: station
-		});
+      stationIndex = stationMarkers.indexOf(e.target)
+      stationMarkers[stationIndex].setIcon(greenIcon);
+      (stationIndex % 2 === 0) ? stationMarkers[stationIndex + 1].setIcon(greenIcon) : stationMarkers[stationIndex - 1].setIcon(greenIcon)
+      if (stationIndex <= 1) {
+        lineIndex = 0
+      } else if (stationIndex % 2 === 0) {
+        lineIndex = stationIndex / 2
+      } else {
+        lineIndex = (stationIndex - 1) / 2
+      }
+      lines[lineIndex].setStyle({ color: 'green' })
+      // Sends the station name to the parent component
+      dispatch('stationClicked', {
+        text: station
+      })
     }
 
     /**
@@ -172,59 +165,57 @@
      *
      * Iterates the rivers array and adds a marker for each river
      * Also sets up a click even handler for each marker
-     * @param {object} leaflet - The Leaflet object uses to create markers
      */
-    function addRivers() {
-        rivers.forEach(river => {
-            let coordinate1 = river.position.coordinates[0];
-            let coordinate2 = river.position.coordinates[1];
-            const marker = leaflet.marker([coordinate2 , coordinate1]).addTo(map);
-            riverMarkers.push(marker);
-            marker.on('click', (e) => { // handles clicks events for each river
-                riverSelected(river, e);
-            });
-        });
+    function addRivers () {
+      rivers.forEach(river => {
+        const coordinate1 = river.position.coordinates[0]
+        const coordinate2 = river.position.coordinates[1]
+        const marker = leaflet.marker([coordinate2, coordinate1]).addTo(map)
+        riverMarkers.push(marker)
+        marker.on('click', (e) => { // handles clicks events for each river
+          riverSelected(river, e)
+        })
+      })
     }
 
     /**
      * Called when a river marker is clicked
      * @param {object} river - The river data
-     * @param {object} leaflet - The Leaflet object uses to create markers
      * @param {Event} e - The event object
      */
-    function riverSelected(river, e) {
-            // calculate which river needs to be turned red
-        if(riverIndex >= 0) {
-            riverMarkers[riverIndex].setIcon(blueIcon);
-        }
-            // calculate which river needs to be turned blue
-        riverIndex = riverMarkers.indexOf(e.target);
-        riverMarkers[riverIndex].setIcon(greenIcon);
-            // Sends the river name to the parent component
-        dispatch('riverClicked', { 
-			text: river
-		});
+    function riverSelected (river, e) {
+      // calculate which river needs to be turned red
+      if (riverIndex >= 0) {
+        riverMarkers[riverIndex].setIcon(blueIcon)
+      }
+      // calculate which river needs to be turned blue
+      riverIndex = riverMarkers.indexOf(e.target)
+      riverMarkers[riverIndex].setIcon(greenIcon)
+      // Sends the river name to the parent component
+      dispatch('riverClicked', {
+        text: river
+      })
     }
 
     /**
      * Removes all markers from the map
      */
-    function removeMarkers() {
-        stationMarkers.forEach(marker => {
-            map.removeLayer(marker);
-        });
-        lines.forEach(line => {
-            map.removeLayer(line);
-        });
-        
-        riverMarkers.forEach(marker => {
-        map.removeLayer(marker);
-        });
-        riverMarkers = [];
-        stationMarkers = [];
-        lines = [];
-        lineIndex = -1; 
-        riverIndex = -1;       
+    function removeMarkers () {
+      stationMarkers.forEach(marker => {
+        map.removeLayer(marker)
+      })
+      lines.forEach(line => {
+        map.removeLayer(line)
+      })
+
+      riverMarkers.forEach(marker => {
+        map.removeLayer(marker)
+      })
+      riverMarkers = []
+      stationMarkers = []
+      lines = []
+      lineIndex = -1
+      riverIndex = -1
     }
 
 </script>

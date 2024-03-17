@@ -4,8 +4,12 @@
     import SpeciesInput from '../../lib/SpeciesInput.svelte'
     import Modal from '../../lib/Modal.svelte'
     import SelectRiverAndStation from '../../lib/SelectRiverAndStation.svelte'
-    import { generateExcelFile, generateCSVFile } from  '/src/utils/fileHandler'
-    import { getRivers, getStations } from '../../utils/dataManager.js'
+    import { generateExcelFile, generateCSVFile } from '../../../../../src/utils/fileHandler'
+    import {
+      getRivers, getStations,
+      getRiverForDownload,
+      getStationForDownload
+    } from '../../utils/dataManager.js'
     import { getSelectableSpecies } from '../../utils/filterData.js'
     import { riverStore } from '../../stores/riverStore.js'
     import { stationStore } from '../../stores/stationStore.js'
@@ -15,12 +19,8 @@
       FEEDBACK_TYPES,
       FEEDBACK_CODES,
       FEEDBACK_MESSAGES
-    } from '../../constants/feedbackMessages.js';
+    } from '../../constants/feedbackMessages.js'
     import { addFeedbackToStore } from '../../utils/addFeedbackToStore.js'
-    import { 
-      getRiverForDownload,
-      getStationForDownload
-    } from '../../utils/dataManager.js'
 
     let showSelectRiverAndStationModal = false
 
@@ -63,41 +63,41 @@
 
     /**
      * When the user has chosen rivers or stations, get the data needed for download
-     * @return {void}
+     * @returns {void}
      */
-    function onSelectRiverStation() {
-        // Should get the selected rivers and stations from event
-        if (dataType === 'river') {
-            // For each river in the selectedRivers map, get the data needed for download if it is not already in the store
-            selectedRivers.forEach((_, key) => {
-                getRiverForDownload(key);
-            })
-        } else {
-            // For each station in the selectedStations map, get the data needed for download if it is not already in the store
-            selectedStations.forEach((_, key) => {
-                getStationForDownload(key);
-            })
-        }
+    function onSelectRiverStation () {
+      // Should get the selected rivers and stations from event
+      if (dataType === 'river') {
+        // For each river in the selectedRivers map, get the data needed for download if it is not already in the store
+        selectedRivers.forEach((_, key) => {
+          getRiverForDownload(key)
+        })
+      } else {
+        // For each station in the selectedStations map, get the data needed for download if it is not already in the store
+        selectedStations.forEach((_, key) => {
+          getStationForDownload(key)
+        })
+      }
     }
 
     /**
      * Handles the close event from the modal
-     * @return {void}
+     * @returns {void}
      */
-    function handleClose() {
-        // Close modal
-        showSelectRiverAndStationModal = false;
-        // Retrieve the data needed for the rivers/stations choosen 
-        onSelectRiverStation();
+    function handleClose () {
+      // Close modal
+      showSelectRiverAndStationModal = false
+      // Retrieve the data needed for the rivers/stations choosen
+      onSelectRiverStation()
     }
 
     /**
-     * Handles when the user wants to select rivers or stations 
-     * @return {void}
+     * Handles when the user wants to select rivers or stations
+     * @returns {void}
      */
-    function handleSelectRiverStation() {
-        showSelectRiverAndStationModal = true;
-        console.log(selectedStations)
+    function handleSelectRiverStation () {
+      showSelectRiverAndStationModal = true
+      console.log(selectedStations)
     }
 
     const sampleData = [
@@ -121,7 +121,7 @@
 
       if (selectedFormat === 'xlsx') {
         if (dataType === 'river') { // Generate Excel file
-          fileData = await generateExcelFile(selectedRivers, dataType) 
+          fileData = await generateExcelFile(selectedRivers, dataType)
         } else {
           fileData = await generateExcelFile(selectedStations, dataType)
         }
