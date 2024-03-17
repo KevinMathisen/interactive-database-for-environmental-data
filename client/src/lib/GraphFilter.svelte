@@ -1,15 +1,15 @@
 <script>
-    import CollapsibleSection from "./CollapsibleSection.svelte";
-    import SpeciesInput from "./SpeciesInput.svelte";
-    import PlotSpeciesOptions from "./PlotSpeciesOptions.svelte";
-    import PlotLengthOptions from "./PlotLengthOptions.svelte";
-    import { createEventDispatcher } from "svelte";
+    import CollapsibleSection from './CollapsibleSection.svelte';
+    import SpeciesInput from './SpeciesInput.svelte';
+    import PlotSpeciesOptions from './PlotSpeciesOptions.svelte';
+    import PlotLengthOptions from './PlotLengthOptions.svelte';
+    import { createEventDispatcher } from 'svelte';
     const dispatch = createEventDispatcher();
 
     export let selectedRivers;
     export let selectedStations;
     export let selectableSpecies = [];  // Species the user can choose
-    export let dataType = "river";
+    export let dataType = 'river';
 
     export let selectedSpecies = [];
     
@@ -27,8 +27,11 @@
     // Species the user has choosen; either all or the custom ones
     $: selectedSpecies = chooseAll ? selectableSpecies : customSpecies;
 
+    /**
+     *
+     */
     function handleSelectRiverStation() {
-        dispatch("selectRiverAndStation");
+        dispatch('selectRiverAndStation');
     }
 
 </script>
@@ -41,12 +44,12 @@
             {#if dataType === 'river'}
                 <p>Elver valgt</p>
                 {#each Array.from(selectedRivers.entries()) as [_, river]}
-                    <li>{river.name + " " + river.startDate}</li>
+                    <li>{river.name + ' ' + river.startDate}</li>
                 {/each}
             {:else}
                 <p>Stasjoner valgt</p>
                 {#each Array.from(selectedStations.entries()) as [_, station]}
-                    <li>{station.name + " " + station.date}</li>
+                    <li>{station.name + ' ' + station.date}</li>
                 {/each}
             {/if}
         </ul>
