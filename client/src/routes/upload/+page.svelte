@@ -7,10 +7,10 @@
     FEEDBACK_CODES,
     FEEDBACK_MESSAGES
   } from '../../constants/feedbackMessages.js'
-  import { addFeedbackToStore } from '../../utils/addFeedbackToStore'
+  import { addFeedbackToStore } from '../../utils/addFeedbackToStore.js'
   import UserFeedbackMessage from '../../lib/UserFeedbackMessage.svelte'
 
-  import { validateFile, fileExistsInArray } from '../../../../../../../../../src/utils/fileHandler.js'
+  import { validateFile, fileExistsInArray } from '../../utils/fileHandler.js'
 
   const filesArray = []
   // let isUploading = false;
