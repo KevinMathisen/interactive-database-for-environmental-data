@@ -17,6 +17,10 @@
 		FEEDBACK_MESSAGES
 	} from '../../constants/feedbackMessages.js';
 	import { addFeedbackToStore } from '../../utils/addFeedbackToStore.js';
+    import { 
+        getRiverForDownload,
+        getStationForDownload
+    } from '../../utils/dataManager.js';
 
     let showSelectRiverAndStationModal = false;
 
@@ -37,7 +41,7 @@
     let customSpecies = [];             // Species the user has chosen
 
     // Species the user can choose
-    $: selectableSpecies = dataType === 'river' ? getSelectableSpecies(rivers) : getSelectableSpecies(stations);
+    $: selectableSpecies = dataType === 'river' ? getSelectableSpecies(selectedRivers) : getSelectableSpecies(selectedStations);
 
     // Species the user has choosen; either all or the custom ones
     $: selectedSpecies = chooseAll ? selectableSpecies : customSpecies;
@@ -59,18 +63,25 @@
     $: stations = $stationStore;
 
     function onSelectRiverStation() {
-        // should get the selected rivers and stations from event
+        // Should get the selected rivers and stations from event
         if (dataType === 'river') {
-            selectedRivers = new Map(rivers[3])
-            selectableSpecies = getSelectableSpecies(rivers)
+            // For each river in the selectedRivers map, get the data needed for download if it is not already in the store
+            selectedRivers.forEach((_, key) => {
+                getRiverForDownload(key);
+            })
         } else {
-            selectedStations = new Map(stations[11])
-            selectableSpecies = getSelectableSpecies(stations)
+            // For each station in the selectedStations map, get the data needed for download if it is not already in the store
+            selectedStations.forEach((_, key) => {
+                getStationForDownload(key);
+            })
         }
     }
 
     function handleClose() {
+        // Close modal
         showSelectRiverAndStationModal = false;
+        // Retrieve the data needed for the rivers/stations choosen 
+        onSelectRiverStation();
     }
 
     function handleSelectRiverStation() {
