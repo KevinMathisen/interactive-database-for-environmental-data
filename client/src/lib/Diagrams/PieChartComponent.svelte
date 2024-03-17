@@ -19,7 +19,7 @@
         let values = stationData.map(function(item) { return item.count; });
 
         //Adds the names and the count of the species into one array.
-        let textLabels = stationData.map(function(item) { return item.species + " " + item.count; });
+        let textLabels = stationData.map(function(item) { return item.species + ' ' + item.count; });
 
         //Sets the data on the axes, the chart type and the name of the slices in the pie chart.
         let data = [{

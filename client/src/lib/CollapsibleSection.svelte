@@ -1,11 +1,16 @@
 <script>
-	import { fly } from "svelte/transition";
+	import { fly } from 'svelte/transition';
 
-	export let title = "";
+	export let title = '';
 	export let collapsable = true;
 
 	let isCollapsed = false;
 
+	/**
+	 * Toggle the collapse state
+	 * 
+	 * @returns {void}
+	 */
 	function toggleCollapse() {
 		if (!collapsable) return;
 

@@ -20,7 +20,7 @@
         let speciesCounts = stationData.map(function(item) { return item.count; });
 
         //Label for each bar in the bar chart.
-        let textLabels = stationData.map(function(item) { return item.species + " " + item.count; });
+        let textLabels = stationData.map(function(item) { return item.species + ' ' + item.count; });
         
         
         //Set the data, layout and color for the bar chart 
@@ -51,7 +51,7 @@
         };
 
         //Adjust the size of the graphs according to the screen size.
-        let config = {responsive: true}
+        let config = {responsive: true};
     
         //Creates the bar chart. 
         Plotly.newPlot('barAloneOne', data, layout, config);

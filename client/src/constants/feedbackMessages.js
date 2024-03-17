@@ -2,7 +2,7 @@ export const FEEDBACK_TYPES = {
   SUCCESS: 'SUCCESS',
   INFO: 'INFO',
   ERROR: 'ERROR'
-}
+};
 
 export const FEEDBACK_CODES = {
   CREATED: 'CREATED',
@@ -15,7 +15,7 @@ export const FEEDBACK_CODES = {
   UNSUPPORTED_CONTENT_TYPE: 'UNSUPPORTED_CONTENT_TYPE',
   POSTGREST_UNAVAILABLE: 'POSTGREST_UNAVAILABLE',
   AUTH_UNAVAILABLE: 'AUTH_UNAVAILABLE'
-}
+};
 
 export const FEEDBACK_MESSAGES = {
   UPLOAD_SUCCESS: 'Opplasting vellykket',
@@ -29,4 +29,4 @@ export const FEEDBACK_MESSAGES = {
   UNSUPPORTED_CONTENT_TYPE: 'Filtypen du forsøkte å laste opp støttes ikke',
   POSTGREST_UNAVAILABLE: 'Kunne ikke hente data fra serveren, prøv igjen senere',
   AUTH_UNAVAILABLE: 'Kunne ikke autentisere brukeren, prøv igjen senere'
-}
+};
