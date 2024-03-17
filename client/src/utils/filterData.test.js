@@ -4,42 +4,77 @@ import { River } from '../models/River.js'
 import { Station, Observation } from '../models/Station.js'
 
 describe('test filterRiversBySearch function', () => {
-  it('should return an empty array if the input is an empty array', () => {
-    expect(filterRiversBySearch([], 'search')).toEqual([])
+  it('should return an empty map if the input is an empty map', () => {
+    expect(filterRiversBySearch(new Map(), 'search')).toEqual(new Map())
   })
 
-  it('should return the whole array if the input is an empty string', () => {
-    expect(filterRiversBySearch([new River({ name: 'name', project_id: 'projectId' })], '')).toEqual([new River({ name: 'name', project_id: 'projectId' })])
+  it('should return the whole map if the input is an empty string', () => {
+    const inputMap = new Map([[0, new River({ name: 'name', project_id: 'projectId' })]]);
+    const expectedMap = new Map([[0, new River({ name: 'name', project_id: 'projectId' })]]);
+    expect(filterRiversBySearch(inputMap, '')).toEqual(expectedMap)
   })
 
-  it('should return an array with the correct river if the input is a substring of the name', () => {
-    expect(filterRiversBySearch([new River({ name: 'name', project_id: 'projectId' }), new River({ name: 'name2', project_id: 'projectId2' })], 'me2')).toEqual([new River({ name: 'name2', project_id: 'projectId2' })])
+  it('should return a map with the correct river if the input is a substring of the name', () => {
+    const inputMap = new Map([
+      [0, new River({ name: 'name', project_id: 'projectId' })],
+      [1, new River({ name: 'name2', project_id: 'projectId2' })]
+    ]);
+    const expectedMap = new Map([[1, new River({ name: 'name2', project_id: 'projectId2' })]]);
+    expect(filterRiversBySearch(inputMap, 'me2')).toEqual(expectedMap)
   })
 
-  it('should return an array with the correct river if the input is a substring of the projectId', () => {
-    expect(filterRiversBySearch([new River({ name: 'name', project_id: 'projectId' }), new River({ name: 'name2', project_id: 'projectId2' })], 'projectId2')).toEqual([new River({ name: 'name2', project_id: 'projectId2' })])
+  it('should return a map with the correct river if the input is a substring of the projectId', () => {
+    const inputMap = new Map([
+      [0, new River({ name: 'name', project_id: 'projectId' })],
+      [1, new River({ name: 'name2', project_id: 'projectId2' })]
+    ]);
+    const expectedMap = new Map([[1, new River({ name: 'name2', project_id: 'projectId2' })]]);
+    expect(filterRiversBySearch(inputMap, 'projectId2')).toEqual(expectedMap)
   })
 
-  it('should return the whole array if the input is a substring of all rivers', () => {
-    expect(filterRiversBySearch([new River({ name: 'name', project_id: 'projectId' }), new River({ name: 'name2', project_id: 'projectId2' })], 'name')).toEqual([new River({ name: 'name', project_id: 'projectId' }), new River({ name: 'name2', project_id: 'projectId2' })])
+  it('should return the whole map if the input is a substring of all rivers', () => {
+    const inputMap = new Map([
+      [0, new River({ name: 'name', project_id: 'projectId' })],
+      [1, new River({ name: 'name2', project_id: 'projectId2' })]
+    ]);
+    const expectedMap = new Map([
+      [0, new River({ name: 'name', project_id: 'projectId' })],
+      [1, new River({ name: 'name2', project_id: 'projectId2' })]
+    ]);
+    expect(filterRiversBySearch(inputMap, 'name')).toEqual(expectedMap)
   })
 })
 
 describe('test filterStationsBySearch function', () => {
-  it('should return an empty array if the input is an empty array', () => {
-    expect(filterStationsBySearch([], 'search')).toEqual([])
+  it('should return an empty map if the input is an empty map', () => {
+    expect(filterStationsBySearch(new Map(), 'search')).toEqual(new Map())
   })
 
-  it('should return the whole array if the input is an empty string', () => {
-    expect(filterStationsBySearch([new Station({ name: 'name' })], '')).toEqual([new Station({ name: 'name' })])
+  it('should return the whole map if the input is an empty string', () => {
+    const inputMap = new Map([[0, new Station({ name: 'name' })]]);
+    const expectedMap = new Map([[0, new Station({ name: 'name' })]]);
+    expect(filterStationsBySearch(inputMap, '')).toEqual(expectedMap)
   })
 
-  it('should return an array with the correct station if the input is a substring of the name', () => {
-    expect(filterStationsBySearch([new Station({ name: 'name' }), new Station({ name: 'name2' })], 'me2')).toEqual([new Station({ name: 'name2' })])
+  it('should return a map with the correct station if the input is a substring of the name', () => {
+    const inputMap = new Map([
+      [0, new Station({ name: 'name' })],
+      [1, new Station({ name: 'name2' })]
+    ]);
+    const expectedMap = new Map([[1, new Station({ name: 'name2' })]]);
+    expect(filterStationsBySearch(inputMap, 'me2')).toEqual(expectedMap)
   })
 
-  it('should return the whole array if the input is a substring of all stations', () => {
-    expect(filterStationsBySearch([new Station({ name: 'name' }), new Station({ name: 'name2' })], 'name')).toEqual([new Station({ name: 'name' }), new Station({ name: 'name2' })])
+  it('should return the whole map if the input is a substring of all stations', () => {
+    const inputMap = new Map([
+      [0, new Station({ name: 'name' })],
+      [1, new Station({ name: 'name2' })]
+    ]);
+    const expectedMap = new Map([
+      [0, new Station({ name: 'name' })],
+      [1, new Station({ name: 'name2' })]
+    ]);
+    expect(filterStationsBySearch(inputMap, 'name')).toEqual(expectedMap)
   })
 })
 
