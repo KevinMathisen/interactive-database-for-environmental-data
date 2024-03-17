@@ -29,28 +29,28 @@ export class Station {
     display = null,
     gpx_file = null
   } = {}) {
-    this.id = id
-    this.name = name
-    this.date = date
-    this.startPos = start_pos
-    this.endPos = end_pos
-    this.time = time
-    this.riverId = river_id
-    this.description = description
-    this.comment = comment
-    this.riverType = river_type
-    this.weather = weather
-    this.waterTemp = water_temp
-    this.airTemp = air_temp
-    this.secFished = sec_fished
-    this.voltage = voltage
-    this.pulse = pulse
-    this.conductivity = conductivity
-    this.species = species
-    this.observations = observations ? observations.map(observation => new Observation(observation)) : null
-    this.transectLength = transect_length
-    this.display = display
-    this.gpxFile = gpx_file
+    this.id = id;
+    this.name = name;
+    this.date = date;
+    this.startPos = start_pos;
+    this.endPos = end_pos;
+    this.time = time;
+    this.riverId = river_id;
+    this.description = description;
+    this.comment = comment;
+    this.riverType = river_type;
+    this.weather = weather;
+    this.waterTemp = water_temp;
+    this.airTemp = air_temp;
+    this.secFished = sec_fished;
+    this.voltage = voltage;
+    this.pulse = pulse;
+    this.conductivity = conductivity;
+    this.species = species;
+    this.observations = observations ? observations.map(observation => new Observation(observation)) : null;
+    this.transectLength = transect_length;
+    this.display = display;
+    this.gpxFile = gpx_file;
   }
 }
 
@@ -71,17 +71,17 @@ export class Observation {
     sample_type = null,
     comment = null
   } = {}) {
-    this.id = id
-    this.station = station
-    this.round = round
-    this.species = species
-    this.length = length
-    this.count = count
-    this.gender = gender
-    this.age = age
-    this.released = released
-    this.sampleType = sample_type
-    this.comment = comment
+    this.id = id;
+    this.station = station;
+    this.round = round;
+    this.species = species;
+    this.length = length;
+    this.count = count;
+    this.gender = gender;
+    this.age = age;
+    this.released = released;
+    this.sampleType = sample_type;
+    this.comment = comment;
   }
 }
 
