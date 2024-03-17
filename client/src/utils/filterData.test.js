@@ -9,39 +9,39 @@ describe('test filterRiversBySearch function', () => {
   })
 
   it('should return the whole map if the input is an empty string', () => {
-    const inputMap = new Map([[0, new River({ name: 'name', project_id: 'projectId' })]]);
-    const expectedMap = new Map([[0, new River({ name: 'name', project_id: 'projectId' })]]);
-    expect(filterRiversBySearch(inputMap, '')).toEqual(expectedMap)
+    const inputRivers = new Map([[0, new River({ name: 'name', project_id: 'projectId' })]]);
+    const expectedRivers = new Map([[0, new River({ name: 'name', project_id: 'projectId' })]]);
+    expect(filterRiversBySearch(inputRivers, '')).toEqual(expectedRivers)
   })
 
   it('should return a map with the correct river if the input is a substring of the name', () => {
-    const inputMap = new Map([
+    const inputRivers = new Map([
       [0, new River({ name: 'name', project_id: 'projectId' })],
       [1, new River({ name: 'name2', project_id: 'projectId2' })]
     ]);
-    const expectedMap = new Map([[1, new River({ name: 'name2', project_id: 'projectId2' })]]);
-    expect(filterRiversBySearch(inputMap, 'me2')).toEqual(expectedMap)
+    const expectedRivers = new Map([[1, new River({ name: 'name2', project_id: 'projectId2' })]]);
+    expect(filterRiversBySearch(inputRivers, 'me2')).toEqual(expectedRivers)
   })
 
   it('should return a map with the correct river if the input is a substring of the projectId', () => {
-    const inputMap = new Map([
+    const inputRivers = new Map([
       [0, new River({ name: 'name', project_id: 'projectId' })],
       [1, new River({ name: 'name2', project_id: 'projectId2' })]
     ]);
-    const expectedMap = new Map([[1, new River({ name: 'name2', project_id: 'projectId2' })]]);
-    expect(filterRiversBySearch(inputMap, 'projectId2')).toEqual(expectedMap)
+    const expectedRivers = new Map([[1, new River({ name: 'name2', project_id: 'projectId2' })]]);
+    expect(filterRiversBySearch(inputRivers, 'projectId2')).toEqual(expectedRivers)
   })
 
   it('should return the whole map if the input is a substring of all rivers', () => {
-    const inputMap = new Map([
+    const inputRivers = new Map([
       [0, new River({ name: 'name', project_id: 'projectId' })],
       [1, new River({ name: 'name2', project_id: 'projectId2' })]
     ]);
-    const expectedMap = new Map([
+    const expectedRivers = new Map([
       [0, new River({ name: 'name', project_id: 'projectId' })],
       [1, new River({ name: 'name2', project_id: 'projectId2' })]
     ]);
-    expect(filterRiversBySearch(inputMap, 'name')).toEqual(expectedMap)
+    expect(filterRiversBySearch(inputRivers, 'name')).toEqual(expectedRivers)
   })
 })
 
@@ -51,30 +51,30 @@ describe('test filterStationsBySearch function', () => {
   })
 
   it('should return the whole map if the input is an empty string', () => {
-    const inputMap = new Map([[0, new Station({ name: 'name' })]]);
-    const expectedMap = new Map([[0, new Station({ name: 'name' })]]);
-    expect(filterStationsBySearch(inputMap, '')).toEqual(expectedMap)
+    const inputStations = new Map([[0, new Station({ name: 'name' })]]);
+    const expectedStations = new Map([[0, new Station({ name: 'name' })]]);
+    expect(filterStationsBySearch(inputStations, '')).toEqual(expectedStations)
   })
 
   it('should return a map with the correct station if the input is a substring of the name', () => {
-    const inputMap = new Map([
+    const inputStations = new Map([
       [0, new Station({ name: 'name' })],
       [1, new Station({ name: 'name2' })]
     ]);
-    const expectedMap = new Map([[1, new Station({ name: 'name2' })]]);
-    expect(filterStationsBySearch(inputMap, 'me2')).toEqual(expectedMap)
+    const expectedStations = new Map([[1, new Station({ name: 'name2' })]]);
+    expect(filterStationsBySearch(inputStations, 'me2')).toEqual(expectedStations)
   })
 
   it('should return the whole map if the input is a substring of all stations', () => {
-    const inputMap = new Map([
+    const inputStations = new Map([
       [0, new Station({ name: 'name' })],
       [1, new Station({ name: 'name2' })]
     ]);
-    const expectedMap = new Map([
+    const expectedStations = new Map([
       [0, new Station({ name: 'name' })],
       [1, new Station({ name: 'name2' })]
     ]);
-    expect(filterStationsBySearch(inputMap, 'name')).toEqual(expectedMap)
+    expect(filterStationsBySearch(inputStations, 'name')).toEqual(expectedStations)
   })
 })
 
@@ -84,25 +84,25 @@ describe('test filterRiversByDateAndSpecies function', () => {
   })
 
   it('should return the whole map if the species is the same and the date is inside time range', () => {
-    const inputMap = new Map([[0, new River({ name: 'name', species: ['species1'], start_date: '2024-01-01', end_date: '2024-01-03' })]]);
-    const expectedMap = new Map([[0, new River({ name: 'name', species: ['species1'], start_date: '2024-01-01', end_date: '2024-01-03' })]]);
-    expect(filterRiversByDateAndSpecies(inputMap, ['species1'], '2024-01-02', '2024-02-01')).toEqual(expectedMap)
+    const inputRivers = new Map([[0, new River({ name: 'name', species: ['species1'], start_date: '2024-01-01', end_date: '2024-01-03' })]]);
+    const expectedRivers = new Map([[0, new River({ name: 'name', species: ['species1'], start_date: '2024-01-01', end_date: '2024-01-03' })]]);
+    expect(filterRiversByDateAndSpecies(inputRivers, ['species1'], '2024-01-02', '2024-02-01')).toEqual(expectedRivers)
   })
 
   it('should return the whole map if the species is empty and the date is inside time range', () => {
-    const inputMap = new Map([[0, new River({ name: 'name', species: ['species1'], start_date: '2024-01-01', end_date: '2024-01-03' })]]);
-    const expectedMap = new Map([[0, new River({ name: 'name', species: ['species1'], start_date: '2024-01-01', end_date: '2024-01-03' })]]);
-    expect(filterRiversByDateAndSpecies(inputMap, [], '2024-01-02', '2024-02-01')).toEqual(expectedMap)
+    const inputRivers = new Map([[0, new River({ name: 'name', species: ['species1'], start_date: '2024-01-01', end_date: '2024-01-03' })]]);
+    const expectedRivers = new Map([[0, new River({ name: 'name', species: ['species1'], start_date: '2024-01-01', end_date: '2024-01-03' })]]);
+    expect(filterRiversByDateAndSpecies(inputRivers, [], '2024-01-02', '2024-02-01')).toEqual(expectedRivers)
   })
 
   it('should return an empty map if the species is not the same', () => {
-    const inputMap = new Map([[0, new River({ name: 'name', species: ['species1'], start_date: '2024-01-01', end_date: '2024-01-03' })]]);
-    expect(filterRiversByDateAndSpecies(inputMap, ['species2'], '2024-01-02', '2024-02-01')).toEqual(new Map())
+    const inputRivers = new Map([[0, new River({ name: 'name', species: ['species1'], start_date: '2024-01-01', end_date: '2024-01-03' })]]);
+    expect(filterRiversByDateAndSpecies(inputRivers, ['species2'], '2024-01-02', '2024-02-01')).toEqual(new Map())
   })
 
   it('should return an empty map if the date is not inside time range', () => {
-    const inputMap = new Map([[0, new River({ name: 'name', species: ['species1'], start_date: '2024-01-01', end_date: '2024-01-03' })]]);
-    expect(filterRiversByDateAndSpecies(inputMap, ['species1'], '2024-01-04', '2024-02-01')).toEqual(new Map())
+    const inputRivers = new Map([[0, new River({ name: 'name', species: ['species1'], start_date: '2024-01-01', end_date: '2024-01-03' })]]);
+    expect(filterRiversByDateAndSpecies(inputRivers, ['species1'], '2024-01-04', '2024-02-01')).toEqual(new Map())
   })
 })
 
@@ -112,25 +112,25 @@ describe('test filterStationsByDateAndSpecies function', () => {
   })
 
   it('should return the whole map if the species is the same and the date is inside time range', () => {
-    const inputMap = new Map([[0, new Station({ name: 'name', species: ['species1'], date: '2024-01-01' })]]);
-    const expectedMap = new Map([[0, new Station({ name: 'name', species: ['species1'], date: '2024-01-01' })]]);
-    expect(filterStationsByDateAndSpecies(inputMap, ['species1'], '2024-01-01', '2024-02-01')).toEqual(expectedMap)
+    const inputStations = new Map([[0, new Station({ name: 'name', species: ['species1'], date: '2024-01-01' })]]);
+    const expectedStations = new Map([[0, new Station({ name: 'name', species: ['species1'], date: '2024-01-01' })]]);
+    expect(filterStationsByDateAndSpecies(inputStations, ['species1'], '2024-01-01', '2024-02-01')).toEqual(expectedStations)
   })
 
   it('should return the whole map if the species is empty and the date is inside time range', () => {
-    const inputMap = new Map([[0, new Station({ name: 'name', species: ['species1'], date: '2024-01-01' })]]);
-    const expectedMap = new Map([[0, new Station({ name: 'name', species: ['species1'], date: '2024-01-01' })]]);
-    expect(filterStationsByDateAndSpecies(inputMap, [], '2024-01-01', '2024-02-01')).toEqual(expectedMap)
+    const inputStations = new Map([[0, new Station({ name: 'name', species: ['species1'], date: '2024-01-01' })]]);
+    const expectedStations = new Map([[0, new Station({ name: 'name', species: ['species1'], date: '2024-01-01' })]]);
+    expect(filterStationsByDateAndSpecies(inputStations, [], '2024-01-01', '2024-02-01')).toEqual(expectedStations)
   })
 
   it('should return an empty map if the species is not the same', () => {
-    const inputMap = new Map([[0, new Station({ name: 'name', species: ['species1'], date: '2024-01-01' })]]);
-    expect(filterStationsByDateAndSpecies(inputMap, ['species2'], '2024-01-01', '2024-02-01')).toEqual(new Map())
+    const inputStations = new Map([[0, new Station({ name: 'name', species: ['species1'], date: '2024-01-01' })]]);
+    expect(filterStationsByDateAndSpecies(inputStations, ['species2'], '2024-01-01', '2024-02-01')).toEqual(new Map())
   })
 
   it('should return an empty map if the date is not inside time range', () => {
-    const inputMap = new Map([[0, new Station({ name: 'name', species: ['species1'], date: '2024-01-01' })]]);
-    expect(filterStationsByDateAndSpecies(inputMap, ['species1'], '2024-01-02', '2024-02-01')).toEqual(new Map())
+    const inputStations = new Map([[0, new Station({ name: 'name', species: ['species1'], date: '2024-01-01' })]]);
+    expect(filterStationsByDateAndSpecies(inputStations, ['species1'], '2024-01-02', '2024-02-01')).toEqual(new Map())
   })
 })
 
@@ -154,3 +154,4 @@ describe('test filterObservationsBySpecies function', () => {
     expect(filterObservationsBySpecies(observations, ['species2'])).toEqual([])
   })
 })
+
