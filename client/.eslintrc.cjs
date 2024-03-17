@@ -15,7 +15,6 @@ module.exports = {
     'eslint:recommended',
     'plugin:svelte/recommended',
     'plugin:jsdoc/recommended',
-    'plugin:jsdoc/recommended',
   ],
   plugins: [
     'svelte',
