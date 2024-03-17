@@ -48,6 +48,7 @@
     /**
      * Log the river/station clicked by the user, 
      * TODO: should open a new page with the data
+     * @param {Event} event - The click event
      */
     function handleRowClick(event) {
         console.log('Row clicked:', event.detail);
@@ -55,10 +56,9 @@
 
     /**
      * Create the header and data for the table
-     * 
      * @param {string} dataType - "river" or "station"
-     * @param {Map<int, River>} filteredBySearchRivers - Rivers filtered by search
-     * @param {Map<int, Station} filteredBySearchStations - Stations filtered by search
+     * @param {Map<number, object>} filteredBySearchRivers - Rivers filtered by search
+     * @param {Map<number, object>} filteredBySearchStations - Stations filtered by search
      * @returns {{headers: string[], rows: string[][]}} - Headers and rows for the table
      */
     function createHeaderAndData(dataType, filteredBySearchRivers, filteredBySearchStations) {
