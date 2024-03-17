@@ -13,8 +13,11 @@
 	import { validateFile, fileExistsInArray } from '/src/utils/fileHandler.js';
 
 	let filesArray = [];
-	let isUploading = false;
+	//let isUploading = false;
 
+	/**
+	 * Selects files from the user's computer
+	 */
 	function selectFile() {
 		const fileInput = document.createElement('input');
 		fileInput.type = 'file';
@@ -39,8 +42,11 @@
 		});
 	}
 
+	/**
+	 *
+	 */
 	function uploadFile() {
-		isUploading = true;
+		//isUploading = true;
 		if (filesArray.length === 0) {
 			addFeedbackToStore(
 				FEEDBACK_TYPES.ERROR,
