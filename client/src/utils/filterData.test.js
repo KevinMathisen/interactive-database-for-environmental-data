@@ -202,3 +202,52 @@ describe('test getSelectableSpecies function', () => {
   })
 })
 
+describe('test filterRiversByNameAndDateCombined function', () => {
+  it('should return an empty map if the input map is empty', () => {
+    expect(filterRiversByNameAndDateCombined(new Map(), 'searchQuery')).toEqual(new Map())
+  })
+
+  it('should return a filtered map of rivers matching the name and date combined search query', () => {
+    const rivers = new Map([
+      [0, new River({ name: 'Name1', start_date: '2024-01-01' })],
+      [1, new River({ name: 'Name2', start_date: '2024-01-15' })],
+      [2, new River({ name: 'Name1', start_date: '2024-02-01' })]
+    ])
+    expect(filterRiversByNameAndDateCombined(rivers, 'name1 2024-02')).toEqual(new Map([
+      [2, new River({ name: 'Name1', start_date: '2024-02-01' })]
+    ]))
+  })
+
+  it('should return an empty map if no rivers match the search query', () => {
+    const rivers = new Map([
+      [0, new River({ name: 'Name1', start_date: '2024-01-01' })],
+      [1, new River({ name: 'Name2', start_date: '2024-01-15' })]
+    ])
+    expect(filterRiversByNameAndDateCombined(rivers, 'name3')).toEqual(new Map())
+  })
+})
+
+describe('test filterStationsByNameAndDateCombined function', () => {
+  it('should return an empty map if the input map is empty', () => {
+    expect(filterStationsByNameAndDateCombined(new Map(), 'searchQuery')).toEqual(new Map())
+  })
+
+  it('should return a filtered map of stations matching the name and date combined search query', () => {
+    const stations = new Map([
+      [0, new Station({ name: 'Name1', date: '2024-01-01' })],
+      [1, new Station({ name: 'Name2', date: '2024-01-15' })],
+      [2, new Station({ name: 'Name1', date: '2024-02-01' })]
+    ])
+    expect(filterStationsByNameAndDateCombined(stations, 'name1 2024-02')).toEqual(new Map([
+      [2, new Station({ name: 'Name1', date: '2024-02-01' })]
+    ]))
+  })
+
+  it('should return an empty map if no stations match the search query', () => {
+    const stations = new Map([
+      [0, new Station({ name: 'Name1', date: '2024-01-01' })],
+      [1, new Station({ name: 'Name2', date: '2024-01-15' })]
+    ])
+    expect(filterStationsByNameAndDateCombined(stations, 'ame3')).toEqual(new Map())
+  })
+})
