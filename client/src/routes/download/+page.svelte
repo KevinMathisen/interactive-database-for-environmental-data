@@ -28,7 +28,7 @@
     let selectedRivers = new Map();     // Rivers the user has chosen
     let selectedStations = new Map();   // Stations the user has chosen
 
-    let selectedSpecies = [];
+    //let selectedSpecies = [];
 
     let selectedFormat = '';
 	let isDownloading = false;
@@ -40,12 +40,12 @@
     $: selectableSpecies = dataType === 'river' ? getSelectableSpecies(rivers) : getSelectableSpecies(stations);
 
     // Species the user has choosen; either all or the custom ones
-    $: selectedSpecies = chooseAll ? selectableSpecies : customSpecies;
+    //$: selectedSpecies = chooseAll ? selectableSpecies : customSpecies;
 
     
     let formatOptions = [
-        {value: "xlsx", label: "xlsx"},
-        {value: "csv", label: "csv"}
+        {value: 'xlsx', label: 'xlsx'},
+        {value: 'csv', label: 'csv'}
     ];
 
     onMount(async () => {
@@ -58,21 +58,30 @@
     $: rivers = $riverStore;
     $: stations = $stationStore;
 
-    function onSelectRiverStation() {
-        // should get the selected rivers and stations from event
-        if (dataType === 'river') {
-            selectedRivers = new Map(rivers[3])
-            selectableSpecies = getSelectableSpecies(rivers)
-        } else {
-            selectedStations = new Map(stations[11])
-            selectableSpecies = getSelectableSpecies(stations)
-        }
-    }
+    /**
+     *
+     */
+    // function onSelectRiverStation() {
+    //     // should get the selected rivers and stations from event
+    //     if (dataType === 'river') {
+    //         selectedRivers = new Map(rivers[3]);
+    //         selectableSpecies = getSelectableSpecies(rivers);
+    //     } else {
+    //         selectedStations = new Map(stations[11]);
+    //         selectableSpecies = getSelectableSpecies(stations);
+    //     }
+    // }
 
+    /**
+     * Handles the clikc event on a river
+     */
     function handleClose() {
         showSelectRiverAndStationModal = false;
     }
 
+    /**
+     * Handles the clikc event on a river
+     */
     function handleSelectRiverStation() {
         showSelectRiverAndStationModal = true;
     }
@@ -155,12 +164,12 @@
                     {#if dataType === 'river'}
                         <p>Elver valgt</p>
                         {#each Array.from(selectedRivers.entries()) as [_, river]}
-                            <li>{river.name + " " + river.startDate}</li>
+                            <li>{river.name + ' ' + river.startDate}</li>
                         {/each}
                     {:else}
                         <p>Stasjoner valgt</p>
                         {#each Array.from(selectedStations.entries()) as [_, station]}
-                            <li>{station.name + " " + station.date}</li>
+                            <li>{station.name + ' ' + station.date}</li>
                         {/each}
                     {/if}
                 </ul>
