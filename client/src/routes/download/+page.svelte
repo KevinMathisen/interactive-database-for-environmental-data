@@ -35,7 +35,6 @@
     // let selectedSpecies = [];
 
     let selectedFormat = ''
-    let isDownloading = false
 
     let chooseAll = true // If the user wants to choose all species
     let customSpecies = [] // Species the user has chosen
@@ -107,8 +106,7 @@
     ]
 
     const downloadFile = async () => {
-      isDownloading = true
-      if (selectedFormat === '' && isDownloading) {
+      if (selectedFormat === '') {
         addFeedbackToStore(
           FEEDBACK_TYPES.ERROR,
           FEEDBACK_CODES.NOT_FOUND,
@@ -151,9 +149,9 @@
     }
 </script>
 
-{#if isDownloading}
-    <UserFeedbackMessage />
-{/if}
+
+<UserFeedbackMessage />
+
 
 {#if showSelectRiverAndStationModal}
     <Modal on:close={handleClose} large={true}>
