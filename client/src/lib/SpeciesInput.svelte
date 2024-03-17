@@ -110,13 +110,13 @@
 
   <!-- Suggestions based on user input -->
   {#if showSuggestions}
-    <ul>
+    <div class="suggestions">
       {#each suggestSpecies as species}
-        <li class='suggestSpecies' on:click={() => { inputSpecies = capitalizeFirstLetter(species); addSpecies() }}>
+        <button class='suggestSpecies' on:click={() => { inputSpecies = capitalizeFirstLetter(species); addSpecies() }}>
           {capitalizeFirstLetter(species)}
-        </li>
+        </button>
       {/each}
-    </ul>
+    </div>
   {/if}
 
   <!-- Custom species choosen by user -->

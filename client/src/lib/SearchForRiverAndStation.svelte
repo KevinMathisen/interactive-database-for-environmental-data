@@ -173,22 +173,22 @@
 
 <!-- Suggestions for rivers -->
 {#if showRiverSuggestions}
-  <ul>
+  <div class="suggestions">
     {#each Array.from(selectableRivers.entries()) as [_, river]}
-      <li on:click={() => { input = river.name + ' ' + river.startDate; addInput() }}>
+      <button on:click={() => { input = river.name + ' ' + river.startDate; addInput() }}>
         {capitalizeFirstLetter(river.name + ' ' + river.startDate)}
-      </li>
+      </button>
     {/each}
-  </ul>
+  </div>
 {:else if showStationSuggestions}
   <!-- Suggestions for stations -->
-  <ul>
+  <div class="suggestions">
     {#each Array.from(selectableStations.entries()) as [_, station]}
-      <li on:click={() => { input = station.name + ' ' + station.date; addInput() }}>
+      <button on:click={() => { input = station.name + ' ' + station.date; addInput() }}>
         {capitalizeFirstLetter(station.name + ' ' + station.date)}
-      </li>
+      </button>
     {/each}
-  </ul>
+  </div>
 {/if}
 
 <!-- List of selected rivers -->
@@ -196,8 +196,9 @@
   <p>Valgte elver</p>
   <ul>
     {#each Array.from(selectedRivers.entries()) as [key, river]}
-      <li on:click={() => removeRiverStation(key)}>
+      <li>
         {capitalizeFirstLetter(river.name + ' ' + river.startDate)}
+        <button on:click={() => removeRiverStation(key)}>x</button>
       </li>
     {/each}
   </ul>
@@ -206,8 +207,9 @@
   <p>Valgte stasjoner</p>
   <ul>
     {#each Array.from(selectedStations.entries()) as [key, station]}
-      <li on:click={() => removeRiverStation(key)}>
+      <li>
         {capitalizeFirstLetter(station.name + ' ' + station.date)}
+        <button on:click={() => removeRiverStation(key)}>x</button>
       </li>
     {/each}
   </ul>
