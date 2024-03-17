@@ -1,37 +1,37 @@
 <script>
-    import CollapsibleSection from './CollapsibleSection.svelte';
-    import SpeciesInput from './SpeciesInput.svelte';
-    import PlotSpeciesOptions from './PlotSpeciesOptions.svelte';
-    import PlotLengthOptions from './PlotLengthOptions.svelte';
-    import { createEventDispatcher } from 'svelte';
-    const dispatch = createEventDispatcher();
+    import CollapsibleSection from './CollapsibleSection.svelte'
+    import SpeciesInput from './SpeciesInput.svelte'
+    import PlotSpeciesOptions from './PlotSpeciesOptions.svelte'
+    import PlotLengthOptions from './PlotLengthOptions.svelte'
+    import { createEventDispatcher } from 'svelte'
+    const dispatch = createEventDispatcher()
 
-    export let selectedRivers;
-    export let selectedStations;
-    export let selectableSpecies = [];  // Species the user can choose
-    export let dataType = 'river';
+    export let selectedRivers
+    export let selectedStations
+    export let selectableSpecies = [] // Species the user can choose
+    export let dataType = 'river'
 
-    export let selectedSpecies = [];
-    
-    export let showPlotA = true;
-    export let showValueA = 'absolute';
-    export let plotTypeA = 'bar';
+    export let selectedSpecies = []
 
-    export let showPlotB = true;
-    export let intervallPlotB = 20;
-    export let plotTypeB = 'histogram';
+    export let showPlotA = true
+    export let showValueA = 'absolute'
+    export let plotTypeA = 'bar'
 
-    let chooseAll = true;               // If the user wants to choose all species
-    let customSpecies = [];             // Species the user has chosen
+    export let showPlotB = true
+    export let intervallPlotB = 20
+    export let plotTypeB = 'histogram'
+
+    let chooseAll = true // If the user wants to choose all species
+    let customSpecies = [] // Species the user has chosen
 
     // Species the user has choosen; either all or the custom ones
-    $: selectedSpecies = chooseAll ? selectableSpecies : customSpecies;
+    $: selectedSpecies = chooseAll ? selectableSpecies : customSpecies
 
     /**
      *
      */
-    function handleSelectRiverStation() {
-        dispatch('selectRiverAndStation');
+    function handleSelectRiverStation () {
+      dispatch('selectRiverAndStation')
     }
 
 </script>
@@ -62,17 +62,17 @@
 
     <!-- Input for choosing how plot A is displayed -->
     <CollapsibleSection title="Fordeling av arter">
-        <PlotSpeciesOptions 
-            bind:showPlotA 
-            bind:showValueA 
+        <PlotSpeciesOptions
+            bind:showPlotA
+            bind:showValueA
             bind:plotTypeA />
     </CollapsibleSection>
 
     <!-- Input for choosing how plot B is displayed -->
     <CollapsibleSection title="Fordeling av lengde">
-        <PlotLengthOptions 
-            bind:showPlotB 
-            bind:intervallPlotB 
+        <PlotLengthOptions
+            bind:showPlotB
+            bind:intervallPlotB
             bind:plotTypeB />
     </CollapsibleSection>
 

@@ -1,22 +1,21 @@
 <script>
-	import RadioInput from './RadioInput.svelte';
+  import RadioInput from './RadioInput.svelte'
 
-	export let showPlotB;
-    export let intervallPlotB;
-    export let plotTypeB;
+  export let showPlotB
+    export let intervallPlotB
+    export let plotTypeB
 
-	// Options when choosing plot type
-    let plotTypeOptions = [
-        {value: 'histogram', label: 'Histogram'},
-        {value: 'box', label: 'Boksplott'}
-    ];
+  // Options when choosing plot type
+    const plotTypeOptions = [
+      { value: 'histogram', label: 'Histogram' },
+      { value: 'box', label: 'Boksplott' }
+    ]
 </script>
 
 <label for="showPlotB">
-	Vis
-	<input type="checkbox" id="showPlotB" name="showPlotB" bind:checked={showPlotB}>
+  Vis
+  <input type="checkbox" id="showPlotB" name="showPlotB" bind:checked={showPlotB}>
 </label>
-
 
 <h4>Intervall i mm</h4>
 

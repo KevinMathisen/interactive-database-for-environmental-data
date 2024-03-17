@@ -1,16 +1,16 @@
 <script>
-    import { page} from '$app/stores';   
+    import { page } from '$app/stores'
 </script>
 
 <header>
-    <div class="logoHeader">  
-        <img src="/NINA_logo_emblem.png"  alt="Logo" height="60px">
+    <div class="logoHeader">
+        <img src="/NINA_logo_emblem.png" alt="Logo" height="60px">
         <p>Nina</p>
-    </div>  
+    </div>
     <div class="centerItem" class:active={$page.url.pathname === '/'}>
         <a href="/" >Kart</a>
         <img src="/mapIcon.svg" alt="listIcon" height="60px" class="headerIcon">
-    </div> 
+    </div>
     <div class="centerItem" class:active={$page.url.pathname === '/list'}>
         <a href="/list">List</a>
         <img src="/listIcon.svg" alt="listIcon" height="60px" class="headerIcon">
@@ -37,7 +37,7 @@
         display: flex;
         flex-direction: row;
         background-color: white;
-        align-items: center; 
+        align-items: center;
         height: 80px;
         gap: 2rem;
         justify-content: space-between;
@@ -62,7 +62,7 @@
         width: 180px;
         height: 80px;
     }
-    
+
     header > :nth-child(7) {
         font-size: 1.5rem;
         width: 180px;
@@ -80,7 +80,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-    }   
+    }
 
     a {
         color: #000; /* Change links color to black */

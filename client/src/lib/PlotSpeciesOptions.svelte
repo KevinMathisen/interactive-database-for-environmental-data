@@ -1,28 +1,27 @@
 <script>
-	import RadioInput from './RadioInput.svelte';
+  import RadioInput from './RadioInput.svelte'
 
-	export let showPlotA;
-    export let showValueA;
-    export let plotTypeA;
+  export let showPlotA
+    export let showValueA
+    export let plotTypeA
 
-	// Options when choosing y value
-    let yValueOptions = [
-        {value: 'absolute', label: 'Antall per art'},
-        {value: 'relative', label: 'Ant/min per art'}
-    ];
+  // Options when choosing y value
+    const yValueOptions = [
+      { value: 'absolute', label: 'Antall per art' },
+      { value: 'relative', label: 'Ant/min per art' }
+    ]
 
-	// Options when choosing plot type
-    let plotTypeOptions = [
-        {value: 'bar', label: 'Stolpediagram'},
-        {value: 'pie', label: 'Sektordiagram'}
-    ];
+  // Options when choosing plot type
+    const plotTypeOptions = [
+      { value: 'bar', label: 'Stolpediagram' },
+      { value: 'pie', label: 'Sektordiagram' }
+    ]
 </script>
 
 <label for="showPlotA">
-	Vis
-	<input type="checkbox" id="showPlotA" name="showPlotA" bind:checked={showPlotA}>
+  Vis
+  <input type="checkbox" id="showPlotA" name="showPlotA" bind:checked={showPlotA}>
 </label>
-
 
 <h4>Y-akse verdi</h4>
 

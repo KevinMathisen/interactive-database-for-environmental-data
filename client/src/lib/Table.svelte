@@ -1,67 +1,69 @@
 <script>
   /*
-    Parent should send the headers and data to diplay. 
-    Each row of data should have the id as the first element, 
+    Parent should send the headers and data to diplay.
+    Each row of data should have the id as the first element,
       which will not be displayed in the table.
-    When a row is clicked, the id of the row and the datatypew will be sent 
+    When a row is clicked, the id of the row and the datatypew will be sent
       to the parent, which should handle the event.
   */
-  import { createEventDispatcher  } from 'svelte';
-  const dispatch = createEventDispatcher();
+  import { createEventDispatcher } from 'svelte'
+  const dispatch = createEventDispatcher()
 
-  export let datatype = '';		// "river", "station", or "observation"
-  export let headers = [];		// Header names
-  export let rows = [];			// Rows of data
-  export let clickable = false;	// If the rows are clickable
+  export let datatype = '' // "river", "station", or "observation"
+  export let headers = [] // Header names
+  export let rows = [] // Rows of data
+  export let clickable = false // If the rows are clickable
 
-  let sortKey = '';			// Header name to sort by
-  let sortDirection = ''; 	// Sorting direction, 'asc' or 'desc'
-  let sortedRows = [];		// Rows sorted based on sortKey and sortDirection
+  let sortKey = '' // Header name to sort by
+  let sortDirection = '' // Sorting direction, 'asc' or 'desc'
+  let sortedRows = [] // Rows sorted based on sortKey and sortDirection
 
   // Sort rows based on sortKey and sortDirection
-  $: [headers, rows, sortDirection, sortKey], sortedRows = sortRows(); 
+  $: if (headers && rows && sortDirection && sortKey) {
+    sortedRows = sortRows()
+  }
 
   /**
    * Sort order of rows based on selected header and direction
    * @returns {Array} - The sorted rows
    */
-  function sortRows() {
-    const sorted = [...rows];
+  function sortRows () {
+    const sorted = [...rows]
 
     // If no header selected, return the original rows
-    if (!sortKey) return sorted;
+    if (!sortKey) return sorted
 
     // Sort the rows based on the selected header and direction
     sorted.sort((a, b) => {
       // Index of elements to sort by is +1 because the first element is the id
-      let indexKey = headers.indexOf(sortKey)+1;
-      let aVal = a[indexKey];
-      let bVal = b[indexKey];
+      const indexKey = headers.indexOf(sortKey) + 1
+      const aVal = a[indexKey]
+      const bVal = b[indexKey]
 
-      if (sortDirection === 'asc') return aVal > bVal ? 1 : -1;
-      if (sortDirection === 'desc') return aVal < bVal ? 1 : -1;
-      return 0;
-    });
+      if (sortDirection === 'asc') return aVal > bVal ? 1 : -1
+      if (sortDirection === 'desc') return aVal < bVal ? 1 : -1
+      return 0
+    })
 
-    return sorted;
+    return sorted
   }
 
   /**
    * Handle click on header to sort the rows
    * @param {string} header - Header name
    */
-  function handleHeaderClick(header) {
+  function handleHeaderClick (header) {
     // If the header is already selected, change the direction or deselect it
     if (sortKey === header) {
-      if (sortDirection === 'asc') sortDirection = 'desc';
+      if (sortDirection === 'asc') sortDirection = 'desc'
       else {
-        sortKey = '';
-        sortDirection = '';
+        sortKey = ''
+        sortDirection = ''
       }
     // If the header is not selected, select it and set the direction to ascending
     } else {
-      sortKey = header;
-      sortDirection = 'asc';
+      sortKey = header
+      sortDirection = 'asc'
     }
   }
 
@@ -70,8 +72,8 @@
    * Only sends the event if the rows are clickable
    * @param {string} id - Id of the row
    */
-  function handleClickRow(id) {
-    if (clickable) dispatch('rowClick', {id, datatype});
+  function handleClickRow (id) {
+    if (clickable) dispatch('rowClick', { id, datatype })
   }
 </script>
 
@@ -80,7 +82,7 @@
     <tr>
       <!-- Create the headers and add the sorting arrow if the header is selected -->
       {#each headers as header}
-        <th 
+        <th
           on:click={() => handleHeaderClick(header)}
           class:sortable={sortKey === header}
           class:asc={sortDirection === 'asc' && sortKey === header}
@@ -101,9 +103,8 @@
         <!-- Create the cells, do not display the id -->
         {#each row as cell, index}
           {#if index !== 0}
-                  <td>{cell}</td>
-                {/if}
-
+            <td>{cell}</td>
+          {/if}
         {/each}
       </tr>
     {/each}
@@ -158,4 +159,4 @@
     background: #f0f0f0;
     cursor: pointer;
   }
-  </style>
+</style>

@@ -10,13 +10,13 @@ import {
   RIVER_SUMMARY_ENDPOINT,
   STATION_SUMMARY_ENDPOINT,
   STATION_DOWNLOAD_ENDPOINT
-} from '../constants/endpoints.js';
-import { addFeedbackToStore } from '../utils/addFeedbackToStore.js';
-import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/feedbackMessages';
+} from '../constants/endpoints.js'
+import { addFeedbackToStore } from '../utils/addFeedbackToStore.js'
+import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/feedbackMessages'
 
 /**
  * Fetches data from the PostgREST API on the endpoint specified
- * @param {string} endpoint - The endpoint with optional parameters to fetch data from                           
+ * @param {string} endpoint - The endpoint with optional parameters to fetch data from
  * @returns {Promise<object>} - A promise which resolves to json data
  * @throws {Error} - Thrown if the fetch fails
  * @async
@@ -27,11 +27,11 @@ async function fetchFromPostgrest (endpoint) {
     // Fetch data from given url and endpoint
     const response = await fetch(`${POSTGREST_URL}${endpoint}`, {
       method: 'GET'
-    });
+    })
     // Return the response
-    return handleResponse(response);
+    return handleResponse(response)
   } catch (error) {
-    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.POSTGREST_UNAVAILABLE, FEEDBACK_MESSAGES.POSTGREST_UNAVAILABLE);
+    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.POSTGREST_UNAVAILABLE, FEEDBACK_MESSAGES.POSTGREST_UNAVAILABLE)
   }
 }
 
@@ -46,16 +46,16 @@ async function fetchFromPostgrest (endpoint) {
 async function handleResponse (response) {
   // If response status is not ok, throw an error
   if (!response.ok) {
-    throw new Error(response.statusText);
+    throw new Error(response.statusText)
   }
 
   // If response status is 204 No Content, return null
   if (response.status === 204) {
-    return null;
+    return null
   }
 
   // Return response as json
-  return response.json();
+  return response.json()
 }
 
 /**
@@ -64,7 +64,7 @@ async function handleResponse (response) {
  * @async
  */
 export async function fetchRivers () {
-  return fetchFromPostgrest(RIVERS_ENDPOINT);
+  return fetchFromPostgrest(RIVERS_ENDPOINT)
 }
 
 /**
@@ -73,7 +73,7 @@ export async function fetchRivers () {
  * @async
  */
 export async function fetchStations () {
-  return fetchFromPostgrest(STATIONS_ENDPOINT);
+  return fetchFromPostgrest(STATIONS_ENDPOINT)
 }
 
 /**
@@ -83,8 +83,8 @@ export async function fetchStations () {
  * @async
  */
 export async function fetchRiverSummary (id) {
-  const endpoint = `${RIVER_SUMMARY_ENDPOINT}?id=eq.${id}`;
-  return fetchFromPostgrest(endpoint);
+  const endpoint = `${RIVER_SUMMARY_ENDPOINT}?id=eq.${id}`
+  return fetchFromPostgrest(endpoint)
 }
 
 /**
@@ -95,9 +95,9 @@ export async function fetchRiverSummary (id) {
  */
 export async function fetchStationSummary (id) {
   // Create endpoint for either single station or array of stations
-  const endpoint = createEndpointForArray(id, STATION_SUMMARY_ENDPOINT);
+  const endpoint = createEndpointForArray(id, STATION_SUMMARY_ENDPOINT)
 
-  return fetchFromPostgrest(endpoint);
+  return fetchFromPostgrest(endpoint)
 }
 
 /**
@@ -108,9 +108,9 @@ export async function fetchStationSummary (id) {
  */
 export async function fetchStationDownload (id) {
   // Create endpoint for either single station or array of stations
-  const endpoint = createEndpointForArray(id, STATION_DOWNLOAD_ENDPOINT);
+  const endpoint = createEndpointForArray(id, STATION_DOWNLOAD_ENDPOINT)
 
-  return fetchFromPostgrest(endpoint);
+  return fetchFromPostgrest(endpoint)
 }
 
 /**
@@ -122,14 +122,14 @@ export async function fetchStationDownload (id) {
 function createEndpointForArray (id, endpoint) {
   // If id is a single number, return endpoint with id
   if (id.length === 1) {
-    return `${endpoint}?id=eq.${id[0]}`;
+    return `${endpoint}?id=eq.${id[0]}`
   }
 
   // If no id is given, throw an error
   if (id.length === 0) {
-    throw new Error('No id given');
+    throw new Error('No id given')
   }
 
   // If id is an array of numbers, return endpoint with all ids
-  return `${endpoint}?id=in.(${id.join(',')})`;
+  return `${endpoint}?id=in.(${id.join(',')})`
 }

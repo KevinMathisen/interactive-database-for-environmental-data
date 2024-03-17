@@ -1,8 +1,8 @@
-import { riverStore } from '../stores/riverStore';
-import { stationStore } from '../stores/stationStore';
-import { get } from 'svelte/store';
-import { addFeedbackToStore } from './addFeedbackToStore.js';
-import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/feedbackMessages';
+import { riverStore } from '../stores/riverStore'
+import { stationStore } from '../stores/stationStore'
+import { get } from 'svelte/store'
+import { addFeedbackToStore } from './addFeedbackToStore.js'
+import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/feedbackMessages'
 
 /**
  * Check if the store contains any data, and if it contains any data,
@@ -17,14 +17,14 @@ function doesDataInStoreExist (store) {
   try {
     // checks if the store is empty, if so return false
     if (get(store).size === 0) {
-      return false;
+      return false
     }
 
     // if the first object in the store does not have species, return false
-    return get(store).values().next().value.species !== null;
+    return get(store).values().next().value.species !== null
   } catch (error) {
-    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC);
-    return false;
+    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
+    return false
   }
 }
 
@@ -34,7 +34,7 @@ function doesDataInStoreExist (store) {
  * @returns {boolean} - True if the store contains river data for all rivers, else false
  */
 export function doesAllRiversExistInStore () {
-  return doesDataInStoreExist(riverStore);
+  return doesDataInStoreExist(riverStore)
 }
 
 /**
@@ -43,7 +43,7 @@ export function doesAllRiversExistInStore () {
  * @returns {boolean} - True if the store contains station data for all stations, else false
  */
 export function doesAllStationsExistInStore () {
-  return doesDataInStoreExist(stationStore);
+  return doesDataInStoreExist(stationStore)
 }
 
 /**
@@ -57,21 +57,21 @@ export function doesAllStationsExistInStore () {
 function checkIfObjectHasProperty (store, key, prop) {
   try {
     // Retrieve map of data
-    const dataMap = get(store);
+    const dataMap = get(store)
 
     // If no object with key given exists, return false
     if (dataMap.has(key) === false) {
-      return false;
+      return false
     }
 
     // Retrieve object with key given
-    const data = dataMap.get(key);
+    const data = dataMap.get(key)
 
     // If the object does not have the property defined, return false
-    return data[prop] !== null;
+    return data[prop] !== null
   } catch (error) {
-    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC);
-    return false;
+    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
+    return false
   }
 }
 
@@ -83,7 +83,7 @@ function checkIfObjectHasProperty (store, key, prop) {
  * @returns {boolean} - True if store contains river summary info, else false
  */
 export function checkIfRiverSummaryExists (id) {
-  return checkIfObjectHasProperty(riverStore, id, 'skipper');
+  return checkIfObjectHasProperty(riverStore, id, 'skipper')
 }
 
 /**
@@ -94,7 +94,7 @@ export function checkIfRiverSummaryExists (id) {
  * @returns {boolean} - True if store contains station summary info, else false
  */
 export function checkIfStationSummaryExists (id) {
-  return checkIfObjectHasProperty(stationStore, id, 'secFished');
+  return checkIfObjectHasProperty(stationStore, id, 'secFished')
 }
 
 /**
@@ -105,5 +105,5 @@ export function checkIfStationSummaryExists (id) {
  * @returns {boolean} - True if store contains data needed to download station, else false
  */
 export function checkIfStationDownloadExists (id) {
-  return checkIfObjectHasProperty(stationStore, id, 'display');
+  return checkIfObjectHasProperty(stationStore, id, 'display')
 }

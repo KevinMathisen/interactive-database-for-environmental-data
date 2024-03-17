@@ -1,3 +1,3 @@
-import { writable } from 'svelte/store';
+import { writable } from 'svelte/store'
 
-export const riverStore = writable(new Map());
+export const riverStore = writable(new Map())

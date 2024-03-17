@@ -1,5 +1,5 @@
-//import { addFeedbackToStore } from './addFeedbackToStore.js';
-//import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/feedbackMessages';
+// import { addFeedbackToStore } from './addFeedbackToStore.js';
+// import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/feedbackMessages';
 
 /**
  * Converts river objects into arrays for display in a table
@@ -7,19 +7,19 @@
  * @returns {{headers: string[], rows: string[][]}} - Headers and rows for the table
  */
 export function formatRiversForTable (rivers) {
-  let headers = ['Navn', 'Dato', 'Projektnummer'];
+  const headers = ['Navn', 'Dato', 'Projektnummer']
 
-  let rows = [];
+  const rows = []
   rivers.forEach(river => {
     rows.push([
       river.id,
       river.name,
       river.startDate,
       river.projectId
-    ]);
-  });
+    ])
+  })
 
-  return {headers, rows};
+  return { headers, rows }
 }
 
 /**
@@ -28,17 +28,17 @@ export function formatRiversForTable (rivers) {
  * @returns {{headers: string[], rows: string[][]}} - Headers and rows for the table
  */
 export function formatStationsForTable (stations) {
-  let headers = ['Navn', 'Dato', 'Kl.'];
-  
-  let rows = [];
+  const headers = ['Navn', 'Dato', 'Kl.']
+
+  const rows = []
   stations.forEach(station => {
     rows.push([
       station.id,
       station.name,
       station.date,
       station.time
-    ]);
-  });
+    ])
+  })
 
-  return {headers, rows};
+  return { headers, rows }
 }

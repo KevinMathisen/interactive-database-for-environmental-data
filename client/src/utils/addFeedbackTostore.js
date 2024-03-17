@@ -1,5 +1,5 @@
-import { userFeedbackStore } from '../stores/userFeedbackStore';
-import { UserFeedback } from '../models/UserFeedback';
+import { userFeedbackStore } from '../stores/userFeedbackStore'
+import { UserFeedback } from '../models/UserFeedback'
 
 /**
  * Adds a feedback message to the userFeedbackStore which will be displayed to the user
@@ -9,6 +9,6 @@ import { UserFeedback } from '../models/UserFeedback';
  * @param {string} message - The message to display to the user
  */
 export function addFeedbackToStore (type, code, message) {
-  const feedback = new UserFeedback(type, code, message);
-  userFeedbackStore.update(currentFeedback => [...currentFeedback, feedback]);
+  const feedback = new UserFeedback(type, code, message)
+  userFeedbackStore.update(currentFeedback => [...currentFeedback, feedback])
 }
