@@ -245,14 +245,19 @@ export function filterObservationsBySpecies (observations, species) {
  * @returns {string[]} - A list of unique species
  */
 export function getSelectableSpecies (rivers) {
-  // Use set instead of array for faster lookups
-  const speciesSet = new Set()
+  try {
+    // Use set instead of array for faster lookups
+    const speciesSet = new Set()
 
-  rivers.forEach(river => {
-    river[attributesToFilterOn.SPECIES].forEach(species => speciesSet.add(species))
-  })
+    rivers.forEach(river => {
+      river[attributesToFilterOn.SPECIES].forEach(species => speciesSet.add(species))
+    })
 
-  return Array.from(speciesSet)
+    return Array.from(speciesSet)
+  } catch (error) {
+    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
+    return []
+  }
 }
 
 /**
