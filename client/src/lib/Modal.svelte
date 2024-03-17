@@ -17,6 +17,10 @@
 		dispatch('close');
 	}
 
+	/**
+	 * Handles the keydown event of Enter and Escape keys
+	 * @param {KeyboardEvent} event - The keydown event
+	 */
 	function handleKeyDown(event) {
 		if (event.key === 'Enter' || event.key === 'Escape') {
 			handleClose();
