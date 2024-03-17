@@ -163,9 +163,7 @@ There is no need for a sql view for river download data, as the river summary pa
 All the station information not included in the summary view. Includes all the observation data. 
 ```sql
 CREATE VIEW station_download AS
-SELECT stasjonsdata.id AS id, 
-stasjonsdata.posisjon_start AS start_pos,
-stasjonsdata.posisjon_stop AS end_pos,
+SELECT stasjonsdata.id AS id,
 stasjonsdata.transektlengde AS transect_length
 stasjonsdata.display AS display,
 stasjonsdata.gpx_file AS gpx_file,
