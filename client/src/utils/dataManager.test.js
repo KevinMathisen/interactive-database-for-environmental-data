@@ -567,7 +567,7 @@ describe('test getStationForDownload function', () => {
 
   it('should exit function if station is ready for download', async () => {
     // Set up test
-    const initialStationMap = new Map([[1, new Station({ id: 1, name: 'Station Test', river_id: 1 })]])
+    const initialStationMap = new Map([[1, new Station({ id: 1, name: 'Station Test', river_id: 1})]])
     vi.mocked(get).mockReturnValue(initialStationMap)
     checkIfDataExists.checkIfStationSummaryExists.mockReturnValue(true)
     checkIfDataExists.checkIfRiverSummaryExists.mockReturnValue(true)
@@ -603,7 +603,7 @@ describe('test getStationForDownload function', () => {
     checkIfDataExists.checkIfStationDownloadExists.mockReturnValue(false)
     const mockedStationDownload = [{ id: 1, name: 'Station Test', observations: [{ species: 'Species 1', count: 1 }] }]
     postgrest.fetchStationDownload.mockResolvedValue(mockedStationDownload)
-    const initialStationMap = new Map([[1, new Station({ id: 1, name: 'Station Test', river_id: 1 })]])
+    const initialStationMap = new Map([[1, new Station({ id: 1, name: 'Station Test', river_id: 1})]])
     vi.mocked(get).mockReturnValue(initialStationMap)
 
     // capture updates
