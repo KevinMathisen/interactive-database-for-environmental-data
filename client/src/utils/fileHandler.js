@@ -3,12 +3,17 @@ import {
   FEEDBACK_TYPES,
   FEEDBACK_CODES,
   FEEDBACK_MESSAGES
-} from '../constants/feedbackMessages.js';
-import { addFeedbackToStore } from './addFeedbackToStore';
+} from '../constants/feedbackMessages.js'
+import { addFeedbackToStore } from './addFeedbackToStore'
 
 //  - - - - DOWNLOAD FUNCTIONALITY - - - -
+/**
+ * Generates an Excel file from the given data
+ * @param {Array<object>} data - The data to generate the Excel file from
+ * @param {string} type - The type of data to generate the Excel file from
+ * @returns {Promise<Buffer>} - A promise which resolves to a buffer containing the Excel file
+ */
 export async function generateExcelFile (data, type) {
-  console.log(data);
   const workbook = new ExcelJS.Workbook()
 
   const worksheet = workbook.addWorksheet('Sheet1')
@@ -61,6 +66,11 @@ export async function generateExcelFile (data, type) {
   return buffer
 }
 
+/**
+ * Generates a CSV file from the given data
+ * @param {Array<object>} data - The data to generate the CSV file from
+ * @returns {Promise<string>} - A promise which resolves to a string containing the CSV content
+ */
 export async function generateCSVFile (data) {
   // Generate CSV content
   const csvContent = data.map(row => Object.values(row).join(',')).join('\n')
@@ -70,10 +80,14 @@ export async function generateCSVFile (data) {
 
 //  - - - - UPLOAD FUNCTIONALITY - - - -
 
+/**
+ * Validated the file type and size
+ * @param {File} file - The file to validate
+ * @returns {boolean} - True if the file is valid, else false
+ */
 export function validateFile (file) {
   // Check if the file type is valid
   if (!['.csv', '.xlsx'].includes(file.name.slice(file.name.lastIndexOf('.')))) {
-    
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.UNSUPPORTED_CONTENT_TYPE, FEEDBACK_MESSAGES.UNSUPPORTED_CONTENT_TYPE)
     return false
   }
@@ -85,6 +99,12 @@ export function validateFile (file) {
   return true
 }
 
+/**
+ * Reads the content of a CSV file
+ * @param {File} file - The file to check
+ * @param {Array<File>} filesArray - The array of files to check
+ * @returns {boolean} - True if the file exists in the array, else false
+ */
 export function fileExistsInArray (file, filesArray) {
   return filesArray.some(existingFile => existingFile.name === file.name)
 }

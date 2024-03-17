@@ -23,12 +23,11 @@ import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/
 /**
  * Updates a store with given objects converted to a given class
  * Ensures that if there is any overlap between new and existing objects,
- *   that the properties of the new object overwrite the old one, while the
- *     old properties are kept
- *
- * @param {store} store - The store to update
- * @param {array} objects - The objects to update the store with
- * @param {class} Class - The class to convert the objects to
+ * that the properties of the new object overwrite the old one, while the
+ * old properties are kept
+ * @param {import('svelte/store').Writable} store - The store to update
+ * @param {Array<object>} objects - The objects to update the store with
+ * @param {Function} Class - The class to convert the objects to
  * @returns {void}
  */
 function updateStoreWithObjects (store, objects, Class) {
@@ -65,12 +64,11 @@ function updateStoreWithObjects (store, objects, Class) {
 /**
  * Updates a store with a given object converted to a given class
  * Ensures that if there is any overlap between a new and existing object,
- *   that the properties of the new object overwrite the old one, while the
- *     old properties are kept
- *
- * @param {store} store - The store to update
- * @param {array} object - The object to update the store with
- * @param {class} Class - The class to convert the object to
+ * that the properties of the new object overwrite the old one, while the
+ * old properties are kept
+ * @param {import('svelte/store').Writable} store - The store to update
+ * @param {object} object - The object to update the store with
+ * @param {Function} Class - The class to convert the object to
  * @returns {void}
  */
 function updateStoreWithObject (store, object, Class) {
@@ -95,8 +93,7 @@ function updateStoreWithObject (store, object, Class) {
 
 /**
  * Ensures that all rivers are stored in the river store such that the
- *   map and list page can display them
- *
+ * map and list page can display them
  * @returns {void}
  */
 export async function getRivers () {
@@ -118,8 +115,7 @@ export async function getRivers () {
 
 /**
  * Ensures that all stations are stored in the station store such that the
- *    map and list page can display them
- *
+ * map and list page can display them
  * @returns {void}
  */
 export async function getStations () {
@@ -141,9 +137,8 @@ export async function getStations () {
 
 /**
  * Ensures that a river summary and its underlying stations are stored
- *   in the river store such that the river summary page can display them
- *
- * @param {int} id - The id of the river to get the summary for
+ * in the river store such that the river summary page can display them
+ * @param {number} id - The id of the river to get the summary for
  * @returns {void}
  */
 export async function getRiverSummary (id) {
@@ -171,9 +166,8 @@ export async function getRiverSummary (id) {
 
 /**
  * Ensures that a station summary is stored in the station store such that
- *  the station summary page can display it
- *
- * @param {int} id - The id of the station to get the summary for
+ * the station summary page can display it
+ * @param {number} id - The id of the station to get the summary for
  */
 export async function getStationSummary (id) {
   // Check if station summary exists, if it does, return
@@ -194,9 +188,8 @@ export async function getStationSummary (id) {
 
 /**
  * Ensures that all stations under a river has their data stored in the store
- *   for the river to be downloaded
- *
- * @param {int} id - The id of the river to get the data for
+ * for the river to be downloaded
+ * @param {number} id - The id of the river to get the data for
  * @returns {void}
  */
 export async function getRiverForDownload (id) {
@@ -226,9 +219,8 @@ export async function getRiverForDownload (id) {
 
 /**
  * Ensures that a station is stored in the station store such that
- *   the station can be downloaded
- *
- * @param {int} id - The id of the station to get the data for
+ * the station can be downloaded
+ * @param {number} id - The id of the station to get the data for
  * @returns {void}
  */
 export async function getStationForDownload (id) {
