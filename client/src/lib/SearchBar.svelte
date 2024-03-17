@@ -4,7 +4,7 @@
 	
 	$: searchQuery = searchQuery.toLowerCase();
 	let placeholder;
-	let helpText = "Bruk filter for å filtrere resultat";
+	let helpText = 'Bruk filter for å filtrere resultat';
 
 	$: placeholder = `Søk etter ${dataType === 'river' ? 'Elv navn eller prosjektnummer' : 'Stasjon navn'}`;
 </script>

@@ -1,5 +1,5 @@
 <script>
-	import RadioInput from "./RadioInput.svelte";
+	import RadioInput from './RadioInput.svelte';
 
 	export let showPlotB;
     export let intervallPlotB;
@@ -7,8 +7,8 @@
 
 	// Options when choosing plot type
     let plotTypeOptions = [
-        {value: "histogram", label: "Histogram"},
-        {value: "box", label: "Boksplott"}
+        {value: 'histogram', label: 'Histogram'},
+        {value: 'box', label: 'Boksplott'}
     ];
 </script>
 

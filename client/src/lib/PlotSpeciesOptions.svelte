@@ -1,5 +1,5 @@
 <script>
-	import RadioInput from "./RadioInput.svelte";
+	import RadioInput from './RadioInput.svelte';
 
 	export let showPlotA;
     export let showValueA;
@@ -7,14 +7,14 @@
 
 	// Options when choosing y value
     let yValueOptions = [
-        {value: "absolute", label: "Antall per art"},
-        {value: "relative", label: "Ant/min per art"}
+        {value: 'absolute', label: 'Antall per art'},
+        {value: 'relative', label: 'Ant/min per art'}
     ];
 
 	// Options when choosing plot type
     let plotTypeOptions = [
-        {value: "bar", label: "Stolpediagram"},
-        {value: "pie", label: "Sektordiagram"}
+        {value: 'bar', label: 'Stolpediagram'},
+        {value: 'pie', label: 'Sektordiagram'}
     ];
 </script>
 
