@@ -1,8 +1,9 @@
 <script>    
     import { onMount, onDestroy } from 'svelte';
-    import { browser } from '$app/environment';
+    //import { browser } from '$app/environment';
     import { createEventDispatcher } from 'svelte';
     import leaflet from 'leaflet';
+    import L from 'leaflet';
    
     export let stations;    // Imported data containg station objects
     export let rivers;      // Imported data containg river objects
@@ -15,7 +16,7 @@
     let stationMarkers = [];   // Array to store stationmarkers used by the map
     let riverMarkers =  [];    // Array to store river markers used by the map
     let lines = [];     // Array to store lines used by the map
-    let zoomChanged = 0;
+    //let zoomChanged = 0;
     let clickedMarker;
     let clickedRiver;
     let markerIndex;
@@ -71,6 +72,9 @@
         }
     });
 
+    /**
+     *
+     */
     function updateMap() {
         if (dataType) {
             if(dataType === 'station') {  // handles everything when user choses to view station data
@@ -86,11 +90,21 @@
     $: [rivers, stations, dataType], updateMap();
 
         // called when the map is clicked
-    function onMapClick(e) {
+    /**
+     * Dispatches an event to the parent component
+     * 
+     * @param {Event} _ - The event object
+     */
+    function onMapClick(_) {
         dispatch('map');
     }
         
-        // adds station markers to the map
+
+    /**
+     * Adds station markers to the map
+     * 
+     * @param {object} leaflet - Object used to create markers
+     */
     function addStations(leaflet) {
             // loops through all stations and adds a marker for each
         stations.forEach(station => {
@@ -117,7 +131,14 @@
             stationMarkers.push(endMarker);                   
         });
     }
-        // Called when a station marker is clicked
+        
+    /**
+     * Called when a station marker is clicked
+     * 
+     * @param {object} station - The station data
+     * @param {object} leaflet - The Leaflet object uses to create markers
+     * @param {Event} e - The event object
+     */
     function stationSelected(station, leaflet, e) {
             // calculate which points need to be turned red
         markerIndex = stationMarkers.indexOf(clickedMarker);
@@ -148,7 +169,15 @@
 		});
     }
 
-        // adds river markers to the map
+
+    /**
+     * Adds river markers to the map
+     *
+     * Iterates the rivers array and adds a marker for each river
+     * Also sets up a click even handler for each marker
+     * 
+     * @param {object} leaflet - The Leaflet object uses to create markers
+     */
     function addRivers(leaflet) {
         rivers.forEach(river => {
             let coordinate1 = river.position.coordinates[0];
@@ -161,6 +190,13 @@
         });
     }
 
+    /**
+     * Handles click events for each river marker
+     * 
+     * @param {object} river - The river data
+     * @param {object} leaflet - The Leaflet object uses to create markers
+     * @param {Event} e - The event object
+     */
     function riverSelected(river, leaflet, e) {
             // calculate which river needs to be turned red
         if(clickedRiver) {
@@ -177,6 +213,9 @@
     }
 
         // removes markers from the map
+    /**
+     * Removes all markers from the map
+     */
     function removeMarkers() {
         stationMarkers.forEach(marker => {
             map.removeLayer(marker);
