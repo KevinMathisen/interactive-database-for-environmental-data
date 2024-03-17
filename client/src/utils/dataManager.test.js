@@ -569,6 +569,7 @@ describe('test getStationForDownload function', () => {
     // Set up test
     const initialStationMap = new Map([[1, new Station({ id: 1, name: 'Station Test', river_id: 1})]])
     vi.mocked(get).mockReturnValue(initialStationMap)
+    checkIfDataExists.checkIfStationSummaryExists.mockReturnValue(true)
     checkIfDataExists.checkIfRiverSummaryExists.mockReturnValue(true)
     checkIfDataExists.checkIfStationDownloadExists.mockReturnValue(true)
 
@@ -583,6 +584,7 @@ describe('test getStationForDownload function', () => {
     // Set up test
     const initialStationMap = new Map([[1, new Station({ id: 1, name: 'Station Test', river_id: 1 })]])
     vi.mocked(get).mockReturnValue(initialStationMap)
+    checkIfDataExists.checkIfStationSummaryExists.mockReturnValue(true)
     checkIfDataExists.checkIfRiverSummaryExists.mockReturnValue(true)
     checkIfDataExists.checkIfStationDownloadExists.mockReturnValue(false)
     postgrest.fetchStationDownload.mockRejectedValue(new Error('Test Error'))
@@ -596,6 +598,7 @@ describe('test getStationForDownload function', () => {
 
   it('should fetch and add station download to store if station overlap exists', async () => {
     // set up test
+    checkIfDataExists.checkIfStationSummaryExists.mockReturnValue(true)
     checkIfDataExists.checkIfRiverSummaryExists.mockReturnValue(true)
     checkIfDataExists.checkIfStationDownloadExists.mockReturnValue(false)
     const mockedStationDownload = [{ id: 1, name: 'Station Test', observations: [{ species: 'Species 1', count: 1 }] }]
