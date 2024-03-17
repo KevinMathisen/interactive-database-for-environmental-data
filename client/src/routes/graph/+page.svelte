@@ -1,5 +1,5 @@
 <script> // Graph page logic here 
-    import GraphFilter from '$lib/GraphFilter.svelte'
+    import GraphFilter from '$lib/GraphFilter.svelte';
 	import Sidebar from '../../lib/Sidebar.svelte';
     import PlotlyComponent from './PlotlyComponent.svelte';
     import Modal from '../../lib/Modal.svelte';
@@ -42,21 +42,30 @@
     // Get selectable species
     $: selectableSpecies = dataType === 'river' ? getSelectableSpecies(rivers) : getSelectableSpecies(stations);
 
+    /**
+     *
+     */
     function onSelectRiverStation() {
         // should get the selected rivers and stations from event
         if (dataType === 'river') {
-            selectedRivers = new Map(rivers[3])
-            selectableSpecies = getSelectableSpecies(rivers)
+            selectedRivers = new Map(rivers[3]);
+            selectableSpecies = getSelectableSpecies(rivers);
         } else {
-            selectedStations = new Map(stations[11])
-            selectableSpecies = getSelectableSpecies(stations)
+            selectedStations = new Map(stations[11]);
+            selectableSpecies = getSelectableSpecies(stations);
         }
     }
 
+    /**
+     *
+     */
     function handleClose() {
         showSelectRiverAndStationModal = false;
     }
 
+    /**
+     *
+     */
     function handleSelectRiverStation() {
         showSelectRiverAndStationModal = true;
     }
