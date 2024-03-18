@@ -21,6 +21,7 @@
       FEEDBACK_MESSAGES
     } from '../../constants/feedbackMessages.js'
     import { addFeedbackToStore } from '../../utils/addFeedbackToStore.js'
+    import { formatRiversForExcel, formatStationsForExcel } from '../../utils/formatData.js'
 
     let showSelectRiverAndStationModal = false
 
@@ -28,7 +29,7 @@
     let stations = new Map() // Stations with coordinates
     let selectableSpecies = [] // All unique species
 
-    let dataType // "river" or "station", chosen by user
+    let dataType = 'river' // "river" or "station", chosen by user
     let selectedRivers = new Map() // Rivers the user has chosen
     let selectedStations = new Map() // Stations the user has chosen
 
@@ -106,44 +107,58 @@
     ]
 
     const downloadFile = async () => {
+      // Check if the user has chosen a file format
       if (selectedFormat === '') {
         addFeedbackToStore(
           FEEDBACK_TYPES.ERROR,
           FEEDBACK_CODES.NOT_FOUND,
           FEEDBACK_MESSAGES.NO_FILE_FORMAT_SELECTED
         )
-      }
-      let fileName = ''
-      let blob = null
-      let fileData = null
-
-      if (selectedFormat === 'xlsx') {
-        if (dataType === 'river') { // Generate Excel file
-          fileData = await generateExcelFile(selectedRivers, dataType)
-        } else {
-          fileData = await generateExcelFile(selectedStations, dataType)
-        }
-        // Create a blob from the Excel file data
-        blob = new Blob([fileData], {
-          type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-        })
-        fileName = 'data.xlsx'
-      } else if (selectedFormat === 'csv') {
-        fileData = await generateCSVFile(sampleData) // Generate CSV content
-        // Create a Blob from the CSV content
-        blob = new Blob([fileData], { type: 'text/csv' })
-        fileName = 'data.csv'
+        return
       }
 
-      const url = URL.createObjectURL(blob)
-      // Create a temporary anchor element
+      // Check if the user has chosen rivers but not selected any
+      if (dataType === 'river' && selectedRivers.size === 0) {
+        addFeedbackToStore(
+          FEEDBACK_TYPES.ERROR,
+          FEEDBACK_CODES.NOT_FOUND,
+          FEEDBACK_MESSAGES.NO_RIVERS_SELECTED
+        )
+        return
+      }
+
+      // Check if the user has chosen stations but not selected any
+      if (dataType === 'station' && selectedStations.size === 0) {
+        addFeedbackToStore(
+          FEEDBACK_TYPES.ERROR,
+          FEEDBACK_CODES.NOT_FOUND,
+          FEEDBACK_MESSAGES.NO_STATIONS_SELECTED
+        )
+        return
+      }
+
+      // Create object with river object in array and station object in array
+      let data = type === 'river' ? formatRiversForExcel(selectedRivers) : formatStationsForExcel(selectedStations)
+
+      
+      let fileExtension = selectedFormat === 'xlsx' ? '.xlsx' : '.csv'
+      let fileName = type === 'river' ? 'elver' : 'stasjoner' + fileExtension
+      let blob = selectedFormat === 'xlsx' ? 
+        await generateExcelFile(selectedRivers, selectedStations, dataType) : 
+        await generateCSVFile(selectedRivers, selectedStations, dataType)
+
+      // Create a URL for the blob
+      const blobUrl = URL.createObjectURL(blob)
+
+      // Create a temporary anchor element, set the href and download attributes to the URL and file name
       const a = document.createElement('a')
-      a.href = url
+      a.href = blobUrl
+      a.download = fileName 
+      a.style.display = 'none'
 
-      a.download = fileName // Set the filename
-      document.body.appendChild(a)
-      // Programmatically click the anchor element to trigger the download
-      a.click()
+      // Append the anchor element to the DOM and click it
+      document.body.appendChild(a).click()
+      
       // Remove the anchor element from the DOM
       document.body.removeChild(a)
     }
