@@ -26,7 +26,7 @@ vi.mock('./checkIfDataExists', () => ({
   checkIfStationDownloadExists: vi.fn()
 }))
 
-vi.mock('./addFeedbackTostore', () => ({
+vi.mock('./addFeedbackToStore', () => ({
   addFeedbackToStore: vi.fn()
 }))
 

@@ -15,7 +15,7 @@ vi.mock('./formatData.js', () => ({
   formatStationsForCsv: vi.fn()
 }))
 
-vi.mock('./addFeedbackTostore', () => ({
+vi.mock('./addFeedbackToStore', () => ({
   addFeedbackToStore: vi.fn()
 }))
 
