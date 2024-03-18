@@ -30,18 +30,21 @@ export async function generateExcelFile (rivers, stations, type) {
 
     // Create a river worksheet, and add each river to it
     const riverSheet = workbook.addWorksheet('Elvedata')
+    riverSheet.addRow(data.riverHeader)
     data.riverRows.forEach(row => {
       riverSheet.addRow(row)
     })
 
     // Create a station worksheet, and add each station to it
     const stationSheet = workbook.addWorksheet('Stasjonsdata')
+    stationSheet.addRow(data.stationHeader)
     data.stationRows.forEach(row => {
       stationSheet.addRow(row)
     })
 
     // Create an observation worksheet, and add each observation to it
     const observationSheet = workbook.addWorksheet('Individdata')
+    observationSheet.addRow(data.observationHeader)
     data.observationRows.forEach(row => {
       observationSheet.addRow(row)
     })
