@@ -21,38 +21,44 @@ import {
  * @returns {Promise<Blob>} A promise that resolves with a Blob representing the Excel file.
  */
 export async function generateExcelFile (rivers, stations, type) {
-  // Format the data for Excel
-  let data = type === 'river' ? formatRiversForExcel(selectedRivers) : formatStationsForExcel(selectedStations)
+  try {
+    // Format the data for Excel
+    let data = type === 'river' ? formatRiversForExcel(selectedRivers) : formatStationsForExcel(selectedStations)
 
-  // Create a new workbook
-  const workbook = new ExcelJS.Workbook()
+    // Create a new workbook
+    const workbook = new ExcelJS.Workbook()
 
-  // Create a river worksheet, and add each river to it
-  const riverSheet = workbook.addWorksheet('Elvedata')
-  data.riverRows.forEach(row => {
-    riverSheet.addRow(row)
-  })
+    // Create a river worksheet, and add each river to it
+    const riverSheet = workbook.addWorksheet('Elvedata')
+    data.riverRows.forEach(row => {
+      riverSheet.addRow(row)
+    })
 
-  // Create a station worksheet, and add each station to it
-  const stationSheet = workbook.addWorksheet('Stasjonsdata')
-  data.stationRows.forEach(row => {
-    stationSheet.addRow(row)
-  })
+    // Create a station worksheet, and add each station to it
+    const stationSheet = workbook.addWorksheet('Stasjonsdata')
+    data.stationRows.forEach(row => {
+      stationSheet.addRow(row)
+    })
 
-  // Create an observation worksheet, and add each observation to it
-  const observationSheet = workbook.addWorksheet('Individdata')
-  data.observationRows.forEach(row => {
-    observationSheet.addRow(row)
-  })
+    // Create an observation worksheet, and add each observation to it
+    const observationSheet = workbook.addWorksheet('Individdata')
+    data.observationRows.forEach(row => {
+      observationSheet.addRow(row)
+    })
 
-  // Write the workbook to a buffer
-  const buffer = await workbook.xlsx.writeBuffer()
+    // Write the workbook to a buffer
+    const buffer = await workbook.xlsx.writeBuffer()
 
-  // Convert the buffer to a blob
-  const blob = new Blob([buffer], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+    // Convert the buffer to a blob
+    const blob = new Blob([buffer], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'})
 
-  // Return the blob
-  return blob;
+    // Return the blob
+    return blob
+  } catch (error) {
+    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.NOT_FOUND, FEEDBACK_MESSAGES.ERROR_GENERATING_FILE)
+    // if error, return empty blob
+    return new Blob()
+  }
 }
 
 /**
@@ -63,20 +69,25 @@ export async function generateExcelFile (rivers, stations, type) {
  * @returns {string} - A string containing the CSV file
  */
 export async function generateCSVFile (rivers, stations, type) {
-  // Format the data for CSV
-  let data = type === 'river' ? formatRiversForCsv(selectedRivers) : formatStationsForCsv(selectedStations)
+  try {
+    // Format the data for CSV
+    let data = type === 'river' ? formatRiversForCsv(selectedRivers) : formatStationsForCsv(selectedStations)
 
-  // Generate and return CSV content, where each row is separated by a newline, and each column by a comma
-  const csvContent = [
-    data.header.join(','), 
-    ...data.rows.join(',')
-  ].join('\n')
+    // Generate and return CSV content, where each row is separated by a newline, and each column by a comma
+    const csvContent = [
+      data.header.join(','), 
+      ...data.rows.join(',')
+    ].join('\n')
 
-  // Convert the CSV content to a blob
-  const blob = new Blob([csvContent], {type: 'text/csv'});
+    // Convert the CSV content to a blob
+    const blob = new Blob([csvContent], {type: 'text/csv'});
 
-  // Return the blob
-  return blob;
+    // Return the blob
+    return blob;
+  } catch (error) {
+    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.NOT_FOUND, FEEDBACK_MESSAGES.ERROR_GENERATING_FILE)
+    return new Blob()
+  }
 }
 
 //  - - - - UPLOAD FUNCTIONALITY - - - -
