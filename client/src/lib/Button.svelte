@@ -12,6 +12,8 @@
 
     function handleClick() {
         dispatch('downloadFile');
+        dispatch('uploadFile');
+        dispatch('selectFile');
     }
 </script>
 
