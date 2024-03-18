@@ -21,6 +21,7 @@
       FEEDBACK_MESSAGES
     } from '../../constants/feedbackMessages.js'
     import { addFeedbackToStore } from '../../utils/addFeedbackToStore.js'
+    import Button from '../../lib/Button.svelte'
 
     let showSelectRiverAndStationModal = false
 
@@ -232,8 +233,7 @@
         </CollapsibleSection>
     </div>
 </div>
-
-<button class="downloadButton" on:click={downloadFile}>Last ned</button>
+<Button type="download" color="orange" on:downloadFile={downloadFile}>Last ned <img src="/dowloadIcon.svg" alt="listIcon" height="50px" class="headerIcon"></Button>
 
 <style>
     .downloadHeader {
@@ -263,19 +263,5 @@
 
     .rowItem {
         margin: 20px;
-    }
-
-    .downloadButton {
-        position: fixed;
-        right: 500px;
-        bottom: 100px;
-        font-size: 1.2rem;
-        background-color: tomato;
-        border-radius: 1rem;
-        width: 200px;
-        height: 60px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
     }
 </style>

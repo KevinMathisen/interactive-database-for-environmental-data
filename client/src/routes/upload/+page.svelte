@@ -1,5 +1,4 @@
 <script>
-  // Upload page logic here
   import Papa from 'papaparse'
   import ExcelJS from 'exceljs'
   import {
@@ -9,7 +8,7 @@
   } from '../../constants/feedbackMessages.js'
   import { addFeedbackToStore } from '../../utils/addFeedbackToStore.js'
   import UserFeedbackMessage from '../../lib/UserFeedbackMessage.svelte'
-
+  import Button from '../../lib/Button.svelte'
   import { validateFile, fileExistsInArray } from '../../utils/fileHandler.js'
 
   const filesArray = []
@@ -103,11 +102,12 @@
 <UserFeedbackMessage />
 
 <div class="uploadBody">
-  <!--Defines the bos where you click to choose files -->
+  <!--Defines the box where you click to choose files -->
   <div class="uploadFilesBox">
     <img src="/uploadCloudIcon.svg" alt="listIcon" height="60px" id="uploadCloudIcon" />
     <p>Dra og slipp filer eller</p>
-    <button id="uploadFilesBoxButton" on:click={selectFile}>Bla gjennom Filer </button>
+    <br>
+    <Button color="blue" on:selectFile={selectFile} ifNotPicture={true}>Bla gjennom Filer </Button>
   </div>
 
   <!-- Defines the text under the upload files box -->
@@ -123,8 +123,8 @@
   </div>
 </div>
 
-<!-- Defines the upload files button -->
-<button class="uploadButton" on:click={uploadFile}>Last opp</button>
+<!-- The upload files button -->
+<Button type="uploadButton" color="orange" on:uploadFile={uploadFile}>Last opp <img src="/uploadIcon.svg" alt="listIcon" height="50px" class="headerIcon"></Button>
 
 <style>
   .uploadBody {
@@ -140,20 +140,13 @@
     flex-direction: column;
     align-items: center;
     width: 900px;
+    height: 13em;
     font-size: 1.5rem;
   }
 
   #uploadCloudIcon {
     margin-top: 1rem;
     height: 100px;
-  }
-
-  #uploadFilesBoxButton {
-    background-color: #435768;
-    font-size: 1.5rem;
-    padding: 1rem 5rem 1rem 5rem;
-    margin: 3rem 0 1rem 0;
-    border-radius: 1rem;
   }
 
   .uploadFilesBoxText {
@@ -173,19 +166,5 @@
 
   #filesChosen {
     font-size: 1rem;
-  }
-
-  .uploadButton {
-    position: fixed;
-    right: 500px;
-    bottom: 100px;
-    font-size: 1.2rem;
-    background-color: tomato;
-    border-radius: 1rem;
-    width: 200px;
-    height: 60px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
 </style>
