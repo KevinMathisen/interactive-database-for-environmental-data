@@ -89,7 +89,7 @@ function createRowForObservation(observation) {
   return [
     observation.id, observation.station, observation.round, observation.species, 
     observation.length, observation.count, observation.gender, observation.age, observation.released,
-    observation.sampleType, observation.comment
+    observation.sampletype, observation.comment
   ].map(attribute => attribute === null ? '' : attribute)
 }
 
