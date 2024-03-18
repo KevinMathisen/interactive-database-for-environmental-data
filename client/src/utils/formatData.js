@@ -92,3 +92,46 @@ function createRowForObservation(observation) {
     observation.sampleType, observation.comment
   ]
 }
+
+/**
+ * Converts Rivers into rows for insertion into an Excel file
+ * Includes both rivers and its underlying station and observations
+ * 
+ * @param {Map<number, River>} rivers - The rivers to convert to rows
+ * @returns {{
+*    riverHeader: string[], riverRows: string[], 
+*    stationHeader: string[], stationRows: string[], 
+*    observationHeader: string[], observationRows: string[]
+*   }} - Headers and rows for the table
+*/
+export function formatRiversForExcel (rivers) {
+ // Import the headers for the Excel file
+ const riverHeader = headersConstants.RIVER_HEADERS_EXCEL
+ const stationHeader = headersConstants.STATION_HEADERS_EXCEL
+ const observationHeader = headersConstants.OBSERVATION_HEADERS_EXCEL
+
+ let riverRows = []
+ let stationRows = []
+ let observationRows = []
+
+ // Get stations from store
+ const stations = get(stationStore)
+ 
+ rivers.forEach(river => {
+   // Create new row for river
+   riverRows.push(createRowForRiver(river))
+
+   river.stations.forEach(station => {
+     // Create new row for station  
+     stationRows.push(createRowForStation(stations.get(station)))
+
+     station.observations.forEach(observation => {
+       // Create new row for observation
+       observationRows.push(createRowForObservation(observation))
+     })
+   })
+ })
+
+ // Return the headers and and all the rows
+ return { riverHeader, riverRows, stationHeader, stationRows, observationHeader, observationRows }
+}
