@@ -8,7 +8,7 @@
   } from '../../constants/feedbackMessages.js'
   import { addFeedbackToStore } from '../../utils/addFeedbackToStore.js'
   import UserFeedbackMessage from '../../lib/UserFeedbackMessage.svelte'
-  import Button from '../../lib/Button.svelte';
+  import Button from '../../lib/Button.svelte'
   import { validateFile, fileExistsInArray } from '../../utils/fileHandler.js'
 
   const filesArray = []
@@ -102,77 +102,69 @@
 <UserFeedbackMessage />
 
 <div class="uploadBody">
-	<!--Defines the box where you click to choose files -->
-	<div class="uploadFilesBox">
-		<img src="/uploadCloudIcon.svg" alt="listIcon" height="60px" id="uploadCloudIcon" />
-		<p>Dra og slipp filer eller</p>
-		<br>
-		<Button color="blue" on:selectFile={selectFile} ifNotPicture={true}>Bla gjennom Filer </Button>
-	</div>
+  <!--Defines the box where you click to choose files -->
+  <div class="uploadFilesBox">
+    <img src="/uploadCloudIcon.svg" alt="listIcon" height="60px" id="uploadCloudIcon" />
+    <p>Dra og slipp filer eller</p>
+    <br>
+    <Button color="blue" on:selectFile={selectFile} ifNotPicture={true}>Bla gjennom Filer </Button>
+  </div>
 
-	<!-- Defines the text under the upload files box -->
-	<div class="uploadFilesBoxText">
-		<p>Maksimal fil størrelse: 10 MB</p>
-		<p>Kun tillatt å laste opp filer av typen: .csv and .xlsx</p>
-	</div>
+  <!-- Defines the text under the upload files box -->
+  <div class="uploadFilesBoxText">
+    <p>Maksimal fil størrelse: 10 MB</p>
+    <p>Kun tillatt å laste opp filer av typen: .csv and .xlsx</p>
+  </div>
 
-	<!-- Defines the overview over files selected -->
-	<div class="uploadFilesUploaded">
-		<p id="filesChosenText">Filer som er valgt:</p>
-		<div id="filesChosen"></div>
-	</div>
+  <!-- Defines the overview over files selected -->
+  <div class="uploadFilesUploaded">
+    <p id="filesChosenText">Filer som er valgt:</p>
+    <div id="filesChosen"></div>
+  </div>
 </div>
 
 <!-- The upload files button -->
 <Button type="uploadButton" color="orange" on:uploadFile={uploadFile}>Last opp <img src="/uploadIcon.svg" alt="listIcon" height="50px" class="headerIcon"></Button>
 
 <style>
-	.uploadBody {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-	}
+  .uploadBody {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
-	.uploadFilesBox {
-		border: 2px dashed black;
-		margin-top: 3rem;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		width: 900px;
-		height: 13em;
-		font-size: 1.5rem;
-	}
+  .uploadFilesBox {
+    border: 2px dashed black;
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 900px;
+    height: 13em;
+    font-size: 1.5rem;
+  }
 
-	#uploadCloudIcon {
-		margin-top: 1rem;
-		height: 100px;
-	}
+  #uploadCloudIcon {
+    margin-top: 1rem;
+    height: 100px;
+  }
 
-	#uploadFilesBoxButton {
-		background-color: #435768;
-		font-size: 1.5rem;
-		padding: 1rem 5rem 1rem 5rem;
-		margin: 3rem 0 1rem 0;
-		border-radius: 1rem;
-	}
+  .uploadFilesBoxText {
+    margin-right: 35rem;
+  }
 
-	.uploadFilesBoxText {
-		margin-right: 35rem;
-	}
+  .uploadFilesUploaded {
+    margin-top: 3rem;
+    font-size: 2rem;
+    height: 200px;
+    width: 900px;
+  }
 
-	.uploadFilesUploaded {
-		margin-top: 3rem;
-		font-size: 2rem;
-		height: 200px;
-		width: 900px;
-	}
+  #filesChosenText {
+    margin-bottom: 1rem;
+  }
 
-	#filesChosenText {
-		margin-bottom: 1rem;
-	}
-
-	#filesChosen {
-		font-size: 1rem;
-	}
+  #filesChosen {
+    font-size: 1rem;
+  }
 </style>
