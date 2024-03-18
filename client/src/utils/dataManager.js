@@ -109,6 +109,7 @@ export async function getRivers () {
     // Update store
     updateStoreWithObjects(riverStore, fetchedRivers, River)
   } catch (error) {
+    console.log('Error fetching rivers:', error)
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
   }
 }
@@ -131,6 +132,7 @@ export async function getStations () {
     // Update store
     updateStoreWithObjects(stationStore, fetchedStations, Station)
   } catch (error) {
+    console.log('Error fetching stations:', error)
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
   }
 }
@@ -150,7 +152,7 @@ export async function getRiverSummary (id) {
   try {
     // Get river summary data
     const fetchedRiversSummary = await fetchRiverSummary(id)
-
+    console.log('fetchedRiversSummary:', fetchedRiversSummary)
     // Update store with river
     updateStoreWithObject(riverStore, fetchedRiversSummary[0], River)
 
@@ -160,6 +162,7 @@ export async function getRiverSummary (id) {
     // Update store with the stations
     updateStoreWithObjects(stationStore, fetchedStations, Station)
   } catch (error) {
+    console.log('Error fetching river summary:', error)
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
   }
 }
@@ -182,6 +185,7 @@ export async function getStationSummary (id) {
     // Update store
     updateStoreWithObject(stationStore, fetchedStationsSummary[0], Station)
   } catch (error) {
+    console.log('Error fetching station summary:', error)
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
   }
 }
@@ -194,7 +198,7 @@ export async function getStationSummary (id) {
  */
 export async function getRiverForDownload (id) {
   // Ensure that river summary is stored
-  getRiverSummary(id)
+  await getRiverSummary(id)
 
   const river = get(riverStore).get(id)
 
@@ -210,9 +214,12 @@ export async function getRiverForDownload (id) {
     // Get all download data for all stations under river
     const fetchedStations = await fetchStationDownload(stationsNotFetchedForDownload)
 
+    console.log(fetchedStations)
+
     // Update store with the new station data
     updateStoreWithObjects(stationStore, fetchedStations, Station)
   } catch (error) {
+    console.log('Error fetching river for download:', error)
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
   }
 }
@@ -225,12 +232,12 @@ export async function getRiverForDownload (id) {
  */
 export async function getStationForDownload (id) {
   // Ensure that station summary is stored
-  getStationSummary(id)
+  await getStationSummary(id)
 
   const station = get(stationStore).get(id)
 
   // Ensure that river summary for station is stored
-  getRiverSummary(station.riverId)
+  await getRiverSummary(station.riverId)
 
   // Check if station download exists, if it does, return
   if (checkIfStationDownloadExists(id)) {
@@ -244,6 +251,7 @@ export async function getStationForDownload (id) {
     // Update store
     updateStoreWithObject(stationStore, fetchedStations[0], Station)
   } catch (error) {
+    console.log('Error fetching station for download:', error)
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
   }
 }
