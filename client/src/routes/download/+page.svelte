@@ -150,6 +150,11 @@
         await generateExcelFile(selectedRivers, selectedStations, dataType) : 
         generateCSVFile(selectedRivers, selectedStations, dataType)
 
+      // If no file was created, return
+      if (blob.size === 0) {
+        return
+      }
+
       // Create a URL for the blob
       const blobUrl = URL.createObjectURL(blob)
 
