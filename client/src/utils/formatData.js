@@ -215,9 +215,11 @@ export function formatRiversForCsv(rivers) {
     let riverRow = createRowForRiver(river)
 
     river.stations.forEach(station => {
+      // Get station from store
+      station = stations.get(station)
 
       // Create new row for station
-      let stationRow = createRowForStation(stations.get(station))
+      let stationRow = createRowForStation(station)
 
       station.observations.forEach(observation => {
         // Create new row for observation
