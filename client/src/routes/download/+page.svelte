@@ -61,6 +61,18 @@
     $: rivers = $riverStore
     $: stations = $stationStore
 
+    // Keep the selected rivers and stations up to date when the rivers and stations are updated
+    $: if (rivers) {
+      selectedRivers.forEach((_, key) => {
+        selectedRivers.set(key, rivers.get(key))
+      })
+    }
+    $: if (stations) {
+      selectedStations.forEach((_, key) => {
+        selectedStations.set(key, stations.get(key))
+      })
+    }
+
     /**
      * When the user has chosen rivers or stations, get the data needed for download
      * @returns {void}
@@ -70,7 +82,7 @@
       if (dataType === 'river') {
         // For each river in the selectedRivers map, get the data needed for download if it is not already in the store
         selectedRivers.forEach((_, key) => {
-          getRiverForDownload(key)
+        getRiverForDownload(key)
         })
       } else {
         // For each station in the selectedStations map, get the data needed for download if it is not already in the store
@@ -97,14 +109,7 @@
      */
     function handleSelectRiverStation () {
       showSelectRiverAndStationModal = true
-      console.log(selectedStations)
     }
-
-    const sampleData = [
-      { name: 'John Doe', age: 30, email: 'john@example.com' },
-      { name: 'Jane Smith', age: 25, email: 'jane@example.com' },
-      { name: 'Bob Johnson', age: 40, email: 'bob@example.com' }
-    ]
 
     /**
      * Downloads a file with the content specified by the user
@@ -143,7 +148,7 @@
 
       // Create a file name and file extension
       let fileExtension = selectedFormat === 'xlsx' ? '.xlsx' : '.csv'
-      let fileName = type === 'river' ? 'elver' : 'stasjoner' + fileExtension
+      let fileName = dataType === 'river' ? 'elver' : 'stasjoner' + fileExtension
 
       // Create a blob with the data
       let blob = selectedFormat === 'xlsx' ? 
