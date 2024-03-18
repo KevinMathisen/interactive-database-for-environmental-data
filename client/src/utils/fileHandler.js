@@ -57,12 +57,23 @@ export async function generateExcelFile (rivers, stations, type) {
 
 /**
  * Generates a CSV file from the given data
- * @param {Array<object>} data - The data to generate the CSV file from
- * @returns {Promise<string>} - A promise which resolves to a string containing the CSV content
+ * @param {Map<number, River>} rivers - The rivers to generate the CSV file from
+ * @param {Map<number, Station>} stations - The stations to generate the CSV file from
+ * @param {string} type - The type of data to generate the CSV file from
+ * @returns {string} - A string containing the CSV file
  */
-export async function generateCSVFile (data) {
-  // Generate CSV content
-  const csvContent = data.map(row => Object.values(row).join(',')).join('\n')
+export async function generateCSVFile (rivers, stations, type) {
+  // Format the data for CSV
+  let data = type === 'river' ? formatRiversForCsv(selectedRivers) : formatStationsForCsv(selectedStations)
+
+  // Generate and return CSV content, where each row is separated by a newline, and each column by a comma
+  const csvContent = [
+    data.header.join(','), 
+    ...data.rows.join(',')
+  ].join('\n')
+
+  // Convert the CSV content to a blob
+  const blob = new Blob([csvContent], {type: 'text/csv'});
 
   // Return the blob
   return blob;
