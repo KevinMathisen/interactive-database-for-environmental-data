@@ -47,14 +47,20 @@ function updateStoreWithObjects (store, objects, Class) {
         return
       }
 
-      // If the object already exists in the store, update it
-      // by merging the new object with the existing object
+      // Get the existing object from the store
       const existingObject = currentMap.get(newObject.id)
+      // Convert the new object from json to the class
       const newClassObject = Class.fromJson(newObject)
+      // Remove any null values from the new object
+      const newObjectFiltered = Object.fromEntries(Object.entries(newClassObject).filter(([_, value]) => value !== null))
+
+      // Merge the new object with the existing object
       const updatedObject = new Class({
         ...existingObject,
-        ...newClassObject
+        ...newObjectFiltered
       })
+
+      // Update the map with the updated object
       currentMap.set(newObject.id, updatedObject)
     })
 
@@ -80,13 +86,20 @@ function updateStoreWithObject (store, object, Class) {
       return currentMap
     }
 
-    // If the object exists in the store, update it
+    // Get the existing object from the store
     const existingObject = currentMap.get(object.id)
-    const classObject = Class.fromJson(object)
+    // Convert the new object from json to the class
+    const newObject = Class.fromJson(object)
+    // Remove any null values from the new object
+    const newObjectFiltered = Object.fromEntries(Object.entries(newObject).filter(([_, value]) => value !== null))
+
+    // Merge the new object with the existing object
     const updatedObject = new Class({
       ...existingObject,
-      ...classObject
+      ...newObjectFiltered
     })
+
+    // Update the map with the updated object
     currentMap.set(object.id, updatedObject)
 
     return currentMap
