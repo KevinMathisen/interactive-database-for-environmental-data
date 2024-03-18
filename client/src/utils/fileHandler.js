@@ -23,7 +23,7 @@ import {
 export async function generateExcelFile (rivers, stations, type) {
   try {
     // Format the data for Excel
-    let data = type === 'river' ? formatRiversForExcel(selectedRivers) : formatStationsForExcel(selectedStations)
+    let data = type === 'river' ? formatRiversForExcel(rivers) : formatStationsForExcel(stations)
 
     // Create a new workbook
     const workbook = new ExcelJS.Workbook()
@@ -71,7 +71,7 @@ export async function generateExcelFile (rivers, stations, type) {
 export async function generateCSVFile (rivers, stations, type) {
   try {
     // Format the data for CSV
-    let data = type === 'river' ? formatRiversForCsv(selectedRivers) : formatStationsForCsv(selectedStations)
+    let data = type === 'river' ? formatRiversForCsv(rivers) : formatStationsForCsv(stations)
 
     // Generate and return CSV content, where each row is separated by a newline, and each column by a comma
     const csvContent = [
