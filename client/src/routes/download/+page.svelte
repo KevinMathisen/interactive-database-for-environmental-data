@@ -106,7 +106,11 @@
       { name: 'Bob Johnson', age: 40, email: 'bob@example.com' }
     ]
 
-    const downloadFile = async () => {
+    /**
+     * Downloads a file with the content specified by the user
+     * @returns {void}
+     */
+    async function downloadFile () {
       // Check if the user has chosen a file format
       if (selectedFormat === '') {
         addFeedbackToStore(
@@ -137,15 +141,14 @@
         return
       }
 
-      // Create object with river object in array and station object in array
-      let data = type === 'river' ? formatRiversForExcel(selectedRivers) : formatStationsForExcel(selectedStations)
-
-      
+      // Create a file name and file extension
       let fileExtension = selectedFormat === 'xlsx' ? '.xlsx' : '.csv'
       let fileName = type === 'river' ? 'elver' : 'stasjoner' + fileExtension
+
+      // Create a blob with the data
       let blob = selectedFormat === 'xlsx' ? 
         await generateExcelFile(selectedRivers, selectedStations, dataType) : 
-        await generateCSVFile(selectedRivers, selectedStations, dataType)
+        generateCSVFile(selectedRivers, selectedStations, dataType)
 
       // Create a URL for the blob
       const blobUrl = URL.createObjectURL(blob)
