@@ -31,8 +31,8 @@ describe('test formatRiversForTable function', () => {
 
   it('should correctly convert river objects into arrays for table display', () => {
     const rivers = new Map([
-      [0, new River({ id: '1', name: 'Name1', start_date: '2024-01-01', project_id: 'prosjekt1' })],
-      [1, new River({ id: '2', name: 'Name2', start_date: '2024-01-15', project_id: 'prosjekt2' })]
+      [0, new River({ id: '1', name: 'Name1', startDate: '2024-01-01', projectId: 'prosjekt1' })],
+      [1, new River({ id: '2', name: 'Name2', startDate: '2024-01-15', projectId: 'prosjekt2' })]
     ])
     const formatted = formatRiversForTable(rivers)
     expect(formatted.headers).toEqual(['Navn', 'Dato', 'Projektnummer'])
@@ -84,24 +84,24 @@ describe('test formatRiversForExcel function', () => {
   it('should correctly convert river objects into arrays for Excel display', () => {
     const rivers = new Map([
       [1, new River({ 
-        id: 1, name: 'Name1', start_date: '2024-01-01', project_id: 'prosjekt1', 
-        pos: {coordinates: [9.0, 60.5]}, stations: [1]})],
+        id: 1, name: 'Name1', startDate: '2024-01-01', projectId: 'prosjekt1', 
+        position: {coordinates: [9.0, 60.5]}, stations: [1], crew: ['Crew1', '', '']})],
       [2, new River({ 
-        id: 2, name: 'Name2', start_date: '2024-01-15', project_id: 'prosjekt2', 
-        pos: {coordinates: [9.1, 60.6]}, stations: [2]})]
+        id: 2, name: 'Name2', startDate: '2024-01-15', projectId: 'prosjekt2', 
+        position: {coordinates: [9.1, 60.6]}, stations: [2], crew: ['Crew2', '', '']})]
     ])
     const stations = new Map([
       [1, new Station({ 
         id: 1, name: 'Station 1', date: '2024-01-01', time: '12:00',
-        water_temp: 4, comment: 'Comment1', 
-        start_pos: {coordinates: [9.0, 60.5]}, end_pos: {coordinates: [9.01, 60.51]},
+        waterTemp: 4, comment: 'Comment1', 
+        startPos: {coordinates: [9.0, 60.5]}, endPos: {coordinates: [9.01, 60.51]},
         observations: [
           { id: 1, station: 1, species: 'Species1', length: 2, count: 1, comment: 'Comment1' }
         ]})],
       [2, new Station({
         id: 2, name: 'Station 2', date: '2024-01-15', time: '13:00',
-        water_temp: 6, comment: 'Comment2',
-        start_pos: {coordinates: [9.1, 60.6]}, end_pos: {coordinates: [9.11, 60.61]},
+        waterTemp: 6, comment: 'Comment2',
+        startPos: {coordinates: [9.1, 60.6]}, endPos: {coordinates: [9.11, 60.61]},
         observations: [
           { id: 2, station: 2, species: 'Species2', length: 3, count: 1, comment: 'Comment2' }
         ]})
@@ -113,8 +113,8 @@ describe('test formatRiversForExcel function', () => {
 
     expect(formatted.riverHeader).toEqual(headersConstants.RIVER_HEADERS_EXCEL)
     expect(formatted.riverRows).toEqual([
-      ['2024-01-01', '', 'Name1', '', 60.5, 9.0, '', '', '', '', '', 'prosjekt1', ''],
-      ['2024-01-15', '', 'Name2', '', 60.6, 9.1, '', '', '', '', '', 'prosjekt2', '']
+      ['2024-01-01', '', 'Name1', '', 60.5, 9.0, '', '', 'Crew1', '', '', 'prosjekt1', ''],
+      ['2024-01-15', '', 'Name2', '', 60.6, 9.1, '', '', 'Crew2', '', '', 'prosjekt2', '']
     ])
     expect(formatted.stationHeader).toEqual(headersConstants.STATION_HEADERS_EXCEL)
     expect(formatted.stationRows).toEqual([
@@ -149,27 +149,27 @@ describe('test formatStationsForExcel function', () => {
   it('should correctly convert station objects into arrays for Excel display', () => {
     const rivers = new Map([
       [1, new River({ 
-        id: 1, name: 'Name1', start_date: '2024-01-01', project_id: 'prosjekt1', 
-        pos: {coordinates: [9.0, 60.5]}, stations: [1]})],
+        id: 1, name: 'Name1', startDate: '2024-01-01', projectId: 'prosjekt1', 
+        position: {coordinates: [9.0, 60.5]}, stations: [1], crew: ['Crew1', '', '']})],
       [2, new River({ 
-        id: 2, name: 'Name2', start_date: '2024-01-15', project_id: 'prosjekt2', 
-        pos: {coordinates: [9.1, 60.6]}, stations: [2]})]
+        id: 2, name: 'Name2', startDate: '2024-01-15', projectId: 'prosjekt2', 
+        position: {coordinates: [9.1, 60.6]}, stations: [2], crew: ['Crew2', '', '']})]
     ])
     const stations = new Map([
       [1, new Station({ 
         id: 1, name: 'Station 1', date: '2024-01-01', time: '12:00',
-        water_temp: 4, comment: 'Comment1', 
-        start_pos: {coordinates: [9.0, 60.5]}, end_pos: {coordinates: [9.01, 60.51]},
+        waterTemp: 4, comment: 'Comment1', 
+        startPos: {coordinates: [9.0, 60.5]}, endPos: {coordinates: [9.01, 60.51]},
         observations: [
           { id: 1, station: 1, species: 'Species1', length: 2, count: 1, comment: 'Comment1' }
-        ], river_id: 1})],
+        ], riverId: 1})],
       [2, new Station({
         id: 2, name: 'Station 2', date: '2024-01-15', time: '13:00',
-        water_temp: 6, comment: 'Comment2',
-        start_pos: {coordinates: [9.1, 60.6]}, end_pos: {coordinates: [9.11, 60.61]},
+        waterTemp: 6, comment: 'Comment2',
+        startPos: {coordinates: [9.1, 60.6]}, endPos: {coordinates: [9.11, 60.61]},
         observations: [
           { id: 2, station: 2, species: 'Species2', length: 3, count: 1, comment: 'Comment2' }
-        ], river_id: 2})
+        ], riverId: 2})
       ]
     ])
     vi.mocked(get).mockReturnValue(rivers)
@@ -178,8 +178,8 @@ describe('test formatStationsForExcel function', () => {
 
     expect(formatted.riverHeader).toEqual(headersConstants.RIVER_HEADERS_EXCEL)
     expect(formatted.riverRows).toEqual([
-      ['2024-01-01', '', 'Name1', '', 60.5, 9.0, '', '', '', '', '', 'prosjekt1', ''],
-      ['2024-01-15', '', 'Name2', '', 60.6, 9.1, '', '', '', '', '', 'prosjekt2', '']
+      ['2024-01-01', '', 'Name1', '', 60.5, 9.0, '', '', 'Crew1', '', '', 'prosjekt1', ''],
+      ['2024-01-15', '', 'Name2', '', 60.6, 9.1, '', '', 'Crew2', '', '', 'prosjekt2', '']
     ])
     expect(formatted.stationHeader).toEqual(headersConstants.STATION_HEADERS_EXCEL)
     expect(formatted.stationRows).toEqual([
@@ -214,24 +214,24 @@ describe('test formatRiversForCsv function', () => {
   it('should correctly convert river objects into arrays for CSV display', () => {
     const rivers = new Map([
       [1, new River({ 
-        id: 1, name: 'Name1', start_date: '2024-01-01', project_id: 'prosjekt1', 
-        pos: {coordinates: [9.0, 60.5]}, stations: [1]})],
+        id: 1, name: 'Name1', startDate: '2024-01-01', projectId: 'prosjekt1', 
+        position: {coordinates: [9.0, 60.5]}, stations: [1], crew: ['Crew1', '', '']})],
       [2, new River({ 
-        id: 2, name: 'Name2', start_date: '2024-01-15', project_id: 'prosjekt2', 
-        pos: {coordinates: [9.1, 60.6]}, stations: [2]})]
+        id: 2, name: 'Name2', startDate: '2024-01-15', projectId: 'prosjekt2', 
+        position: {coordinates: [9.1, 60.6]}, stations: [2], crew: ['Crew2', '', '']})]
     ])
     const stations = new Map([
       [1, new Station({ 
         id: 1, name: 'Station 1', date: '2024-01-01', time: '12:00',
-        water_temp: 4, comment: 'Comment1', 
-        start_pos: {coordinates: [9.0, 60.5]}, end_pos: {coordinates: [9.01, 60.51]},
+        waterTemp: 4, comment: 'Comment1', 
+        startPos: {coordinates: [9.0, 60.5]}, endPos: {coordinates: [9.01, 60.51]},
         observations: [
           { id: 1, station: 1, species: 'Species1', length: 2, count: 1, comment: 'Comment1' }
         ]})],
       [2, new Station({
         id: 2, name: 'Station 2', date: '2024-01-15', time: '13:00',
-        water_temp: 6, comment: 'Comment2',
-        start_pos: {coordinates: [9.1, 60.6]}, end_pos: {coordinates: [9.11, 60.61]},
+        waterTemp: 6, comment: 'Comment2',
+        startPos: {coordinates: [9.1, 60.6]}, endPos: {coordinates: [9.11, 60.61]},
         observations: [
           { id: 2, station: 2, species: 'Species2', length: 3, count: 1, comment: 'Comment2' }
         ]})
@@ -247,10 +247,10 @@ describe('test formatRiversForCsv function', () => {
       ...headersConstants.OBSERVATION_HEADERS_EXCEL
     ])
     expect(formatted.rows).toEqual([
-      ['2024-01-01', '', 'Name1', '', 60.5, 9.0, '', '', '', '', '', 'prosjekt1', '', 
+      ['2024-01-01', '', 'Name1', '', 60.5, 9.0, '', '', 'Crew1', '', '', 'prosjekt1', '', 
       '1', '2024-01-01', '12:00', 60.5, 9, 60.51, 9.01, '', '', 4, '', '', '', '', '', '', '', '', '', 'Comment1',
       1, 1, '', 'Species1', 2, 1, '', '', '', '', 'Comment1'],
-      ['2024-01-15', '', 'Name2', '', 60.6, 9.1, '', '', '', '', '', 'prosjekt2', '',
+      ['2024-01-15', '', 'Name2', '', 60.6, 9.1, '', '', 'Crew2', '', '', 'prosjekt2', '',
       '2', '2024-01-15', '13:00', 60.6, 9.1, 60.61, 9.11, '', '', 6, '', '', '', '', '', '', '', '', '', 'Comment2',
       2, 2, '', 'Species2', 3, 1, '', '', '', '', 'Comment2']
     ])
@@ -277,27 +277,27 @@ describe('test formatStationsForCsv function', () => {
   it('should correctly convert station objects into arrays for CSV display', () => {
     const rivers = new Map([
       [1, new River({ 
-        id: 1, name: 'Name1', start_date: '2024-01-01', project_id: 'prosjekt1', 
-        pos: {coordinates: [9.0, 60.5]}, stations: [1]})],
+        id: 1, name: 'Name1', startDate: '2024-01-01', projectId: 'prosjekt1', 
+        position: {coordinates: [9.0, 60.5]}, stations: [1], crew: ['Crew1', '', '']})],
       [2, new River({ 
-        id: 2, name: 'Name2', start_date: '2024-01-15', project_id: 'prosjekt2', 
-        pos: {coordinates: [9.1, 60.6]}, stations: [2]})]
+        id: 2, name: 'Name2', startDate: '2024-01-15', projectId: 'prosjekt2', 
+        position: {coordinates: [9.1, 60.6]}, stations: [2], crew: ['Crew2', '', '']})]
     ])
     const stations = new Map([
       [1, new Station({ 
         id: 1, name: 'Station 1', date: '2024-01-01', time: '12:00',
-        water_temp: 4, comment: 'Comment1', 
-        start_pos: {coordinates: [9.0, 60.5]}, end_pos: {coordinates: [9.01, 60.51]},
+        waterTemp: 4, comment: 'Comment1', 
+        startPos: {coordinates: [9.0, 60.5]}, endPos: {coordinates: [9.01, 60.51]},
         observations: [
           { id: 1, station: 1, species: 'Species1', length: 2, count: 1, comment: 'Comment1' }
-        ], river_id: 1})],
+        ], riverId: 1})],
       [2, new Station({
         id: 2, name: 'Station 2', date: '2024-01-15', time: '13:00',
-        water_temp: 6, comment: 'Comment2',
-        start_pos: {coordinates: [9.1, 60.6]}, end_pos: {coordinates: [9.11, 60.61]},
+        waterTemp: 6, comment: 'Comment2',
+        startPos: {coordinates: [9.1, 60.6]}, endPos: {coordinates: [9.11, 60.61]},
         observations: [
           { id: 2, station: 2, species: 'Species2', length: 3, count: 1, comment: 'Comment2' }
-        ], river_id: 2})
+        ], riverId: 2})
       ]
     ])
     vi.mocked(get).mockReturnValue(rivers)
@@ -310,10 +310,10 @@ describe('test formatStationsForCsv function', () => {
       ...headersConstants.OBSERVATION_HEADERS_EXCEL
     ])
     expect(formatted.rows).toEqual([
-      ['2024-01-01', '', 'Name1', '', 60.5, 9.0, '', '', '', '', '', 'prosjekt1', '', 
+      ['2024-01-01', '', 'Name1', '', 60.5, 9.0, '', '', 'Crew1', '', '', 'prosjekt1', '', 
       '1', '2024-01-01', '12:00', 60.5, 9, 60.51, 9.01, '', '', 4, '', '', '', '', '', '', '', '', '', 'Comment1',
       1, 1, '', 'Species1', 2, 1, '', '', '', '', 'Comment1'],
-      ['2024-01-15', '', 'Name2', '', 60.6, 9.1, '', '', '', '', '', 'prosjekt2', '',
+      ['2024-01-15', '', 'Name2', '', 60.6, 9.1, '', '', 'Crew2', '', '', 'prosjekt2', '',
       '2', '2024-01-15', '13:00', 60.6, 9.1, 60.61, 9.11, '', '', 6, '', '', '', '', '', '', '', '', '', 'Comment2',
       2, 2, '', 'Species2', 3, 1, '', '', '', '', 'Comment2']
     ])
