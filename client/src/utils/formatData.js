@@ -167,8 +167,8 @@ export function formatStationsForExcel (stations) {
  let uniqueRivers = new Map()
  stations.forEach(station => {
    const river = rivers.get(station.riverId)
-   if (!stationRivers.has(river.id)) {
-     stationRivers.set(river.id, river)
+   if (!uniqueRivers.has(river.id)) {
+    uniqueRivers.set(river.id, river)
    }
  })
 
