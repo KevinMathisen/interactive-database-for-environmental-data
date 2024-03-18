@@ -83,7 +83,60 @@ describe('test generateExcelFile function', () => {
 
 })
 
+describe('test generateCSVFile function', () => {
+  beforeEach(() => {
+    vi.resetModules()
+    vi.clearAllMocks()
+  })
 
+  it('should return an empty blob and add error feedback to store if an error occurs', async () => {
+    const rivers = new Map()
+    const stations = new Map()
+    const type = 'river'
+    formatData.formatRiversForCsv.mockImplementation(() => { throw new Error() })
+    addFeedbackToStore.addFeedbackToStore.mockReturnValue()
+
+    const result = await generateCSVFile(rivers, stations, type)
+
+    expect(result).toBeInstanceOf(Blob)
+    expect(result.size).toBe(0)
+    expect(addFeedbackToStore.addFeedbackToStore).toHaveBeenCalled()
+  })
+
+  it('should generate a CSV file from river data', async () => {
+    const rivers = new Map()
+    const stations = new Map()
+    const type = 'river'
+    const mockData = {
+      header: ['Name'],
+      rows: [['river1'], ['river2']]
+    }
+    formatData.formatRiversForCsv.mockReturnValue(mockData)
+
+    const result = await generateCSVFile(rivers, stations, type)
+    
+    expect(result).toBeInstanceOf(Blob)
+    expect(result.size).toBeGreaterThan(0)
+    expect(result.type).toBe('text/csv')
+  })
+
+  it('should generate a CSV file from station data', async () => {
+    const rivers = new Map()
+    const stations = new Map()
+    const type = 'station'
+    const mockData = {
+      header: ['Name'],
+      rows: [['station1'], ['station2']]
+    }
+    formatData.formatStationsForCsv.mockReturnValue(mockData)
+
+    const result = await generateCSVFile(rivers, stations, type)
+    
+    expect(result).toBeInstanceOf(Blob)
+    expect(result.size).toBeGreaterThan(0)
+    expect(result.type).toBe('text/csv')
+  })
+})
 
 // TODO: write tests for validateFile
 
