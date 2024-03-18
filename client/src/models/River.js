@@ -13,6 +13,7 @@ export class River {
     project_id = null,
     waterflow = null,
     boat_type = null,
+    skipper = null,
     crew1 = null,
     crew2 = null,
     crew3 = null,
@@ -28,6 +29,7 @@ export class River {
     this.projectId = project_id
     this.waterflow = waterflow
     this.boatType = boat_type
+    this.skipper = skipper
     this.crew = [crew1, crew2, crew3]
     this.position = pos
     this.comment = comment
