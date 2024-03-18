@@ -27,6 +27,7 @@ module.exports = {
     },
   ],
   rules: {
+    'jsdoc/no-undefined-types': 'off',
     'jsdoc/check-alignment': 'warn', 
     'jsdoc/check-param-names': 'warn',
     'jsdoc/check-tag-names': 'warn',

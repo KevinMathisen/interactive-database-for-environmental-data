@@ -178,7 +178,7 @@ jsonb_agg(
     'gender', individdata.kjoenn,
     'age', individdata.alder,
     'released', individdata.gjenutsatt,
-    'sample_type', individdata.proevetype,
+    'sampletype', individdata.proevetype,
     'comment', individdata.kommentar
     )
   ) AS observations 

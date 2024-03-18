@@ -5,76 +5,92 @@ import {
   FEEDBACK_MESSAGES
 } from '../constants/feedbackMessages.js'
 import { addFeedbackToStore } from './addFeedbackToStore'
+import {
+  formatRiversForExcel,
+  formatStationsForExcel,
+  formatRiversForCsv,
+  formatStationsForCsv
+} from './formatData.js'
 
 //  - - - - DOWNLOAD FUNCTIONALITY - - - -
 /**
  * Generates an Excel file from the given data
- * @param {Array<object>} data - The data to generate the Excel file from
- * @param {string} type - The type of data to generate the Excel file from
- * @returns {Promise<Buffer>} - A promise which resolves to a buffer containing the Excel file
+ * @param {Map<number, River>} rivers - The rivers to generate the Excel file from
+ * @param {Map<number, Station>} stations - The stations to generate the Excel file from
+ * @param {string} type - - The type of data ('river' or 'station')
+ * @returns {Promise<Blob>} A promise that resolves with a Blob representing the Excel file.
  */
-export async function generateExcelFile (data, type) {
-  const workbook = new ExcelJS.Workbook()
+export async function generateExcelFile (rivers, stations, type) {
+  try {
+    // Format the data for Excel
+    const data = type === 'river' ? formatRiversForExcel(rivers) : formatStationsForExcel(stations)
 
-  const worksheet = workbook.addWorksheet('Sheet1')
+    // Create a new workbook
+    const workbook = new ExcelJS.Workbook()
 
-  /* const worksheet2 = workbook.addWorksheet('Sheet2');
-  worksheet2.addRow(['Name2', 'Age2', 'Email2']); */
-
-  if (type === 'station') {
-    worksheet.addRow(['stasjon', 'navn', 'dato', 'klokkeslett', 'lat start', 'long start', 'lat stopp', 'long stopp',
-      'elvtype', 'vær', 'vanntemperatur', 'lufttemperatur', 'sekunder fisket', 'volt',
-      'puls', 'ledningsevne', 'arter??', 'oservasjoner', 'transektlengde', 'display', 'gpx File', 'kommentar'])
-
-    // Add data
-    data.forEach(row => {
-      // Loop through each property of the row
-      for (const key in row) {
-        // If the property value is null, set it to '.'
-        if (row[key] === null) {
-          row[key] = ' '
-        }
-      }
-
-      const str = row.name
-      const parts = str.split(' ')
-      worksheet.addRow([parts[1], parts[0], row.date, row.time, row.startPos.coordinates[0], row.startPos.coordinates[1],
-        row.endPos.coordinates[0], row.endPos.coordinates[1], row.riverType, row.weather, row.waterTemp, row.airTemp,
-        row.secFished, row.voltage, row.pulse, row.conductivity, 'art', row.observations,
-        row.transectLength, row.display, row.gpxFile, row.comment])
+    // Create a river worksheet, and add each river to it
+    const riverSheet = workbook.addWorksheet('Elvedata')
+    riverSheet.addRow(data.riverHeader)
+    data.riverRows.forEach(row => {
+      riverSheet.addRow(row)
     })
-  } else if (type === 'river') {
-    worksheet.addRow(['Start dato', 'Slutt dato', 'Elv', 'Båttype', 'Lat', 'Long',
-      'Vannføring (sildre.no)', 'Skipper', 'Mannskap1', 'Mannskap2', 'Mannskap3', 'Prosjekt', 'Prosjektnummer', 'Kommentar'])
 
-    data.forEach(row => {
-      // Loop through each property of the row
-      for (const key in row) {
-        // If the property value is null, set it to '.'
-        if (row[key] === null) {
-          row[key] = ' '
-        }
-      }
-      worksheet.addRow([row.startDate, row.endDate, row.name, row.boatType, row.position.coordinates[0],
-        row.position.coordinates[1], row.waterflow, row.crew[0], row.crew[1], row.crew[2], row.projectId,
-        row.projectId, row.comment])
+    // Create a station worksheet, and add each station to it
+    const stationSheet = workbook.addWorksheet('Stasjonsdata')
+    stationSheet.addRow(data.stationHeader)
+    data.stationRows.forEach(row => {
+      stationSheet.addRow(row)
     })
+
+    // Create an observation worksheet, and add each observation to it
+    const observationSheet = workbook.addWorksheet('Individdata')
+    observationSheet.addRow(data.observationHeader)
+    data.observationRows.forEach(row => {
+      observationSheet.addRow(row)
+    })
+
+    // Write the workbook to a buffer
+    const buffer = await workbook.xlsx.writeBuffer()
+
+    // Convert the buffer to a blob
+    const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
+
+    // Return the blob
+    return blob
+  } catch (error) {
+    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.NOT_FOUND, FEEDBACK_MESSAGES.ERROR_GENERATING_FILE)
+    // if error, return empty blob
+    return new Blob()
   }
-
-  const buffer = await workbook.xlsx.writeBuffer()
-  return buffer
 }
 
 /**
  * Generates a CSV file from the given data
- * @param {Array<object>} data - The data to generate the CSV file from
- * @returns {Promise<string>} - A promise which resolves to a string containing the CSV content
+ * @param {Map<number, River>} rivers - The rivers to generate the CSV file from
+ * @param {Map<number, Station>} stations - The stations to generate the CSV file from
+ * @param {string} type - The type of data to generate the CSV file from
+ * @returns {string} - A string containing the CSV file
  */
-export async function generateCSVFile (data) {
-  // Generate CSV content
-  const csvContent = data.map(row => Object.values(row).join(',')).join('\n')
+export async function generateCSVFile (rivers, stations, type) {
+  try {
+    // Format the data for CSV
+    const data = type === 'river' ? formatRiversForCsv(rivers) : formatStationsForCsv(stations)
 
-  return csvContent
+    // Generate and return CSV content, where each row is separated by a newline, and each column by a comma
+    const csvContent = [
+      data.header.join(','),
+      ...data.rows.join(',')
+    ].join('\n')
+
+    // Convert the CSV content to a blob
+    const blob = new Blob([csvContent], { type: 'text/csv' })
+
+    // Return the blob
+    return blob
+  } catch (error) {
+    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.NOT_FOUND, FEEDBACK_MESSAGES.ERROR_GENERATING_FILE)
+    return new Blob()
+  }
 }
 
 //  - - - - UPLOAD FUNCTIONALITY - - - -
