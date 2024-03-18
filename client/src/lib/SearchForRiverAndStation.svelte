@@ -122,7 +122,7 @@
     // Filter rivers based on the input
     const filteredBySearchAndDateAndSpeciesRivers = filterRiversByNameAndDateCombined(filteredByDateAndSpeciesRivers, input)
 
-    // Filter away any rivers in filteredRivers which already are selected 
+    // Filter away any rivers in filteredRivers which already are selected
     return new Map([...filteredBySearchAndDateAndSpeciesRivers].filter(([key, _]) => !selectedRivers.has(key)))
   }
 
@@ -141,7 +141,7 @@
     // Filter stations based on the input
     const filteredBySearchAndDateAndSpeciesStations = filterStationsByNameAndDateCombined(filteredByDateAndSpeciesStations, input)
 
-    // Filter away any stations in filteredStations which already are selected 
+    // Filter away any stations in filteredStations which already are selected
     return new Map([...filteredBySearchAndDateAndSpeciesStations].filter(([key, _]) => !selectedStations.has(key)))
   }
 

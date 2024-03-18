@@ -5,11 +5,11 @@ import {
   FEEDBACK_MESSAGES
 } from '../constants/feedbackMessages.js'
 import { addFeedbackToStore } from './addFeedbackToStore'
-import { 
-  formatRiversForExcel, 
-  formatStationsForExcel, 
-  formatRiversForCsv, 
-  formatStationsForCsv 
+import {
+  formatRiversForExcel,
+  formatStationsForExcel,
+  formatRiversForCsv,
+  formatStationsForCsv
 } from './formatData.js'
 
 //  - - - - DOWNLOAD FUNCTIONALITY - - - -
@@ -23,7 +23,7 @@ import {
 export async function generateExcelFile (rivers, stations, type) {
   try {
     // Format the data for Excel
-    let data = type === 'river' ? formatRiversForExcel(rivers) : formatStationsForExcel(stations)
+    const data = type === 'river' ? formatRiversForExcel(rivers) : formatStationsForExcel(stations)
 
     // Create a new workbook
     const workbook = new ExcelJS.Workbook()
@@ -53,7 +53,7 @@ export async function generateExcelFile (rivers, stations, type) {
     const buffer = await workbook.xlsx.writeBuffer()
 
     // Convert the buffer to a blob
-    const blob = new Blob([buffer], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'})
+    const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
 
     // Return the blob
     return blob
@@ -74,19 +74,19 @@ export async function generateExcelFile (rivers, stations, type) {
 export async function generateCSVFile (rivers, stations, type) {
   try {
     // Format the data for CSV
-    let data = type === 'river' ? formatRiversForCsv(rivers) : formatStationsForCsv(stations)
+    const data = type === 'river' ? formatRiversForCsv(rivers) : formatStationsForCsv(stations)
 
     // Generate and return CSV content, where each row is separated by a newline, and each column by a comma
     const csvContent = [
-      data.header.join(','), 
+      data.header.join(','),
       ...data.rows.join(',')
     ].join('\n')
 
     // Convert the CSV content to a blob
-    const blob = new Blob([csvContent], {type: 'text/csv'});
+    const blob = new Blob([csvContent], { type: 'text/csv' })
 
     // Return the blob
-    return blob;
+    return blob
   } catch (error) {
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.NOT_FOUND, FEEDBACK_MESSAGES.ERROR_GENERATING_FILE)
     return new Blob()

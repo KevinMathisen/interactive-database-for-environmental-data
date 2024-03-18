@@ -21,7 +21,6 @@
       FEEDBACK_MESSAGES
     } from '../../constants/feedbackMessages.js'
     import { addFeedbackToStore } from '../../utils/addFeedbackToStore.js'
-    import { formatRiversForExcel, formatStationsForExcel } from '../../utils/formatData.js'
 
     let showSelectRiverAndStationModal = false
 
@@ -82,7 +81,7 @@
       if (dataType === 'river') {
         // For each river in the selectedRivers map, get the data needed for download if it is not already in the store
         selectedRivers.forEach((_, key) => {
-        getRiverForDownload(key)
+          getRiverForDownload(key)
         })
       } else {
         // For each station in the selectedStations map, get the data needed for download if it is not already in the store
@@ -147,13 +146,13 @@
       }
 
       // Create a file name and file extension
-      let fileExtension = selectedFormat === 'xlsx' ? '.xlsx' : '.csv'
-      let fileName = dataType === 'river' ? 'elver' : 'stasjoner' + fileExtension
+      const fileExtension = selectedFormat === 'xlsx' ? '.xlsx' : '.csv'
+      const fileName = dataType === 'river' ? 'elver' : 'stasjoner' + fileExtension
 
       // Create a blob with the data
-      let blob = selectedFormat === 'xlsx' ? 
-        await generateExcelFile(selectedRivers, selectedStations, dataType) : 
-        generateCSVFile(selectedRivers, selectedStations, dataType)
+      const blob = selectedFormat === 'xlsx'
+        ? await generateExcelFile(selectedRivers, selectedStations, dataType)
+        : generateCSVFile(selectedRivers, selectedStations, dataType)
 
       // If no file was created, return
       if (blob.size === 0) {
@@ -166,20 +165,18 @@
       // Create a temporary anchor element, set the href and download attributes to the URL and file name
       const a = document.createElement('a')
       a.href = blobUrl
-      a.download = fileName 
+      a.download = fileName
       a.style.display = 'none'
 
       // Append the anchor element to the DOM and click it
       document.body.appendChild(a).click()
-      
+
       // Remove the anchor element from the DOM
       document.body.removeChild(a)
     }
 </script>
 
-
 <UserFeedbackMessage />
-
 
 {#if showSelectRiverAndStationModal}
     <Modal on:close={handleClose} large={true}>

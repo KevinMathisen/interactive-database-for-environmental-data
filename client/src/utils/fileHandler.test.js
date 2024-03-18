@@ -1,8 +1,8 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { 
+import {
   generateExcelFile,
   generateCSVFile,
-  fileExistsInArray 
+  fileExistsInArray
 } from './fileHandler.js'
 import * as formatData from './formatData.js'
 import * as addFeedbackToStore from './addFeedbackToStore'
@@ -23,7 +23,7 @@ describe('test generateExcelFile function', () => {
   beforeEach(() => {
     vi.resetModules()
     vi.clearAllMocks()
-  })  
+  })
 
   it('should return an empty blob and add error feedback to store if an error occurs', async () => {
     const rivers = new Map()
@@ -54,7 +54,7 @@ describe('test generateExcelFile function', () => {
     formatData.formatRiversForExcel.mockReturnValue(mockData)
 
     const result = await generateExcelFile(rivers, stations, type)
-    
+
     expect(result).toBeInstanceOf(Blob)
     expect(result.size).toBeGreaterThan(0)
     expect(result.type).toBe('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
@@ -75,12 +75,11 @@ describe('test generateExcelFile function', () => {
     formatData.formatStationsForExcel.mockReturnValue(mockData)
 
     const result = await generateExcelFile(rivers, stations, type)
-    
+
     expect(result).toBeInstanceOf(Blob)
     expect(result.size).toBeGreaterThan(0)
     expect(result.type).toBe('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
   })
-
 })
 
 describe('test generateCSVFile function', () => {
@@ -114,7 +113,7 @@ describe('test generateCSVFile function', () => {
     formatData.formatRiversForCsv.mockReturnValue(mockData)
 
     const result = await generateCSVFile(rivers, stations, type)
-    
+
     expect(result).toBeInstanceOf(Blob)
     expect(result.size).toBeGreaterThan(0)
     expect(result.type).toBe('text/csv')
@@ -131,7 +130,7 @@ describe('test generateCSVFile function', () => {
     formatData.formatStationsForCsv.mockReturnValue(mockData)
 
     const result = await generateCSVFile(rivers, stations, type)
-    
+
     expect(result).toBeInstanceOf(Blob)
     expect(result.size).toBeGreaterThan(0)
     expect(result.type).toBe('text/csv')
@@ -139,7 +138,6 @@ describe('test generateCSVFile function', () => {
 })
 
 // TODO: write tests for validateFile
-
 
 describe('test fileExistsInArray function', () => {
   it('should return true if file exists in array', () => {
