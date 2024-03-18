@@ -116,16 +116,14 @@
    * @returns {Array} - The filtered array of stations
    */
   function filterRiverSuggestions (rivers, input, startDate, endDate) {
-    const filteredRivers = filterRiversByDateAndSpecies(rivers, [], startDate, endDate)
+    // Filter rivers based on the selected date and species
+    const filteredByDateAndSpeciesRivers = filterRiversByDateAndSpecies(rivers, [], startDate, endDate)
 
-    // filter away any rivers in filteredRivers which already are selected and exists in selectedRivers
-    filteredRivers.forEach((_, key) => {
-      if (selectedRivers.has(key)) {
-        filteredRivers.delete(key)
-      }
-    })
+    // Filter rivers based on the input
+    const filteredBySearchAndDateAndSpeciesRivers = filterRiversByNameAndDateCombined(filteredByDateAndSpeciesRivers, input)
 
-    return filterRiversByNameAndDateCombined(filteredRivers, input)
+    // Filter away any rivers in filteredRivers which already are selected 
+    return new Map([...filteredBySearchAndDateAndSpeciesRivers].filter(([key, _]) => !selectedRivers.has(key)))
   }
 
   /**
@@ -137,16 +135,14 @@
    * @returns {Array} - The filtered array of stations
    */
   function filterStationSuggestions (stations, input, startDate, endDate) {
-    const filteredStations = filterStationsByDateAndSpecies(stations, [], startDate, endDate)
+    // Filter stations based on the selected date and species
+    const filteredByDateAndSpeciesStations = filterStationsByDateAndSpecies(stations, [], startDate, endDate)
 
-    // filter away any stations in filteredStations which already are selected and exists in selectedStations
-    filteredStations.forEach((_, key) => {
-      if (selectedStations.has(key)) {
-        filteredStations.delete(key)
-      }
-    })
+    // Filter stations based on the input
+    const filteredBySearchAndDateAndSpeciesStations = filterStationsByNameAndDateCombined(filteredByDateAndSpeciesStations, input)
 
-    return filterStationsByNameAndDateCombined(filteredStations, input)
+    // Filter away any stations in filteredStations which already are selected 
+    return new Map([...filteredBySearchAndDateAndSpeciesStations].filter(([key, _]) => !selectedStations.has(key)))
   }
 
   // Get the species to suggest to the user based on the input
