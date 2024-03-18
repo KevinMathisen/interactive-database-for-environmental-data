@@ -59,7 +59,7 @@ function createRowForRiver(river) {
     river.startDate, river.endDate, river.name, river.boatType, river.position.coordinates[1],
     river.position.coordinates[0], river.waterflow, river.skipper, river.crew[0], river.crew[1], river.crew[2],
     river.projectId, river.comment
-  ]
+  ].map(attribute => attribute === null ? '' : attribute)
 }
 
 /**
@@ -71,11 +71,11 @@ function createRowForRiver(river) {
  */
 function createRowForStation(station) {
   return [
-    row.name.split(' ')[1], row.date, row.time, row.startPos.coordinates[0], row.startPos.coordinates[1],
-    row.endPos.coordinates[0], row.endPos.coordinates[1], row.riverType, row.weather, row.waterTemp, row.airTemp,
-    row.conductivity, row.transectLength, row.secFished, row.voltage, row.pulse, row.display, row.gpxFile,
-    row.description, row.comment
-  ]
+    station.name.split(' ')[1], station.date, station.time, station.startPos.coordinates[1], station.startPos.coordinates[0],
+    station.endPos.coordinates[1], station.endPos.coordinates[0], station.riverType, station.weather, station.waterTemp, station.airTemp,
+    station.conductivity, station.transectLength, station.secFished, station.voltage, station.pulse, station.display, station.gpxFile,
+    station.description, station.comment
+  ].map(attribute => attribute === null ? '' : attribute)
 }
 
 /**
@@ -90,7 +90,7 @@ function createRowForObservation(observation) {
     observation.id, observation.station, observation.round, observation.species, 
     observation.length, observation.count, observation.gender, observation.age, observation.released,
     observation.sampleType, observation.comment
-  ]
+  ].map(attribute => attribute === null ? '' : attribute)
 }
 
 /**
@@ -105,35 +105,38 @@ function createRowForObservation(observation) {
 *   }} - Headers and rows for the table
 */
 export function formatRiversForExcel (rivers) {
- // Import the headers for the Excel file
- const riverHeader = headersConstants.RIVER_HEADERS_EXCEL
- const stationHeader = headersConstants.STATION_HEADERS_EXCEL
- const observationHeader = headersConstants.OBSERVATION_HEADERS_EXCEL
+  // Import the headers for the Excel file
+  const riverHeader = headersConstants.RIVER_HEADERS_EXCEL
+  const stationHeader = headersConstants.STATION_HEADERS_EXCEL
+  const observationHeader = headersConstants.OBSERVATION_HEADERS_EXCEL
 
- let riverRows = []
- let stationRows = []
- let observationRows = []
+  let riverRows = []
+  let stationRows = []
+  let observationRows = []
 
- // Get stations from store
- const stations = get(stationStore)
- 
- rivers.forEach(river => {
-   // Create new row for river
-   riverRows.push(createRowForRiver(river))
+  // Get stations from store
+  const stations = get(stationStore)
 
-   river.stations.forEach(station => {
-     // Create new row for station  
-     stationRows.push(createRowForStation(stations.get(station)))
+  rivers.forEach(river => {
+    // Create new row for river
+    riverRows.push(createRowForRiver(river))
 
-     station.observations.forEach(observation => {
-       // Create new row for observation
-       observationRows.push(createRowForObservation(observation))
-     })
-   })
- })
+    river.stations.forEach(stationId => {
+      // Get station from store
+      const station = stations.get(stationId)
 
- // Return the headers and and all the rows
- return { riverHeader, riverRows, stationHeader, stationRows, observationHeader, observationRows }
+      // Create new row for station  
+      stationRows.push(createRowForStation(station))
+
+      station.observations.forEach(observation => {
+        // Create new row for observation
+        observationRows.push(createRowForObservation(observation))
+      })
+    })
+  })
+
+  // Return the headers and and all the rows
+  return { riverHeader, riverRows, stationHeader, stationRows, observationHeader, observationRows }
 }
 
 /**
