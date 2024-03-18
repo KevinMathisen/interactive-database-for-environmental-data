@@ -187,3 +187,82 @@ export function formatStationsForExcel (stations) {
  // Return the headers and and all the rows
  return { riverHeader, riverRows, stationHeader, stationRows, observationHeader, observationRows }
 }
+
+/**
+ * Converts Rivers into rows for insertion into a CSV file
+ * Each row is a string array with the river, station and observation data
+ * 
+ * @param {Map<number, River>} rivers - The rivers to convert to rows
+ * @returns {{header: string[], rows: string[][]}} - Headers and rows for the table
+ */
+export function formatRiversForCsv(rivers) {
+  const header = [
+    ...headersConstants.RIVER_HEADERS_EXCEL, 
+    ...headersConstants.STATION_HEADERS_EXCEL, 
+    ...headersConstants.OBSERVATION_HEADERS_EXCEL
+  ]
+
+  let rows = []
+
+  // Get stations from store
+  const stations = get(stationStore)
+  
+  rivers.forEach(river => {
+    // Create new row for river
+    let riverRow = createRowForRiver(river)
+
+    river.stations.forEach(station => {
+
+      // Create new row for station
+      let stationRow = createRowForStation(stations.get(station))
+
+      station.observations.forEach(observation => {
+        // Create new row for observation
+        let observationRow = createRowForObservation(observation)
+
+        // Create a row with river, station and observation data
+        rows.push([...riverRow, ...stationRow, ...observationRow])
+      })
+    })
+  })
+
+  // Return the headers and and all the rows
+  return { header, rows }
+}
+
+/**
+ * Converts Stations into rows for insertion into a CSV file
+ * Each row is a string array with the river, station and observation data
+ * 
+ * @param {Map<number, Station>} stations - The stations to convert to rows
+ * @returns {{header: string[], rows: string[][]}} - Headers and rows for the table
+ */
+export function formatStationsForCsv(stations) {
+  const header = [
+    ...headersConstants.RIVER_HEADERS_EXCEL, 
+    ...headersConstants.STATION_HEADERS_EXCEL, 
+    ...headersConstants.OBSERVATION_HEADERS_EXCEL
+  ]
+
+  let rows = []
+  // Get rivers from store
+  const rivers = get(riverStore)
+  
+  stations.forEach(station => {
+    // Create new row for station
+    let stationRow = createRowForStation(station)
+
+    // Create new row for river
+    let riverRow = createRowForRiver(rivers.get(station.riverId))
+
+    station.observations.forEach(observation => {
+      // Create new row for observation
+      let observationRow = createRowForObservation(observation)
+
+      // Create a row with river, station and observation data
+      rows.push([...riverRow, ...stationRow, ...observationRow])
+    })
+  })
+
+  return { header, rows }
+}
