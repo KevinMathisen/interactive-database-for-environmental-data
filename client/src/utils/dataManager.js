@@ -33,7 +33,7 @@ import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/
 function updateStoreWithObjects (store, objects, Class) {
   // If the store is empty, simply set the store with the objects converted to the class
   if (get(store).size === 0) {
-    const objectMap = new Map(objects.map(object => [object.id, new Class(object)]))
+    const objectMap = new Map(objects.map(object => [object.id, Class.fromJson(object)]))
     store.set(objectMap)
     return
   }
@@ -43,16 +43,17 @@ function updateStoreWithObjects (store, objects, Class) {
     objects.forEach(newObject => {
       // If the object does not exist in the store, add it
       if (!currentMap.has(newObject.id)) {
-        currentMap.set(newObject.id, new Class(newObject))
+        currentMap.set(newObject.id, Class.fromJson(newObject))
         return
       }
 
       // If the object already exists in the store, update it
       // by merging the new object with the existing object
       const existingObject = currentMap.get(newObject.id)
+      const newClassObject = Class.fromJson(newObject)
       const updatedObject = new Class({
         ...existingObject,
-        ...newObject
+        ...newClassObject
       })
       currentMap.set(newObject.id, updatedObject)
     })
@@ -75,15 +76,16 @@ function updateStoreWithObject (store, object, Class) {
   store.update(currentMap => {
     // If the object does not exist in the store, add it
     if (!currentMap.has(object.id)) {
-      currentMap.set(object.id, new Class(object))
+      currentMap.set(object.id, Class.fromJson(object))
       return currentMap
     }
 
     // If the object exists in the store, update it
     const existingObject = currentMap.get(object.id)
+    const classObject = Class.fromJson(object)
     const updatedObject = new Class({
       ...existingObject,
-      ...object
+      ...classObject
     })
     currentMap.set(object.id, updatedObject)
 
