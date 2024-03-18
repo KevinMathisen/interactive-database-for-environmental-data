@@ -1,5 +1,28 @@
-/*
- * Station model
+/**
+ * Represents a station
+ * @class
+ * @property {number} id - Unique id of station
+ * @property {string} name - Name of station
+ * @property {string} date - Date of station
+ * @property {{coordinates: [number, number]}} startPos - Start position of station observation
+ * @property {{coordinates: [number, number]}} endPos - End position of station observation
+ * @property {string} time - Time of day
+ * @property {number} riverId - Id of river the station is under
+ * @property {string} description - Description
+ * @property {string} comment - Comment
+ * @property {string} riverType - Type of river
+ * @property {string} weather - Weather
+ * @property {number} waterTemp - Water temperature
+ * @property {number} airTemp - Air temperature
+ * @property {number} secFished - Seconds fished
+ * @property {number} voltage - Voltage of boat
+ * @property {number} pulse - Pulse of boat
+ * @property {number} conductivity - Conductivity of water
+ * @property {string[]} species - Unique species in station
+ * @property {Observation[]} observations - Individual observations
+ * @property {number} transectLength - Length of transect
+ * @property {boolean} display - Display
+ * @property {string} gpxFile - Gpx file
  */
 export class Station {
   constructor ({
@@ -81,8 +104,20 @@ export class Station {
   /* eslint-enable camelcase */
 }
 
-/*
- * Observation model
+/**
+ * Represents an observation
+ * @class
+ * @property {number} id - Unique id of observation
+ * @property {number} station - Number of station
+ * @property {number} round - Round
+ * @property {string} species - Species of fish
+ * @property {number} length - Length of fish
+ * @property {number} count - Amount of fish
+ * @property {string} gender - Gender
+ * @property {number} age - Age
+ * @property {boolean} released - If the fish was released
+ * @property {string} sampletype - Sample type
+ * @property {string} comment - Comment
  */
 export class Observation {
   constructor ({
@@ -111,5 +146,3 @@ export class Observation {
     this.comment = comment
   }
 }
-
-

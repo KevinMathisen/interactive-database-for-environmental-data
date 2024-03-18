@@ -1,5 +1,19 @@
-/*
- * River model
+/**
+ * Represents a river
+ * @class
+ * @property {number} id - Unique id of river
+ * @property {string} name - Name of river
+ * @property {string} startDate - Start date
+ * @property {string} endDate - End date
+ * @property {string} projectId - Project id
+ * @property {number} waterflow - Waterflow
+ * @property {string} boatType - Type of boat
+ * @property {string} skipper - Skipper/boat driver
+ * @property {string[]} crew - Crew members
+ * @property {{coordinates: [number, number]}} position - Position of river observation
+ * @property {string} comment - Comment
+ * @property {string[]} species  - Unique species in river
+ * @property {number[]} stations - Id of stations under river
  */
 export class River {
   constructor ({
@@ -34,7 +48,7 @@ export class River {
 
   // Diable eslint camelcase rule because of the PostgreSQL naming convention
   /* eslint-disable camelcase */
-  static fromJson(object) {
+  static fromJson (object) {
     return new River({
       id: object.id,
       name: object.name,
@@ -53,5 +67,3 @@ export class River {
   }
   /* eslint-enable camelcase */
 }
-
-
