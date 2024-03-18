@@ -1,6 +1,3 @@
-// Diable eslint camelcase rule because of the PostgreSQL naming convention
-/* eslint-disable camelcase */
-
 /*
  * Station model
  */
@@ -9,49 +6,79 @@ export class Station {
     id = null,
     name = null,
     date = null,
-    start_pos = null,
-    end_pos = null,
+    startPos = null,
+    endPos = null,
     time = null,
-    river_id = null,
+    riverId = null,
     description = null,
     comment = null,
-    river_type = null,
+    riverType = null,
     weather = null,
-    water_temp = null,
-    air_temp = null,
-    sec_fished = null,
+    waterTemp = null,
+    airTemp = null,
+    secFished = null,
     voltage = null,
     pulse = null,
     conductivity = null,
     species = null,
     observations = null,
-    transect_length = null,
+    transectLength = null,
     display = null,
-    gpx_file = null
+    gpxFile = null
   } = {}) {
     this.id = id
     this.name = name
     this.date = date
-    this.startPos = start_pos
-    this.endPos = end_pos
+    this.startPos = startPos
+    this.endPos = endPos
     this.time = time
-    this.riverId = river_id
+    this.riverId = riverId
     this.description = description
     this.comment = comment
-    this.riverType = river_type
+    this.riverType = riverType
     this.weather = weather
-    this.waterTemp = water_temp
-    this.airTemp = air_temp
-    this.secFished = sec_fished
+    this.waterTemp = waterTemp
+    this.airTemp = airTemp
+    this.secFished = secFished
     this.voltage = voltage
     this.pulse = pulse
     this.conductivity = conductivity
     this.species = species
     this.observations = observations ? observations.map(observation => new Observation(observation)) : null
-    this.transectLength = transect_length
+    this.transectLength = transectLength
     this.display = display
-    this.gpxFile = gpx_file
+    this.gpxFile = gpxFile
   }
+
+  // Diable eslint camelcase rule because of the PostgreSQL naming convention
+  /* eslint-disable camelcase */
+  static fromJson (object) {
+    return new Station({
+      id: object.id,
+      name: object.name,
+      date: object.date,
+      startPos: object.start_pos,
+      endPos: object.end_pos,
+      time: object.time,
+      riverId: object.river_id,
+      description: object.description,
+      comment: object.comment,
+      riverType: object.river_type,
+      weather: object.weather,
+      waterTemp: object.water_temp,
+      airTemp: object.air_temp,
+      secFished: object.sec_fished,
+      voltage: object.voltage,
+      pulse: object.pulse,
+      conductivity: object.conductivity,
+      species: object.species,
+      observations: object.observations,
+      transectLength: object.transect_length,
+      display: object.display,
+      gpxFile: object.gpx_file
+    })
+  }
+  /* eslint-enable camelcase */
 }
 
 /*
@@ -68,7 +95,7 @@ export class Observation {
     gender = null,
     age = null,
     released = null,
-    sample_type = null,
+    sampletype = null,
     comment = null
   } = {}) {
     this.id = id
@@ -80,9 +107,9 @@ export class Observation {
     this.gender = gender
     this.age = age
     this.released = released
-    this.sampleType = sample_type
+    this.sampletype = sampletype
     this.comment = comment
   }
 }
 
-/* eslint-enable camelcase */
+
