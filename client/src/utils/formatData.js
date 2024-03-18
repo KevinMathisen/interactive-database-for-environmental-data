@@ -1,16 +1,15 @@
-import { addFeedbackToStore } from './addFeedbackToStore.js'
-import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/feedbackMessages'
+// import { addFeedbackToStore } from './addFeedbackToStore.js';
+// import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/feedbackMessages';
 
 /**
  * Converts river objects into arrays for display in a table
- * 
- * @param {Map<int, River>} rivers - The rivers to convert to array
+ * @param {Map<number, object>} rivers - The rivers to convert to array
  * @returns {{headers: string[], rows: string[][]}} - Headers and rows for the table
  */
 export function formatRiversForTable (rivers) {
-  let headers = ['Navn', 'Dato', 'Projektnummer']
+  const headers = ['Navn', 'Dato', 'Projektnummer']
 
-  let rows = []
+  const rows = []
   rivers.forEach(river => {
     rows.push([
       river.id,
@@ -20,19 +19,18 @@ export function formatRiversForTable (rivers) {
     ])
   })
 
-  return {headers, rows}
+  return { headers, rows }
 }
 
 /**
  * Converts station objects into arrays for display in a table
- * 
- * @param {Map<int, Station>} stations - The stations to convert to array
+ * @param {Map<number, object>} stations - The stations to convert to array
  * @returns {{headers: string[], rows: string[][]}} - Headers and rows for the table
  */
 export function formatStationsForTable (stations) {
-  let headers = ['Navn', 'Dato', 'Kl.']
-  
-  let rows = []
+  const headers = ['Navn', 'Dato', 'Kl.']
+
+  const rows = []
   stations.forEach(station => {
     rows.push([
       station.id,
@@ -42,5 +40,5 @@ export function formatStationsForTable (stations) {
     ])
   })
 
-  return {headers, rows}
+  return { headers, rows }
 }

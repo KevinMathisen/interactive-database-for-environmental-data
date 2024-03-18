@@ -1,3 +1,5 @@
+const standard = require('eslint-config-standard');
+
 module.exports = {
   parserOptions: {
     ecmaVersion: "latest",
@@ -9,8 +11,10 @@ module.exports = {
     node: true,
   },
   extends: [
+    'standard',
     'eslint:recommended',
     'plugin:svelte/recommended',
+    'plugin:jsdoc/recommended',
   ],
   plugins: [
     'svelte',
@@ -26,9 +30,9 @@ module.exports = {
     'jsdoc/check-alignment': 'warn', 
     'jsdoc/check-param-names': 'warn',
     'jsdoc/check-tag-names': 'warn',
-    'indent': ['error', 2],
+    'jsdoc/check-indentation': 'warn',
     'quotes': ['error', 'single'],
-    'semi': ['error', 'always'],
+    'no-unused-vars': ['error', { 'argsIgnorePattern': '^_' }],
   },
   settings: {
     "svelte/ignore-styles": () => true,

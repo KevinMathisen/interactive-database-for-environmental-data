@@ -1,84 +1,93 @@
-<script> // Graph page logic here 
+<script> // Graph page logic here
     import GraphFilter from '$lib/GraphFilter.svelte'
-	import Sidebar from '../../lib/Sidebar.svelte';
-    import PlotlyComponent from './PlotlyComponent.svelte';
-    import Modal from '../../lib/Modal.svelte';
-    import SelectRiverAndStation from '../../lib/SelectRiverAndStation.svelte';
-    import { riverStore } from '../../stores/riverStore.js';
-    import { stationStore } from '../../stores/stationStore.js';
-    import { getRivers, getStations } from '../../utils/dataManager.js';
-    import { getSelectableSpecies } from '../../utils/filterData.js';
-    import { onMount } from 'svelte';
+    import Sidebar from '../../lib/Sidebar.svelte'
+    import PlotlyComponent from './PlotlyComponent.svelte'
+    import Modal from '../../lib/Modal.svelte'
+    import SelectRiverAndStation from '../../lib/SelectRiverAndStation.svelte'
+    import { riverStore } from '../../stores/riverStore.js'
+    import { stationStore } from '../../stores/stationStore.js'
+    import { getRivers, getStations } from '../../utils/dataManager.js'
+    import { getSelectableSpecies } from '../../utils/filterData.js'
+    import { onMount } from 'svelte'
 
-    let showSelectRiverAndStationModal = false;
+    let showSelectRiverAndStationModal = false
 
-    let rivers = new Map();
-    let stations = new Map();
-    let selectedRivers = new Map();
-    let selectedStations = new Map();
-    let selectableSpecies;
+    let rivers = new Map()
+    let stations = new Map()
+    let selectedRivers = new Map()
+    let selectedStations = new Map()
+    let selectableSpecies
 
-    let dataType;
-    let selectedSpecies;
+    let dataType
+    let selectedSpecies
 
-    let showPlotA;
-    let showValueA;
-    let plotTypeA;
+    let showPlotA
+    let showValueA
+    let plotTypeA
 
-    let showPlotB;
-    let intervallPlotB;
-    let plotTypeB;
+    let showPlotB
+    let intervallPlotB
+    let plotTypeB
 
     onMount(async () => {
-        // Get rivers and stations from API
-        getRivers();
-        getStations();
-    });
+      // Get rivers and stations from API
+      getRivers()
+      getStations()
+    })
 
     // Get rivers and stations from stores
-    $: rivers = $riverStore;
-    $: stations = $stationStore;
+    $: rivers = $riverStore
+    $: stations = $stationStore
 
     // Get selectable species
-    $: selectableSpecies = dataType === 'river' ? getSelectableSpecies(rivers) : getSelectableSpecies(stations);
+    $: selectableSpecies = dataType === 'river' ? getSelectableSpecies(rivers) : getSelectableSpecies(stations)
 
-    function onSelectRiverStation() {
-        // should get the selected rivers and stations from event
-        if (dataType === 'river') {
-            selectedRivers = new Map(rivers[3])
-            selectableSpecies = getSelectableSpecies(rivers)
-        } else {
-            selectedStations = new Map(stations[11])
-            selectableSpecies = getSelectableSpecies(stations)
-        }
+    /**
+     * Get the selectable species from the rivers or stations
+     */
+    function onSelectRiverStation () {
+      // should get the selected rivers and stations from event
+      if (dataType === 'river') {
+        selectedRivers = new Map(rivers[3])
+        selectableSpecies = getSelectableSpecies(rivers)
+      } else {
+        selectedStations = new Map(stations[11])
+        selectableSpecies = getSelectableSpecies(stations)
+      }
     }
 
-    function handleClose() {
-        showSelectRiverAndStationModal = false;
+    /**
+     * Handles the close event from the modal
+     */
+    function handleClose () {
+      showSelectRiverAndStationModal = false
     }
 
-    function handleSelectRiverStation() {
-        showSelectRiverAndStationModal = true;
+    /**
+     * Handles the clikc event on a river
+     */
+    function handleSelectRiverStation () {
+      showSelectRiverAndStationModal = true
     }
 
 </script>
 
 {#if showSelectRiverAndStationModal}
     <Modal on:close={handleClose} large={true}>
-        <SelectRiverAndStation 
-            {rivers} 
-            {stations} 
-            bind:dataType 
-            bind:selectedRivers 
+        <SelectRiverAndStation
+            {rivers}
+            {stations}
+            bind:dataType
+            bind:selectedRivers
             bind:selectedStations
             />
     </Modal>
 {/if}
-    
+
 <div class="graphPage">
     <div class="filterContainer">
         <Sidebar title="Filter for Grafer" typeClose="sideButton">
-            <GraphFilter 
+            <GraphFilter
                 {selectedRivers}
                 {selectedStations}
                 {selectableSpecies}
@@ -94,7 +103,7 @@
                 />
         </Sidebar>
     </div>
-    
+
     <div class="graphMain">
         <button on:click={onSelectRiverStation}>Velg elver/stasjoner</button>
 
@@ -104,7 +113,7 @@
                 <PlotlyComponent type={plotTypeA}/>
             </div>
         {/if}
-    
+
         {#if showPlotB}
             <div class="graphBox2">
                 <h3>FORDELING AV LENGDE</h3>
@@ -112,13 +121,12 @@
             </div>
         {/if}
     </div>
-    
+
 </div>
 
-
-<style> 
+<style>
     .graphPage {
-        height: calc(100vh - 80px); 
+        height: calc(100vh - 80px);
         width: 100%;
         display: flex;
     }
@@ -127,7 +135,7 @@
         width: 300px;
         height: 100%;
     }
-    
+
     .graphMain {
         flex-grow: 1;
         padding: 4em;
