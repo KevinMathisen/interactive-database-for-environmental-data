@@ -12,7 +12,7 @@ export class River {
     boatType = null,
     skipper = null,
     crew = null,
-    pos = null,
+    position = null,
     comment = null,
     species = null,
     stations = null
@@ -26,7 +26,7 @@ export class River {
     this.boatType = boatType
     this.skipper = skipper
     this.crew = crew
-    this.position = pos
+    this.position = position
     this.comment = comment
     this.species = species
     this.stations = stations
@@ -45,7 +45,7 @@ export class River {
       boatType: object.boat_type,
       skipper: object.skipper,
       crew: object.crew,
-      pos: object.pos,
+      position: object.pos,
       comment: object.comment,
       species: object.species,
       stations: object.stations
