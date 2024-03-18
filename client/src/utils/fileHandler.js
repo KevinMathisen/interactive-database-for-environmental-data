@@ -5,64 +5,54 @@ import {
   FEEDBACK_MESSAGES
 } from '../constants/feedbackMessages.js'
 import { addFeedbackToStore } from './addFeedbackToStore'
+import { 
+  formatRiversForExcel, 
+  formatStationsForExcel, 
+  formatRiversForCsv, 
+  formatStationsForCsv 
+} from './formatData.js'
 
 //  - - - - DOWNLOAD FUNCTIONALITY - - - -
 /**
  * Generates an Excel file from the given data
- * @param {Array<object>} data - The data to generate the Excel file from
- * @param {string} type - The type of data to generate the Excel file from
- * @returns {Promise<Buffer>} - A promise which resolves to a buffer containing the Excel file
+ * @param {Map<number, River>} rivers - The rivers to generate the Excel file from
+ * @param {Map<number, Station>} stations - The stations to generate the Excel file from
+ * @param {string} type - - The type of data ('river' or 'station')
+ * @returns {Promise<Blob>} A promise that resolves with a Blob representing the Excel file.
  */
-export async function generateExcelFile (data, type) {
+export async function generateExcelFile (rivers, stations, type) {
+  // Format the data for Excel
+  let data = type === 'river' ? formatRiversForExcel(selectedRivers) : formatStationsForExcel(selectedStations)
+
+  // Create a new workbook
   const workbook = new ExcelJS.Workbook()
 
-  const worksheet = workbook.addWorksheet('Sheet1')
+  // Create a river worksheet, and add each river to it
+  const riverSheet = workbook.addWorksheet('Elvedata')
+  data.riverRows.forEach(row => {
+    riverSheet.addRow(row)
+  })
 
-  /* const worksheet2 = workbook.addWorksheet('Sheet2');
-  worksheet2.addRow(['Name2', 'Age2', 'Email2']); */
+  // Create a station worksheet, and add each station to it
+  const stationSheet = workbook.addWorksheet('Stasjonsdata')
+  data.stationRows.forEach(row => {
+    stationSheet.addRow(row)
+  })
 
-  if (type === 'station') {
-    worksheet.addRow(['stasjon', 'navn', 'dato', 'klokkeslett', 'lat start', 'long start', 'lat stopp', 'long stopp',
-      'elvtype', 'vær', 'vanntemperatur', 'lufttemperatur', 'sekunder fisket', 'volt',
-      'puls', 'ledningsevne', 'arter??', 'oservasjoner', 'transektlengde', 'display', 'gpx File', 'kommentar'])
+  // Create an observation worksheet, and add each observation to it
+  const observationSheet = workbook.addWorksheet('Individdata')
+  data.observationRows.forEach(row => {
+    observationSheet.addRow(row)
+  })
 
-    // Add data
-    data.forEach(row => {
-      // Loop through each property of the row
-      for (const key in row) {
-        // If the property value is null, set it to '.'
-        if (row[key] === null) {
-          row[key] = ' '
-        }
-      }
-
-      const str = row.name
-      const parts = str.split(' ')
-      worksheet.addRow([parts[1], parts[0], row.date, row.time, row.startPos.coordinates[0], row.startPos.coordinates[1],
-        row.endPos.coordinates[0], row.endPos.coordinates[1], row.riverType, row.weather, row.waterTemp, row.airTemp,
-        row.secFished, row.voltage, row.pulse, row.conductivity, 'art', row.observations,
-        row.transectLength, row.display, row.gpxFile, row.comment])
-    })
-  } else if (type === 'river') {
-    worksheet.addRow(['Start dato', 'Slutt dato', 'Elv', 'Båttype', 'Lat', 'Long',
-      'Vannføring (sildre.no)', 'Skipper', 'Mannskap1', 'Mannskap2', 'Mannskap3', 'Prosjekt', 'Prosjektnummer', 'Kommentar'])
-
-    data.forEach(row => {
-      // Loop through each property of the row
-      for (const key in row) {
-        // If the property value is null, set it to '.'
-        if (row[key] === null) {
-          row[key] = ' '
-        }
-      }
-      worksheet.addRow([row.startDate, row.endDate, row.name, row.boatType, row.position.coordinates[0],
-        row.position.coordinates[1], row.waterflow, row.crew[0], row.crew[1], row.crew[2], row.projectId,
-        row.projectId, row.comment])
-    })
-  }
-
+  // Write the workbook to a buffer
   const buffer = await workbook.xlsx.writeBuffer()
-  return buffer
+
+  // Convert the buffer to a blob
+  const blob = new Blob([buffer], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+
+  // Return the blob
+  return blob;
 }
 
 /**
@@ -74,7 +64,8 @@ export async function generateCSVFile (data) {
   // Generate CSV content
   const csvContent = data.map(row => Object.values(row).join(',')).join('\n')
 
-  return csvContent
+  // Return the blob
+  return blob;
 }
 
 //  - - - - UPLOAD FUNCTIONALITY - - - -
