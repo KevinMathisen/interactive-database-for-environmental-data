@@ -1,13 +1,13 @@
 <script>
-    import { page} from '$app/stores';
-    import Button from './Button.svelte';
+    import { page} from '$app/stores'
+    import Button from './Button.svelte'
 </script>
 
 <header>
-    <div class="logoHeader">  
-        <img src="/NINA_logo_emblem.png"  alt="Logo" height="60px">
+    <div class="logoHeader">
+        <img src="/NINA_logo_emblem.png" alt="Logo" height="60px">
         <p>Nina</p>
-    </div>  
+    </div>
     <div class="centerItem" class:active={$page.url.pathname === '/'}>
         <Button color="none" href="/">Kart<img src="/mapIcon.svg" alt="listIcon" height="50px" class="headerIcon"></Button>
     </div> 
@@ -33,7 +33,7 @@
         display: flex;
         flex-direction: row;
         background-color: white;
-        align-items: center; 
+        align-items: center;
         height: 80px;
         gap: 2rem;
         justify-content: space-between;
@@ -58,7 +58,7 @@
         width: 180px;
         height: 80px;
     }
-    
+
     header > :nth-child(7) {
         font-size: 1.5rem;
         width: 180px;
@@ -78,3 +78,4 @@
         align-items: center;
     }   
 </style>
+

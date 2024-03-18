@@ -21,7 +21,7 @@ describe('test fetchRivers function', {}, () => {
   it('fetchRivers should call fetch with the correct URL', async () => {
     // Set up test
     const endpoint = RIVERS_ENDPOINT
-    const expectedUrl = `${POSTGREST_URL}/${endpoint}`
+    const expectedUrl = `${POSTGREST_URL}${endpoint}`
     const mockResponse = { data: 'example-data' }
     global.fetch.mockResolvedValue({
       ok: true,
@@ -93,7 +93,7 @@ describe('test fetchStations function', {}, () => {
   it('fetchStations should call fetch with the correct URL', async () => {
     // Set up test
     const endpoint = STATIONS_ENDPOINT
-    const expectedUrl = `${POSTGREST_URL}/${endpoint}`
+    const expectedUrl = `${POSTGREST_URL}${endpoint}`
     const mockResponse = { data: 'example-data' }
     global.fetch.mockResolvedValue({
       ok: true,
@@ -165,7 +165,7 @@ describe('test fetchRiverSummary function', {}, () => {
     // Set up test
     const id = 1
     const endpoint = `${RIVER_SUMMARY_ENDPOINT}?id=eq.${id}`
-    const expectedUrl = `${POSTGREST_URL}/${endpoint}`
+    const expectedUrl = `${POSTGREST_URL}${endpoint}`
     const mockResponse = { data: 'example-data' }
     global.fetch.mockResolvedValue({
       ok: true,
@@ -237,7 +237,7 @@ describe('test fetchStationSummary function', {}, () => {
     // Set up test
     const id = [1]
     const endpoint = `${STATION_SUMMARY_ENDPOINT}?id=eq.${id[0]}`
-    const expectedUrl = `${POSTGREST_URL}/${endpoint}`
+    const expectedUrl = `${POSTGREST_URL}${endpoint}`
     const mockResponse = { data: 'example-data' }
     global.fetch.mockResolvedValue({
       ok: true,
@@ -255,7 +255,7 @@ describe('test fetchStationSummary function', {}, () => {
     // Set up test
     const id = [1, 2, 3]
     const endpoint = `${STATION_SUMMARY_ENDPOINT}?id=in.(${id.join(',')})`
-    const expectedUrl = `${POSTGREST_URL}/${endpoint}`
+    const expectedUrl = `${POSTGREST_URL}${endpoint}`
     const mockResponse = { data: 'example-data' }
     global.fetch.mockResolvedValue({
       ok: true,
@@ -327,7 +327,7 @@ describe('test fetchStationDownload function', {}, () => {
     // Set up test
     const id = [1]
     const endpoint = `${STATION_DOWNLOAD_ENDPOINT}?id=eq.${id[0]}`
-    const expectedUrl = `${POSTGREST_URL}/${endpoint}`
+    const expectedUrl = `${POSTGREST_URL}${endpoint}`
     const mockResponse = { data: 'example-data' }
     global.fetch.mockResolvedValue({
       ok: true,
@@ -345,7 +345,7 @@ describe('test fetchStationDownload function', {}, () => {
     // Set up test
     const id = [1, 2, 3]
     const endpoint = `${STATION_DOWNLOAD_ENDPOINT}?id=in.(${id.join(',')})`
-    const expectedUrl = `${POSTGREST_URL}/${endpoint}`
+    const expectedUrl = `${POSTGREST_URL}${endpoint}`
     const mockResponse = { data: 'example-data' }
     global.fetch.mockResolvedValue({
       ok: true,

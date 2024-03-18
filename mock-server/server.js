@@ -20,7 +20,7 @@ app.get('/:endpoint', (req, res) => {
 
 	// Extract the json file name from the request
 	const { endpoint } = req.params;
-	const filePath = path.join(__dirname, `data\\${endpoint}.json`);
+	const filePath = path.join(__dirname, 'data', `${endpoint}.json`);
 
 	// Read the json file specified in the request, send it as a response if it exists
 	fs.readFile(filePath, (err, data) => {

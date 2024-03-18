@@ -1,100 +1,102 @@
 <script>
-	//Upload page logic here
-	import Papa from 'papaparse';
-	import ExcelJS from 'exceljs';
-	import {
-		FEEDBACK_TYPES,
-		FEEDBACK_CODES,
-		FEEDBACK_MESSAGES
-	} from '../../constants/feedbackMessages.js';
-	import { addFeedbackToStore } from '../../utils/addFeedbackToStore';
-	import UserFeedbackMessage from '../../lib/UserFeedbackMessage.svelte';
+  import Papa from 'papaparse'
+  import ExcelJS from 'exceljs'
+  import {
+    FEEDBACK_TYPES,
+    FEEDBACK_CODES,
+    FEEDBACK_MESSAGES
+  } from '../../constants/feedbackMessages.js'
+  import { addFeedbackToStore } from '../../utils/addFeedbackToStore.js'
+  import UserFeedbackMessage from '../../lib/UserFeedbackMessage.svelte'
+  import Button from '../../lib/Button.svelte';
+  import { validateFile, fileExistsInArray } from '../../utils/fileHandler.js'
 
-	import { validateFile, fileExistsInArray } from '/src/utils/fileHandler.js';
-    import Button from '../../lib/Button.svelte';
+  const filesArray = []
+  // let isUploading = false;
 
-	let filesArray = [];
-	let isUploading = false;
+  /**
+   * Selects files from the user's computer
+   */
+  function selectFile () {
+    const fileInput = document.createElement('input')
+    fileInput.type = 'file'
+    fileInput.multiple = true
+    fileInput.accept = '.csv, .xlsx'
+    fileInput.click()
+    fileInput.addEventListener('change', (e) => {
+      const files = e.target.files
+      const uploadFilesUploaded = document.querySelector('#filesChosen')
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i]
+        if (!validateFile(file) || fileExistsInArray(file, filesArray)) {
+          continue
+        }
+        const fileDiv = document.createElement('div')
+        fileDiv.innerHTML = file.name
+        uploadFilesUploaded.appendChild(fileDiv)
 
-	function selectFile() {
-		const fileInput = document.createElement('input');
-		fileInput.type = 'file';
-		fileInput.multiple = true;
-		fileInput.accept = '.csv, .xlsx';
-		fileInput.click();
-		fileInput.addEventListener('change', (e) => {
-			const files = e.target.files;
-			const uploadFilesUploaded = document.querySelector('#filesChosen');
-			for (let i = 0; i < files.length; i++) {
-				const file = files[i];
-				if (!validateFile(file) || fileExistsInArray(file, filesArray)) {
-					continue;
-				}
-				const fileDiv = document.createElement('div');
-				fileDiv.innerHTML = file.name;
-				uploadFilesUploaded.appendChild(fileDiv);
+        // Add file to array
+        filesArray.push(file)
+      }
+    })
+  }
 
-				// Add file to array
-				filesArray.push(file);
-			}
-		});
-	}
+  /**
+   *
+   */
+  function uploadFile () {
+    // isUploading = true;
+    if (filesArray.length === 0) {
+      addFeedbackToStore(
+        FEEDBACK_TYPES.ERROR,
+        FEEDBACK_CODES.NOT_FOUND,
+        FEEDBACK_MESSAGES.NO_FILE_SELCETED
+      )
+      return
+    }
+    // need to validate that the files are actually csv or xls files. Do this by converting to json
+    // and checking if the json data follows the format we have specified
+    let allFilesValid = true
+    for (const file of filesArray) {
+      // Parse CSV file
+      if (file.name.endsWith('.csv')) {
+        Papa.parse(file, {
+          header: true,
+          complete: function (results) {
+            console.log(results.data)
+          }
+        })
+      } else if (file.name.endsWith('.xlsx')) { // Parse XLSX file
+        const reader = new FileReader()
+        reader.onload = async function (e) {
+          const buffer = new Uint8Array(e.target.result)
+          const workbook = new ExcelJS.Workbook()
+          await workbook.xlsx.load(buffer)
+          const worksheet = workbook.worksheets[0]
+          const jsonData = worksheet.getRows(1, worksheet.rowCount).map((row) => row.values)
+          console.log(jsonData)
+        }
+        reader.readAsArrayBuffer(file)
+      } else {
+        allFilesValid = false
+        break
+      }
+    }
 
-	function uploadFile() {
-		isUploading = true;
-		if (filesArray.length === 0) {
-			addFeedbackToStore(
-				FEEDBACK_TYPES.ERROR,
-				FEEDBACK_CODES.NOT_FOUND,
-				FEEDBACK_MESSAGES.NO_FILE_SELCETED
-			);
-			return;
-		}
-		// need to validate that the files are actually csv or xls files. Do this by converting to json
-		// and checking if the json data follows the format we have specified
-		let allFilesValid = true;
-		for (let file of filesArray) {
-			// Parse CSV file
-			if (file.name.endsWith('.csv')) {
-				Papa.parse(file, {
-					header: true,
-					complete: function (results) {
-						console.log(results.data);
-					}
-				});
-			}
-			// Parse XLSX file
-			else if (file.name.endsWith('.xlsx')) {
-				const reader = new FileReader();
-				reader.onload = async function (e) {
-					const buffer = new Uint8Array(e.target.result);
-					const workbook = new ExcelJS.Workbook();
-					await workbook.xlsx.load(buffer);
-					const worksheet = workbook.worksheets[0];
-					const jsonData = worksheet.getRows(1, worksheet.rowCount).map((row) => row.values);
-					console.log(jsonData);
-				};
-				reader.readAsArrayBuffer(file);
-			} else {
-				allFilesValid = false;
-				break;
-			}
-		}
-
-		if (allFilesValid) {
-			addFeedbackToStore(
-				FEEDBACK_TYPES.SUCCESS,
-				FEEDBACK_CODES.CREATED,
-				FEEDBACK_MESSAGES.UPLOAD_SUCCESS
-			);
-		} else {
-			addFeedbackToStore(
-				FEEDBACK_TYPES.ERROR,
-				FEEDBACK_CODES.NOT_FOUND,
-				FEEDBACK_MESSAGES.NOT_FOUND
-			);
-		}
-	}
+    if (allFilesValid) {
+      addFeedbackToStore(
+        FEEDBACK_TYPES.SUCCESS,
+        FEEDBACK_CODES.CREATED,
+        FEEDBACK_MESSAGES.UPLOAD_SUCCESS
+      )
+    } else {
+      addFeedbackToStore(
+        FEEDBACK_TYPES.ERROR,
+        FEEDBACK_CODES.NOT_FOUND,
+        FEEDBACK_MESSAGES.NOT_FOUND
+      )
+    }
+  }
 </script>
 
 <UserFeedbackMessage />
