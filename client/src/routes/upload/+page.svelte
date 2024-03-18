@@ -1,5 +1,5 @@
 <script>
-	// Upload page logic here
+	//Upload page logic here
 	import Papa from 'papaparse';
 	import ExcelJS from 'exceljs';
 	import {
@@ -100,13 +100,12 @@
 <UserFeedbackMessage />
 
 <div class="uploadBody">
-	<!--Defines the bos where you click to choose files -->
+	<!--Defines the box where you click to choose files -->
 	<div class="uploadFilesBox">
 		<img src="/uploadCloudIcon.svg" alt="listIcon" height="60px" id="uploadCloudIcon" />
 		<p>Dra og slipp filer eller</p>
 		<br>
-		<!-- <button id="uploadFilesBoxButton" on:click={selectFile}>Bla gjennom Filer </button> -->
-		<Button color="blue" on:downloadFile={downloadFile} ifNotPicture={true}>Bla gjennom Filer </Button>
+		<Button color="blue" on:selectFile={selectFile} ifNotPicture={true}>Bla gjennom Filer </Button>
 	</div>
 
 	<!-- Defines the text under the upload files box -->
@@ -122,9 +121,8 @@
 	</div>
 </div>
 
-<!-- Defines the upload files button -->
-<!-- <button class="uploadButton" on:click={uploadFile}>Last opp</button> -->
-<Button type="uploadButton" color="orange" on:downloadFile={downloadFile}>Last opp <img src="/uploadIcon.svg" alt="listIcon" height="50px" class="headerIcon"></Button>
+<!-- The upload files button -->
+<Button type="uploadButton" color="orange" on:uploadFile={uploadFile}>Last opp <img src="/uploadIcon.svg" alt="listIcon" height="50px" class="headerIcon"></Button>
 
 <style>
 	.uploadBody {
