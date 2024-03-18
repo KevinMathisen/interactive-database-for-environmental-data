@@ -135,3 +135,55 @@ export function formatRiversForExcel (rivers) {
  // Return the headers and and all the rows
  return { riverHeader, riverRows, stationHeader, stationRows, observationHeader, observationRows }
 }
+
+/**
+ * Converts Stations into rows for insertion into an Excel file
+ * Includes stations, their river, and the stations underlying observations
+ * 
+ * @param {Map<number, Station>} stations - The stations to convert to rows
+ * @returns {{
+*    riverHeader: string[], riverRows: string[], 
+*    stationHeader: string[], stationRows: string[], 
+*    observationHeader: string[], observationRows: string[]
+*   }} - Headers and rows for the table
+*/
+export function formatStationsForExcel (stations) {
+ // Import the headers for the Excel file
+ const riverHeader = headersConstants.RIVER_HEADERS_EXCEL
+ const stationHeader = headersConstants.STATION_HEADERS_EXCEL
+ const observationHeader = headersConstants.OBSERVATION_HEADERS_EXCEL
+
+ let riverRows = []
+ let stationRows = []
+ let observationRows = []
+
+ // Get rivers from store
+ const rivers = get(riverStore)
+
+ // Find all unique rivers for stations selected
+ let uniqueRivers = new Map()
+ stations.forEach(station => {
+   const river = rivers.get(station.riverId)
+   if (!stationRivers.has(river.id)) {
+     stationRivers.set(river.id, river)
+   }
+ })
+
+ uniqueRivers.forEach(river => {
+   // Create new row for river
+   riverRows.push(createRowForRiver(river))
+ })
+ 
+ stations.forEach(station => {
+   // Create new row for station
+   stationRows.push(createRowForStation(station))
+
+   station.observations.forEach(observation => {
+     // Create new row for observation
+     observationRows.push(createRowForObservation(observation))
+   })
+ })
+
+ // Return the headers and and all the rows
+ return { riverHeader, riverRows, stationHeader, stationRows, observationHeader, observationRows }
+}
