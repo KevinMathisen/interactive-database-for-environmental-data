@@ -1,9 +1,12 @@
+// TODO: Should add error handling for when the object is empty
+
 // import { addFeedbackToStore } from './addFeedbackToStore.js';
 // import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/feedbackMessages';
 import headersConstants from '../constants/headers.js'
 import { riverStore } from '../stores/riverStore.js'
 import { stationStore } from '../stores/stationStore.js'
 import { get } from 'svelte/store'
+import { amountOfFishInStation, fishPerMinuteInStation } from './calculateData.js'
 
 /**
  * Converts river objects into arrays for display in a table
@@ -41,6 +44,32 @@ export function formatStationsForTable (stations) {
       station.name,
       station.date,
       station.time
+    ])
+  })
+
+  return { headers, rows }
+}
+
+/**
+ * Formats the station data for the station summary table
+ *
+ * @param {Map<number, object>} stations - The stations to be formatted
+ * @returns {{headers: string[], rows: string[][]}} - Headers and rows for the table
+ */
+export function formatStationsForSummaryTable (stations) {
+  const headers = headersConstants.STATION_SUMMARY_HEADERS_TABLE
+
+  const rows = []
+  // Create a row for each station
+  stations.forEach(station => {
+    rows.push([
+      station.id,
+      station.name.split(' ')[1],       // Get the station number from the name
+      station.riverType,
+      station.weather,
+      station.secFished,
+      amountOfFishInStation(station),   
+      fishPerMinuteInStation(station) 
     ])
   })
 
