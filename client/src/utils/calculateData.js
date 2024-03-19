@@ -130,3 +130,22 @@ function dataForSpeciesObservations (observations, secSpentFishing) {
   };
 }
 
+/**
+ * Calculates data for all species in a station
+ * 
+ * @param {Object} station - The station object
+ * @returns {Array} data - An array of objects, each containing data for a species
+ */
+export function dataForAllSpeciesInStation (station) {
+  let data = []
+  const secSpentFishing = station.secFished
+  const observations = station.observations
+  station.species.forEach(species => {
+    const speciesObservations = observations.filter(observation => observation.species === species)
+    const speciesData = dataForSpeciesObservations(speciesObservations, secSpentFishing)
+    data.push({ species, ...speciesData })
+  })
+
+  return data
+}
+
