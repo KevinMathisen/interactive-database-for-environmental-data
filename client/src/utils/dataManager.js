@@ -19,6 +19,7 @@ import { River } from '../models/River.js'
 import { Station } from '../models/Station.js'
 import { addFeedbackToStore } from './addFeedbackToStore.js'
 import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/feedbackMessages'
+import { filtersStationsByRiver } from './filterData.js'
 
 /**
  * Updates a store with given objects converted to a given class
@@ -269,4 +270,13 @@ export async function getStationForDownload (id) {
     console.log('Error fetching station for download:', error)
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
   }
+}
+
+/**
+ * Retrieves all the stations for a given river
+ * @param {object} river - The river object, which has the ID of the stations
+ * @returns {Map<number, Station>} - A Map of stations under the given river
+ */
+export function getStationsForRiver (river) {
+  return filtersStationsByRiver(river, get(stationStore))
 }

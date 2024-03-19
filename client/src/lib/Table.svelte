@@ -19,7 +19,7 @@
   let sortedRows = [] // Rows sorted based on sortKey and sortDirection
 
   // Sort rows based on sortKey and sortDirection
-  $: if (headers && rows && sortDirection && sortKey) {
+  $: if (headers || rows || sortDirection || sortKey) {
     sortedRows = sortRows()
   }
 

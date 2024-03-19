@@ -25,6 +25,7 @@ export const FEEDBACK_MESSAGES = {
   NOT_FOUND: 'Kunne ikke finne den forespurte ressursen',
   NO_RIVERS_SELECTED: 'Ingen elver valgt, velg en eller flere elver før du klikker last ned',
   NO_STATIONS_SELECTED: 'Ingen stasjoner valgt, velg en eller flere stasjoner før du klikker last ned',
+  ERROR_GENERATING_FILE: 'En feil oppstod under nedlasting av filen',
   FORBIDDEN: 'Handlingen du utførte ble ikke akseptert',
   UNAUTHORIZED: 'Du har ikke tillatelse til å utføre handlingen du forsøkte',
   CONTENT_TO_LARGE: 'Filen du forsøkte å laste opp er for stor',
