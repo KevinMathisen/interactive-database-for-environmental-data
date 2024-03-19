@@ -4,16 +4,20 @@
 
   const dispatch = createEventDispatcher()
 
-  export let color = 'blue' // The default color for the button.
-  export let center = true // The default center for the button.
-  export let href = '#' // The default link for the button.
-  export let type = '' // The default type for the button.
-  export let ifNotPicture = false // Contains an svg icon.
+  // Should only take in type of button and derive other properties from that
 
+  export let color = 'blue' // Can be either 'none', 'blue', 'orange' or 'green'
+  export let center = true // The default center for the button
+  export let href = '#' // The default link for the button
+  export let type = '' // Can be either 'download', 'uploadButton'
+  export let ifNotPicture = false // Contains an svg icon
+
+  
   /**
    *
    */
   function handleClick () {
+    // Should only dispatch one event based on type of button
     dispatch('downloadFile')
     dispatch('uploadFile')
     dispatch('selectFile')
@@ -43,7 +47,7 @@
   }
 
   .none {
-    background-color: white;
+    background-color: transparent;
     color: #000000;
   }
 
@@ -116,5 +120,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  .medium {
+    font-size: 1.2rem;
+    width: 200px;
+    height: 60px;
   }
 </style>
