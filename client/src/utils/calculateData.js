@@ -42,3 +42,24 @@ export function secondsAndMinutesSpentFishingInStations (stations) {
   }
 }
 
+/**
+ * Calculates the amount of fish observed per minute in a station
+ * 
+ * @param {Station} station - The station to calculate based on
+ * @returns {number} - The amount of fish observed per minute
+ */
+export function fishPerMinuteInStation (station) {
+  return ( amountOfFishInStation(station) / (station.secFished / 60) ).toFixed(2)
+}
+
+/**
+ * Calculates the amount of fish observed per minute in multiple stations
+ * 
+ * @param {Map<number, Station>} stations - The stations to calculate based on
+ * @returns {number} - The amount of fish observed per minute
+ */
+export function fishPerMinuteInStations (stations) {
+  const secSpentFishing = secondsSpentFishingInStations(stations)
+  return (amountOfFishInStations(stations) / (secSpentFishing / 60)).toFixed(2)
+}
+
