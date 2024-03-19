@@ -112,3 +112,21 @@ function maximumLengthObservation(observations) {
   return observations.reduce((max, observation) => observation.length > max ? observation.length : max, -Infinity)
 }
 
+/**
+ * Calculates data for a species in a station
+ * 
+ * @param {Observation[]} observations - The observations of the species
+ * @param {number} secSpentFishing - Time spent fishing in the station
+ * @returns {Object} data - An object containing data for the species
+ */
+function dataForSpeciesObservations (observations, secSpentFishing) {
+  return {
+    amount: observations.length,
+    amountPerMinute: observations.length / (secSpentFishing / 60),
+    averageLength: averageLengthObservation(observations),
+    medianLength: medianLengthObservation(observations),
+    miniumLength: minimumLengthObservation(observations),
+    maximumLength: maximumLengthObservation(observations)
+  };
+}
+
