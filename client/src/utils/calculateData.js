@@ -140,8 +140,39 @@ export function dataForAllSpeciesInStation (station) {
   let data = []
   const secSpentFishing = station.secFished
   const observations = station.observations
+
+  // For each species in the station, calculate data for the species and add it to the data array
   station.species.forEach(species => {
     const speciesObservations = observations.filter(observation => observation.species === species)
+    const speciesData = dataForSpeciesObservations(speciesObservations, secSpentFishing)
+    data.push({ species, ...speciesData })
+  })
+
+  return data
+}
+
+/**
+ * Calculates data for each unique species in multiple stations
+ * 
+ * @param {Map<number, Station>} stations - The stations to calculate data for
+ * @returns {Array} data - An array of objects, each containing data for an unique species
+ */
+export function dataForAllSpeciesInStations (stations) {
+  let data = []
+
+  // Calculate the time spent fishing in all the stations
+  const secSpentFishing = secondsSpentFishingInStations(stations)
+
+  // Get all observations from all stations
+  const allObservations = [];
+  Array.from(stations.values()).forEach(station => allObservations.push(...station.observations));
+
+  // Get all unique species from all stations
+  const species = allUniqueSpeciesInObjects(stations)
+
+  // For each unique species, calculate and add the data to the data array
+  species.forEach(species => {
+    const speciesObservations = allObservations.filter(observation => observation.species === species)
     const speciesData = dataForSpeciesObservations(speciesObservations, secSpentFishing)
     data.push({ species, ...speciesData })
   })
