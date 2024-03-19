@@ -63,3 +63,52 @@ export function fishPerMinuteInStations (stations) {
   return (amountOfFishInStations(stations) / (secSpentFishing / 60)).toFixed(2)
 }
 
+/**
+ * Calculates the average length of the fish observed in a station
+ * 
+ * @param {Observation[]} observations - The observations to calculate the average length of
+ * @returns {number} - The average length of the fish observed
+ */
+function averageLengthObservation(observations) {
+  return observations.reduce((totalLength, observation) => totalLength + observation.length, 0) / observations.length
+}
+
+/**
+ * Calculates the median length of the fish observed in a station
+ * 
+ * @param {Observation[]} observations - The observations to calculate the median length of
+ * @returns {number} - The median length of the fish observed
+ */
+function medianLengthObservation(observations) {
+  // Sort the observations by length
+  const sortedObservations = observations.sort((a, b) => a.length - b.length)
+  
+  // Find the middle index
+  const middleIndex = Math.floor(sortedObservations.length / 2)
+
+  // Return the median length, if the amount of observations is even, return the average of the two middle lengths
+  return sortedObservations.length % 2 === 0
+    ? (sortedObservations[middleIndex - 1].length + sortedObservations[middleIndex].length) / 2
+    : sortedObservations[middleIndex].length
+}
+
+/**
+ * Calculates the minimum length of the fish observed in a station
+ * 
+ * @param {Observation[]} observations - The observations to calculate the minimum length of
+ * @returns {number} - The minimum length of the fish observed
+ */
+function minimumLengthObservation(observations) {
+  return observations.reduce((min, observation) => observation.length < min ? observation.length : min, Infinity)
+}
+
+/**
+ * Calculates the maximum length of the fish observed in a station
+ * 
+ * @param {Observation[]} observations - The observations to calculate the maximum length of
+ * @returns {number} - The maximum length of the fish observed
+ */
+function maximumLengthObservation(observations) {
+  return observations.reduce((max, observation) => observation.length > max ? observation.length : max, -Infinity)
+}
+
