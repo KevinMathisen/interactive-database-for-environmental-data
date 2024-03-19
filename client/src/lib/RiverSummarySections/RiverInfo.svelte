@@ -1,5 +1,5 @@
 <script>
-  import { 
+  import {
     amountOfFishInStations,
     secondsAndMinutesSpentFishingInStations,
     fishPerMinuteInStations
@@ -15,7 +15,7 @@
   $: {
     amountOfStations = stations.size
     fishInStations = amountOfFishInStations(stations)
-    // Find the minutes and second spent fishing 
+    // Find the minutes and second spent fishing
     timeSpentFishing = secondsAndMinutesSpentFishingInStations(stations)
     fishPerMin = fishPerMinuteInStations(stations)
   }

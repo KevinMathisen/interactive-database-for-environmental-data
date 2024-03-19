@@ -52,7 +52,6 @@ export function formatStationsForTable (stations) {
 
 /**
  * Formats the station data for the station summary table
- *
  * @param {Map<number, object>} stations - The stations to be formatted
  * @returns {{headers: string[], rows: string[][]}} - Headers and rows for the table
  */
@@ -64,12 +63,12 @@ export function formatStationsForSummaryTable (stations) {
   stations.forEach(station => {
     rows.push([
       station.id,
-      station.name.split(' ')[1],       // Get the station number from the name
+      station.name.split(' ')[1], // Get the station number from the name
       station.riverType,
       station.weather,
       station.secFished,
-      amountOfFishInStation(station),   
-      fishPerMinuteInStation(station) 
+      amountOfFishInStation(station),
+      fishPerMinuteInStation(station)
     ])
   })
 

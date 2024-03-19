@@ -12,7 +12,6 @@
   export let type = '' // Can be either 'download', 'uploadButton'
   export let ifNotPicture = false // Contains an svg icon
 
-  
   /**
    *
    */

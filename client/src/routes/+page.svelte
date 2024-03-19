@@ -7,9 +7,9 @@
   import { stationStore } from '../stores/stationStore.js'
   import Sidebar from '../lib/Sidebar.svelte'
   import { onMount } from 'svelte'
-  import RiverSummary from '../lib/RiverSummary.svelte';
+  import RiverSummary from '../lib/RiverSummary.svelte'
   import { River } from '../models/River.js'
-  //import { Station } from '../models/Station.js'
+  // import { Station } from '../models/Station.js'
 
   let rivers = new Map() // Rivers with coordinates
   let stations = new Map() // Stations with coordinates
@@ -24,7 +24,7 @@
   let filteredStations // Stations filtered by date and species
 
   let selectedRiver = new River() // River the user has chosen
-  //let selectedStation = new Station() // Station the user has chosen
+  // let selectedStation = new Station() // Station the user has chosen
 
   let showLeftSidebar = true
   let showRightSideBar = false
@@ -58,10 +58,16 @@
   $: filteredRivers = filterRiversByDateAndSpecies(rivers, selectedSpecies, selectedStartDate, selectedEndDate)
   $: filteredStations = filterStationsByDateAndSpecies(stations, selectedSpecies, selectedStartDate, selectedEndDate)
 
+  /**
+   *
+   */
   function toggleLeftSidebar () {
     showLeftSidebar = !showLeftSidebar
   }
 
+  /**
+   *
+   */
   function toggleRightSidebar () {
     showRightSideBar = !showRightSideBar
   }
@@ -81,7 +87,6 @@
     </Sidebar>
   </div>
 {/if}
-
 
 {#if showRightSideBar}
   <div class="rightSidebar">

@@ -274,8 +274,7 @@ export async function getStationForDownload (id) {
 
 /**
  * Retrieves all the stations for a given river
- * 
- * @param {Object} river - The river object, which has the ID of the stations
+ * @param {object} river - The river object, which has the ID of the stations
  * @returns {Map<number, Station>} - A Map of stations under the given river
  */
 export function getStationsForRiver (river) {

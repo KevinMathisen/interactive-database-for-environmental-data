@@ -1,11 +1,11 @@
 <script>
     import { River } from '../models/River.js'
-    import CollapsibleSection from "./CollapsibleSection.svelte";
-    import Button from "./Button.svelte";
-    import RiverOverview from './RiverSummarySections/RiverOverview.svelte';
-    import RiverInfo from './RiverSummarySections/RiverInfo.svelte';
-    import { getStationsForRiver } from '../utils/dataManager.js';
-    import RiverStations from './RiverSummarySections/RiverStations.svelte';
+    import CollapsibleSection from './CollapsibleSection.svelte'
+    import Button from './Button.svelte'
+    import RiverOverview from './RiverSummarySections/RiverOverview.svelte'
+    import RiverInfo from './RiverSummarySections/RiverInfo.svelte'
+    import { getStationsForRiver } from '../utils/dataManager.js'
+    import RiverStations from './RiverSummarySections/RiverStations.svelte'
 
     export let river = new River()
 
@@ -15,22 +15,20 @@
 </script>
 
 <div class='container'>
-  
+
   <div class="maincontent">
     <CollapsibleSection title={river.name} collapsable={false}>
       <RiverOverview {river} />
     </CollapsibleSection>
-  
+
     <CollapsibleSection title="Info">
       <RiverInfo {river} {stations}/>
     </CollapsibleSection>
-  
+
     <CollapsibleSection title="Stasjoner">
       <RiverStations {stations} on:rowClick/>
     </CollapsibleSection>
   </div>
-  
-  
 
   <div class="footer">
     <Button color="blue" type="medium">

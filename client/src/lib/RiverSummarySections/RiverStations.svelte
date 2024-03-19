@@ -1,5 +1,5 @@
 <script>
-  import Table from '../Table.svelte';
+  import Table from '../Table.svelte'
   import { formatStationsForSummaryTable } from '../../utils/formatData.js'
 
   export let stations // Map of stations
@@ -14,7 +14,7 @@
 </script>
 
 <!-- Table with summary of stations -->
-<Table 
+<Table
   headers={tableContent.headers}
   rows={tableContent.rows}
   clickable=true
