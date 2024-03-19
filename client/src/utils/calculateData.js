@@ -1,6 +1,6 @@
 /**
  * Calculates the amount of fish observed in a station
- * @param {Station} station
+ * @param {Station} station - The station to calculate on
  * @returns {number} - The amount of fish the station observed
  */
 export function amountOfFishInStation (station) {
@@ -9,7 +9,7 @@ export function amountOfFishInStation (station) {
 
 /**
  * Calculates the amount of fish observed in multiple stations
- * @param {Map<number, Station>} stations
+ * @param {Map<number, Station>} stations - The stations to calculate on
  * @returns {number} - The amount of fish observed in all stations
  */
 export function amountOfFishInStations (stations) {
@@ -18,8 +18,7 @@ export function amountOfFishInStations (stations) {
 
 /**
  * Calculates the time spent fishing in multiple stations
- * @param {Map<number, Station>} station
- * @param stations
+ * @param {Map<number, Station>} stations - The stations to calculate on
  * @returns {number} - The time spent fishing in all the stations
  */
 function secondsSpentFishingInStations (stations) {
