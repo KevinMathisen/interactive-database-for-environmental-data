@@ -1,6 +1,8 @@
 const RIVER_HEADERS_TABLE = ['Navn', 'Dato', 'Projektnummer']
 const STATION_HEADERS_TABLE = ['Navn', 'Dato', 'Kl.']
 
+const STATION_SUMMARY_HEADERS_TABLE = ['Stasjon', 'Elvtype', 'Vær', 'Min fisket', 'Ant fisk', 'Fisk/min']
+
 const RIVER_HEADERS_EXCEL = [
   'Start dato', 'Slutt dato', 'Elv', 'Båttype', 'Lat', 'Long',
   'Vannføring (sildre.no)', 'Skipper', 'Mannskap1', 'Mannskap2',
@@ -19,4 +21,4 @@ const OBSERVATION_HEADERS_EXCEL = [
   'Gjenutsatt(ja/nei)', 'Prøvetatt(ja/nei)', 'Kommentar'
 ]
 
-export default { RIVER_HEADERS_TABLE, STATION_HEADERS_TABLE, RIVER_HEADERS_EXCEL, STATION_HEADERS_EXCEL, OBSERVATION_HEADERS_EXCEL }
+export default { RIVER_HEADERS_TABLE, STATION_HEADERS_TABLE, STATION_SUMMARY_HEADERS_TABLE, RIVER_HEADERS_EXCEL, STATION_HEADERS_EXCEL, OBSERVATION_HEADERS_EXCEL }
