@@ -180,3 +180,16 @@ export function dataForAllSpeciesInStations (stations) {
   return data
 }
 
+/**
+ * Finds the unique species in an array of objects
+ * @param {object[]} objects - An array of objects
+ * @param {string[]} objects.species - An array of species in the object
+ * @returns {string[]} - An array of unique species in the objects
+ */
+export function allUniqueSpeciesInObjects (objects) {
+  const speciesSet = new Set()
+  objects.forEach(object => {
+    object.species.forEach(species => speciesSet.add(species));
+  })
+  return Array.from(speciesSet)
+}
