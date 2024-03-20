@@ -1,10 +1,9 @@
 /**
  * Calculates the amount of fish in all observations given
- * 
- * @param {Observation[]} observations - The observations to calculate the amount of fish in 
+ * @param {Observation[]} observations - The observations to calculate the amount of fish in
  * @returns {number} - The amount of fish in the observations
  */
-function amountOfFishInObservations(observations) {
+function amountOfFishInObservations (observations) {
   return observations.reduce((amountOfFish, observation) => amountOfFish + observation.count, 0)
 }
 
@@ -74,7 +73,7 @@ export function fishPerMinuteInStations (stations) {
  */
 function averageLengthObservation (observations) {
   const amountOfFish = amountOfFishInObservations(observations)
-  return observations.reduce((totalLength, observation) => totalLength + observation.length*observation.count, 0) / amountOfFish
+  return observations.reduce((totalLength, observation) => totalLength + observation.length * observation.count, 0) / amountOfFish
 }
 
 /**

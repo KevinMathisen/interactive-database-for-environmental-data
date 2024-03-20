@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect } from 'vitest'
 import {
   amountOfFishInStation,
   amountOfFishInStations,
@@ -6,10 +6,8 @@ import {
   fishPerMinuteInStation,
   fishPerMinuteInStations,
   dataForAllSpeciesInStation,
-  dataForAllSpeciesInStations,
-  allUniqueSpeciesInObjects
+  dataForAllSpeciesInStations
 } from './calculateData.js'
-import { River } from '../models/River.js'
 import { Station } from '../models/Station.js'
 
 describe('test amountOfFishInStation function', () => {
@@ -106,26 +104,26 @@ describe('test dataForAllSpeciesInStation function', () => {
   })
 
   it('should return the correct data when observations are present', () => {
-    const station = new Station({ 
-      species: ['a', 'b'], 
+    const station = new Station({
+      species: ['a', 'b'],
       secFished: 60,
       observations: [
-        { species: 'a', length: 2, count: 1 }, 
-        { species: 'b', length: 2, count: 1 }, 
-        { species: 'a', length: 1, count: 2}
-      ] 
+        { species: 'a', length: 2, count: 1 },
+        { species: 'b', length: 2, count: 1 },
+        { species: 'a', length: 1, count: 2 }
+      ]
     })
 
     expect(dataForAllSpeciesInStation(station)).toEqual([
-      { 
-        species: 'a', 
+      {
+        species: 'a',
         amount: 3,
         amountPerMinute: '3.00',
         averageLength: '1.33',
         medianLength: '1.00',
         minimumLength: 1,
         maximumLength: 2
-       }, 
+      },
       {
         species: 'b',
         amount: 1,
@@ -148,28 +146,28 @@ describe('test dataForAllSpeciesInStation function', () => {
   })
 
   it('should return the correct data when observations with no length are present', () => {
-    const station = new Station({ 
+    const station = new Station({
       species: ['a', 'b'],
       secFished: 60,
       observations: [
-        { species: 'a', length: 2, count: 1 }, 
-        { species: 'b', length: 2, count: 1 }, 
-        { species: 'a', length: 1, count: 2},
+        { species: 'a', length: 2, count: 1 },
+        { species: 'b', length: 2, count: 1 },
+        { species: 'a', length: 1, count: 2 },
         { species: 'a', count: 1 },
         { species: 'b', count: 1, length: 0 }
       ]
     })
 
     expect(dataForAllSpeciesInStation(station)).toEqual([
-      { 
-        species: 'a', 
+      {
+        species: 'a',
         amount: 4,
         amountPerMinute: '4.00',
         averageLength: '1.33',
         medianLength: '1.00',
         minimumLength: 1,
         maximumLength: 2
-       }, 
+      },
       {
         species: 'b',
         amount: 2,
@@ -200,35 +198,35 @@ describe('test dataForAllSpeciesInStations function', () => {
 
   it('should return the correct data when stations are present', () => {
     const stations = new Map()
-    stations.set(1, new Station({ 
-      species: ['a', 'b'], 
+    stations.set(1, new Station({
+      species: ['a', 'b'],
       secFished: 60,
       observations: [
-        { species: 'a', length: 2, count: 1 }, 
-        { species: 'b', length: 2, count: 1 }, 
-        { species: 'a', length: 1, count: 2}
-      ] 
+        { species: 'a', length: 2, count: 1 },
+        { species: 'b', length: 2, count: 1 },
+        { species: 'a', length: 1, count: 2 }
+      ]
     }))
-    stations.set(2, new Station({ 
-      species: ['a', 'c'], 
+    stations.set(2, new Station({
+      species: ['a', 'c'],
       secFished: 60,
       observations: [
-        { species: 'a', length: 2, count: 1 }, 
-        { species: 'c', length: 2, count: 1 }, 
+        { species: 'a', length: 2, count: 1 },
+        { species: 'c', length: 2, count: 1 },
         { species: 'c', length: 1, count: 2 }
-      ] 
+      ]
     }))
 
     expect(dataForAllSpeciesInStations(stations)).toEqual([
-      { 
-        species: 'a', 
+      {
+        species: 'a',
         amount: 4,
         amountPerMinute: '2.00',
         averageLength: '1.50',
         medianLength: '1.50',
         minimumLength: 1,
         maximumLength: 2
-       }, 
+      },
       {
         species: 'b',
         amount: 1,
@@ -261,37 +259,37 @@ describe('test dataForAllSpeciesInStations function', () => {
 
   it('should return the correct data when stations with no length are present', () => {
     const stations = new Map()
-    stations.set(1, new Station({ 
-      species: ['a', 'b'], 
+    stations.set(1, new Station({
+      species: ['a', 'b'],
       secFished: 60,
       observations: [
-        { species: 'a', length: 2, count: 1 }, 
-        { species: 'b', length: 2, count: 1 }, 
-        { species: 'a', length: 1, count: 2},
+        { species: 'a', length: 2, count: 1 },
+        { species: 'b', length: 2, count: 1 },
+        { species: 'a', length: 1, count: 2 },
         { species: 'a', count: 1 },
         { species: 'b', count: 1, length: 0 }
-      ] 
+      ]
     }))
-    stations.set(2, new Station({ 
-      species: ['a', 'c'], 
+    stations.set(2, new Station({
+      species: ['a', 'c'],
       secFished: 60,
       observations: [
-        { species: 'a', length: 2, count: 1 }, 
-        { species: 'c', length: 2, count: 1 }, 
-        { species: 'c', length: 1, count: 2 },
-      ] 
+        { species: 'a', length: 2, count: 1 },
+        { species: 'c', length: 2, count: 1 },
+        { species: 'c', length: 1, count: 2 }
+      ]
     }))
 
     expect(dataForAllSpeciesInStations(stations)).toEqual([
-      { 
-        species: 'a', 
+      {
+        species: 'a',
         amount: 5,
         amountPerMinute: '2.50',
         averageLength: '1.50',
         medianLength: '1.50',
         minimumLength: 1,
         maximumLength: 2
-       }, 
+      },
       {
         species: 'b',
         amount: 2,
@@ -322,7 +320,3 @@ describe('test dataForAllSpeciesInStations function', () => {
     ])
   })
 })
-
-
-
-

@@ -7,13 +7,13 @@ const RIVER_END_DATE = 'endDate'
 const STATION_DATE = 'date'
 const SPECIES = 'species'
 
-export default { 
-  RIVER_SEARCH, 
-  RIVER_NAME, 
-  STATION_SEARCH, 
-  STATION_NAME, 
-  RIVER_START_DATE, 
+export default {
+  RIVER_SEARCH,
+  RIVER_NAME,
+  STATION_SEARCH,
+  STATION_NAME,
+  RIVER_START_DATE,
   RIVER_END_DATE,
-  STATION_DATE, 
+  STATION_DATE,
   SPECIES
 }

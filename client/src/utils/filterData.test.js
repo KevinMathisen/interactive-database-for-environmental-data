@@ -285,6 +285,4 @@ describe('test filtersStationsByRiver function', () => {
       [1, new Station({ id: 1 })]
     ]))
   })
-
-  
 })

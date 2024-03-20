@@ -147,7 +147,7 @@ describe('test formatStationSettingsForTable function', () => {
       id: '1',
       voltage: 1,
       pulse: 2,
-      conductivity: 3,
+      conductivity: 3
     })
 
     const formatted = formatStationSettingsForTable(stations)
