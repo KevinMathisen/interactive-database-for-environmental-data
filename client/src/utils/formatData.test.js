@@ -3,6 +3,9 @@ import {
   formatRiversForTable,
   formatStationsForTable,
   formatStationsForSummaryTable,
+  formatStationConditionsForTable,
+  formatStationSettingsForTable,
+  formatStationObservationsForTable,
   formatRiversForExcel,
   formatStationsForExcel,
   formatRiversForCsv,
@@ -103,6 +106,31 @@ describe('test formatStationsForSummaryTable function', () => {
     expect(formatted.rows).toEqual([
       ['1', '1', 'Type1', 'Weather1', 1, 1, 2],
       ['2', '2', 'Type2', 'Weather2', 2, 1, 2]
+    ])
+  })
+})
+
+describe('test formatStationConditionsForTable function', () => {
+  it('should return headers and an empty rows array if the input map is empty', () => {
+    const formatted = formatStationConditionsForTable(new Station())
+    expect(formatted.headers).toEqual(headersConstants.STATION_CONDITIONS_HEADERS_TABLE)
+    expect(formatted.rows).toEqual([])
+  })
+
+  it('should correctly convert station objects into arrays for table display', () => {
+    const stations = new Station({
+      id: '1',
+      riverType: 'Type1',
+      weather: 'Weather1',
+      waterTemp: 1,
+      airTemp: 2,
+      secFished: 90
+    })
+
+    const formatted = formatStationConditionsForTable(stations)
+    expect(formatted.headers).toEqual(headersConstants.STATION_CONDITIONS_HEADERS_TABLE)
+    expect(formatted.rows).toEqual([
+      ['Type1', 'Weather1', 1, 2, '1.5']
     ])
   })
 })
