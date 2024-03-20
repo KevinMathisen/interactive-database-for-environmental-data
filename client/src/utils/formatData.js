@@ -87,6 +87,11 @@ export function formatStationsForSummaryTable (stations) {
 export function formatStationConditionsForTable (station) {
   const headers = headersConstants.STATION_CONDITIONS_HEADERS_TABLE
 
+  // If the station is an empty station, return an empty table
+  if (station.id === null) {
+    return { headers, rows: [] }
+  }
+
   const rows = []
   // Create a row with the station conditions
   rows.push([
@@ -108,6 +113,11 @@ export function formatStationConditionsForTable (station) {
 export function formatStationSettingsForTable (station) {
   const headers = headersConstants.STATION_SETTINGS_HEADERS_TABLE
 
+  // If the station is an empty station, return an empty table
+  if (station.id === null) {
+    return { headers, rows: [] }
+  }
+
   const rows = []
   // Create a row with the station settings
   rows.push([
@@ -126,6 +136,11 @@ export function formatStationSettingsForTable (station) {
  */
 export function formatStationObservationsForTable (station) {
   const headers = headersConstants.STATION_OBSERVATIONS_HEADERS_TABLE
+
+  // If the station is an empty station, return an empty table
+  if (station.id === null) {
+    return { headers, rows: [] }
+  }
 
   const rows = dataForAllSpeciesInStation(station).map(Object.values)
 
