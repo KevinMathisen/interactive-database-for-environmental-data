@@ -13,6 +13,7 @@
   export let headers = [] // Header names
   export let rows = [] // Rows of data
   export let clickable = false // If the rows are clickable
+  export let markRow = '' // Name of row to mark, empty if none
 
   let sortKey = '' // Header name to sort by
   let sortDirection = '' // Sorting direction, 'asc' or 'desc'
@@ -99,6 +100,7 @@
       <tr
         on:click={() => handleClickRow(row[0])}
         class:clickable={clickable}
+        class:marked={row[1] === markRow}
       >
         <!-- Create the cells, do not display the id -->
         {#each row as cell, index}
@@ -158,5 +160,9 @@
   tr.clickable:hover {
     background: #f0f0f0;
     cursor: pointer;
+  }
+  /* When the last row should be marked, make text bold and draw line on top */
+  tr.marked {
+    font-weight: bold;
   }
 </style>
