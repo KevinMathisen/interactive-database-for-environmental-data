@@ -111,9 +111,9 @@ function maximumLengthObservation (observations) {
 function dataForSpeciesObservations (observations, secSpentFishing) {
   return {
     amount: observations.length,
-    amountPerMinute: observations.length / (secSpentFishing / 60),
-    averageLength: averageLengthObservation(observations),
-    medianLength: medianLengthObservation(observations),
+    amountPerMinute: (observations.length / (secSpentFishing / 60)).toFixed(2),
+    averageLength: averageLengthObservation(observations).toFixed(2),
+    medianLength: medianLengthObservation(observations).toFixed(2),
     miniumLength: minimumLengthObservation(observations),
     maximumLength: maximumLengthObservation(observations)
   }
@@ -131,10 +131,15 @@ export function dataForAllSpeciesInStation (station) {
 
   // For each species in the station, calculate data for the species and add it to the data array
   station.species.forEach(species => {
-    const speciesObservations = observations.filter(observation => observation.species === species)
+    const speciesObservations = observations.filter(observation => observation.species.toLowerCase() === species)
+
     const speciesData = dataForSpeciesObservations(speciesObservations, secSpentFishing)
     data.push({ species, ...speciesData })
   })
+
+  // Calculate the data for the sum of all species in the station and add it to the data array
+  const sumData = dataForSpeciesObservations(observations, secSpentFishing)
+  data.push({ species: 'Sum', ...sumData })
 
   return data
 }
