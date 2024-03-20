@@ -1,15 +1,16 @@
 <script>
   import LeafletMap from '$lib/LeafletMap.svelte'
   import Filter from '$lib/filter.svelte'
-  import { getRivers, getStations, getRiverSummary } from '../utils/dataManager.js'
+  import { getRivers, getStations, getRiverSummary, getStationSummary } from '../utils/dataManager.js'
   import { getSelectableSpecies, filterRiversByDateAndSpecies, filterStationsByDateAndSpecies } from '../utils/filterData.js'
   import { riverStore } from '../stores/riverStore.js'
   import { stationStore } from '../stores/stationStore.js'
   import Sidebar from '../lib/Sidebar.svelte'
   import { onMount } from 'svelte'
   import RiverSummary from '../lib/RiverSummary.svelte'
+  import StationSummary from '../lib/StationSummary.svelte'
   import { River } from '../models/River.js'
-  // import { Station } from '../models/Station.js'
+  import { Station } from '../models/Station.js'
 
   let rivers = new Map() // Rivers with coordinates
   let stations = new Map() // Stations with coordinates
@@ -24,7 +25,7 @@
   let filteredStations // Stations filtered by date and species
 
   let selectedRiver = new River() // River the user has chosen
-  // let selectedStation = new Station() // Station the user has chosen
+  let selectedStation = new Station() // Station the user has chosen
 
   let showLeftSidebar = true
   let showRightSideBar = false
@@ -35,10 +36,19 @@
    * @param {Event} event - The click event
    */
   function stationClicked (event) {
-    showRightSideBar = true
+    sideBarTitle = event.detail.text.name
+    getStationSummary(11)
+      .then(_ => {
+        selectedRiver = new River()
+        selectedStation = stations.get(11)
+      })
+  }
+
+  function riverClicked (event) {
     sideBarTitle = event.detail.text.name
     getRiverSummary(3)
       .then(_ => {
+        selectedStation = new Station()
         selectedRiver = rivers.get(3)
       })
   }
@@ -69,11 +79,13 @@
    *
    */
   function toggleRightSidebar () {
-    showRightSideBar = !showRightSideBar
+    selectedRiver = new River()
+    selectedStation = new Station()
   }
+
 </script>
 
-<LeafletMap {dataType} rivers={filteredRivers} stations={filteredStations} on:map={toggleRightSidebar} on:stationClicked={stationClicked} on:riverClicked={stationClicked}/>
+<LeafletMap {dataType} rivers={filteredRivers} stations={filteredStations} on:stationClicked={stationClicked} on:riverClicked={riverClicked}/>
 
 {#if showLeftSidebar}
   <div class="leftSidebar">
@@ -88,10 +100,16 @@
   </div>
 {/if}
 
-{#if showRightSideBar}
+{#if selectedRiver.id}
   <div class="rightSidebar">
     <Sidebar title={sideBarTitle} typeClose="cross" side="right" on:close={toggleRightSidebar}>
       <RiverSummary river={selectedRiver} />
+    </Sidebar>
+  </div>
+{:else if selectedStation.id}
+  <div class="rightSidebar">
+    <Sidebar title={sideBarTitle} typeClose="cross" side="right" on:close={toggleRightSidebar}>
+      <StationSummary station={selectedStation} />
     </Sidebar>
   </div>
 {/if}
@@ -109,6 +127,6 @@
     top: 80px;
     right: 0;
     height: calc(100vh - 80px);
-    width: 30em;
+    width: 35em;
   }
 </style>
