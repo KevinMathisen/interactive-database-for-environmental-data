@@ -192,3 +192,137 @@ describe('test dataForAllSpeciesInStation function', () => {
   })
 })
 
+describe('test dataForAllSpeciesInStations function', () => {
+  it('should return an empty array when no stations are present', () => {
+    const stations = new Map()
+    expect(dataForAllSpeciesInStations(stations)).toEqual([])
+  })
+
+  it('should return the correct data when stations are present', () => {
+    const stations = new Map()
+    stations.set(1, new Station({ 
+      species: ['a', 'b'], 
+      secFished: 60,
+      observations: [
+        { species: 'a', length: 2, count: 1 }, 
+        { species: 'b', length: 2, count: 1 }, 
+        { species: 'a', length: 1, count: 2}
+      ] 
+    }))
+    stations.set(2, new Station({ 
+      species: ['a', 'c'], 
+      secFished: 60,
+      observations: [
+        { species: 'a', length: 2, count: 1 }, 
+        { species: 'c', length: 2, count: 1 }, 
+        { species: 'c', length: 1, count: 2 }
+      ] 
+    }))
+
+    expect(dataForAllSpeciesInStations(stations)).toEqual([
+      { 
+        species: 'a', 
+        amount: 4,
+        amountPerMinute: '2.00',
+        averageLength: '1.50',
+        medianLength: '1.50',
+        minimumLength: 1,
+        maximumLength: 2
+       }, 
+      {
+        species: 'b',
+        amount: 1,
+        amountPerMinute: '0.50',
+        averageLength: '2.00',
+        medianLength: '2.00',
+        minimumLength: 2,
+        maximumLength: 2
+      },
+      {
+        species: 'c',
+        amount: 3,
+        amountPerMinute: '1.50',
+        averageLength: '1.33',
+        medianLength: '1.00',
+        minimumLength: 1,
+        maximumLength: 2
+      },
+      {
+        species: 'sum',
+        amount: 8,
+        amountPerMinute: '4.00',
+        averageLength: '1.50',
+        medianLength: '1.50',
+        minimumLength: 1,
+        maximumLength: 2
+      }
+    ])
+  })
+
+  it('should return the correct data when stations with no length are present', () => {
+    const stations = new Map()
+    stations.set(1, new Station({ 
+      species: ['a', 'b'], 
+      secFished: 60,
+      observations: [
+        { species: 'a', length: 2, count: 1 }, 
+        { species: 'b', length: 2, count: 1 }, 
+        { species: 'a', length: 1, count: 2},
+        { species: 'a', count: 1 },
+        { species: 'b', count: 1, length: 0 }
+      ] 
+    }))
+    stations.set(2, new Station({ 
+      species: ['a', 'c'], 
+      secFished: 60,
+      observations: [
+        { species: 'a', length: 2, count: 1 }, 
+        { species: 'c', length: 2, count: 1 }, 
+        { species: 'c', length: 1, count: 2 },
+      ] 
+    }))
+
+    expect(dataForAllSpeciesInStations(stations)).toEqual([
+      { 
+        species: 'a', 
+        amount: 5,
+        amountPerMinute: '2.50',
+        averageLength: '1.50',
+        medianLength: '1.50',
+        minimumLength: 1,
+        maximumLength: 2
+       }, 
+      {
+        species: 'b',
+        amount: 2,
+        amountPerMinute: '1.00',
+        averageLength: '2.00',
+        medianLength: '2.00',
+        minimumLength: 2,
+        maximumLength: 2
+      },
+      {
+        species: 'c',
+        amount: 3,
+        amountPerMinute: '1.50',
+        averageLength: '1.33',
+        medianLength: '1.00',
+        minimumLength: 1,
+        maximumLength: 2
+      },
+      {
+        species: 'sum',
+        amount: 10,
+        amountPerMinute: '5.00',
+        averageLength: '1.50',
+        medianLength: '1.50',
+        minimumLength: 1,
+        maximumLength: 2
+      }
+    ])
+  })
+})
+
+
+
+
