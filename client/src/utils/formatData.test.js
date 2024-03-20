@@ -117,7 +117,7 @@ describe('test formatStationConditionsForTable function', () => {
     expect(formatted.rows).toEqual([])
   })
 
-  it('should correctly convert station objects into arrays for table display', () => {
+  it('should correctly convert station object into arrays for table display', () => {
     const stations = new Station({
       id: '1',
       riverType: 'Type1',
@@ -131,6 +131,78 @@ describe('test formatStationConditionsForTable function', () => {
     expect(formatted.headers).toEqual(headersConstants.STATION_CONDITIONS_HEADERS_TABLE)
     expect(formatted.rows).toEqual([
       ['Type1', 'Weather1', 1, 2, '1.5']
+    ])
+  })
+})
+
+describe('test formatStationSettingsForTable function', () => {
+  it('should return headers and an empty rows array if the input map is empty', () => {
+    const formatted = formatStationSettingsForTable(new Station())
+    expect(formatted.headers).toEqual(headersConstants.STATION_SETTINGS_HEADERS_TABLE)
+    expect(formatted.rows).toEqual([])
+  })
+
+  it('should correctly convert station object into arrays for table display', () => {
+    const stations = new Station({
+      id: '1',
+      voltage: 1,
+      pulse: 2,
+      conductivity: 3,
+    })
+
+    const formatted = formatStationSettingsForTable(stations)
+    expect(formatted.headers).toEqual(headersConstants.STATION_SETTINGS_HEADERS_TABLE)
+    expect(formatted.rows).toEqual([
+      [1, 2, 3]
+    ])
+  })
+})
+
+describe('test formatStationObservationsForTable function', () => {
+  it('should return headers and an empty rows array if the input map is empty', () => {
+    const formatted = formatStationObservationsForTable(new Station())
+    expect(formatted.headers).toEqual(headersConstants.STATION_OBSERVATIONS_HEADERS_TABLE)
+    expect(formatted.rows).toEqual([])
+  })
+
+  it('should correctly convert station object into arrays for table display', () => {
+    const stations = new Station({ id: 1 })
+    calculateData.dataForAllSpeciesInStation.mockReturnValue([
+      {
+        species: 'Species1',
+        amount: 1,
+        amountPerMinute: '1.11',
+        averageLength: '1.11',
+        medianLength: '1.11',
+        miniumLength: 1,
+        maximumLength: 1
+      },
+      {
+        species: 'Species2',
+        amount: 2,
+        amountPerMinute: '2.22',
+        averageLength: '2.22',
+        medianLength: '2.22',
+        miniumLength: 2,
+        maximumLength: 2
+      },
+      {
+        species: 'Sum',
+        amount: 3,
+        amountPerMinute: '3.33',
+        averageLength: '3.33',
+        medianLength: '3.33',
+        miniumLength: 3,
+        maximumLength: 3
+      }
+    ])
+
+    const formatted = formatStationObservationsForTable(stations)
+    expect(formatted.headers).toEqual(headersConstants.STATION_OBSERVATIONS_HEADERS_TABLE)
+    expect(formatted.rows).toEqual([
+      [1, 'Species1', 1, '1.11', '1.11', '1.11', 1, 1],
+      [1, 'Species2', 2, '2.22', '2.22', '2.22', 2, 2],
+      [1, 'Sum', 3, '3.33', '3.33', '3.33', 3, 3]
     ])
   })
 })
