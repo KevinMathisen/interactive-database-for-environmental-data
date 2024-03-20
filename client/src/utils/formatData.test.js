@@ -2,11 +2,13 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import {
   formatRiversForTable,
   formatStationsForTable,
+  formatStationsForSummaryTable,
   formatRiversForExcel,
   formatStationsForExcel,
   formatRiversForCsv,
   formatStationsForCsv
 } from './formatData.js'
+import * as calculateData from './calculateData.js'
 import { River } from '../models/River.js'
 import { Station } from '../models/Station.js'
 import { get } from 'svelte/store'
@@ -19,6 +21,12 @@ vi.mock('svelte/store', () => ({
     set: vi.fn(),
     update: vi.fn()
   }))
+}))
+
+vi.mock('./calculateData.js', () => ({
+  amountOfFishInStation: vi.fn(),
+  fishPerMinuteInStation: vi.fn(),
+  dataForAllSpeciesInStation: vi.fn()
 }))
 
 describe('test formatRiversForTable function', () => {
@@ -59,6 +67,42 @@ describe('test formatStationsForTable function', () => {
     expect(formatted.rows).toEqual([
       ['1', 'Navn1', '2024-01-01', '12:00'],
       ['2', 'Navn2', '2024-01-15', '13:00']
+    ])
+  })
+})
+
+describe('test formatStationsForSummaryTable function', () => {
+  it('should return headers and an empty rows array if the input map is empty', () => {
+    const formatted = formatStationsForSummaryTable(new Map())
+    expect(formatted.headers).toEqual(headersConstants.STATION_SUMMARY_HEADERS_TABLE)
+    expect(formatted.rows).toEqual([])
+  })
+
+  it('should correctly convert station objects into arrays for table display', () => {
+    const stations = new Map([
+      [0, new Station({
+        id: '1',
+        name: 'Name 1',
+        riverType: 'Type1',
+        weather: 'Weather1',
+        secFished: 1
+      })],
+      [1, new Station({
+        id: '2',
+        name: 'Name 2',
+        riverType: 'Type2',
+        weather: 'Weather2',
+        secFished: 2
+      })]
+    ])
+    calculateData.amountOfFishInStation.mockReturnValue(1)
+    calculateData.fishPerMinuteInStation.mockReturnValue(2)
+
+    const formatted = formatStationsForSummaryTable(stations)
+    expect(formatted.headers).toEqual(headersConstants.STATION_SUMMARY_HEADERS_TABLE)
+    expect(formatted.rows).toEqual([
+      ['1', '1', 'Type1', 'Weather1', 1, 1, 2],
+      ['2', '2', 'Type2', 'Weather2', 2, 1, 2]
     ])
   })
 })
