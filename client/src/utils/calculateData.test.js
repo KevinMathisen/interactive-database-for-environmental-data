@@ -6,8 +6,10 @@ import {
   fishPerMinuteInStation,
   fishPerMinuteInStations,
   dataForAllSpeciesInStation,
-  dataForAllSpeciesInStations
+  dataForAllSpeciesInStations,
+  allUniqueSpeciesInObjects
 } from './calculateData.js'
+import { River } from '../models/River.js'
 import { Station } from '../models/Station.js'
 
 describe('test amountOfFishInStation function', () => {
@@ -318,5 +320,34 @@ describe('test dataForAllSpeciesInStations function', () => {
         maximumLength: 2
       }
     ])
+  })
+})
+
+describe('test allUniqueSpeciesInObjects function', () => {
+  it('should return an empty array when no objects are present', () => {
+    const objects = new Map()
+    expect(allUniqueSpeciesInObjects(objects)).toEqual([])
+  })
+
+  it('should return the correct species when stations are present', () => {
+    const objects = new Map()
+    objects.set(1, new Station({ species: ['a', 'b'] }))
+    objects.set(2, new Station({ species: ['a', 'c'] }))
+    expect(allUniqueSpeciesInObjects(objects)).toEqual(['a', 'b', 'c'])
+  })
+
+  it('should return the correct species when stations with no species are present', () => {
+    const objects = new Map()
+    objects.set(1, new Station({ species: ['a', 'b'] }))
+    objects.set(2, new Station({ species: ['a', 'c'] }))
+    objects.set(3, new Station({ species: [] }))
+    expect(allUniqueSpeciesInObjects(objects)).toEqual(['a', 'b', 'c'])
+  })
+
+  it('should return the correct species when rivers are present', () => {
+    const objects = new Map()
+    objects.set(1, new River({ species: ['a', 'b'] }))
+    objects.set(2, new River({ species: ['a', 'c'] }))
+    expect(allUniqueSpeciesInObjects(objects)).toEqual(['a', 'b', 'c'])
   })
 })
