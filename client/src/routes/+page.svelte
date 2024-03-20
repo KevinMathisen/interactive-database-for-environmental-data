@@ -28,11 +28,10 @@
   let selectedStation = new Station() // Station the user has chosen
 
   let showLeftSidebar = true
-  let showRightSideBar = false
   let sideBarTitle = 'Sidebar'
 
   /**
-   * Handles the clikc event on a station
+   * Handles the click event on a station
    * @param {Event} event - The click event
    */
   function stationClicked (event) {
@@ -44,6 +43,10 @@
       })
   }
 
+  /**
+   * Handles the click event on a river
+   * @param {Event} event - The click event
+   */
   function riverClicked (event) {
     sideBarTitle = event.detail.text.name
     getRiverSummary(3)
@@ -69,14 +72,14 @@
   $: filteredStations = filterStationsByDateAndSpecies(stations, selectedSpecies, selectedStartDate, selectedEndDate)
 
   /**
-   *
+   * Toggles the left sidebar
    */
   function toggleLeftSidebar () {
     showLeftSidebar = !showLeftSidebar
   }
 
   /**
-   *
+   * Toggles the right sidebar by resetting the selected river and station
    */
   function toggleRightSidebar () {
     selectedRiver = new River()

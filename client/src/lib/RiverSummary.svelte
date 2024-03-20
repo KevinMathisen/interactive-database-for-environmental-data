@@ -83,9 +83,9 @@
     content: "";
     position: absolute;
     top: 0;
-    left: 10%; 
+    left: 10%;
     width: 80%;
-    border-top: 2px solid #435768; 
+    border-top: 2px solid #435768;
   }
 
 </style>

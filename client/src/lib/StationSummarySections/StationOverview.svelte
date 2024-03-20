@@ -1,6 +1,6 @@
 <script>
-  import Button from "../Button.svelte"
-  
+  import Button from '../Button.svelte'
+
   export let station // Station to show
 </script>
 
@@ -14,7 +14,7 @@
   <Button color='blue' type='small'>
     Til elvedata
   </Button>
-  
+
 </div>
 
 <style>
@@ -26,5 +26,5 @@
     height: 100%;
     width: 100%;
   }
-  
+
 </style>

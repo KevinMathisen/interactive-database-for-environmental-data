@@ -1,5 +1,5 @@
 <script>
-  import SortableTable from '../SortableTable.svelte';
+  import SortableTable from '../SortableTable.svelte'
   import { formatStationsForSummaryTable } from '../../utils/formatData.js'
 
   export let stations // Map of stations

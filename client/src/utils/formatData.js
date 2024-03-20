@@ -6,8 +6,8 @@ import headersConstants from '../constants/headers.js'
 import { riverStore } from '../stores/riverStore.js'
 import { stationStore } from '../stores/stationStore.js'
 import { get } from 'svelte/store'
-import { 
-  amountOfFishInStation, 
+import {
+  amountOfFishInStation,
   fishPerMinuteInStation,
   dataForAllSpeciesInStation
 } from './calculateData.js'
@@ -81,7 +81,6 @@ export function formatStationsForSummaryTable (stations) {
 
 /**
  * Formats the station conditions for display in a table
- *
  * @param {Station} station - The station object containing the conditions
  * @returns {{headers: string[], rows: string[][]}} - The headers and rows for the table
  */
@@ -95,7 +94,7 @@ export function formatStationConditionsForTable (station) {
     station.weather,
     station.waterTemp,
     station.airTemp,
-    (station.secFished/60).toFixed(1),
+    (station.secFished / 60).toFixed(1)
   ])
 
   return { headers, rows }
@@ -103,7 +102,6 @@ export function formatStationConditionsForTable (station) {
 
 /**
  * Formats the station settings for display in a table
- * 
  * @param {Station} station - The station object containing the settings
  * @returns {{headers: string[], rows: string[][]}} - The headers and rows for the table
  */
@@ -119,12 +117,10 @@ export function formatStationSettingsForTable (station) {
   ])
 
   return { headers, rows }
-
 }
 
 /**
  * Formats the station observations for display in a table
- * 
  * @param {Station} station - The station object containing the observations
  * @returns {{headers: string[], rows: string[][]}} - The headers and rows for the table
  */

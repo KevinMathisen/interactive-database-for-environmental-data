@@ -1,10 +1,10 @@
 <script>
-  import CollapsibleSection from "./CollapsibleSection.svelte"
-  import Button from "./Button.svelte"
-  import StationOverview from "./StationSummarySections/StationOverview.svelte"
-  import StationInfo from "./StationSummarySections/StationInfo.svelte"
-  import StationFishData from "./StationSummarySections/StationFishData.svelte"
-  import { Station } from "../models/Station"
+  import CollapsibleSection from './CollapsibleSection.svelte'
+  import Button from './Button.svelte'
+  import StationOverview from './StationSummarySections/StationOverview.svelte'
+  import StationInfo from './StationSummarySections/StationInfo.svelte'
+  import StationFishData from './StationSummarySections/StationFishData.svelte'
+  import { Station } from '../models/Station'
 
   export let station = new Station() // Station to show
 </script>
@@ -76,7 +76,7 @@
     content: "";
     position: absolute;
     top: 0;
-    left: 10%; 
+    left: 10%;
     width: 80%;
     border-top: 2px solid #435768;
   }

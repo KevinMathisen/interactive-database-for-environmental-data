@@ -1,9 +1,9 @@
 <script>
-  import Table from "../Table.svelte"
-  import { 
-    formatStationConditionsForTable, 
-    formatStationSettingsForTable 
-  } from "../../utils/formatData.js"
+  import Table from '../Table.svelte'
+  import {
+    formatStationConditionsForTable,
+    formatStationSettingsForTable
+  } from '../../utils/formatData.js'
 
   export let station // Station to show
 
@@ -18,8 +18,8 @@
   }
 
   // Format the station conditions and settings for displaying in table
-  $: conditions = formatStationConditionsForTable (station)
-  $: settings = formatStationSettingsForTable (station)
+  $: conditions = formatStationConditionsForTable(station)
+  $: settings = formatStationSettingsForTable(station)
 </script>
 
 <div class='container'>

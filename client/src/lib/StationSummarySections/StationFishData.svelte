@@ -1,6 +1,6 @@
 <script>
-  import SortableTable from "../SortableTable.svelte"
-  import { formatStationObservationsForTable } from "../../utils/formatData.js"
+  import SortableTable from '../SortableTable.svelte'
+  import { formatStationObservationsForTable } from '../../utils/formatData.js'
 
   export let station // Station to show
 
