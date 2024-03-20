@@ -99,3 +99,96 @@ describe('test fishPerMinuteInStations function', () => {
   })
 })
 
+describe('test dataForAllSpeciesInStation function', () => {
+  it('should return an empty array when no observations are present', () => {
+    const station = new Station({ species: [], observations: [] })
+    expect(dataForAllSpeciesInStation(station)).toEqual([])
+  })
+
+  it('should return the correct data when observations are present', () => {
+    const station = new Station({ 
+      species: ['a', 'b'], 
+      secFished: 60,
+      observations: [
+        { species: 'a', length: 2, count: 1 }, 
+        { species: 'b', length: 2, count: 1 }, 
+        { species: 'a', length: 1, count: 2}
+      ] 
+    })
+
+    expect(dataForAllSpeciesInStation(station)).toEqual([
+      { 
+        species: 'a', 
+        amount: 3,
+        amountPerMinute: '3.00',
+        averageLength: '1.33',
+        medianLength: '1.00',
+        minimumLength: 1,
+        maximumLength: 2
+       }, 
+      {
+        species: 'b',
+        amount: 1,
+        amountPerMinute: '1.00',
+        averageLength: '2.00',
+        medianLength: '2.00',
+        minimumLength: 2,
+        maximumLength: 2
+      },
+      {
+        species: 'sum',
+        amount: 4,
+        amountPerMinute: '4.00',
+        averageLength: '1.50',
+        medianLength: '1.50',
+        minimumLength: 1,
+        maximumLength: 2
+      }
+    ])
+  })
+
+  it('should return the correct data when observations with no length are present', () => {
+    const station = new Station({ 
+      species: ['a', 'b'],
+      secFished: 60,
+      observations: [
+        { species: 'a', length: 2, count: 1 }, 
+        { species: 'b', length: 2, count: 1 }, 
+        { species: 'a', length: 1, count: 2},
+        { species: 'a', count: 1 },
+        { species: 'b', count: 1, length: 0 }
+      ]
+    })
+
+    expect(dataForAllSpeciesInStation(station)).toEqual([
+      { 
+        species: 'a', 
+        amount: 4,
+        amountPerMinute: '4.00',
+        averageLength: '1.33',
+        medianLength: '1.00',
+        minimumLength: 1,
+        maximumLength: 2
+       }, 
+      {
+        species: 'b',
+        amount: 2,
+        amountPerMinute: '2.00',
+        averageLength: '2.00',
+        medianLength: '2.00',
+        minimumLength: 2,
+        maximumLength: 2
+      },
+      {
+        species: 'sum',
+        amount: 6,
+        amountPerMinute: '6.00',
+        averageLength: '1.50',
+        medianLength: '1.50',
+        minimumLength: 1,
+        maximumLength: 2
+      }
+    ])
+  })
+})
+
