@@ -7,7 +7,8 @@ import {
   filterObservationsBySpecies,
   getSelectableSpecies,
   filterRiversByNameAndDateCombined,
-  filterStationsByNameAndDateCombined
+  filterStationsByNameAndDateCombined,
+  filtersStationsByRiver
 } from './filterData'
 import { River } from '../models/River.js'
 import { Station, Observation } from '../models/Station.js'
@@ -250,4 +251,40 @@ describe('test filterStationsByNameAndDateCombined function', () => {
     ])
     expect(filterStationsByNameAndDateCombined(stations, 'ame3')).toEqual(new Map())
   })
+})
+
+describe('test filtersStationsByRiver function', () => {
+  it('should return an empty map if the river and stations are empty', () => {
+    expect(filtersStationsByRiver(new River(), new Map())).toEqual(new Map())
+  })
+
+  it('should return an empty map if the river has no stations', () => {
+    const river = new River()
+    const stations = new Map([[0, new Station({ id: 0 })]])
+    expect(filtersStationsByRiver(river, stations)).toEqual(new Map())
+  })
+
+  it('should return a map with the correct stations if the river has all stations', () => {
+    const river = new River({ id: 0, stations: [0, 1] })
+    const stations = new Map([
+      [0, new Station({ id: 0 })],
+      [1, new Station({ id: 1 })]
+    ])
+    expect(filtersStationsByRiver(river, stations)).toEqual(stations)
+  })
+
+  it('should return a map with the correct stations if the river has some stations', () => {
+    const river = new River({ id: 0, stations: [0, 1] })
+    const stations = new Map([
+      [0, new Station({ id: 0 })],
+      [1, new Station({ id: 1 })],
+      [2, new Station({ id: 2 })]
+    ])
+    expect(filtersStationsByRiver(river, stations)).toEqual(new Map([
+      [0, new Station({ id: 0 })],
+      [1, new Station({ id: 1 })]
+    ]))
+  })
+
+  
 })
