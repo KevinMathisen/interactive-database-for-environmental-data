@@ -1,4 +1,14 @@
 /**
+ * Calculates the amount of fish in all observations given
+ * 
+ * @param {Observation[]} observations - The observations to calculate the amount of fish in 
+ * @returns {number} - The amount of fish in the observations
+ */
+function amountOfFishInObservations(observations) {
+  return observations.reduce((amountOfFish, observation) => amountOfFish + observation.count, 0)
+}
+
+/**
  * Calculates the amount of fish observed in a station
  * @param {Station} station - The station to calculate on
  * @returns {number} - The amount of fish the station observed
@@ -111,12 +121,12 @@ function maximumLengthObservation (observations) {
  */
 function dataForSpeciesObservations (observations, secSpentFishing) {
   return {
-    amount: amountOfFish,
-    amountPerMinute: (amountOfFish / (secSpentFishing / 60)).toFixed(2),
-    averageLength: averageLengthObservation(observationsWithLength).toFixed(2),
-    medianLength: medianLengthObservation(observationsWithLength).toFixed(2),
-    minimumLength: minimumLengthObservation(observationsWithLength),
-    maximumLength: maximumLengthObservation(observationsWithLength)
+    amount: observations.length,
+    amountPerMinute: (observations.length / (secSpentFishing / 60)).toFixed(2),
+    averageLength: averageLengthObservation(observations).toFixed(2),
+    medianLength: medianLengthObservation(observations).toFixed(2),
+    miniumLength: minimumLengthObservation(observations),
+    maximumLength: maximumLengthObservation(observations)
   }
 }
 
