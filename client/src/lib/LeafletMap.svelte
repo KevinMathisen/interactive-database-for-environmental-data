@@ -56,9 +56,6 @@
         attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       }).addTo(map)
 
-      // calls function when the map is clicked
-      map.on('click', onMapClick)
-
       // waits for data to be loaded before adding markers to the map
       while (rivers.size === 0) {
         await new Promise(resolve => setTimeout(resolve, 100))
@@ -93,13 +90,6 @@
         // called when the data type is changed
     $: if (rivers || stations || dataType) {
       updateMap()
-    }
-
-    /**
-     * Handles the click event on the map
-     */
-    function onMapClick () {
-      dispatch('map')
     }
 
     /**
