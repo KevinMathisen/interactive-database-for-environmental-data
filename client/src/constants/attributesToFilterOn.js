@@ -15,6 +15,5 @@ export default {
   RIVER_START_DATE, 
   RIVER_END_DATE,
   STATION_DATE, 
-  SPECIES ,
-  LENGTH
+  SPECIES
 }
