@@ -128,13 +128,19 @@ function maximumLengthObservation (observations) {
  * @returns {object} data - An object containing data for the species
  */
 function dataForSpeciesObservations (observations, secSpentFishing) {
+  const amountOfFish = amountOfFishInObservations(observations)
+
+  // Filter out observations without length
+  const observationsWithLength = observations.filter(
+    observation => observation.length && observation.length > 0)
+
   return {
-    amount: observations.length,
-    amountPerMinute: (observations.length / (secSpentFishing / 60)).toFixed(2),
-    averageLength: averageLengthObservation(observations).toFixed(2),
-    medianLength: medianLengthObservation(observations).toFixed(2),
-    miniumLength: minimumLengthObservation(observations),
-    maximumLength: maximumLengthObservation(observations)
+    amount: amountOfFish,
+    amountPerMinute: (amountOfFish / (secSpentFishing / 60)).toFixed(2),
+    averageLength: averageLengthObservation(observationsWithLength).toFixed(2),
+    medianLength: medianLengthObservation(observationsWithLength).toFixed(2),
+    minimumLength: minimumLengthObservation(observationsWithLength),
+    maximumLength: maximumLengthObservation(observationsWithLength)
   }
 }
 
