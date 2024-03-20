@@ -83,6 +83,14 @@ function averageLengthObservation (observations) {
  * @returns {number} - The median length of the fish observed
  */
 function medianLengthObservation (observations) {
+  // Flatten observations to account for multiple observations of the same length
+  observations = observations.reduce((acc, observation) => {
+    for (let i = 0; i < observation.count; i++) {
+      acc.push({ length: observation.length })
+    }
+    return acc
+  }, [])
+
   // Sort the observations by length
   const sortedObservations = observations.sort((a, b) => a.length - b.length)
 
