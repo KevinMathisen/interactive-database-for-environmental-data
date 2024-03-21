@@ -159,3 +159,44 @@ function intervalCountForObservationPoints(observationPoints, allSpecies, interv
   return allSpeciesIntervals
 }
 
+/**
+ * Get the amount of fish in intervals for each species in the observations
+ * 
+ * @param {object[]} observations - An array of observations
+ * @param {string[]} allSpecies - An array of all species to include in the data
+ * @param {number} interval - The interval in cm to group the data by
+ * @param {boolean} includeOthers - Whether to include the 'others' category in the data
+ * @param {boolean} combineSpecies - Whether to combine the data for all species in a river or station
+ * @returns {
+* Map<string, { count: number[], intervals: number[], interval: number }>
+* } - Map of each species with their count in intervals
+*/
+function getObservationSpeciesIntervals(observations, allSpecies, interval, includeOthers, combineSpecies) {
+ const speciesIntervals = new Map()
+
+ // If species should be combined, find the amount of fish for all species and return this
+ if (combineSpecies) {
+   const intervals = intervalsForObservations(observations, interval)
+   speciesIntervals.set('sum', intervals)
+   return speciesIntervals
+ }
+
+ // Find the amount of fish for each species
+ allSpecies.forEach(species => {
+   const speciesObservations = observations.filter(observation => observation.species === species)
+   const intervals = intervalsForObservations(speciesObservations, interval)
+
+   speciesIntervals.set(species, intervals)
+ })
+
+ // If 'others' should be included, find the amount of fish for all other species
+ if (includeOthers) {
+   const otherSpecies = observations.filter(observation => !allSpecies.includes(observation.species))
+   const intervals = intervalsForObservations(otherSpecies, interval)
+
+   speciesIntervals.set('others', intervals)
+ }
+
+ return speciesIntervals
+}
+
