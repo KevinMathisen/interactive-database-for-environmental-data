@@ -3,7 +3,7 @@
  * @param {Observation[]} observations - The observations to calculate the amount of fish in
  * @returns {number} - The amount of fish in the observations
  */
-function amountOfFishInObservations (observations) {
+export function amountOfFishInObservations (observations) {
   return observations.reduce((amountOfFish, observation) => amountOfFish + observation.count, 0)
 }
 
