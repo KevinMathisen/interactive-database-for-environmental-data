@@ -176,7 +176,7 @@ function getObservationSpeciesIntervals(observations, allSpecies, interval, incl
 
  // If species should be combined, find the amount of fish for all species and return this
  if (combineSpecies) {
-   const intervals = intervalsForObservations(observations, interval)
+   const intervals = getIntervalsForObservations(observations, interval)
    speciesIntervals.set('sum', intervals)
    return speciesIntervals
  }
@@ -184,7 +184,7 @@ function getObservationSpeciesIntervals(observations, allSpecies, interval, incl
  // Find the amount of fish for each species
  allSpecies.forEach(species => {
    const speciesObservations = observations.filter(observation => observation.species === species)
-   const intervals = intervalsForObservations(speciesObservations, interval)
+   const intervals = getIntervalsForObservations(speciesObservations, interval)
 
    speciesIntervals.set(species, intervals)
  })
@@ -192,7 +192,7 @@ function getObservationSpeciesIntervals(observations, allSpecies, interval, incl
  // If 'others' should be included, find the amount of fish for all other species
  if (includeOthers) {
    const otherSpecies = observations.filter(observation => !allSpecies.includes(observation.species))
-   const intervals = intervalsForObservations(otherSpecies, interval)
+   const intervals = getIntervalsForObservations(otherSpecies, interval)
 
    speciesIntervals.set('others', intervals)
  }
@@ -200,3 +200,42 @@ function getObservationSpeciesIntervals(observations, allSpecies, interval, incl
  return speciesIntervals
 }
 
+/**
+* Counts the observations in intervals, and returns the count with the intervals
+* 
+* @param {Observation[]} observations - The observations to group by interval
+* @param {number} interval - The interval in cm to group the data by
+* @returns {{
+  * count: number[], intervals: number[], interval: number
+  * }} - The count of observations in each interval
+  */
+  function getIntervalsForObservations(observations, interval) {
+   // If there are no observations, return empty data
+   if (observations.length === 0) {
+     return { count: [], intervals: [], interval }
+   }
+  
+   // Find the minimum and maximum length of the observations, rounded down to the nearest interval
+   const lengths = observations.map(observation => observation.length)
+   const min = Math.floor(Math.min(...lengths) / interval) * interval;
+   const max = Math.floor(Math.max(...lengths) / interval) * interval;
+  
+   // Create the intervals
+   const intervals = []
+   for (let i = min; i <= max; i += interval) {
+     intervals.push(i)
+   }
+  
+   // Count the observations in each interval
+   const count = intervals.map(interval => 
+     observations.filter(observation => 
+       observation.length >= interval && observation.length < interval + interval
+     ).length)
+  
+   // Shift each interval to the middle of the interval for placing the bars in a histogram
+   intervals.forEach((_, index) => {
+     intervals[index] = intervals[index] + interval / 2
+   })
+  
+   return { count, intervals, interval }
+  }
