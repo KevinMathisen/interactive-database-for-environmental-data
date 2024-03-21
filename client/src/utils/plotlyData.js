@@ -60,3 +60,34 @@ function speciesCountForObservationPoints(observationPoints, allSpecies, include
   return speciesCountForPoints
 }
 
+/**
+ * Get the count of each species in the observations
+ * 
+ * @param {object[]} observations - An array of observations
+ * @param {string[]} allSpecies - An array of all species to include in the data
+ * @param {boolean} includeOthers - Whether to include the 'others' category in the data
+ * @returns {Map<string, number>} - Map of each species with their count
+ */
+function getObservationSpeciesCount(observations, allSpecies, includeOthers) {
+  const speciesCount = new Map()
+
+  // Find and save the amount of fish for each species
+  allSpecies.forEach(species => {
+    const speciesObservations = observations.filter(observation => observation.species === species)
+    const count = amountOfFishInObservations(speciesObservations)
+
+    speciesCount.set(species, count)
+  })
+
+  // If 'others' should be included, find and save the amount of fish for all other species
+  if (includeOthers) {
+    const otherSpecies = observations.filter(observation => !allSpecies.includes(observation.species))
+    const count = amountOfFishInObservations(otherSpecies)
+
+    speciesCount.set('others', count)
+  }
+
+  // Return the map with the species and their count
+  return speciesCount
+}
+
