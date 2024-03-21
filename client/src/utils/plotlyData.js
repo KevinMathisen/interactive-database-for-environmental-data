@@ -91,3 +91,71 @@ function getObservationSpeciesCount(observations, allSpecies, includeOthers) {
   return speciesCount
 }
 
+/**
+ * Creates data which can be used in a plotly histogram or box plot
+ * Takes in either a map of rivers or stations to calculate the data for
+ * 
+ * @param {Map<number, ObservationPoint>} observationPoints - Map of either river or station objects 
+ * @param {string} typeOfData - Either 'river' or 'station' 
+ * @param {string[]} species - An array of species to include in the data
+ * @param {number} interval - The interval in cm to group the data by
+ * @param {boolean} includeOthers - Whether to include the 'others' category in the data
+ * @param {boolean} combineSpecies - Whether to combine the data for all species in a river or station
+ * @returns {Map<string, Map<string, number>>} - Map of rivers or stations with count of each species 
+ */
+export function dataForHistogramAndBoxplot(observationPoints, dataType, species, interval, includeOthers = false, combineSpecies = false) {
+  if (dataType === 'river') {
+    return intervalCountForObservationPoints(
+      observationPoints, 
+      species, 
+      interval, 
+      includeOthers, 
+      combineSpecies, 
+      river => getObservationsForRiver(river), // Use imported function to get observations from rivers
+      river => `${river.name} ${river.startDate}`
+    )
+  } else {
+    return intervalCountForObservationPoints(
+      observationPoints, 
+      species, 
+      interval, 
+      includeOthers, 
+      combineSpecies, 
+      station => station.observations, // Simply get observations directly from stations
+      station => `${station.name} ${station.date}`
+    )
+  }
+}
+
+/**
+ * Counts the observations in given intervals for observationPoints (river or station)
+ * 
+ * @param {Map<number, ObservationPoint>} observationPoints - Map of observationPoints (river or station)
+ * @param {string[]} species - An array of species to include in the data
+ * @param {number} interval - The interval in cm to group the data by
+ * @param {boolean} includeOthers - Whether to include the 'others' category in the data
+ * @param {boolean} combineSpecies - Whether to combine the data for all species in an observationPoint
+ * @returns {
+ * Map<string, { count: number[], intervals: number[], interval: number }>
+ * } - Map of observationPoints with count of each species in intervals
+ */
+function intervalCountForObservationPoints(observationPoints, allSpecies, interval, includeOthers, combineSpecies, getObservations, getDisplayName) {
+  const allSpeciesIntervals = new Map()
+
+  // For each observationPoint, get the observations and group them by species
+  Array.from(observationPoints.values()).forEach(observationPoint => {
+    // Get the observations from the observationPoint
+    const observations = getObservations(observationPoint)
+
+    // Get the species length intervals for the observations
+    const speciesIntervals = getObservationSpeciesIntervals(observations, allSpecies, interval, includeOthers, combineSpecies)
+
+    // Add the species length intervals to the total
+    speciesIntervals.forEach((value, key) => {
+      allSpeciesIntervals.set(`${getDisplayName(observationPoint)} - ${key}`, value)
+    })
+  })
+
+  return allSpeciesIntervals
+}
+
