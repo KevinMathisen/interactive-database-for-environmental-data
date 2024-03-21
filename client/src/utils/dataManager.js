@@ -280,3 +280,18 @@ export async function getStationForDownload (id) {
 export function getStationsForRiver (river) {
   return filtersStationsByRiver(river, get(stationStore))
 }
+
+/**
+ * Retrieves all observations under a given river
+ * @param {object} river - The river object, which has the ID of the stations
+ * @returns {Observation[]} - An array of observations under the given river
+ */
+export function getObservationsForRiver (river) {
+  const stations = getStationsForRiver(river)
+  let observations = []
+  stations.forEach(station => {
+    observations = [...observations, ...station.observations]
+  })
+
+  return observations
+}
