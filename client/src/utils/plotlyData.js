@@ -15,7 +15,7 @@ import { secondsSpentFishingInStations } from './calculateData.js'
  * @param {boolean} absoluteValues - Whether to display the data as absolute values or in relation to time spent fishing
  * @returns {Map<string, Map<string, number>>} - Map of rivers or stations with count of each species
  */
-export function dataForBarAndPieChart (observationPoints, dataType, species, includeOthers, absoluteValues) {
+export function dataForBarAndPieChart (observationPoints, dataType, species, includeOthers, absoluteValues = true) {
   try {
     // Return the species count for rivers or stations based on datatType
     if (dataType === 'river') {
