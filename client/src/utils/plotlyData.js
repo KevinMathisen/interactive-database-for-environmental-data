@@ -255,3 +255,18 @@ function getIntervalsForObservations (observations, intervalSize) {
 
   return { count, intervals, interval: intervalSize }
 }
+
+/**
+ * Creates an array with the length of each observation times its count
+ */
+function getLengthsForObservations (observations) {
+  // Add each observation length to array the amount of times the observation was observed/counted, and return this array with lengts
+  const lengths = observations.reduce((acc, observation) => {
+    for (let i = 0; i < observation.count; i++) {
+      acc.push(observation.length)
+    }
+    return acc
+  }, [])
+
+  return { lengths }
+}
