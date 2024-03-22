@@ -18,7 +18,7 @@ describe('GraphFilter', () => {
       ]);
   
       // Render with dataType 'river'
-      let { getByText, queryByText, rerender } = render(GraphFilter, { 
+      let { queryByText, rerender } = render(GraphFilter, { 
         props: { 
           dataType: 'river',
           selectedRivers,
@@ -26,7 +26,7 @@ describe('GraphFilter', () => {
         } 
       });
   
-      expect(getByText('River1 2022-01-01')).toBeTruthy();
+      expect(queryByText('River1 2022-01-01')).toBeTruthy();
       expect(queryByText('Station1 2022-01-01')).toBeNull();
       //
   
@@ -39,7 +39,7 @@ describe('GraphFilter', () => {
         } 
       });
   
-      expect(getByText('Station2 2022-02-01')).toBeTruthy();
+      expect(queryByText('Station2 2022-02-01')).toBeTruthy();
       expect(queryByText('River2 2022-02-01')).toBeNull();
     });
   });

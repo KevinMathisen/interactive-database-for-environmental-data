@@ -2,8 +2,8 @@
   import RadioInput from './RadioInput.svelte'
 
   export let showPlotB
-    export let intervallPlotB
-    export let plotTypeB
+  export let intervallPlotB
+  export let plotTypeB
 
   // Options when choosing plot type
     const plotTypeOptions = [
