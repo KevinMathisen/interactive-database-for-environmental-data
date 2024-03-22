@@ -21,6 +21,7 @@
     export let showPlotB = true
     export let intervallPlotB = 20
     export let plotTypeB = 'histogram'
+    export let combineSpecies = false
 
     let chooseAll = true // If the user wants to choose all species
     let customSpecies = [] // Species the user has chosen
@@ -74,7 +75,8 @@
         <PlotLengthOptions
             bind:showPlotB
             bind:intervallPlotB
-            bind:plotTypeB />
+            bind:plotTypeB
+            bind:combineSpecies />
     </CollapsibleSection>
 
 </div>
