@@ -182,9 +182,10 @@ function intervalCountForObservationPoints (observationPoints, allSpecies, inter
 function getObservationSpeciesIntervals (observations, allSpecies, interval, includeOthers, combineSpecies) {
   const speciesIntervals = new Map()
 
-  // If species should be combined, find the amount of fish for all species and return this
+  // If species should be combined, find the amount of fish for all selected species and return this
   if (combineSpecies) {
-    const intervals = getIntervalsForObservations(observations, interval)
+    const combinedObservations = observations.filter(observation => allSpecies.includes(observation.species))
+    const intervals = getIntervalsForObservations(combinedObservations, interval)
     speciesIntervals.set('sum', intervals)
     return speciesIntervals
   }
@@ -207,6 +208,7 @@ function getObservationSpeciesIntervals (observations, allSpecies, interval, inc
 
   return speciesIntervals
 }
+
 
 /**
  * Counts the observations in intervals, and returns the count with the intervals
