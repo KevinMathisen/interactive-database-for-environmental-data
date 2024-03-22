@@ -21,6 +21,7 @@
       FEEDBACK_MESSAGES
     } from '../../constants/feedbackMessages.js'
     import { addFeedbackToStore } from '../../utils/addFeedbackToStore.js'
+    import Button from '../../lib/Button.svelte'
 
     let showSelectRiverAndStationModal = false
 
@@ -28,14 +29,13 @@
     let stations = new Map() // Stations with coordinates
     let selectableSpecies = [] // All unique species
 
-    let dataType // "river" or "station", chosen by user
+    let dataType = 'river' // "river" or "station", chosen by user
     let selectedRivers = new Map() // Rivers the user has chosen
     let selectedStations = new Map() // Stations the user has chosen
 
     // let selectedSpecies = [];
 
     let selectedFormat = ''
-    let isDownloading = false
 
     let chooseAll = true // If the user wants to choose all species
     let customSpecies = [] // Species the user has chosen
@@ -60,6 +60,18 @@
     // Get rivers and stations from stores
     $: rivers = $riverStore
     $: stations = $stationStore
+
+    // Keep the selected rivers and stations up to date when the rivers and stations are updated
+    $: if (rivers) {
+      selectedRivers.forEach((_, key) => {
+        selectedRivers.set(key, rivers.get(key))
+      })
+    }
+    $: if (stations) {
+      selectedStations.forEach((_, key) => {
+        selectedStations.set(key, stations.get(key))
+      })
+    }
 
     /**
      * When the user has chosen rivers or stations, get the data needed for download
@@ -97,63 +109,75 @@
      */
     function handleSelectRiverStation () {
       showSelectRiverAndStationModal = true
-      console.log(selectedStations)
     }
 
-    const sampleData = [
-      { name: 'John Doe', age: 30, email: 'john@example.com' },
-      { name: 'Jane Smith', age: 25, email: 'jane@example.com' },
-      { name: 'Bob Johnson', age: 40, email: 'bob@example.com' }
-    ]
-
-    const downloadFile = async () => {
-      isDownloading = true
-      if (selectedFormat === '' && isDownloading) {
+    /**
+     * Downloads a file with the content specified by the user
+     * @returns {void}
+     */
+    async function downloadFile () {
+      // Check if the user has chosen a file format
+      if (selectedFormat === '') {
         addFeedbackToStore(
           FEEDBACK_TYPES.ERROR,
           FEEDBACK_CODES.NOT_FOUND,
           FEEDBACK_MESSAGES.NO_FILE_FORMAT_SELECTED
         )
-      }
-      let fileName = ''
-      let blob = null
-      let fileData = null
-
-      if (selectedFormat === 'xlsx') {
-        if (dataType === 'river') { // Generate Excel file
-          fileData = await generateExcelFile(selectedRivers, dataType)
-        } else {
-          fileData = await generateExcelFile(selectedStations, dataType)
-        }
-        // Create a blob from the Excel file data
-        blob = new Blob([fileData], {
-          type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-        })
-        fileName = 'data.xlsx'
-      } else if (selectedFormat === 'csv') {
-        fileData = await generateCSVFile(sampleData) // Generate CSV content
-        // Create a Blob from the CSV content
-        blob = new Blob([fileData], { type: 'text/csv' })
-        fileName = 'data.csv'
+        return
       }
 
-      const url = URL.createObjectURL(blob)
-      // Create a temporary anchor element
+      // Check if the user has chosen rivers but not selected any
+      if (dataType === 'river' && selectedRivers.size === 0) {
+        addFeedbackToStore(
+          FEEDBACK_TYPES.ERROR,
+          FEEDBACK_CODES.NOT_FOUND,
+          FEEDBACK_MESSAGES.NO_RIVERS_SELECTED
+        )
+        return
+      }
+
+      // Check if the user has chosen stations but not selected any
+      if (dataType === 'station' && selectedStations.size === 0) {
+        addFeedbackToStore(
+          FEEDBACK_TYPES.ERROR,
+          FEEDBACK_CODES.NOT_FOUND,
+          FEEDBACK_MESSAGES.NO_STATIONS_SELECTED
+        )
+        return
+      }
+
+      // Create a file name and file extension
+      const fileExtension = selectedFormat === 'xlsx' ? '.xlsx' : '.csv'
+      const fileName = dataType === 'river' ? 'elver' : 'stasjoner' + fileExtension
+
+      // Create a blob with the data
+      const blob = selectedFormat === 'xlsx'
+        ? await generateExcelFile(selectedRivers, selectedStations, dataType)
+        : generateCSVFile(selectedRivers, selectedStations, dataType)
+
+      // If no file was created, return
+      if (blob.size === 0) {
+        return
+      }
+
+      // Create a URL for the blob
+      const blobUrl = URL.createObjectURL(blob)
+
+      // Create a temporary anchor element, set the href and download attributes to the URL and file name
       const a = document.createElement('a')
-      a.href = url
+      a.href = blobUrl
+      a.download = fileName
+      a.style.display = 'none'
 
-      a.download = fileName // Set the filename
-      document.body.appendChild(a)
-      // Programmatically click the anchor element to trigger the download
-      a.click()
+      // Append the anchor element to the DOM and click it
+      document.body.appendChild(a).click()
+
       // Remove the anchor element from the DOM
       document.body.removeChild(a)
     }
 </script>
 
-{#if isDownloading}
-    <UserFeedbackMessage />
-{/if}
+<UserFeedbackMessage />
 
 {#if showSelectRiverAndStationModal}
     <Modal on:close={handleClose} large={true}>
@@ -209,8 +233,7 @@
         </CollapsibleSection>
     </div>
 </div>
-
-<button class="downloadButton" on:click={downloadFile}>Last ned</button>
+<Button type="download" color="orange" on:downloadFile={downloadFile}>Last ned <img src="/dowloadIcon.svg" alt="listIcon" height="50px" class="headerIcon"></Button>
 
 <style>
     .downloadHeader {
@@ -240,19 +263,5 @@
 
     .rowItem {
         margin: 20px;
-    }
-
-    .downloadButton {
-        position: fixed;
-        right: 500px;
-        bottom: 100px;
-        font-size: 1.2rem;
-        background-color: tomato;
-        border-radius: 1rem;
-        width: 200px;
-        height: 60px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
     }
 </style>

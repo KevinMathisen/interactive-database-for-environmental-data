@@ -36,6 +36,7 @@ function filterDataBasedOnAttributeCombinationSubstring (objects, attributes, va
 
 /**
  * Filters a map of objects based on if a given attribute is in a list of values
+ * If no value is given it returns all objects
  * @param {object[]} objects - The array of objects to filter
  * @param {string} attribute - The attribute to filter on
  * @param {string[]} values - The list of values which should be equal to the attribute value
@@ -272,6 +273,24 @@ export function filterStationsByNameAndDateCombined (stations, searchQuery) {
   try {
     // Filters stations based on if the searchQuery is a substring of their name and date combined
     return filterDataBasedOnAttributeCombinationSubstring(stations, [attributesToFilterOn.STATION_NAME, attributesToFilterOn.STATION_DATE], searchQuery)
+  } catch (error) {
+    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
+    return new Map()
+  }
+}
+
+/**
+ * Creates a map with all the stations under a river
+ * @param {object} river - The river object, which has the ID of the stations
+ * @param {Map} stations - The Map of all stations, where the key is the station ID and the value is the station object
+ * @returns {Map<number, Station>} - A Map of stations under the river river.
+ * If an error occurs, adds a generic error message and returns an empty map
+ * @throws Display generic error to user if an error occurs
+ */
+export function filtersStationsByRiver (river, stations) {
+  try {
+    // For each stationId in the river, get the station from the station store and add it to the map to return
+    return new Map(river.stations.map(stationId => [stationId, stations.get(stationId)]))
   } catch (error) {
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
     return new Map()

@@ -1,6 +1,6 @@
 <script> // List page logic here
     import Filter from '$lib/filter.svelte'
-    import Table from '../../lib/Table.svelte'
+    import SortableTable from '../../lib/SortableTable.svelte'
     import SearchBar from '../../lib/SearchBar.svelte'
     import Sidebar from '../../lib/Sidebar.svelte'
     import { getRivers, getStations } from '../../utils/dataManager.js'
@@ -96,7 +96,7 @@
         bind:dataType/>
 
     <!-- Table with Rivers or Stations -->
-    <Table
+    <SortableTable
         {headers}
         {rows}
         clickable=true

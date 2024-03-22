@@ -4,6 +4,7 @@
 
   export let title = ''
   export let typeClose = '' // which way to close the sidebar, "cross" or "sideButton"
+  export let side = 'left'
 
   /**
    *
@@ -24,7 +25,7 @@
   }
 </script>
 
-<div class=sidebarContainer>
+<div class="sidebarContainer {side}">
   <!-- Header with title and optional close button -->
   <div class="header">
     <h1>{title}</h1>
@@ -53,10 +54,16 @@
     align-items: center;
     justify-content: flex-start;
     background-color: white;
-    border-left: 1px solid black;
-    border-right: 1px solid black;
     z-index: 2000;
     position: relative;
+  }
+
+  .left {
+    box-shadow: 5px 0 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .right {
+    box-shadow: -5px 0 5px rgba(0, 0, 0, 0.1);
   }
 
   .header {
@@ -64,12 +71,12 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-        height: 60px;
-        background-color: #435768;
-        color: white;
-        position: relative;
-        margin-top: 0px;
-        margin-bottom: 0px;
+    height: 60px;
+    background-color: #435768;
+    color: white;
+    position: relative;
+    margin-top: 0px;
+    margin-bottom: 0px;
     }
 
   h1 {
@@ -86,25 +93,27 @@
   }
 
   .sideButton {
-      position: absolute;
-      right: -35px;
-      top: 50%;
-      transform: translateY(-50%);
-      height: 80px;
-      width: 35px;
-      background-color: white;
-      border: 1px solid black;
-      border-radius: 0 1rem 1rem 0;
-      font-size: 2rem;
-      font-weight: lighter;
-      transition: transform 1.5s ease;
-      z-index: 1000;                       /* Makes the button overlap the map*/
-      cursor: pointer;
-    }
+    position: absolute;
+    right: -35px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 80px;
+    width: 35px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 0 1rem 1rem 0;
+    font-size: 2rem;
+    font-weight: lighter;
+    transition: transform 1.5s ease;
+    z-index: 1000;                       /* Makes the button overlap the map*/
+    cursor: pointer;
+    /*Create shadow only on right, top, and bottom of element**/
+    box-shadow: 5px 0 5px rgba(0, 0, 0, 0.1);
+  }
 
-    .sideButton:hover {
-      background-color: #435768;
-    }
+  .sideButton:hover {
+    background-color: #435768;
+  }
 
   /* Container for the close symbol */
   .crossButton {
