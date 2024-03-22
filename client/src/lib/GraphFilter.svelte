@@ -15,7 +15,7 @@
 
     export let showPlotA = true
     export let showValueA = 'absolute'
-    export let plotTypeA = 'bar'
+    export let plotTypeA = 'barchart'
 
     export let showPlotB = true
     export let intervallPlotB = 20

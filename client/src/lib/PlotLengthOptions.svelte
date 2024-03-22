@@ -8,7 +8,7 @@
   // Options when choosing plot type
     const plotTypeOptions = [
       { value: 'histogram', label: 'Histogram' },
-      { value: 'box', label: 'Boksplott' }
+      { value: 'boxplot', label: 'Boksplott' }
     ]
 </script>
 
