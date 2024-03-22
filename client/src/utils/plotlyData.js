@@ -55,8 +55,12 @@ function speciesCountForObservationPoints (observationPoints, allSpecies, includ
     // Get the observations from the observationPoint
     const observations = getObservations(observationPoint)
 
+    // Filter out observations which have no length
+    const observationsWithLength = observations.filter(
+      observation => observation.length && observation.length > 0)
+
     // Get the species count for the observations
-    const speciesCount = getObservationSpeciesCount(observations, allSpecies, includeOthers)
+    const speciesCount = getObservationSpeciesCount(observationsWithLength, allSpecies, includeOthers)
 
     // Save the species count for the observationPoint
     speciesCountForPoints.set(getDisplayName(observationPoint), speciesCount)
@@ -156,8 +160,12 @@ function intervalCountForObservationPoints (observationPoints, allSpecies, inter
     // Get the observations from the observationPoint
     const observations = getObservations(observationPoint)
 
+    // Filter out observations which have no length
+    const observationsWithLength = observations.filter(
+      observation => observation.length && observation.length > 0)
+
     // Get the species length intervals for the observations
-    const speciesIntervals = getObservationSpeciesIntervals(observations, allSpecies, interval, includeOthers, combineSpecies)
+    const speciesIntervals = getObservationSpeciesIntervals(observationsWithLength, allSpecies, interval, includeOthers, combineSpecies)
 
     // Add the species length intervals to the total
     speciesIntervals.forEach((value, key) => {
