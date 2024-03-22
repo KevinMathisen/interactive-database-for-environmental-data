@@ -30,7 +30,7 @@ export function amountOfFishInStations (stations) {
  * @param {Map<number, Station>} stations - The stations to calculate on
  * @returns {number} - The time spent fishing in all the stations
  */
-function secondsSpentFishingInStations (stations) {
+export function secondsSpentFishingInStations (stations) {
   return Array.from(stations.values()).reduce((secSpentFishing, station) => secSpentFishing + station.secFished, 0)
 }
 
