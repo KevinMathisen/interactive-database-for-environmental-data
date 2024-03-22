@@ -102,6 +102,7 @@ function getObservationSpeciesCount (observations, allSpecies, includeOthers) {
 /**
  * Creates data which can be used in a plotly histogram or box plot
  * Takes in either a map of rivers or stations to calculate the data for
+ * @param {string} plotType - Either 'histogram' or 'boxplot'
  * @param {Map<number, ObservationPoint>} observationPoints - Map of either river or station objects
  * @param {string} dataType - Either 'river' or 'station'
  * @param {string[]} species - An array of species to include in the data
@@ -110,10 +111,11 @@ function getObservationSpeciesCount (observations, allSpecies, includeOthers) {
  * @param {boolean} combineSpecies - Whether to combine the data for all species in a river or station
  * @returns {Map<string, Map<string, number>>} - Map of rivers or stations with count of each species
  */
-export function dataForHistogramAndBoxplot (observationPoints, dataType, species, interval, includeOthers = false, combineSpecies = false) {
+export function dataForHistogramAndBoxplot (plotType, observationPoints, dataType, species, interval = 1, includeOthers = false, combineSpecies = false) {
   try {
     if (dataType === 'river') {
-      return intervalCountForObservationPoints(
+      return createDataForHistogramAndBoxplot(
+        plotType,
         observationPoints,
         species,
         interval,
@@ -123,7 +125,8 @@ export function dataForHistogramAndBoxplot (observationPoints, dataType, species
         river => `${river.name} ${river.startDate}`
       )
     } else {
-      return intervalCountForObservationPoints(
+      return createDataForHistogramAndBoxplot(
+        plotType,
         observationPoints,
         species,
         interval,
@@ -140,7 +143,8 @@ export function dataForHistogramAndBoxplot (observationPoints, dataType, species
 }
 
 /**
- * Counts the observations in given intervals for observationPoints (river or station)
+ * Creates data for either boxplot or histogram for each observationPoint given (river or station)
+ * @param {string} plotType - Either 'histogram' or 'boxplot'
  * @param {Map<number, ObservationPoint>} observationPoints - Map of observationPoints (river or station)
  * @param {string[]} allSpecies - An array of species to include in the data
  * @param {number} interval - The interval in cm to group the data by
@@ -152,10 +156,10 @@ export function dataForHistogramAndBoxplot (observationPoints, dataType, species
  * Map<string, { count: number[], intervals: number[], interval: number }>
  * } - Map of observationPoints with count of each species in intervals
  */
-function intervalCountForObservationPoints (observationPoints, allSpecies, interval, includeOthers, combineSpecies, getObservations, getDisplayName) {
+function createDataForHistogramAndBoxplot (plotType, observationPoints, allSpecies, interval, includeOthers, combineSpecies, getObservations, getDisplayName) {
   const allSpeciesIntervals = new Map()
 
-  // For each observationPoint, get the observations and group them by species
+  // For each observationPoint, create and save data for that point to plot
   Array.from(observationPoints.values()).forEach(observationPoint => {
     // Get the observations from the observationPoint
     const observations = getObservations(observationPoint)
@@ -164,10 +168,10 @@ function intervalCountForObservationPoints (observationPoints, allSpecies, inter
     const observationsWithLength = observations.filter(
       observation => observation.length && observation.length > 0)
 
-    // Get the species length intervals for the observations
-    const speciesIntervals = getObservationSpeciesIntervals(observationsWithLength, allSpecies, interval, includeOthers, combineSpecies)
+    // Get the data to plot for an observationPoint grouped by species
+    const speciesIntervals = createSpeciesDataForHistogramAndBoxplot(plotType, observationsWithLength, allSpecies, interval, includeOthers, combineSpecies)
 
-    // Add the species length intervals to the total
+    // Add the observationPoint data to the total
     speciesIntervals.forEach((value, key) => {
       allSpeciesIntervals.set(`${getDisplayName(observationPoint)} - ${key}`, value)
     })
@@ -177,7 +181,8 @@ function intervalCountForObservationPoints (observationPoints, allSpecies, inter
 }
 
 /**
- * Get the amount of fish in intervals for each species in the observations
+ * Get the data needed for histogram or boxplot for each species in the observations
+ * @param {string} plotType - Either 'histogram' or 'boxplot'
  * @param {object[]} observations - An array of observations
  * @param {string[]} allSpecies - An array of all species to include in the data
  * @param {number} interval - The interval in cm to group the data by
@@ -187,31 +192,47 @@ function intervalCountForObservationPoints (observationPoints, allSpecies, inter
  * Map<string, { count: number[], intervals: number[], interval: number }>
  * } - Map of each species with their count in intervals
  */
-function getObservationSpeciesIntervals (observations, allSpecies, interval, includeOthers, combineSpecies) {
+function createSpeciesDataForHistogramAndBoxplot (plotType, observations, allSpecies, interval, includeOthers, combineSpecies) {
   const speciesIntervals = new Map()
 
-  // If species should be combined, find the amount of fish for all selected species and return this
+  // If species should be combined, find the data for all selected species and return this
   if (combineSpecies) {
+    // Get the observations for all species selected
     const combinedObservations = observations.filter(observation => allSpecies.includes(observation.species))
-    const intervals = getIntervalsForObservations(combinedObservations, interval)
-    speciesIntervals.set('sum', intervals)
+    
+    // Get the data for the combined species based on the plot type
+    const plotData = plotType === 'histogram' ? 
+      getIntervalsForObservations(combinedObservations, interval) :
+      getLengthsForObservations(combinedObservations)
+
+    speciesIntervals.set('sum', plotData)
     return speciesIntervals
   }
 
-  // Find the amount of fish for each species
+  // Find the data for each species
   allSpecies.forEach(species => {
+    // Get the observations for each species
     const speciesObservations = observations.filter(observation => observation.species === species)
-    const intervals = getIntervalsForObservations(speciesObservations, interval)
+    
+    // Get the data for the species based on the plot type
+    const plotData = plotType === 'histogram' ?
+      getIntervalsForObservations(speciesObservations, interval) :
+      getLengthsForObservations(speciesObservations)
 
-    speciesIntervals.set(species, intervals)
+    speciesIntervals.set(species, plotData)
   })
 
-  // If 'others' should be included, find the amount of fish for all other species
+  // If 'others' should be included, find the data for all other species
   if (includeOthers) {
+    // Get the observations for all species not selected
     const otherSpecies = observations.filter(observation => !allSpecies.includes(observation.species))
-    const intervals = getIntervalsForObservations(otherSpecies, interval)
 
-    speciesIntervals.set('others', intervals)
+    // Get the data for the other species based on the plot type
+    const plotData = plotType === 'histogram' ?
+      getIntervalsForObservations(otherSpecies, interval) :
+      getLengthsForObservations(otherSpecies)
+    
+    speciesIntervals.set('others', plotData)
   }
 
   return speciesIntervals
@@ -258,9 +279,11 @@ function getIntervalsForObservations (observations, intervalSize) {
 
 /**
  * Creates an array with the length of each observation times its count
+ * @param {Observation[]} observations - The observations to get lengths from
+ * @returns {number[]} - The lengths of the observations
  */
 function getLengthsForObservations (observations) {
-  // Add each observation length to array the amount of times the observation was observed/counted, and return this array with lengts
+  // Add each observation length to array the amount of times the observation was observed/counted
   const lengths = observations.reduce((acc, observation) => {
     for (let i = 0; i < observation.count; i++) {
       acc.push(observation.length)
