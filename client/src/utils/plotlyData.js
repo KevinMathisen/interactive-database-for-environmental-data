@@ -2,6 +2,8 @@ import { amountOfFishInObservations } from './calculateData.js'
 import { getObservationsForRiver } from './dataManager.js'
 import { addFeedbackToStore } from './addFeedbackToStore.js'
 import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/feedbackMessages.js'
+import { getStationsForRiver } from './dataManager.js'
+import { secondsSpentFishingInStations } from './calculateData.js'
 
 /**
  * Creates data which can be used in a plotly bar or pie chart
@@ -10,26 +12,31 @@ import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/
  * @param {string} dataType - Either 'river' or 'station'
  * @param {string[]} species - An array of species to include in the data
  * @param {boolean} includeOthers - Whether to include the 'others' category in the data
+ * @param {boolean} absoluteValues - Whether to display the data as absolute values or in relation to time spent fishing
  * @returns {Map<string, Map<string, number>>} - Map of rivers or stations with count of each species
  */
-export function dataForBarAndPieChart (observationPoints, dataType, species, includeOthers) {
+export function dataForBarAndPieChart (observationPoints, dataType, species, includeOthers, absoluteValues) {
   try {
     // Return the species count for rivers or stations based on datatType
     if (dataType === 'river') {
-      return speciesCountForObservationPoints(
+      return createDataForBarAndPieChart(
         observationPoints,
         species,
         includeOthers,
+        absoluteValues,
         river => getObservationsForRiver(river), // Use imported function to get observations from rivers
-        river => `${river.name} ${river.startDate}`
+        river => `${river.name} ${river.startDate}`,
+        river => secondsSpentFishingInStations(getStationsForRiver(river)) // Use imported function to get time spent fishing from stations
       )
     } else {
-      return speciesCountForObservationPoints(
+      return createDataForBarAndPieChart(
         observationPoints,
         species,
         includeOthers,
+        absoluteValues,
         station => station.observations, // Simply get observations directly from stations
-        station => `${station.name} ${station.date}`
+        station => `${station.name} ${station.date}`,
+        station => station.secFished // Simply get time spent fishing directly from stations
       )
     }
   } catch (error) {
@@ -40,17 +47,20 @@ export function dataForBarAndPieChart (observationPoints, dataType, species, inc
 
 /**
  * Counts amount of each species under each observation point (river or station)
+ * Optionally the count can be relative to time spent fishing
  * @param {Map<number, ObservationPoint>} observationPoints - Map of observationPoints (rivers or stations)
  * @param {string[]} allSpecies - An array of species to include in the data
  * @param {boolean} includeOthers - Whether to include the 'others' category in the data
+ * @param {boolean} absoluteValues - Whether to display the data as absolute values or in relation to time spent fishing
  * @param {Function} getObservations - Function to get observations from an observationPoint
  * @param {Function} getDisplayName - Function to get display name from an observationPoint
+ * @param {Function} getTimespentFishing - Function to get time spent fishing from an observationPoint
  * @returns {Map<string, Map<string, number>>} - Map of observationPoints with count of each species
  */
-function speciesCountForObservationPoints (observationPoints, allSpecies, includeOthers, getObservations, getDisplayName) {
+function createDataForBarAndPieChart (observationPoints, allSpecies, includeOthers, absoluteValues, getObservations, getDisplayName, getTimespentFishing) {
   const speciesCountForPoints = new Map()
 
-  // For each observationPoint, get the observations and group them by species
+  // For each observationPoint, get the data for it and save it
   Array.from(observationPoints.values()).forEach(observationPoint => {
     // Get the observations from the observationPoint
     const observations = getObservations(observationPoint)
@@ -61,6 +71,17 @@ function speciesCountForObservationPoints (observationPoints, allSpecies, includ
 
     // Get the species count for the observations
     const speciesCount = getObservationSpeciesCount(observationsWithLength, allSpecies, includeOthers)
+
+    // If the data should be relative to time spent fishing, divide the count by the time spent fishing
+    if (!absoluteValues) {
+      // Get the time spent fishing for the observationPoint
+      const secSpentFishing = getTimespentFishing(observationPoint)
+
+      // Calculate the count of each species per minute and update the species count
+      speciesCount.forEach((count, species) => {
+        speciesCount.set(species, Number((count / secSpentFishing*60).toFixed(2)))
+      })
+    }
 
     // Save the species count for the observationPoint
     speciesCountForPoints.set(getDisplayName(observationPoint), speciesCount)
