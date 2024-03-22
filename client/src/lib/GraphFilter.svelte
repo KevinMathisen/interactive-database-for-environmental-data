@@ -12,6 +12,7 @@
     export let dataType = 'river'
 
     export let selectedSpecies = []
+    export let includeOthers = false
 
     export let showPlotA = true
     export let showValueA = 'absolute'
@@ -57,7 +58,7 @@
 
     <!-- Input for choosing species -->
     <CollapsibleSection title="Art">
-        <SpeciesInput {selectableSpecies} bind:chooseAll bind:customSpecies />
+        <SpeciesInput {selectableSpecies} bind:chooseAll bind:customSpecies bind:includeOthers showIncludeOthers={true}/>
     </CollapsibleSection>
 
     <!-- Input for choosing how plot A is displayed -->
