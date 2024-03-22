@@ -213,38 +213,38 @@ function getObservationSpeciesIntervals (observations, allSpecies, interval, inc
 /**
  * Counts the observations in intervals, and returns the count with the intervals
  * @param {Observation[]} observations - The observations to group by interval
- * @param {number} interval - The interval in cm to group the data by
+ * @param {number} intervalSize - The interval in cm to group the data by
  * @returns {{
  * count: number[], intervals: number[], interval: number
  * }} - The count of observations in each interval
  */
-function getIntervalsForObservations (observations, interval) {
+function getIntervalsForObservations (observations, intervalSize) {
   // If there are no observations, return empty data
   if (observations.length === 0) {
-    return { count: [], intervals: [], interval }
+    return { count: [], intervals: [], interval: intervalSize }
   }
 
   // Find the minimum and maximum length of the observations, rounded down to the nearest interval
   const lengths = observations.map(observation => observation.length)
-  const min = Math.floor(Math.min(...lengths) / interval) * interval
-  const max = Math.floor(Math.max(...lengths) / interval) * interval
+  const min = Math.floor(Math.min(...lengths) / intervalSize) * intervalSize
+  const max = Math.floor(Math.max(...lengths) / intervalSize) * intervalSize
 
   // Create the intervals
   const intervals = []
-  for (let i = min; i <= max; i += interval) {
+  for (let i = min; i <= max; i += intervalSize) {
     intervals.push(i)
   }
 
   // Count the observations in each interval
   const count = intervals.map(interval =>
     observations.filter(observation =>
-      observation.length >= interval && observation.length < interval + interval
+      observation.length >= interval && observation.length < interval + intervalSize
     ).length)
 
   // Shift each interval to the middle of the interval for placing the bars in a histogram
   intervals.forEach((_, index) => {
-    intervals[index] = intervals[index] + interval / 2
+    intervals[index] = intervals[index] + intervalSize / 2
   })
 
-  return { count, intervals, interval }
+  return { count, intervals, interval: intervalSize }
 }
