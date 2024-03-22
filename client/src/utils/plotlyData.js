@@ -1,5 +1,7 @@
 import { amountOfFishInObservations } from './calculateData.js'
 import { getObservationsForRiver } from './dataManager.js'
+import { addFeedbackToStore } from './addFeedbackToStore.js'
+import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/feedbackMessages.js'
 
 /**
  * Creates data which can be used in a plotly bar or pie chart
@@ -11,23 +13,28 @@ import { getObservationsForRiver } from './dataManager.js'
  * @returns {Map<string, Map<string, number>>} - Map of rivers or stations with count of each species
  */
 export function dataForBarAndPieChart (observationPoints, dataType, species, includeOthers) {
-  // Return the species count for rivers or stations based on datatType
-  if (dataType === 'river') {
-    return speciesCountForObservationPoints(
-      observationPoints,
-      species,
-      includeOthers,
-      river => getObservationsForRiver(river), // Use imported function to get observations from rivers
-      river => `${river.name} ${river.startDate}`
-    )
-  } else {
-    return speciesCountForObservationPoints(
-      observationPoints,
-      species,
-      includeOthers,
-      station => station.observations, // Simply get observations directly from stations
-      station => `${station.name} ${station.date}`
-    )
+  try {
+    // Return the species count for rivers or stations based on datatType
+    if (dataType === 'river') {
+      return speciesCountForObservationPoints(
+        observationPoints,
+        species,
+        includeOthers,
+        river => getObservationsForRiver(river), // Use imported function to get observations from rivers
+        river => `${river.name} ${river.startDate}`
+      )
+    } else {
+      return speciesCountForObservationPoints(
+        observationPoints,
+        species,
+        includeOthers,
+        station => station.observations, // Simply get observations directly from stations
+        station => `${station.name} ${station.date}`
+      )
+    }
+  } catch (error) {
+    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.ERROR_PLOTTING_DATA)
+    return new Map()
   }
 }
 
@@ -100,26 +107,31 @@ function getObservationSpeciesCount (observations, allSpecies, includeOthers) {
  * @returns {Map<string, Map<string, number>>} - Map of rivers or stations with count of each species
  */
 export function dataForHistogramAndBoxplot (observationPoints, dataType, species, interval, includeOthers = false, combineSpecies = false) {
-  if (dataType === 'river') {
-    return intervalCountForObservationPoints(
-      observationPoints,
-      species,
-      interval,
-      includeOthers,
-      combineSpecies,
-      river => getObservationsForRiver(river), // Use imported function to get observations from rivers
-      river => `${river.name} ${river.startDate}`
-    )
-  } else {
-    return intervalCountForObservationPoints(
-      observationPoints,
-      species,
-      interval,
-      includeOthers,
-      combineSpecies,
-      station => station.observations, // Simply get observations directly from stations
-      station => `${station.name} ${station.date}`
-    )
+  try {
+    if (dataType === 'river') {
+      return intervalCountForObservationPoints(
+        observationPoints,
+        species,
+        interval,
+        includeOthers,
+        combineSpecies,
+        river => getObservationsForRiver(river), // Use imported function to get observations from rivers
+        river => `${river.name} ${river.startDate}`
+      )
+    } else {
+      return intervalCountForObservationPoints(
+        observationPoints,
+        species,
+        interval,
+        includeOthers,
+        combineSpecies,
+        station => station.observations, // Simply get observations directly from stations
+        station => `${station.name} ${station.date}`
+      )
+    }
+  } catch (error) {
+    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.ERROR_PLOTTING_DATA)
+    return new Map()
   }
 }
 
