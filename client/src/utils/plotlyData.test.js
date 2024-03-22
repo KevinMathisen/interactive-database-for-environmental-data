@@ -1,39 +1,39 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { 
-  dataForBarAndPieChart, 
-  dataForHistogramAndBoxplot 
-} from "./plotlyData"
-import { getObservationsForRiver } from "./dataManager"
+import {
+  dataForBarAndPieChart,
+  dataForHistogramAndBoxplot
+} from './plotlyData'
+import { getObservationsForRiver } from './dataManager'
 import { River } from '../models/River.js'
 import { Station } from '../models/Station.js'
 
-vi.mock("../utils/dataManager", () => ({
+vi.mock('../utils/dataManager', () => ({
   getObservationsForRiver: vi.fn()
 }))
 
-describe("test dataForBarAndPieChart function", () => {
+describe('test dataForBarAndPieChart function', () => {
   beforeEach(() => {
     vi.resetModules()
     vi.clearAllMocks()
   })
 
-  it("should return count of 0 for each species if no observations are found for rivers", () => {
+  it('should return count of 0 for each species if no observations are found for rivers', () => {
     getObservationsForRiver.mockReturnValue([])
     const rivers = new Map([
       [1, new River({
         id: 1,
-        name: "Test river",
-        startDate: "2021-01-01",
+        name: 'Test river',
+        startDate: '2021-01-01'
       })]
     ])
     const species = ['species1', 'species2']
     const expectedData = new Map([
-      ["Test river 2021-01-01", new Map([
+      ['Test river 2021-01-01', new Map([
         ['species1', 0],
         ['species2', 0]
       ])]
     ])
-    
+
     const data = dataForBarAndPieChart(rivers, 'river', species, false)
 
     expect(data).toEqual(expectedData)
@@ -51,13 +51,13 @@ describe("test dataForBarAndPieChart function", () => {
     const rivers = new Map([
       [1, new River({
         id: 1,
-        name: "Test river",
-        startDate: "2021-01-01",
+        name: 'Test river',
+        startDate: '2021-01-01'
       })]
     ])
     const species = []
     const expectedData = new Map([
-      ["Test river 2021-01-01", new Map()]
+      ['Test river 2021-01-01', new Map()]
     ])
 
     const data = dataForBarAndPieChart(rivers, 'river', species, false)
@@ -109,23 +109,23 @@ describe("test dataForBarAndPieChart function", () => {
     const rivers = new Map([
       [1, new River({
         id: 1,
-        name: "Test river",
-        startDate: "2021-01-01",
+        name: 'Test river',
+        startDate: '2021-01-01'
       })],
       [2, new River({
         id: 2,
-        name: "Test river 2",
-        startDate: "2021-01-02",
+        name: 'Test river 2',
+        startDate: '2021-01-02'
       })]
     ])
     const species = ['species1', 'species2', 'species3']
     const expectedData = new Map([
-      ["Test river 2021-01-01", new Map([
+      ['Test river 2021-01-01', new Map([
         ['species1', 1],
         ['species2', 2],
         ['species3', 1]
       ])],
-      ["Test river 2 2021-01-02", new Map([
+      ['Test river 2 2021-01-02', new Map([
         ['species1', 2],
         ['species2', 1],
         ['species3', 0]
@@ -181,21 +181,21 @@ describe("test dataForBarAndPieChart function", () => {
     const rivers = new Map([
       [1, new River({
         id: 1,
-        name: "Test river",
-        startDate: "2021-01-01",
+        name: 'Test river',
+        startDate: '2021-01-01'
       })],
       [2, new River({
         id: 2,
-        name: "Test river 2",
-        startDate: "2021-01-02",
+        name: 'Test river 2',
+        startDate: '2021-01-02'
       })]
     ])
     const species = ['species1']
     const expectedData = new Map([
-      ["Test river 2021-01-01", new Map([
+      ['Test river 2021-01-01', new Map([
         ['species1', 1]
       ])],
-      ["Test river 2 2021-01-02", new Map([
+      ['Test river 2 2021-01-02', new Map([
         ['species1', 2]
       ])]
     ])
@@ -249,22 +249,22 @@ describe("test dataForBarAndPieChart function", () => {
     const rivers = new Map([
       [1, new River({
         id: 1,
-        name: "Test river",
-        startDate: "2021-01-01",
+        name: 'Test river',
+        startDate: '2021-01-01'
       })],
       [2, new River({
         id: 2,
-        name: "Test river 2",
-        startDate: "2021-01-02",
+        name: 'Test river 2',
+        startDate: '2021-01-02'
       })]
     ])
     const species = ['species1']
     const expectedData = new Map([
-      ["Test river 2021-01-01", new Map([
+      ['Test river 2021-01-01', new Map([
         ['species1', 1],
         ['others', 3]
       ])],
-      ["Test river 2 2021-01-02", new Map([
+      ['Test river 2 2021-01-02', new Map([
         ['species1', 2],
         ['others', 1]
       ])]
@@ -279,19 +279,19 @@ describe("test dataForBarAndPieChart function", () => {
     const stations = new Map([
       [1, new Station({
         id: 1,
-        name: "Test station",
-        date: "2021-01-01",
+        name: 'Test station',
+        date: '2021-01-01',
         observations: []
       })]
     ])
     const species = ['species1', 'species2']
     const expectedData = new Map([
-      ["Test station 2021-01-01", new Map([
+      ['Test station 2021-01-01', new Map([
         ['species1', 0],
         ['species2', 0]
       ])]
     ])
-    
+
     const data = dataForBarAndPieChart(stations, 'station', species, false)
 
     expect(data).toEqual(expectedData)
@@ -301,8 +301,8 @@ describe("test dataForBarAndPieChart function", () => {
     const stations = new Map([
       [1, new Station({
         id: 1,
-        name: "Test station",
-        date: "2021-01-01",
+        name: 'Test station',
+        date: '2021-01-01',
         observations: [
           {
             id: 1,
@@ -315,7 +315,7 @@ describe("test dataForBarAndPieChart function", () => {
     ])
     const species = []
     const expectedData = new Map([
-      ["Test station 2021-01-01", new Map()]
+      ['Test station 2021-01-01', new Map()]
     ])
 
     const data = dataForBarAndPieChart(stations, 'station', species, false)
@@ -327,8 +327,8 @@ describe("test dataForBarAndPieChart function", () => {
     const stations = new Map([
       [1, new Station({
         id: 1,
-        name: "Test station",
-        date: "2021-01-01",
+        name: 'Test station',
+        date: '2021-01-01',
         observations: [
           {
             id: 1,
@@ -352,8 +352,8 @@ describe("test dataForBarAndPieChart function", () => {
       })],
       [2, new Station({
         id: 2,
-        name: "Test station 2",
-        date: "2021-01-02",
+        name: 'Test station 2',
+        date: '2021-01-02',
         observations: [
           {
             id: 1,
@@ -372,12 +372,12 @@ describe("test dataForBarAndPieChart function", () => {
     ])
     const species = ['species1', 'species2', 'species3']
     const expectedData = new Map([
-      ["Test station 2021-01-01", new Map([
+      ['Test station 2021-01-01', new Map([
         ['species1', 1],
         ['species2', 2],
         ['species3', 1]
       ])],
-      ["Test station 2 2021-01-02", new Map([
+      ['Test station 2 2021-01-02', new Map([
         ['species1', 2],
         ['species2', 1],
         ['species3', 0]
@@ -393,8 +393,8 @@ describe("test dataForBarAndPieChart function", () => {
     const stations = new Map([
       [1, new Station({
         id: 1,
-        name: "Test station",
-        date: "2021-01-01",
+        name: 'Test station',
+        date: '2021-01-01',
         observations: [
           {
             id: 1,
@@ -418,8 +418,8 @@ describe("test dataForBarAndPieChart function", () => {
       })],
       [2, new Station({
         id: 2,
-        name: "Test station 2",
-        date: "2021-01-02",
+        name: 'Test station 2',
+        date: '2021-01-02',
         observations: [
           {
             id: 1,
@@ -438,10 +438,10 @@ describe("test dataForBarAndPieChart function", () => {
     ])
     const species = ['species1']
     const expectedData = new Map([
-      ["Test station 2021-01-01", new Map([
+      ['Test station 2021-01-01', new Map([
         ['species1', 1]
       ])],
-      ["Test station 2 2021-01-02", new Map([
+      ['Test station 2 2021-01-02', new Map([
         ['species1', 2]
       ])]
     ])
@@ -455,8 +455,8 @@ describe("test dataForBarAndPieChart function", () => {
     const stations = new Map([
       [1, new Station({
         id: 1,
-        name: "Test station",
-        date: "2021-01-01",
+        name: 'Test station',
+        date: '2021-01-01',
         observations: [
           {
             id: 1,
@@ -480,8 +480,8 @@ describe("test dataForBarAndPieChart function", () => {
       })],
       [2, new Station({
         id: 2,
-        name: "Test station 2",
-        date: "2021-01-02",
+        name: 'Test station 2',
+        date: '2021-01-02',
         observations: [
           {
             id: 1,
@@ -500,11 +500,11 @@ describe("test dataForBarAndPieChart function", () => {
     ])
     const species = ['species1']
     const expectedData = new Map([
-      ["Test station 2021-01-01", new Map([
+      ['Test station 2021-01-01', new Map([
         ['species1', 1],
         ['others', 3]
       ])],
-      ["Test station 2 2021-01-02", new Map([
+      ['Test station 2 2021-01-02', new Map([
         ['species1', 2],
         ['others', 1]
       ])]
@@ -516,36 +516,36 @@ describe("test dataForBarAndPieChart function", () => {
   })
 })
 
-describe("test dataForHistogramAndBoxplot function", () => {
+describe('test dataForHistogramAndBoxplot function', () => {
   beforeEach(() => {
     vi.resetModules()
     vi.clearAllMocks()
   })
 
-  it("should return empty arrays if no observations are found for rivers", () => {
+  it('should return empty arrays if no observations are found for rivers', () => {
     getObservationsForRiver.mockReturnValue([])
     const rivers = new Map([
       [1, new River({
         id: 1,
-        name: "Test river",
-        startDate: "2021-01-01",
+        name: 'Test river',
+        startDate: '2021-01-01'
       })]
     ])
     const species = ['species1', 'species2']
     const interval = 10
     const expectedData = new Map([
-      ["Test river 2021-01-01 - species1", {
+      ['Test river 2021-01-01 - species1', {
         count: [],
         intervals: [],
-        interval: interval
+        interval
       }],
-      ["Test river 2021-01-01 - species2", {
+      ['Test river 2021-01-01 - species2', {
         count: [],
         intervals: [],
-        interval: interval
+        interval
       }]
     ])
-    
+
     const data = dataForHistogramAndBoxplot(rivers, 'river', species, interval, false, false)
 
     expect(data).toEqual(expectedData)
@@ -563,8 +563,8 @@ describe("test dataForHistogramAndBoxplot function", () => {
     const rivers = new Map([
       [1, new River({
         id: 1,
-        name: "Test river",
-        startDate: "2021-01-01",
+        name: 'Test river',
+        startDate: '2021-01-01'
       })]
     ])
     const species = []
@@ -626,47 +626,47 @@ describe("test dataForHistogramAndBoxplot function", () => {
     const rivers = new Map([
       [1, new River({
         id: 1,
-        name: "Test river",
-        startDate: "2021-01-01",
+        name: 'Test river',
+        startDate: '2021-01-01'
       })],
       [2, new River({
         id: 2,
-        name: "Test river 2",
-        startDate: "2021-01-02",
+        name: 'Test river 2',
+        startDate: '2021-01-02'
       })]
     ])
     const species = ['species1', 'species2', 'species3']
     const interval = 5
     const expectedData = new Map([
-      ["Test river 2021-01-01 - species1", {
+      ['Test river 2021-01-01 - species1', {
         count: [1],
         intervals: [7.5],
-        interval: interval
+        interval
       }],
-      ["Test river 2021-01-01 - species2", {
+      ['Test river 2021-01-01 - species2', {
         count: [1, 2],
         intervals: [12.5, 17.5],
-        interval: interval
+        interval
       }],
-      ["Test river 2021-01-01 - species3", {
+      ['Test river 2021-01-01 - species3', {
         count: [],
         intervals: [],
-        interval: interval
+        interval
       }],
-      ["Test river 2 2021-01-02 - species1", {
+      ['Test river 2 2021-01-02 - species1', {
         count: [1, 0, 2],
         intervals: [12.5, 17.5, 22.5],
-        interval: interval
+        interval
       }],
-      ["Test river 2 2021-01-02 - species2", {
+      ['Test river 2 2021-01-02 - species2', {
         count: [1],
         intervals: [7.5],
-        interval: interval
+        interval
       }],
-      ["Test river 2 2021-01-02 - species3", {
+      ['Test river 2 2021-01-02 - species3', {
         count: [],
         intervals: [],
-        interval: interval
+        interval
       }]
     ])
 
@@ -725,27 +725,27 @@ describe("test dataForHistogramAndBoxplot function", () => {
     const rivers = new Map([
       [1, new River({
         id: 1,
-        name: "Test river",
-        startDate: "2021-01-01",
+        name: 'Test river',
+        startDate: '2021-01-01'
       })],
       [2, new River({
         id: 2,
-        name: "Test river 2",
-        startDate: "2021-01-02",
+        name: 'Test river 2',
+        startDate: '2021-01-02'
       })]
     ])
     const species = ['species1']
     const interval = 5
     const expectedData = new Map([
-      ["Test river 2021-01-01 - species1", {
+      ['Test river 2021-01-01 - species1', {
         count: [1],
         intervals: [7.5],
-        interval: interval
+        interval
       }],
-      ["Test river 2 2021-01-02 - species1", {
+      ['Test river 2 2021-01-02 - species1', {
         count: [1, 0, 2],
         intervals: [12.5, 17.5, 22.5],
-        interval: interval
+        interval
       }]
     ])
 
@@ -804,37 +804,37 @@ describe("test dataForHistogramAndBoxplot function", () => {
     const rivers = new Map([
       [1, new River({
         id: 1,
-        name: "Test river",
-        startDate: "2021-01-01",
+        name: 'Test river',
+        startDate: '2021-01-01'
       })],
       [2, new River({
         id: 2,
-        name: "Test river 2",
-        startDate: "2021-01-02",
+        name: 'Test river 2',
+        startDate: '2021-01-02'
       })]
     ])
     const species = ['species1']
     const interval = 5
     const expectedData = new Map([
-      ["Test river 2021-01-01 - species1", {
+      ['Test river 2021-01-01 - species1', {
         count: [1],
         intervals: [7.5],
-        interval: interval
+        interval
       }],
-      ["Test river 2021-01-01 - others", {
+      ['Test river 2021-01-01 - others', {
         count: [1, 2],
         intervals: [12.5, 17.5],
-        interval: interval
+        interval
       }],
-      ["Test river 2 2021-01-02 - species1", {
+      ['Test river 2 2021-01-02 - species1', {
         count: [1, 0, 2],
         intervals: [12.5, 17.5, 22.5],
-        interval: interval
+        interval
       }],
-      ["Test river 2 2021-01-02 - others", {
+      ['Test river 2 2021-01-02 - others', {
         count: [1],
         intervals: [7.5],
-        interval: interval
+        interval
       }]
     ])
 
@@ -893,27 +893,27 @@ describe("test dataForHistogramAndBoxplot function", () => {
     const rivers = new Map([
       [1, new River({
         id: 1,
-        name: "Test river",
-        startDate: "2021-01-01",
+        name: 'Test river',
+        startDate: '2021-01-01'
       })],
       [2, new River({
         id: 2,
-        name: "Test river 2",
-        startDate: "2021-01-02",
+        name: 'Test river 2',
+        startDate: '2021-01-02'
       })]
     ])
     const species = ['species1', 'species2', 'species3']
     const interval = 5
     const expectedData = new Map([
-      ["Test river 2021-01-01 - sum", {
+      ['Test river 2021-01-01 - sum', {
         count: [1, 1, 2],
         intervals: [7.5, 12.5, 17.5],
-        interval: interval
+        interval
       }],
-      ["Test river 2 2021-01-02 - sum", {
+      ['Test river 2 2021-01-02 - sum', {
         count: [1, 1, 0, 2],
         intervals: [7.5, 12.5, 17.5, 22.5],
-        interval: interval
+        interval
       }]
     ])
 
@@ -926,26 +926,26 @@ describe("test dataForHistogramAndBoxplot function", () => {
     const stations = new Map([
       [1, new Station({
         id: 1,
-        name: "Test station",
-        date: "2021-01-01",
+        name: 'Test station',
+        date: '2021-01-01',
         observations: []
       })]
     ])
     const species = ['species1', 'species2']
     const interval = 10
     const expectedData = new Map([
-      ["Test station 2021-01-01 - species1", {
+      ['Test station 2021-01-01 - species1', {
         count: [],
         intervals: [],
-        interval: interval
+        interval
       }],
-      ["Test station 2021-01-01 - species2", {
+      ['Test station 2021-01-01 - species2', {
         count: [],
         intervals: [],
-        interval: interval
+        interval
       }]
     ])
-    
+
     const data = dataForHistogramAndBoxplot(stations, 'station', species, interval, false, false)
 
     expect(data).toEqual(expectedData)
@@ -955,8 +955,8 @@ describe("test dataForHistogramAndBoxplot function", () => {
     const stations = new Map([
       [1, new Station({
         id: 1,
-        name: "Test station",
-        date: "2021-01-01",
+        name: 'Test station',
+        date: '2021-01-01',
         observations: [
           {
             id: 1,
@@ -980,8 +980,8 @@ describe("test dataForHistogramAndBoxplot function", () => {
     const stations = new Map([
       [1, new Station({
         id: 1,
-        name: "Test station",
-        date: "2021-01-01",
+        name: 'Test station',
+        date: '2021-01-01',
         observations: [
           {
             id: 1,
@@ -1005,8 +1005,8 @@ describe("test dataForHistogramAndBoxplot function", () => {
       })],
       [2, new Station({
         id: 2,
-        name: "Test station 2",
-        date: "2021-01-02",
+        name: 'Test station 2',
+        date: '2021-01-02',
         observations: [
           {
             id: 1,
@@ -1032,35 +1032,35 @@ describe("test dataForHistogramAndBoxplot function", () => {
     const species = ['species1', 'species2', 'species3']
     const interval = 5
     const expectedData = new Map([
-      ["Test station 2021-01-01 - species1", {
+      ['Test station 2021-01-01 - species1', {
         count: [1],
         intervals: [7.5],
-        interval: interval
+        interval
       }],
-      ["Test station 2021-01-01 - species2", {
+      ['Test station 2021-01-01 - species2', {
         count: [1, 2],
         intervals: [12.5, 17.5],
-        interval: interval
+        interval
       }],
-      ["Test station 2021-01-01 - species3", {
+      ['Test station 2021-01-01 - species3', {
         count: [],
         intervals: [],
-        interval: interval
+        interval
       }],
-      ["Test station 2 2021-01-02 - species1", {
+      ['Test station 2 2021-01-02 - species1', {
         count: [1, 0, 2],
         intervals: [12.5, 17.5, 22.5],
-        interval: interval
+        interval
       }],
-      ["Test station 2 2021-01-02 - species2", {
+      ['Test station 2 2021-01-02 - species2', {
         count: [1],
         intervals: [7.5],
-        interval: interval
+        interval
       }],
-      ["Test station 2 2021-01-02 - species3", {
+      ['Test station 2 2021-01-02 - species3', {
         count: [],
         intervals: [],
-        interval: interval
+        interval
       }]
     ])
 
@@ -1073,8 +1073,8 @@ describe("test dataForHistogramAndBoxplot function", () => {
     const stations = new Map([
       [1, new Station({
         id: 1,
-        name: "Test station",
-        date: "2021-01-01",
+        name: 'Test station',
+        date: '2021-01-01',
         observations: [
           {
             id: 1,
@@ -1098,8 +1098,8 @@ describe("test dataForHistogramAndBoxplot function", () => {
       })],
       [2, new Station({
         id: 2,
-        name: "Test station 2",
-        date: "2021-01-02",
+        name: 'Test station 2',
+        date: '2021-01-02',
         observations: [
           {
             id: 1,
@@ -1125,15 +1125,15 @@ describe("test dataForHistogramAndBoxplot function", () => {
     const species = ['species1']
     const interval = 5
     const expectedData = new Map([
-      ["Test station 2021-01-01 - species1", {
+      ['Test station 2021-01-01 - species1', {
         count: [1],
         intervals: [7.5],
-        interval: interval
+        interval
       }],
-      ["Test station 2 2021-01-02 - species1", {
+      ['Test station 2 2021-01-02 - species1', {
         count: [1, 0, 2],
         intervals: [12.5, 17.5, 22.5],
-        interval: interval
+        interval
       }]
     ])
 
@@ -1146,8 +1146,8 @@ describe("test dataForHistogramAndBoxplot function", () => {
     const stations = new Map([
       [1, new Station({
         id: 1,
-        name: "Test station",
-        date: "2021-01-01",
+        name: 'Test station',
+        date: '2021-01-01',
         observations: [
           {
             id: 1,
@@ -1171,8 +1171,8 @@ describe("test dataForHistogramAndBoxplot function", () => {
       })],
       [2, new Station({
         id: 2,
-        name: "Test station 2",
-        date: "2021-01-02",
+        name: 'Test station 2',
+        date: '2021-01-02',
         observations: [
           {
             id: 1,
@@ -1198,25 +1198,25 @@ describe("test dataForHistogramAndBoxplot function", () => {
     const species = ['species1']
     const interval = 5
     const expectedData = new Map([
-      ["Test station 2021-01-01 - species1", {
+      ['Test station 2021-01-01 - species1', {
         count: [1],
         intervals: [7.5],
-        interval: interval
+        interval
       }],
-      ["Test station 2021-01-01 - others", {
+      ['Test station 2021-01-01 - others', {
         count: [1, 2],
         intervals: [12.5, 17.5],
-        interval: interval
+        interval
       }],
-      ["Test station 2 2021-01-02 - species1", {
+      ['Test station 2 2021-01-02 - species1', {
         count: [1, 0, 2],
         intervals: [12.5, 17.5, 22.5],
-        interval: interval
+        interval
       }],
-      ["Test station 2 2021-01-02 - others", {
+      ['Test station 2 2021-01-02 - others', {
         count: [1],
         intervals: [7.5],
-        interval: interval
+        interval
       }]
     ])
 
@@ -1229,8 +1229,8 @@ describe("test dataForHistogramAndBoxplot function", () => {
     const stations = new Map([
       [1, new Station({
         id: 1,
-        name: "Test station",
-        date: "2021-01-01",
+        name: 'Test station',
+        date: '2021-01-01',
         observations: [
           {
             id: 1,
@@ -1254,8 +1254,8 @@ describe("test dataForHistogramAndBoxplot function", () => {
       })],
       [2, new Station({
         id: 2,
-        name: "Test station 2",
-        date: "2021-01-02",
+        name: 'Test station 2',
+        date: '2021-01-02',
         observations: [
           {
             id: 1,
@@ -1281,15 +1281,15 @@ describe("test dataForHistogramAndBoxplot function", () => {
     const species = ['species1', 'species2', 'species3']
     const interval = 5
     const expectedData = new Map([
-      ["Test station 2021-01-01 - sum", {
+      ['Test station 2021-01-01 - sum', {
         count: [1, 1, 2],
         intervals: [7.5, 12.5, 17.5],
-        interval: interval
+        interval
       }],
-      ["Test station 2 2021-01-02 - sum", {
+      ['Test station 2 2021-01-02 - sum', {
         count: [1, 1, 0, 2],
         intervals: [7.5, 12.5, 17.5, 22.5],
-        interval: interval
+        interval
       }]
     ])
 

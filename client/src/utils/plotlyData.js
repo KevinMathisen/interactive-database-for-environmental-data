@@ -209,7 +209,6 @@ function getObservationSpeciesIntervals (observations, allSpecies, interval, inc
   return speciesIntervals
 }
 
-
 /**
  * Counts the observations in intervals, and returns the count with the intervals
  * @param {Observation[]} observations - The observations to group by interval
