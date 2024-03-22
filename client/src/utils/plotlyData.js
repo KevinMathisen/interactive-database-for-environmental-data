@@ -236,14 +236,10 @@ function getIntervalsForObservations (observations, intervalSize) {
   }
 
   // Count the observations in each interval
-  const count = intervals.map(interval =>
-    observations.reduce((sum, observation) =>
-      observation.length >= interval && observation.length < interval + intervalSize
-        ? sum + observation.count
-        : sum,
-      0
-    )
-  )
+  const count = intervals.map(interval => {
+    const intervalObservations = observations.filter(observation => observation.length >= interval && observation.length < interval + intervalSize)
+    return amountOfFishInObservations(intervalObservations)
+  })
 
   // Shift each interval to the middle of the interval for placing the bars in a histogram
   intervals.forEach((_, index) => {
