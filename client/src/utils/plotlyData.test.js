@@ -516,3 +516,785 @@ describe("test dataForBarAndPieChart function", () => {
   })
 })
 
+describe("test dataForHistogramAndBoxplot function", () => {
+  beforeEach(() => {
+    vi.resetModules()
+    vi.clearAllMocks()
+  })
+
+  it("should return empty arrays if no observations are found for rivers", () => {
+    getObservationsForRiver.mockReturnValue([])
+    const rivers = new Map([
+      [1, new River({
+        id: 1,
+        name: "Test river",
+        startDate: "2021-01-01",
+      })]
+    ])
+    const species = ['species1', 'species2']
+    const interval = 10
+    const expectedData = new Map([
+      ["Test river 2021-01-01 - species1", {
+        count: [],
+        intervals: [],
+        interval: interval
+      }],
+      ["Test river 2021-01-01 - species2", {
+        count: [],
+        intervals: [],
+        interval: interval
+      }]
+    ])
+    
+    const data = dataForHistogramAndBoxplot(rivers, 'river', species, interval, false, false)
+
+    expect(data).toEqual(expectedData)
+  })
+
+  it('should return empty map if no species are given for rivers', () => {
+    getObservationsForRiver.mockReturnValue([
+      {
+        id: 1,
+        species: 'species1',
+        length: 10,
+        count: 1
+      }
+    ])
+    const rivers = new Map([
+      [1, new River({
+        id: 1,
+        name: "Test river",
+        startDate: "2021-01-01",
+      })]
+    ])
+    const species = []
+    const interval = 10
+    const expectedData = new Map()
+
+    const data = dataForHistogramAndBoxplot(rivers, 'river', species, interval, false, false)
+
+    expect(data).toEqual(expectedData)
+  })
+
+  it('should return the correct river data when species and observations are given', () => {
+    // Mock getObservationsForRiver function to return observations for rivers given their id
+    getObservationsForRiver.mockImplementation((river) => {
+      if (river.id === 1) {
+        return [
+          {
+            id: 1,
+            species: 'species1',
+            length: 5,
+            count: 1
+          },
+          {
+            id: 2,
+            species: 'species2',
+            length: 18,
+            count: 2
+          },
+          {
+            id: 3,
+            species: 'species2',
+            length: 10,
+            count: 1
+          }
+        ]
+      } else if (river.id === 2) {
+        return [
+          {
+            id: 1,
+            species: 'species1',
+            length: 20,
+            count: 2
+          },
+          {
+            id: 2,
+            species: 'species2',
+            length: 5,
+            count: 1
+          },
+          {
+            id: 3,
+            species: 'species1',
+            length: 10,
+            count: 1
+          }
+        ]
+      }
+    })
+    const rivers = new Map([
+      [1, new River({
+        id: 1,
+        name: "Test river",
+        startDate: "2021-01-01",
+      })],
+      [2, new River({
+        id: 2,
+        name: "Test river 2",
+        startDate: "2021-01-02",
+      })]
+    ])
+    const species = ['species1', 'species2', 'species3']
+    const interval = 5
+    const expectedData = new Map([
+      ["Test river 2021-01-01 - species1", {
+        count: [1],
+        intervals: [7.5],
+        interval: interval
+      }],
+      ["Test river 2021-01-01 - species2", {
+        count: [1, 2],
+        intervals: [12.5, 17.5],
+        interval: interval
+      }],
+      ["Test river 2021-01-01 - species3", {
+        count: [],
+        intervals: [],
+        interval: interval
+      }],
+      ["Test river 2 2021-01-02 - species1", {
+        count: [1, 0, 2],
+        intervals: [12.5, 17.5, 22.5],
+        interval: interval
+      }],
+      ["Test river 2 2021-01-02 - species2", {
+        count: [1],
+        intervals: [7.5],
+        interval: interval
+      }],
+      ["Test river 2 2021-01-02 - species3", {
+        count: [],
+        intervals: [],
+        interval: interval
+      }]
+    ])
+
+    const data = dataForHistogramAndBoxplot(rivers, 'river', species, interval, false, false)
+
+    expect(data).toEqual(expectedData)
+  })
+
+  it('should return the correct river data when subset species and observations are given', () => {
+    // Mock getObservationsForRiver function to return observations for rivers given their id
+    getObservationsForRiver.mockImplementation((river) => {
+      if (river.id === 1) {
+        return [
+          {
+            id: 1,
+            species: 'species1',
+            length: 5,
+            count: 1
+          },
+          {
+            id: 2,
+            species: 'species2',
+            length: 18,
+            count: 2
+          },
+          {
+            id: 3,
+            species: 'species2',
+            length: 10,
+            count: 1
+          }
+        ]
+      } else if (river.id === 2) {
+        return [
+          {
+            id: 1,
+            species: 'species1',
+            length: 20,
+            count: 2
+          },
+          {
+            id: 2,
+            species: 'species2',
+            length: 5,
+            count: 1
+          },
+          {
+            id: 3,
+            species: 'species1',
+            length: 10,
+            count: 1
+          }
+        ]
+      }
+    })
+    const rivers = new Map([
+      [1, new River({
+        id: 1,
+        name: "Test river",
+        startDate: "2021-01-01",
+      })],
+      [2, new River({
+        id: 2,
+        name: "Test river 2",
+        startDate: "2021-01-02",
+      })]
+    ])
+    const species = ['species1']
+    const interval = 5
+    const expectedData = new Map([
+      ["Test river 2021-01-01 - species1", {
+        count: [1],
+        intervals: [7.5],
+        interval: interval
+      }],
+      ["Test river 2 2021-01-02 - species1", {
+        count: [1, 0, 2],
+        intervals: [12.5, 17.5, 22.5],
+        interval: interval
+      }]
+    ])
+
+    const data = dataForHistogramAndBoxplot(rivers, 'river', species, interval, false, false)
+
+    expect(data).toEqual(expectedData)
+  })
+
+  it('should return the correct river data when species and observations are given, and it should include others', () => {
+    // Mock getObservationsForRiver function to return observations for rivers given their id
+    getObservationsForRiver.mockImplementation((river) => {
+      if (river.id === 1) {
+        return [
+          {
+            id: 1,
+            species: 'species1',
+            length: 5,
+            count: 1
+          },
+          {
+            id: 2,
+            species: 'species2',
+            length: 18,
+            count: 2
+          },
+          {
+            id: 3,
+            species: 'species2',
+            length: 10,
+            count: 1
+          }
+        ]
+      } else if (river.id === 2) {
+        return [
+          {
+            id: 1,
+            species: 'species1',
+            length: 20,
+            count: 2
+          },
+          {
+            id: 2,
+            species: 'species2',
+            length: 5,
+            count: 1
+          },
+          {
+            id: 3,
+            species: 'species1',
+            length: 10,
+            count: 1
+          }
+        ]
+      }
+    })
+    const rivers = new Map([
+      [1, new River({
+        id: 1,
+        name: "Test river",
+        startDate: "2021-01-01",
+      })],
+      [2, new River({
+        id: 2,
+        name: "Test river 2",
+        startDate: "2021-01-02",
+      })]
+    ])
+    const species = ['species1']
+    const interval = 5
+    const expectedData = new Map([
+      ["Test river 2021-01-01 - species1", {
+        count: [1],
+        intervals: [7.5],
+        interval: interval
+      }],
+      ["Test river 2021-01-01 - others", {
+        count: [1, 2],
+        intervals: [12.5, 17.5],
+        interval: interval
+      }],
+      ["Test river 2 2021-01-02 - species1", {
+        count: [1, 0, 2],
+        intervals: [12.5, 17.5, 22.5],
+        interval: interval
+      }],
+      ["Test river 2 2021-01-02 - others", {
+        count: [1],
+        intervals: [7.5],
+        interval: interval
+      }]
+    ])
+
+    const data = dataForHistogramAndBoxplot(rivers, 'river', species, interval, true, false)
+
+    expect(data).toEqual(expectedData)
+  })
+
+  it('should return the correct river data when species and observations are given, and it should combine species for each river', () => {
+    // Mock getObservationsForRiver function to return observations for rivers given their id
+    getObservationsForRiver.mockImplementation((river) => {
+      if (river.id === 1) {
+        return [
+          {
+            id: 1,
+            species: 'species1',
+            length: 5,
+            count: 1
+          },
+          {
+            id: 2,
+            species: 'species2',
+            length: 18,
+            count: 2
+          },
+          {
+            id: 3,
+            species: 'species2',
+            length: 10,
+            count: 1
+          }
+        ]
+      } else if (river.id === 2) {
+        return [
+          {
+            id: 1,
+            species: 'species1',
+            length: 20,
+            count: 2
+          },
+          {
+            id: 2,
+            species: 'species2',
+            length: 5,
+            count: 1
+          },
+          {
+            id: 3,
+            species: 'species1',
+            length: 10,
+            count: 1
+          }
+        ]
+      }
+    })
+    const rivers = new Map([
+      [1, new River({
+        id: 1,
+        name: "Test river",
+        startDate: "2021-01-01",
+      })],
+      [2, new River({
+        id: 2,
+        name: "Test river 2",
+        startDate: "2021-01-02",
+      })]
+    ])
+    const species = ['species1', 'species2', 'species3']
+    const interval = 5
+    const expectedData = new Map([
+      ["Test river 2021-01-01 - sum", {
+        count: [1, 1, 2],
+        intervals: [7.5, 12.5, 17.5],
+        interval: interval
+      }],
+      ["Test river 2 2021-01-02 - sum", {
+        count: [1, 1, 0, 2],
+        intervals: [7.5, 12.5, 17.5, 22.5],
+        interval: interval
+      }]
+    ])
+
+    const data = dataForHistogramAndBoxplot(rivers, 'river', species, interval, false, true)
+
+    expect(data).toEqual(expectedData)
+  })
+
+  it('should return empty arrays if no observations are found for stations', () => {
+    const stations = new Map([
+      [1, new Station({
+        id: 1,
+        name: "Test station",
+        date: "2021-01-01",
+        observations: []
+      })]
+    ])
+    const species = ['species1', 'species2']
+    const interval = 10
+    const expectedData = new Map([
+      ["Test station 2021-01-01 - species1", {
+        count: [],
+        intervals: [],
+        interval: interval
+      }],
+      ["Test station 2021-01-01 - species2", {
+        count: [],
+        intervals: [],
+        interval: interval
+      }]
+    ])
+    
+    const data = dataForHistogramAndBoxplot(stations, 'station', species, interval, false, false)
+
+    expect(data).toEqual(expectedData)
+  })
+
+  it('should return empty map if no species are given for stations', () => {
+    const stations = new Map([
+      [1, new Station({
+        id: 1,
+        name: "Test station",
+        date: "2021-01-01",
+        observations: [
+          {
+            id: 1,
+            species: 'species1',
+            length: 10,
+            count: 1
+          }
+        ]
+      })]
+    ])
+    const species = []
+    const interval = 10
+    const expectedData = new Map()
+
+    const data = dataForHistogramAndBoxplot(stations, 'station', species, interval, false, false)
+
+    expect(data).toEqual(expectedData)
+  })
+
+  it('should return the correct station data when species and observations are given', () => {
+    const stations = new Map([
+      [1, new Station({
+        id: 1,
+        name: "Test station",
+        date: "2021-01-01",
+        observations: [
+          {
+            id: 1,
+            species: 'species1',
+            length: 5,
+            count: 1
+          },
+          {
+            id: 2,
+            species: 'species2',
+            length: 18,
+            count: 2
+          },
+          {
+            id: 3,
+            species: 'species2',
+            length: 10,
+            count: 1
+          }
+        ]
+      })],
+      [2, new Station({
+        id: 2,
+        name: "Test station 2",
+        date: "2021-01-02",
+        observations: [
+          {
+            id: 1,
+            species: 'species1',
+            length: 20,
+            count: 2
+          },
+          {
+            id: 2,
+            species: 'species2',
+            length: 5,
+            count: 1
+          },
+          {
+            id: 3,
+            species: 'species1',
+            length: 10,
+            count: 1
+          }
+        ]
+      })]
+    ])
+    const species = ['species1', 'species2', 'species3']
+    const interval = 5
+    const expectedData = new Map([
+      ["Test station 2021-01-01 - species1", {
+        count: [1],
+        intervals: [7.5],
+        interval: interval
+      }],
+      ["Test station 2021-01-01 - species2", {
+        count: [1, 2],
+        intervals: [12.5, 17.5],
+        interval: interval
+      }],
+      ["Test station 2021-01-01 - species3", {
+        count: [],
+        intervals: [],
+        interval: interval
+      }],
+      ["Test station 2 2021-01-02 - species1", {
+        count: [1, 0, 2],
+        intervals: [12.5, 17.5, 22.5],
+        interval: interval
+      }],
+      ["Test station 2 2021-01-02 - species2", {
+        count: [1],
+        intervals: [7.5],
+        interval: interval
+      }],
+      ["Test station 2 2021-01-02 - species3", {
+        count: [],
+        intervals: [],
+        interval: interval
+      }]
+    ])
+
+    const data = dataForHistogramAndBoxplot(stations, 'station', species, interval, false, false)
+
+    expect(data).toEqual(expectedData)
+  })
+
+  it('should return the correct station data when subset species and observations are given', () => {
+    const stations = new Map([
+      [1, new Station({
+        id: 1,
+        name: "Test station",
+        date: "2021-01-01",
+        observations: [
+          {
+            id: 1,
+            species: 'species1',
+            length: 5,
+            count: 1
+          },
+          {
+            id: 2,
+            species: 'species2',
+            length: 18,
+            count: 2
+          },
+          {
+            id: 3,
+            species: 'species2',
+            length: 10,
+            count: 1
+          }
+        ]
+      })],
+      [2, new Station({
+        id: 2,
+        name: "Test station 2",
+        date: "2021-01-02",
+        observations: [
+          {
+            id: 1,
+            species: 'species1',
+            length: 20,
+            count: 2
+          },
+          {
+            id: 2,
+            species: 'species2',
+            length: 5,
+            count: 1
+          },
+          {
+            id: 3,
+            species: 'species1',
+            length: 10,
+            count: 1
+          }
+        ]
+      })]
+    ])
+    const species = ['species1']
+    const interval = 5
+    const expectedData = new Map([
+      ["Test station 2021-01-01 - species1", {
+        count: [1],
+        intervals: [7.5],
+        interval: interval
+      }],
+      ["Test station 2 2021-01-02 - species1", {
+        count: [1, 0, 2],
+        intervals: [12.5, 17.5, 22.5],
+        interval: interval
+      }]
+    ])
+
+    const data = dataForHistogramAndBoxplot(stations, 'station', species, interval, false, false)
+
+    expect(data).toEqual(expectedData)
+  })
+
+  it('should return the correct station data when species and observations are given, and it should include others', () => {
+    const stations = new Map([
+      [1, new Station({
+        id: 1,
+        name: "Test station",
+        date: "2021-01-01",
+        observations: [
+          {
+            id: 1,
+            species: 'species1',
+            length: 5,
+            count: 1
+          },
+          {
+            id: 2,
+            species: 'species2',
+            length: 18,
+            count: 2
+          },
+          {
+            id: 3,
+            species: 'species2',
+            length: 10,
+            count: 1
+          }
+        ]
+      })],
+      [2, new Station({
+        id: 2,
+        name: "Test station 2",
+        date: "2021-01-02",
+        observations: [
+          {
+            id: 1,
+            species: 'species1',
+            length: 20,
+            count: 2
+          },
+          {
+            id: 2,
+            species: 'species2',
+            length: 5,
+            count: 1
+          },
+          {
+            id: 3,
+            species: 'species1',
+            length: 10,
+            count: 1
+          }
+        ]
+      })]
+    ])
+    const species = ['species1']
+    const interval = 5
+    const expectedData = new Map([
+      ["Test station 2021-01-01 - species1", {
+        count: [1],
+        intervals: [7.5],
+        interval: interval
+      }],
+      ["Test station 2021-01-01 - others", {
+        count: [1, 2],
+        intervals: [12.5, 17.5],
+        interval: interval
+      }],
+      ["Test station 2 2021-01-02 - species1", {
+        count: [1, 0, 2],
+        intervals: [12.5, 17.5, 22.5],
+        interval: interval
+      }],
+      ["Test station 2 2021-01-02 - others", {
+        count: [1],
+        intervals: [7.5],
+        interval: interval
+      }]
+    ])
+
+    const data = dataForHistogramAndBoxplot(stations, 'station', species, interval, true, false)
+
+    expect(data).toEqual(expectedData)
+  })
+
+  it('should return the correct station data when species and observations are given, and it should combine species for each station', () => {
+    const stations = new Map([
+      [1, new Station({
+        id: 1,
+        name: "Test station",
+        date: "2021-01-01",
+        observations: [
+          {
+            id: 1,
+            species: 'species1',
+            length: 5,
+            count: 1
+          },
+          {
+            id: 2,
+            species: 'species2',
+            length: 18,
+            count: 2
+          },
+          {
+            id: 3,
+            species: 'species2',
+            length: 10,
+            count: 1
+          }
+        ]
+      })],
+      [2, new Station({
+        id: 2,
+        name: "Test station 2",
+        date: "2021-01-02",
+        observations: [
+          {
+            id: 1,
+            species: 'species1',
+            length: 20,
+            count: 2
+          },
+          {
+            id: 2,
+            species: 'species2',
+            length: 5,
+            count: 1
+          },
+          {
+            id: 3,
+            species: 'species1',
+            length: 10,
+            count: 1
+          }
+        ]
+      })]
+    ])
+    const species = ['species1', 'species2', 'species3']
+    const interval = 5
+    const expectedData = new Map([
+      ["Test station 2021-01-01 - sum", {
+        count: [1, 1, 2],
+        intervals: [7.5, 12.5, 17.5],
+        interval: interval
+      }],
+      ["Test station 2 2021-01-02 - sum", {
+        count: [1, 1, 0, 2],
+        intervals: [7.5, 12.5, 17.5, 22.5],
+        interval: interval
+      }]
+    ])
+
+    const data = dataForHistogramAndBoxplot(stations, 'station', species, interval, false, true)
+
+    expect(data).toEqual(expectedData)
+  })
+})
