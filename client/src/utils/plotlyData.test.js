@@ -70,39 +70,14 @@ describe('test dataForBarAndPieChart function', () => {
     getObservationsForRiver.mockImplementation((river) => {
       if (river.id === 1) {
         return [
-          {
-            id: 1,
-            species: 'species1',
-            length: 10,
-            count: 1
-          },
-          {
-            id: 2,
-            species: 'species2',
-            length: 20,
-            count: 2
-          },
-          {
-            id: 3,
-            species: 'species3',
-            length: 10,
-            count: 1
-          }
+          { id: 1, species: 'species1', length: 10, count: 1 },
+          { id: 2, species: 'species2', length: 20, count: 2 },
+          { id: 3,species: 'species3', length: 10, count: 1 }
         ]
       } else if (river.id === 2) {
         return [
-          {
-            id: 1,
-            species: 'species1',
-            length: 10,
-            count: 2
-          },
-          {
-            id: 2,
-            species: 'species2',
-            length: 20,
-            count: 1
-          }
+          { id: 1, species: 'species1', length: 10, count: 2 },
+          { id: 2, species: 'species2', length: 20, count: 1 }
         ]
       }
     })
@@ -142,39 +117,14 @@ describe('test dataForBarAndPieChart function', () => {
     getObservationsForRiver.mockImplementation((river) => {
       if (river.id === 1) {
         return [
-          {
-            id: 1,
-            species: 'species1',
-            length: 10,
-            count: 1
-          },
-          {
-            id: 2,
-            species: 'species2',
-            length: 20,
-            count: 2
-          },
-          {
-            id: 3,
-            species: 'species3',
-            length: 10,
-            count: 1
-          }
+          { id: 1, species: 'species1', length: 10, count: 1 },
+          { id: 2, species: 'species2', length: 20, count: 2 },
+          { id: 3,species: 'species3', length: 10, count: 1 }
         ]
       } else if (river.id === 2) {
         return [
-          {
-            id: 1,
-            species: 'species1',
-            length: 10,
-            count: 2
-          },
-          {
-            id: 2,
-            species: 'species2',
-            length: 20,
-            count: 1
-          }
+          { id: 1, species: 'species1', length: 10, count: 2 },
+          { id: 2, species: 'species2', length: 20, count: 1 }
         ]
       }
     })
@@ -210,39 +160,14 @@ describe('test dataForBarAndPieChart function', () => {
     getObservationsForRiver.mockImplementation((river) => {
       if (river.id === 1) {
         return [
-          {
-            id: 1,
-            species: 'species1',
-            length: 10,
-            count: 1
-          },
-          {
-            id: 2,
-            species: 'species2',
-            length: 20,
-            count: 2
-          },
-          {
-            id: 3,
-            species: 'species3',
-            length: 10,
-            count: 1
-          }
+          { id: 1, species: 'species1', length: 10, count: 1 },
+          { id: 2, species: 'species2', length: 20, count: 2 },
+          { id: 3,species: 'species3', length: 10, count: 1 }
         ]
       } else if (river.id === 2) {
         return [
-          {
-            id: 1,
-            species: 'species1',
-            length: 10,
-            count: 2
-          },
-          {
-            id: 2,
-            species: 'species2',
-            length: 20,
-            count: 1
-          }
+          { id: 1, species: 'species1', length: 10, count: 2 },
+          { id: 2, species: 'species2', length: 20, count: 1 }
         ]
       }
     })
@@ -516,7 +441,7 @@ describe('test dataForBarAndPieChart function', () => {
   })
 })
 
-describe('test dataForHistogramAndBoxplot function', () => {
+describe('test dataForHistogramAndBoxplot function for histogram', () => {
   beforeEach(() => {
     vi.resetModules()
     vi.clearAllMocks()
@@ -546,7 +471,7 @@ describe('test dataForHistogramAndBoxplot function', () => {
       }]
     ])
 
-    const data = dataForHistogramAndBoxplot(rivers, 'river', species, interval, false, false)
+    const data = dataForHistogramAndBoxplot('histogram', rivers, 'river', species, interval, false, false)
 
     expect(data).toEqual(expectedData)
   })
@@ -571,7 +496,7 @@ describe('test dataForHistogramAndBoxplot function', () => {
     const interval = 10
     const expectedData = new Map()
 
-    const data = dataForHistogramAndBoxplot(rivers, 'river', species, interval, false, false)
+    const data = dataForHistogramAndBoxplot('histogram', rivers, 'river', species, interval, false, false)
 
     expect(data).toEqual(expectedData)
   })
@@ -581,45 +506,15 @@ describe('test dataForHistogramAndBoxplot function', () => {
     getObservationsForRiver.mockImplementation((river) => {
       if (river.id === 1) {
         return [
-          {
-            id: 1,
-            species: 'species1',
-            length: 5,
-            count: 1
-          },
-          {
-            id: 2,
-            species: 'species2',
-            length: 18,
-            count: 2
-          },
-          {
-            id: 3,
-            species: 'species2',
-            length: 10,
-            count: 1
-          }
+          { id: 1, species: 'species1', length: 5, count: 1 },
+          { id: 2, species: 'species2', length: 18, count: 2 },
+          { id: 3, species: 'species2', length: 10, count: 1 }
         ]
       } else if (river.id === 2) {
         return [
-          {
-            id: 1,
-            species: 'species1',
-            length: 20,
-            count: 2
-          },
-          {
-            id: 2,
-            species: 'species2',
-            length: 5,
-            count: 1
-          },
-          {
-            id: 3,
-            species: 'species1',
-            length: 10,
-            count: 1
-          }
+          { id: 1, species: 'species1', length: 20, count: 2 },
+          { id: 2, species: 'species2', length: 5, count: 1 },
+          { id: 3, species: 'species1', length: 10, count: 1 }
         ]
       }
     })
@@ -670,7 +565,7 @@ describe('test dataForHistogramAndBoxplot function', () => {
       }]
     ])
 
-    const data = dataForHistogramAndBoxplot(rivers, 'river', species, interval, false, false)
+    const data = dataForHistogramAndBoxplot('histogram', rivers, 'river', species, interval, false, false)
 
     expect(data).toEqual(expectedData)
   })
@@ -680,45 +575,15 @@ describe('test dataForHistogramAndBoxplot function', () => {
     getObservationsForRiver.mockImplementation((river) => {
       if (river.id === 1) {
         return [
-          {
-            id: 1,
-            species: 'species1',
-            length: 5,
-            count: 1
-          },
-          {
-            id: 2,
-            species: 'species2',
-            length: 18,
-            count: 2
-          },
-          {
-            id: 3,
-            species: 'species2',
-            length: 10,
-            count: 1
-          }
+          { id: 1, species: 'species1', length: 5, count: 1 },
+          { id: 2, species: 'species2', length: 18, count: 2 },
+          { id: 3, species: 'species2', length: 10, count: 1 }
         ]
       } else if (river.id === 2) {
         return [
-          {
-            id: 1,
-            species: 'species1',
-            length: 20,
-            count: 2
-          },
-          {
-            id: 2,
-            species: 'species2',
-            length: 5,
-            count: 1
-          },
-          {
-            id: 3,
-            species: 'species1',
-            length: 10,
-            count: 1
-          }
+          { id: 1, species: 'species1', length: 20, count: 2 },
+          { id: 2, species: 'species2', length: 5, count: 1 },
+          { id: 3, species: 'species1', length: 10, count: 1 }
         ]
       }
     })
@@ -749,7 +614,7 @@ describe('test dataForHistogramAndBoxplot function', () => {
       }]
     ])
 
-    const data = dataForHistogramAndBoxplot(rivers, 'river', species, interval, false, false)
+    const data = dataForHistogramAndBoxplot('histogram', rivers, 'river', species, interval, false, false)
 
     expect(data).toEqual(expectedData)
   })
@@ -759,45 +624,15 @@ describe('test dataForHistogramAndBoxplot function', () => {
     getObservationsForRiver.mockImplementation((river) => {
       if (river.id === 1) {
         return [
-          {
-            id: 1,
-            species: 'species1',
-            length: 5,
-            count: 1
-          },
-          {
-            id: 2,
-            species: 'species2',
-            length: 18,
-            count: 2
-          },
-          {
-            id: 3,
-            species: 'species2',
-            length: 10,
-            count: 1
-          }
+          { id: 1, species: 'species1', length: 5, count: 1 },
+          { id: 2, species: 'species2', length: 18, count: 2 },
+          { id: 3, species: 'species2', length: 10, count: 1 }
         ]
       } else if (river.id === 2) {
         return [
-          {
-            id: 1,
-            species: 'species1',
-            length: 20,
-            count: 2
-          },
-          {
-            id: 2,
-            species: 'species2',
-            length: 5,
-            count: 1
-          },
-          {
-            id: 3,
-            species: 'species1',
-            length: 10,
-            count: 1
-          }
+          { id: 1, species: 'species1', length: 20, count: 2 },
+          { id: 2, species: 'species2', length: 5, count: 1 },
+          { id: 3, species: 'species1', length: 10, count: 1 }
         ]
       }
     })
@@ -838,7 +673,7 @@ describe('test dataForHistogramAndBoxplot function', () => {
       }]
     ])
 
-    const data = dataForHistogramAndBoxplot(rivers, 'river', species, interval, true, false)
+    const data = dataForHistogramAndBoxplot('histogram', rivers, 'river', species, interval, true, false)
 
     expect(data).toEqual(expectedData)
   })
@@ -848,45 +683,15 @@ describe('test dataForHistogramAndBoxplot function', () => {
     getObservationsForRiver.mockImplementation((river) => {
       if (river.id === 1) {
         return [
-          {
-            id: 1,
-            species: 'species1',
-            length: 5,
-            count: 1
-          },
-          {
-            id: 2,
-            species: 'species2',
-            length: 18,
-            count: 2
-          },
-          {
-            id: 3,
-            species: 'species2',
-            length: 10,
-            count: 1
-          }
+          { id: 1, species: 'species1', length: 5, count: 1 },
+          { id: 2, species: 'species2', length: 18, count: 2 },
+          { id: 3, species: 'species2', length: 10, count: 1 }
         ]
       } else if (river.id === 2) {
         return [
-          {
-            id: 1,
-            species: 'species1',
-            length: 20,
-            count: 2
-          },
-          {
-            id: 2,
-            species: 'species2',
-            length: 5,
-            count: 1
-          },
-          {
-            id: 3,
-            species: 'species1',
-            length: 10,
-            count: 1
-          }
+          { id: 1, species: 'species1', length: 20, count: 2 },
+          { id: 2, species: 'species2', length: 5, count: 1 },
+          { id: 3, species: 'species1', length: 10, count: 1 }
         ]
       }
     })
@@ -917,7 +722,7 @@ describe('test dataForHistogramAndBoxplot function', () => {
       }]
     ])
 
-    const data = dataForHistogramAndBoxplot(rivers, 'river', species, interval, false, true)
+    const data = dataForHistogramAndBoxplot('histogram', rivers, 'river', species, interval, false, true)
 
     expect(data).toEqual(expectedData)
   })
@@ -946,7 +751,7 @@ describe('test dataForHistogramAndBoxplot function', () => {
       }]
     ])
 
-    const data = dataForHistogramAndBoxplot(stations, 'station', species, interval, false, false)
+    const data = dataForHistogramAndBoxplot('histogram', stations, 'station', species, interval, false, false)
 
     expect(data).toEqual(expectedData)
   })
@@ -971,7 +776,7 @@ describe('test dataForHistogramAndBoxplot function', () => {
     const interval = 10
     const expectedData = new Map()
 
-    const data = dataForHistogramAndBoxplot(stations, 'station', species, interval, false, false)
+    const data = dataForHistogramAndBoxplot('histogram', stations, 'station', species, interval, false, false)
 
     expect(data).toEqual(expectedData)
   })
@@ -983,24 +788,9 @@ describe('test dataForHistogramAndBoxplot function', () => {
         name: 'Test station',
         date: '2021-01-01',
         observations: [
-          {
-            id: 1,
-            species: 'species1',
-            length: 5,
-            count: 1
-          },
-          {
-            id: 2,
-            species: 'species2',
-            length: 18,
-            count: 2
-          },
-          {
-            id: 3,
-            species: 'species2',
-            length: 10,
-            count: 1
-          }
+          { id: 1, species: 'species1', length: 5, count: 1 },
+          { id: 2, species: 'species2', length: 18, count: 2 },
+          { id: 3, species: 'species2', length: 10, count: 1 }
         ]
       })],
       [2, new Station({
@@ -1008,24 +798,9 @@ describe('test dataForHistogramAndBoxplot function', () => {
         name: 'Test station 2',
         date: '2021-01-02',
         observations: [
-          {
-            id: 1,
-            species: 'species1',
-            length: 20,
-            count: 2
-          },
-          {
-            id: 2,
-            species: 'species2',
-            length: 5,
-            count: 1
-          },
-          {
-            id: 3,
-            species: 'species1',
-            length: 10,
-            count: 1
-          }
+          { id: 1, species: 'species1', length: 20, count: 2 },
+          { id: 2, species: 'species2', length: 5, count: 1 },
+          { id: 3, species: 'species1', length: 10, count: 1 }
         ]
       })]
     ])
@@ -1064,7 +839,7 @@ describe('test dataForHistogramAndBoxplot function', () => {
       }]
     ])
 
-    const data = dataForHistogramAndBoxplot(stations, 'station', species, interval, false, false)
+    const data = dataForHistogramAndBoxplot('histogram', stations, 'station', species, interval, false, false)
 
     expect(data).toEqual(expectedData)
   })
@@ -1076,24 +851,9 @@ describe('test dataForHistogramAndBoxplot function', () => {
         name: 'Test station',
         date: '2021-01-01',
         observations: [
-          {
-            id: 1,
-            species: 'species1',
-            length: 5,
-            count: 1
-          },
-          {
-            id: 2,
-            species: 'species2',
-            length: 18,
-            count: 2
-          },
-          {
-            id: 3,
-            species: 'species2',
-            length: 10,
-            count: 1
-          }
+          { id: 1, species: 'species1', length: 5, count: 1 },
+          { id: 2, species: 'species2', length: 18, count: 2 },
+          { id: 3, species: 'species2', length: 10, count: 1 }
         ]
       })],
       [2, new Station({
@@ -1101,24 +861,9 @@ describe('test dataForHistogramAndBoxplot function', () => {
         name: 'Test station 2',
         date: '2021-01-02',
         observations: [
-          {
-            id: 1,
-            species: 'species1',
-            length: 20,
-            count: 2
-          },
-          {
-            id: 2,
-            species: 'species2',
-            length: 5,
-            count: 1
-          },
-          {
-            id: 3,
-            species: 'species1',
-            length: 10,
-            count: 1
-          }
+          { id: 1, species: 'species1', length: 20, count: 2 },
+          { id: 2, species: 'species2', length: 5, count: 1 },
+          { id: 3, species: 'species1', length: 10, count: 1 }
         ]
       })]
     ])
@@ -1137,7 +882,7 @@ describe('test dataForHistogramAndBoxplot function', () => {
       }]
     ])
 
-    const data = dataForHistogramAndBoxplot(stations, 'station', species, interval, false, false)
+    const data = dataForHistogramAndBoxplot('histogram', stations, 'station', species, interval, false, false)
 
     expect(data).toEqual(expectedData)
   })
@@ -1149,24 +894,9 @@ describe('test dataForHistogramAndBoxplot function', () => {
         name: 'Test station',
         date: '2021-01-01',
         observations: [
-          {
-            id: 1,
-            species: 'species1',
-            length: 5,
-            count: 1
-          },
-          {
-            id: 2,
-            species: 'species2',
-            length: 18,
-            count: 2
-          },
-          {
-            id: 3,
-            species: 'species2',
-            length: 10,
-            count: 1
-          }
+          { id: 1, species: 'species1', length: 5, count: 1 },
+          { id: 2, species: 'species2', length: 18, count: 2 },
+          { id: 3, species: 'species2', length: 10, count: 1 }
         ]
       })],
       [2, new Station({
@@ -1174,24 +904,9 @@ describe('test dataForHistogramAndBoxplot function', () => {
         name: 'Test station 2',
         date: '2021-01-02',
         observations: [
-          {
-            id: 1,
-            species: 'species1',
-            length: 20,
-            count: 2
-          },
-          {
-            id: 2,
-            species: 'species2',
-            length: 5,
-            count: 1
-          },
-          {
-            id: 3,
-            species: 'species1',
-            length: 10,
-            count: 1
-          }
+          { id: 1, species: 'species1', length: 20, count: 2 },
+          { id: 2, species: 'species2', length: 5, count: 1 },
+          { id: 3, species: 'species1', length: 10, count: 1 }
         ]
       })]
     ])
@@ -1220,7 +935,7 @@ describe('test dataForHistogramAndBoxplot function', () => {
       }]
     ])
 
-    const data = dataForHistogramAndBoxplot(stations, 'station', species, interval, true, false)
+    const data = dataForHistogramAndBoxplot('histogram', stations, 'station', species, interval, true, false)
 
     expect(data).toEqual(expectedData)
   })
@@ -1232,24 +947,9 @@ describe('test dataForHistogramAndBoxplot function', () => {
         name: 'Test station',
         date: '2021-01-01',
         observations: [
-          {
-            id: 1,
-            species: 'species1',
-            length: 5,
-            count: 1
-          },
-          {
-            id: 2,
-            species: 'species2',
-            length: 18,
-            count: 2
-          },
-          {
-            id: 3,
-            species: 'species2',
-            length: 10,
-            count: 1
-          }
+          { id: 1, species: 'species1', length: 5, count: 1 },
+          { id: 2, species: 'species2', length: 18, count: 2 },
+          { id: 3, species: 'species2', length: 10, count: 1 }
         ]
       })],
       [2, new Station({
@@ -1257,24 +957,9 @@ describe('test dataForHistogramAndBoxplot function', () => {
         name: 'Test station 2',
         date: '2021-01-02',
         observations: [
-          {
-            id: 1,
-            species: 'species1',
-            length: 20,
-            count: 2
-          },
-          {
-            id: 2,
-            species: 'species2',
-            length: 5,
-            count: 1
-          },
-          {
-            id: 3,
-            species: 'species1',
-            length: 10,
-            count: 1
-          }
+          { id: 1, species: 'species1', length: 20, count: 2 },
+          { id: 2, species: 'species2', length: 5, count: 1 },
+          { id: 3, species: 'species1', length: 10, count: 1 }
         ]
       })]
     ])
@@ -1293,7 +978,486 @@ describe('test dataForHistogramAndBoxplot function', () => {
       }]
     ])
 
-    const data = dataForHistogramAndBoxplot(stations, 'station', species, interval, false, true)
+    const data = dataForHistogramAndBoxplot('histogram', stations, 'station', species, interval, false, true)
+
+    expect(data).toEqual(expectedData)
+  })
+})
+
+describe('test dataForHistogramAndBoxplot function for boxplot', () => {
+  beforeEach(() => {
+    vi.resetModules()
+    vi.clearAllMocks()
+  })
+
+  it('should return empty arrays if no observations are found for rivers', () => {
+    getObservationsForRiver.mockReturnValue([])
+    const rivers = new Map([
+      [1, new River({
+        id: 1,
+        name: 'Test river',
+        startDate: '2021-01-01'
+      })]
+    ])
+    const species = ['species1', 'species2']
+    const interval = 1
+    const expectedData = new Map([
+      ['Test river 2021-01-01 - species1', {
+        lengths: []
+      }],
+      ['Test river 2021-01-01 - species2', {
+        lengths: []
+      }]
+    ])
+
+    const data = dataForHistogramAndBoxplot('boxplot', rivers, 'river', species, interval, false, false)
+
+    expect(data).toEqual(expectedData)
+  })
+
+  it('should return empty map if no species are given for rivers', () => {
+    getObservationsForRiver.mockReturnValue([
+      {
+        id: 1,
+        species: 'species1',
+        length: 10,
+        count: 1
+      }
+    ])
+    const rivers = new Map([
+      [1, new River({
+        id: 1,
+        name: 'Test river',
+        startDate: '2021-01-01'
+      })]
+    ])
+    const species = []
+    const interval = 1
+    const expectedData = new Map()
+
+    const data = dataForHistogramAndBoxplot('boxplot', rivers, 'river', species, interval, false, false)
+
+    expect(data).toEqual(expectedData)
+  })
+
+  it('should return the correct river data when species and observations are given', () => {
+    // Mock getObservationsForRiver function to return observations for rivers given their id
+    getObservationsForRiver.mockImplementation((river) => {
+      if (river.id === 1) {
+        return [
+          { id: 1, species: 'species1', length: 5, count: 1 },
+          { id: 2, species: 'species2', length: 18, count: 2 },
+          { id: 3, species: 'species2', length: 10, count: 1 }
+        ]
+      } else if (river.id === 2) {
+        return [
+          { id: 1, species: 'species1', length: 20, count: 2 },
+          { id: 2, species: 'species2', length: 5, count: 1 },
+          { id: 3, species: 'species1', length: 10, count: 1 }
+        ]
+      }
+    })
+    const rivers = new Map([
+      [1, new River({
+        id: 1,
+        name: 'Test river',
+        startDate: '2021-01-01'
+      })],
+      [2, new River({
+        id: 2,
+        name: 'Test river 2',
+        startDate: '2021-01-02'
+      })]
+    ])
+    const species = ['species1', 'species2', 'species3']
+    const interval = 1
+    const expectedData = new Map([
+      ['Test river 2021-01-01 - species1', {
+        lengths: [5]
+      }],
+      ['Test river 2021-01-01 - species2', {
+        lengths: [18, 18, 10]
+      }],
+      ['Test river 2021-01-01 - species3', {
+        lengths: []
+      }],
+      ['Test river 2 2021-01-02 - species1', {
+        lengths: [20, 20, 10]
+      }],
+      ['Test river 2 2021-01-02 - species2', {
+        lengths: [5]
+      }],
+      ['Test river 2 2021-01-02 - species3', {
+        lengths: []
+      }]
+    ])
+
+    const data = dataForHistogramAndBoxplot('boxplot', rivers, 'river', species, interval, false, false)
+
+    expect(data).toEqual(expectedData)
+  })
+
+  it('should return the correct river data when subset species and observations are given', () => {
+    // Mock getObservationsForRiver function to return observations for rivers given their id
+    getObservationsForRiver.mockImplementation((river) => {
+      if (river.id === 1) {
+        return [
+          { id: 1, species: 'species1', length: 5, count: 1 },
+          { id: 2, species: 'species2', length: 18, count: 2 },
+          { id: 3, species: 'species2', length: 10, count: 1 }
+        ]
+      } else if (river.id === 2) {
+        return [
+          { id: 1, species: 'species1', length: 20, count: 2 },
+          { id: 2, species: 'species2', length: 5, count: 1 },
+          { id: 3, species: 'species1', length: 10, count: 1 }
+        ]
+      }
+    })
+    const rivers = new Map([
+      [1, new River({
+        id: 1,
+        name: 'Test river',
+        startDate: '2021-01-01'
+      })],
+      [2, new River({
+        id: 2,
+        name: 'Test river 2',
+        startDate: '2021-01-02'
+      })]
+    ])
+    const species = ['species1']
+    const interval = 1
+    const expectedData = new Map([
+      ['Test river 2021-01-01 - species1', {
+        lengths: [5]
+      }],
+      ['Test river 2 2021-01-02 - species1', {
+        lengths: [20, 20, 10]
+      }]
+    ])
+
+    const data = dataForHistogramAndBoxplot('boxplot', rivers, 'river', species, interval, false, false)
+
+    expect(data).toEqual(expectedData)
+  })
+
+  it('should return the correct river data when species and observations are given, and it should include others', () => {
+    // Mock getObservationsForRiver function to return observations for rivers given their id
+    getObservationsForRiver.mockImplementation((river) => {
+      if (river.id === 1) {
+        return [
+          { id: 1, species: 'species1', length: 5, count: 1 },
+          { id: 2, species: 'species2', length: 18, count: 2 },
+          { id: 3, species: 'species2', length: 10, count: 1 }
+        ]
+      } else if (river.id === 2) {
+        return [
+          { id: 1, species: 'species1', length: 20, count: 2 },
+          { id: 2, species: 'species2', length: 5, count: 1 },
+          { id: 3, species: 'species1', length: 10, count: 1 }
+        ]
+      }
+    })
+    const rivers = new Map([
+      [1, new River({
+        id: 1,
+        name: 'Test river',
+        startDate: '2021-01-01'
+      })],
+      [2, new River({
+        id: 2,
+        name: 'Test river 2',
+        startDate: '2021-01-02'
+      })]
+    ])
+    const species = ['species1']
+    const interval = 1
+    const expectedData = new Map([
+      ['Test river 2021-01-01 - species1', {
+        lengths: [5]
+      }],
+      ['Test river 2021-01-01 - others', {
+        lengths: [18, 18, 10]
+      }],
+      ['Test river 2 2021-01-02 - species1', {
+        lengths: [20, 20, 10]
+      }],
+      ['Test river 2 2021-01-02 - others', {
+        lengths: [5]
+      }]
+    ])
+
+    const data = dataForHistogramAndBoxplot('boxplot', rivers, 'river', species, interval, true, false)
+
+    expect(data).toEqual(expectedData)
+  })
+
+  it('should return the correct river data when species and observations are given, and it should combine species for each river', () => {
+    // Mock getObservationsForRiver function to return observations for rivers given their id
+    getObservationsForRiver.mockImplementation((river) => {
+      if (river.id === 1) {
+        return [
+          { id: 1, species: 'species1', length: 5, count: 1 },
+          { id: 2, species: 'species2', length: 18, count: 2 },
+          { id: 3, species: 'species2', length: 10, count: 1 }
+        ]
+      } else if (river.id === 2) {
+        return [
+          { id: 1, species: 'species1', length: 20, count: 2 },
+          { id: 2, species: 'species2', length: 5, count: 1 },
+          { id: 3, species: 'species1', length: 10, count: 1 }
+        ]
+      }
+    })
+    const rivers = new Map([
+      [1, new River({
+        id: 1,
+        name: 'Test river',
+        startDate: '2021-01-01'
+      })],
+      [2, new River({
+        id: 2,
+        name: 'Test river 2',
+        startDate: '2021-01-02'
+      })]
+    ])
+    const species = ['species1', 'species2', 'species3']
+    const interval = 1
+    const expectedData = new Map([
+      ['Test river 2021-01-01 - sum', {
+        lengths: [5, 18, 18, 10]
+      }],
+      ['Test river 2 2021-01-02 - sum', {
+        lengths: [20, 20, 5, 10]
+      }]
+    ])
+
+    const data = dataForHistogramAndBoxplot('boxplot', rivers, 'river', species, interval, false, true)
+
+    expect(data).toEqual(expectedData)
+  })
+
+  it('should return empty arrays if no observations are found for stations', () => {
+    const stations = new Map([
+      [1, new Station({
+        id: 1,
+        name: 'Test station',
+        date: '2021-01-01',
+        observations: []
+      })]
+    ])
+    const species = ['species1', 'species2']
+    const interval = 1
+    const expectedData = new Map([
+      ['Test station 2021-01-01 - species1', {
+        lengths: []
+      }],
+      ['Test station 2021-01-01 - species2', {
+        lengths: []
+      }]
+    ])
+
+    const data = dataForHistogramAndBoxplot('boxplot', stations, 'station', species, interval, false, false)
+
+    expect(data).toEqual(expectedData)
+  })
+
+  it('should return empty map if no species are given for stations', () => {
+    const stations = new Map([
+      [1, new Station({
+        id: 1,
+        name: 'Test station',
+        date: '2021-01-01',
+        observations: [
+          {
+            id: 1,
+            species: 'species1',
+            length: 10,
+            count: 1
+          }
+        ]
+      })]
+    ])
+    const species = []
+    const interval = 1
+    const expectedData = new Map()
+
+    const data = dataForHistogramAndBoxplot('boxplot', stations, 'station', species, interval, false, false)
+
+    expect(data).toEqual(expectedData)
+  })
+
+  it('should return the correct station data when species and observations are given', () => {
+    const stations = new Map([
+      [1, new Station({
+        id: 1,
+        name: 'Test station',
+        date: '2021-01-01',
+        observations: [
+          { id: 1, species: 'species1', length: 5, count: 1 },
+          { id: 2, species: 'species2', length: 18, count: 2 },
+          { id: 3, species: 'species2', length: 10, count: 1 }
+        ]
+      })],
+      [2, new Station({
+        id: 2,
+        name: 'Test station 2',
+        date: '2021-01-02',
+        observations: [
+          { id: 1, species: 'species1', length: 20, count: 2 },
+          { id: 2, species: 'species2', length: 5, count: 1 },
+          { id: 3, species: 'species1', length: 10, count: 1 }
+        ]
+      })]
+    ])
+    const species = ['species1', 'species2', 'species3']
+    const interval = 1
+    const expectedData = new Map([
+      ['Test station 2021-01-01 - species1', {
+        lengths: [5]
+      }],
+      ['Test station 2021-01-01 - species2', {
+        lengths: [18, 18, 10]
+      }],
+      ['Test station 2021-01-01 - species3', {
+        lengths: []
+      }],
+      ['Test station 2 2021-01-02 - species1', {
+        lengths: [20, 20, 10]
+      }],
+      ['Test station 2 2021-01-02 - species2', {
+        lengths: [5]
+      }],
+      ['Test station 2 2021-01-02 - species3', {
+        lengths: []
+      }]
+    ])
+
+    const data = dataForHistogramAndBoxplot('boxplot', stations, 'station', species, interval, false, false)
+
+    expect(data).toEqual(expectedData)
+  })
+
+  it('should return the correct station data when subset species and observations are given', () => {
+    const stations = new Map([
+      [1, new Station({
+        id: 1,
+        name: 'Test station',
+        date: '2021-01-01',
+        observations: [
+          { id: 1, species: 'species1', length: 5, count: 1 },
+          { id: 2, species: 'species2', length: 18, count: 2 },
+          { id: 3, species: 'species2', length: 10, count: 1 }
+        ]
+      })],
+      [2, new Station({
+        id: 2,
+        name: 'Test station 2',
+        date: '2021-01-02',
+        observations: [
+          { id: 1, species: 'species1', length: 20, count: 2 },
+          { id: 2, species: 'species2', length: 5, count: 1 },
+          { id: 3, species: 'species1', length: 10, count: 1 }
+        ]
+      })]
+    ])
+    const species = ['species1']
+    const interval = 1
+    const expectedData = new Map([
+      ['Test station 2021-01-01 - species1', {
+        lengths: [5]
+      }],
+      ['Test station 2 2021-01-02 - species1', {
+        lengths: [20, 20, 10]
+      }]
+    ])
+
+    const data = dataForHistogramAndBoxplot('boxplot', stations, 'station', species, interval, false, false)
+
+    expect(data).toEqual(expectedData)
+  })
+
+  it('should return the correct station data when species and observations are given, and it should include others', () => {
+    const stations = new Map([
+      [1, new Station({
+        id: 1,
+        name: 'Test station',
+        date: '2021-01-01',
+        observations: [
+          { id: 1, species: 'species1', length: 5, count: 1 },
+          { id: 2, species: 'species2', length: 18, count: 2 },
+          { id: 3, species: 'species2', length: 10, count: 1 }
+        ]
+      })],
+      [2, new Station({
+        id: 2,
+        name: 'Test station 2',
+        date: '2021-01-02',
+        observations: [
+          { id: 1, species: 'species1', length: 20, count: 2 },
+          { id: 2, species: 'species2', length: 5, count: 1 },
+          { id: 3, species: 'species1', length: 10, count: 1 }
+        ]
+      })]
+    ])
+    const species = ['species1']
+    const interval = 1
+    const expectedData = new Map([
+      ['Test station 2021-01-01 - species1', {
+        lengths: [5]
+      }],
+      ['Test station 2021-01-01 - others', {
+        lengths: [18, 18, 10]
+      }],
+      ['Test station 2 2021-01-02 - species1', {
+        lengths: [20, 20, 10]
+      }],
+      ['Test station 2 2021-01-02 - others', {
+        lengths: [5]
+      }]
+    ])
+
+    const data = dataForHistogramAndBoxplot('boxplot', stations, 'station', species, interval, true, false)
+
+    expect(data).toEqual(expectedData)
+  })
+
+  it('should return the correct station data when species and observations are given, and it should combine species for each station', () => {
+    const stations = new Map([
+      [1, new Station({
+        id: 1,
+        name: 'Test station',
+        date: '2021-01-01',
+        observations: [
+          { id: 1, species: 'species1', length: 5, count: 1 },
+          { id: 2, species: 'species2', length: 18, count: 2 },
+          { id: 3, species: 'species2', length: 10, count: 1 }
+        ]
+      })],
+      [2, new Station({
+        id: 2,
+        name: 'Test station 2',
+        date: '2021-01-02',
+        observations: [
+          { id: 1, species: 'species1', length: 20, count: 2 },
+          { id: 2, species: 'species2', length: 5, count: 1 },
+          { id: 3, species: 'species1', length: 10, count: 1 }
+        ]
+      })]
+    ])
+    const species = ['species1', 'species2', 'species3']
+    const interval = 1
+    const expectedData = new Map([
+      ['Test station 2021-01-01 - sum', {
+        lengths: [5, 18, 18, 10]
+      }],
+      ['Test station 2 2021-01-02 - sum', {
+        lengths: [20, 20, 5, 10]
+      }]
+    ])
+
+    const data = dataForHistogramAndBoxplot('boxplot', stations, 'station', species, interval, false, true)
 
     expect(data).toEqual(expectedData)
   })
