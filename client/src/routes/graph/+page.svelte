@@ -6,7 +6,7 @@
     import SelectRiverAndStation from '../../lib/SelectRiverAndStation.svelte'
     import { riverStore } from '../../stores/riverStore.js'
     import { stationStore } from '../../stores/stationStore.js'
-    import { getRiverSummary, getRivers, getStations } from '../../utils/dataManager.js'
+    import { getRiverSummary, getStationSummary, getRivers, getStations } from '../../utils/dataManager.js'
     import { getSelectableSpecies } from '../../utils/filterData.js'
     import { onMount } from 'svelte'
 
@@ -46,7 +46,7 @@
     $: selectableSpecies = dataType === 'river' ? getSelectableSpecies(rivers) : getSelectableSpecies(stations)
 
     // Get data to plot from
-    $: plotData = dataType === 'river' ? selectedRivers : selectedStations 
+    $: plotData = dataType === 'river' ? selectedRivers : selectedStations
 
     /**
      * Get the selectable species from the rivers or stations
@@ -124,9 +124,9 @@
         {#if showPlotA}
             <div class="graphBox1">
                 <h3>FORDELING AV ARTER</h3>
-                <PlotlyComponent 
-                    type={plotTypeA} 
-                    {plotData} 
+                <PlotlyComponent
+                    type={plotTypeA}
+                    {plotData}
                     {dataType}
                     species={selectedSpecies}
                     absoluteValues={showValueA}
@@ -138,9 +138,9 @@
         {#if showPlotB}
             <div class="graphBox2">
                 <h3>FORDELING AV LENGDE</h3>
-                <PlotlyComponent 
-                    type={plotTypeB} 
-                    {plotData} 
+                <PlotlyComponent
+                    type={plotTypeB}
+                    {plotData}
                     {dataType}
                     species={selectedSpecies}
                     interval={intervallPlotB}

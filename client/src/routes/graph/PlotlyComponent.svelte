@@ -4,9 +4,9 @@
     import PieChartComponent from '../../lib/Diagrams/PieChartComponent.svelte'
     import BoxPlotComponent from '../../lib/Diagrams/BoxPlottComponent.svelte'
     import HistogramComponent from '../../lib/Diagrams/HistogramComponent.svelte'
-    import { 
-        dataForBarAndPieChart, 
-        dataForHistogramAndBoxplot 
+    import {
+      dataForBarAndPieChart,
+      dataForHistogramAndBoxplot
     } from '../../utils/plotlyData.js'
 
     export let type = 'bar' // The type of graph to display, 'barchart', 'piechart', 'boxplot' or 'histogram'
@@ -21,9 +21,9 @@
     let formattedData = new Map()
 
     $: if (plotData) {
-        formattedData = (type === 'barchart' || type === 'piechart') ? 
-            dataForBarAndPieChart(plotData, dataType, species, includeOthers, absoluteValues) : 
-            dataForHistogramAndBoxplot(type, plotData, dataType, species, interval, includeOthers, combineSpecies)
+      formattedData = (type === 'barchart' || type === 'piechart')
+        ? dataForBarAndPieChart(plotData, dataType, species, includeOthers, absoluteValues)
+        : dataForHistogramAndBoxplot(type, plotData, dataType, species, interval, includeOthers, combineSpecies)
     }
 
 </script>

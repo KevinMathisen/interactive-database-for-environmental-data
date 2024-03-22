@@ -19,13 +19,13 @@
      * Creates and draws a grouped bar chart with the given data
      * @param {Map<string, Map<string, number>>} plotData - The data to be displayed in the bar chart
      */
-    function drawPlot(plotData) {
+    function drawPlot (plotData) {
       // Create bars for each species in each observation point
       const traces = plotData.map((observationPoint, name) => ({
         x: observationPoint.map(species => species.species),
         y: observationPoint.map(species => species.count),
         type: 'bar',
-        name: name,
+        name,
         text: observationPoint.map(species => `${species.species} ${species.count}`),
         textposition: 'auto'
       }))
@@ -43,7 +43,7 @@
 
       // Creates the grouped bar chart.
       Plotly.newPlot('barGroupOne', traces, layout, config)
-    } 
+    }
 </script>
 
 <!--Displays the grouped bar chart with id='barGroupOne'-->

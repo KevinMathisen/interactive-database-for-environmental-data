@@ -1,9 +1,7 @@
-import { amountOfFishInObservations } from './calculateData.js'
-import { getObservationsForRiver } from './dataManager.js'
+import { amountOfFishInObservations, secondsSpentFishingInStations } from './calculateData.js'
+import { getObservationsForRiver, getStationsForRiver } from './dataManager.js'
 import { addFeedbackToStore } from './addFeedbackToStore.js'
 import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/feedbackMessages.js'
-import { getStationsForRiver } from './dataManager.js'
-import { secondsSpentFishingInStations } from './calculateData.js'
 
 /**
  * Creates data which can be used in a plotly bar or pie chart
@@ -79,7 +77,7 @@ function createDataForBarAndPieChart (observationPoints, allSpecies, includeOthe
 
       // Calculate the count of each species per minute and update the species count
       speciesCount.forEach((count, species) => {
-        speciesCount.set(species, Number((count / secSpentFishing*60).toFixed(2)))
+        speciesCount.set(species, Number((count / secSpentFishing * 60).toFixed(2)))
       })
     }
 
@@ -220,11 +218,11 @@ function createSpeciesDataForHistogramAndBoxplot (plotType, observations, allSpe
   if (combineSpecies) {
     // Get the observations for all species selected
     const combinedObservations = observations.filter(observation => allSpecies.includes(observation.species))
-    
+
     // Get the data for the combined species based on the plot type
-    const plotData = plotType === 'histogram' ? 
-      getIntervalsForObservations(combinedObservations, interval) :
-      getLengthsForObservations(combinedObservations)
+    const plotData = plotType === 'histogram'
+      ? getIntervalsForObservations(combinedObservations, interval)
+      : getLengthsForObservations(combinedObservations)
 
     speciesIntervals.set('sum', plotData)
     return speciesIntervals
@@ -234,11 +232,11 @@ function createSpeciesDataForHistogramAndBoxplot (plotType, observations, allSpe
   allSpecies.forEach(species => {
     // Get the observations for each species
     const speciesObservations = observations.filter(observation => observation.species === species)
-    
+
     // Get the data for the species based on the plot type
-    const plotData = plotType === 'histogram' ?
-      getIntervalsForObservations(speciesObservations, interval) :
-      getLengthsForObservations(speciesObservations)
+    const plotData = plotType === 'histogram'
+      ? getIntervalsForObservations(speciesObservations, interval)
+      : getLengthsForObservations(speciesObservations)
 
     speciesIntervals.set(species, plotData)
   })
@@ -249,10 +247,10 @@ function createSpeciesDataForHistogramAndBoxplot (plotType, observations, allSpe
     const otherSpecies = observations.filter(observation => !allSpecies.includes(observation.species))
 
     // Get the data for the other species based on the plot type
-    const plotData = plotType === 'histogram' ?
-      getIntervalsForObservations(otherSpecies, interval) :
-      getLengthsForObservations(otherSpecies)
-    
+    const plotData = plotType === 'histogram'
+      ? getIntervalsForObservations(otherSpecies, interval)
+      : getLengthsForObservations(otherSpecies)
+
     speciesIntervals.set('others', plotData)
   }
 

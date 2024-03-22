@@ -73,7 +73,7 @@ describe('test dataForBarAndPieChart function', () => {
         return [
           { id: 1, species: 'species1', length: 10, count: 1 },
           { id: 2, species: 'species2', length: 20, count: 2 },
-          { id: 3,species: 'species3', length: 10, count: 1 }
+          { id: 3, species: 'species3', length: 10, count: 1 }
         ]
       } else if (river.id === 2) {
         return [
@@ -120,7 +120,7 @@ describe('test dataForBarAndPieChart function', () => {
         return [
           { id: 1, species: 'species1', length: 10, count: 1 },
           { id: 2, species: 'species2', length: 20, count: 2 },
-          { id: 3,species: 'species3', length: 10, count: 1 }
+          { id: 3, species: 'species3', length: 10, count: 1 }
         ]
       } else if (river.id === 2) {
         return [
@@ -163,7 +163,7 @@ describe('test dataForBarAndPieChart function', () => {
         return [
           { id: 1, species: 'species1', length: 10, count: 1 },
           { id: 2, species: 'species2', length: 20, count: 2 },
-          { id: 3,species: 'species3', length: 10, count: 1 }
+          { id: 3, species: 'species3', length: 10, count: 1 }
         ]
       } else if (river.id === 2) {
         return [
@@ -208,7 +208,7 @@ describe('test dataForBarAndPieChart function', () => {
         return [
           { id: 1, species: 'species1', length: 10, count: 1 },
           { id: 2, species: 'species2', length: 20, count: 2 },
-          { id: 3,species: 'species3', length: 10, count: 1 }
+          { id: 3, species: 'species3', length: 10, count: 1 }
         ]
       } else if (river.id === 2) {
         return [
@@ -460,7 +460,6 @@ describe('test dataForBarAndPieChart function', () => {
     const data = dataForBarAndPieChart(stations, 'station', species, false, false)
 
     expect(data).toEqual(expectedData)
-  
   })
 })
 
