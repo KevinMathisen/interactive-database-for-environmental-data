@@ -1,10 +1,9 @@
-<script> 
+<script>
     import Header from '$lib/header.svelte'
-    import "../global.css"
+    import '../global.css'
 </script>
-
 
 <Header />
 <main>
-    <slot></slot>
+    <slot />
 </main>

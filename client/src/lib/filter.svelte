@@ -1,101 +1,68 @@
 <script>
+    import CollapsibleSection from './CollapsibleSection.svelte'
+    import RadioInput from './RadioInput.svelte'
+    import DateInput from './DateInput.svelte'
+    import SpeciesInput from './SpeciesInput.svelte'
+
+    export let selectableSpecies = [] // Species the user can choose
+
+    // User input exported to the page
+    export let dataType = 'river'
+    export let selectedStartDate = ''
+    export let selectedEndDate = ''
+    export let selectedSpecies = []
+
+    let chooseAll = true // If the user wants to choose all species
+    let customSpecies = [] // Species the user has chosen
+
+    // Species the user has choosen; either all or the custom ones
+    $: selectedSpecies = chooseAll ? selectableSpecies : customSpecies
+
+    // Options when choosing data type
+    const dataOptions = [
+      { value: 'river', label: 'Elvedata' },
+      { value: 'station', label: 'Stasjonsdata' }
+    ]
 
 </script>
 
-<section id="indexLeftSideFilter"> <!-- id is used for animations  -->
-    <div class="indexFilterHeader">Filter for Kart</div>
+<div class=main>
+    <form >
+        <!-- Input for choosing data type -->
+        <CollapsibleSection title="Type data">
+            <RadioInput name="dataType" options={dataOptions} bind:selected={dataType} />
+        </CollapsibleSection>
 
-        <!-- Defines the form for choosing elvedata or stasjonsdata -->
-    <h3>Type data</h3>
-    <form action=" ">
-        <div class="indexFilterDataContainer">
-            <div class="indexSetWidthForButtons"><label for="Stasjonsdata">Stasjonsdata</label></div>
-            <input type="radio" id="Stasjonsdata" name="color" value="Stasjonsdata">
-        </div>
-        <div class="indexFilterDataContainer">
-            <div class="indexSetWidthForButtons"><label for="Elvedata">Elvedata</label></div>
-            <input type="radio" id="Elvedata" name="color" value="Elvedata">
-        </div>            
+        <!-- Input for choosing date -->
+        <CollapsibleSection title="Dato">
+            <DateInput bind:selectedStartDate bind:selectedEndDate/>
+        </CollapsibleSection>
+
+        <!-- Input for choosing species -->
+        <CollapsibleSection title="Art">
+            <SpeciesInput {selectableSpecies} bind:chooseAll bind:customSpecies />
+        </CollapsibleSection>
+
+        <CollapsibleSection title="Valg">
+            <p>{dataType}</p>
+            <p>Fra {selectedStartDate}, til {selectedEndDate}</p>
+            <ul>
+                {#each selectedSpecies as species}
+                    <li>{species}</li>
+                {/each}
+            </ul>
+        </CollapsibleSection>
+
     </form>
-
-        <!-- Defines the form for choosing a time interval -->
-    <h3>Dato</h3>
-
-        <div class="indexFilterDataContainer">
-            <label for="FraDato">Fra</label>
-            <input type="date" id="FraDato" name="color" value="FraDato"><br>
-        </div>
-        
-        <div class="indexFilterDataContainer">
-            <label for="TilDato">Til</label>
-            <input type="date" id="TilDato" name="color" value="TilDato"><br>
-        </div>            
-
-
-        <!-- Defines the form for filtering different species of fish -->
-    <h3>Art</h3>
-    <form action=" ">
-        <div class="indexFilterDataContainer">
-            <div class="indexSetWidthForButtons"><label for="VelgAlleMenuFilter">Velg Alle</label></div>
-            <input type="radio" id="VelgAlleMenuFilter" name="color" value="VelgAlleMenuFilter">
-        </div>
-        
-        <div class="indexFilterDataContainer">
-            <div class="indexSetWidthForButtons"><label for="EgendefinertMenuFilter">Egendefinert</label></div>
-            <input type="radio" id="EgendefinertMenuFilter" name="color" value="EgendefinertMenuFilter">
-        </div>
-
-            <!-- Defines the drop-down search menu -->
-        <div class="indexFilterDataContainer">
-            <label for="fishOptions"></label>
-            <select id="fishOptions" name="fishOptions">
-                <option value="Sei">Sei</option>
-                <option value="Flyndre">Flyndre</option>
-                <option value="Torsk">Torsk</option>
-                <option value="Makrell">Makrell</option>
-                <option value="Steinbit">Steinbit</option>
-            </select>
-        </div>
-     </form>   
-</section>
+</div>
 
 <style>
-    section {
-        position: fixed;
-        width: 300px;
-        height: calc(100vh - 80px);         /* Height of the page subtracted by height of the header*/
-        top: 80px;                          /* Positions the menu under the header */
-        background-color: white;
-        border-right: 5px solid black;
-        transition: transform 1.5s ease;    /* Animation for the menu */
-        z-index: 1000;                      /* Makes the menu overlap the map */
-    }
-
-    .indexFilterHeader {
-        height: 60px;
-        font-size: 2.5rem;
-        background-color: #435768;
-        color: white;
+    .main {
+        height: 100%;
+        width: 100%;
         display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .indexFilterDataContainer {
-        font-size: 1.2rem;
-        padding: 0 0 0.5rem 1rem;
-    }
-
-    /* ----------------- OTHER -----------------*/
-
-    h3 {
-        color: #435768;
-        font-size: 1.5rem;
-        padding-left: 1rem;
-    }
-
-    .indexSetWidthForButtons { /* Used to position the radio buttons */
-        width: 120px;
-        display: inline-block;
+        flex-direction: column;
+        justify-content: flex-start;
+        overflow: auto;
     }
 </style>

@@ -3,8 +3,8 @@
 	"version": "0.0.1",
 	"private": true,
 	"directories": {
-    "test": "test"
-  },
+		"test": "test"
+	},
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
@@ -12,8 +12,8 @@
 		"test": "npm run test:integration && npm run test:unit",
 		"test:integration": "playwright test",
 		"test:unit": "vitest",
-		"lint": "npx standard --fix",
-		"format": "prettier --write ."
+		"lint": "eslint **/*.{js,svelte}",
+		"lint:fix": "eslint **/*.{js,svelte} --fix"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.28.1",
@@ -21,16 +21,21 @@
 		"@sveltejs/adapter-static": "^3.0.1",
 		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
+		"dotenv": "^16.4.5",
+		"eslint": "^8.57.0",
+		"eslint-config-standard": "^17.1.0",
+		"eslint-plugin-jsdoc": "^48.2.1",
+		"eslint-plugin-svelte": "^2.35.1",
 		"standard": "^17.1.0",
-		"prettier": "^3.1.1",
-		"prettier-plugin-svelte": "^3.1.2",
-		"svelte": "^4.2.7",
+		"svelte": "^4.2.12",
 		"vite": "^5.0.3",
 		"vitest": "^1.2.0"
 	},
 	"type": "module",
 	"dependencies": {
 		"exceljs": "^4.4.0",
-		"leaflet": "^1.9.4"
+		"leaflet": "^1.9.4",
+		"papaparse": "^5.4.1",
+		"plotly.js-dist-min": "^2.30.0"
 	}
 }

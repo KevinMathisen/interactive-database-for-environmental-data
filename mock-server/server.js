@@ -2,7 +2,12 @@ const express = require('express');
 const app = express();
 const fs = require('fs');
 const path = require('path');
+const cors = require('cors');
 const port = 3000; 
+
+// Middleware to enable CORS (Cross-Origin Resource Sharing) for development purposes
+// Without this the CORS policy: No 'Access-Control-Allow-Origin' header will block requests from the client
+app.use(cors());
 
 // Middleware to parse JSON
 app.use(express.json());
@@ -15,7 +20,7 @@ app.get('/:endpoint', (req, res) => {
 
 	// Extract the json file name from the request
 	const { endpoint } = req.params;
-	const filePath = path.join(__dirname, `data\\${endpoint}.json`);
+	const filePath = path.join(__dirname, 'data', `${endpoint}.json`);
 
 	// Read the json file specified in the request, send it as a response if it exists
 	fs.readFile(filePath, (err, data) => {
