@@ -1,39 +1,69 @@
-// Diable eslint camelcase rule because of the PostgreSQL naming convention
-/* eslint-disable camelcase */
-
-/*
- * River model
+/**
+ * Represents a river
+ * @class
+ * @property {number} id - Unique id of river
+ * @property {string} name - Name of river
+ * @property {string} startDate - Start date
+ * @property {string} endDate - End date
+ * @property {string} projectId - Project id
+ * @property {number} waterflow - Waterflow
+ * @property {string} boatType - Type of boat
+ * @property {string} skipper - Skipper/boat driver
+ * @property {string[]} crew - Crew members
+ * @property {{coordinates: [number, number]}} position - Position of river observation
+ * @property {string} comment - Comment
+ * @property {string[]} species  - Unique species in river
+ * @property {number[]} stations - Id of stations under river
  */
 export class River {
   constructor ({
     id = null,
     name = null,
-    start_date = null,
-    end_date = null,
-    project_id = null,
+    startDate = null,
+    endDate = null,
+    projectId = null,
     waterflow = null,
-    boat_type = null,
-    crew1 = null,
-    crew2 = null,
-    crew3 = null,
-    pos = null,
+    boatType = null,
+    skipper = null,
+    crew = null,
+    position = null,
     comment = null,
     species = null,
     stations = null
   } = {}) {
     this.id = id
     this.name = name
-    this.startDate = start_date
-    this.endDate = end_date
-    this.projectId = project_id
+    this.startDate = startDate
+    this.endDate = endDate
+    this.projectId = projectId
     this.waterflow = waterflow
-    this.boatType = boat_type
-    this.crew = [crew1, crew2, crew3]
-    this.position = pos
+    this.boatType = boatType
+    this.skipper = skipper
+    this.crew = crew
+    this.position = position
     this.comment = comment
     this.species = species
     this.stations = stations
   }
-}
 
-/* eslint-enable camelcase */
+  // Diable eslint camelcase rule because of the PostgreSQL naming convention
+  /* eslint-disable camelcase */
+  static fromJson (object) {
+    return new River({
+      id: object.id,
+      name: object.name,
+      startDate: object.start_date,
+      endDate: object.end_date,
+      projectId: object.project_id,
+      waterflow: object.waterflow,
+      boatType: object.boat_type,
+      skipper: object.skipper,
+      crew: object.crew,
+      position: object.pos,
+      comment: object.comment,
+      species: object.species,
+      stations: object.stations
+    })
+  }
+  /* eslint-enable camelcase */
+}
