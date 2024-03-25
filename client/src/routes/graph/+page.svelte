@@ -43,7 +43,7 @@
     $: stations = $stationStore
 
     // Get selectable species
-    $: selectableSpecies = dataType === 'river' ? getSelectableSpecies(rivers) : getSelectableSpecies(stations)
+    $: selectableSpecies = dataType === 'river' ? getSelectableSpecies(selectedRivers) : getSelectableSpecies(selectedStations)
 
     // Get data to plot from
     $: plotData = dataType === 'river' ? selectedRivers : selectedStations
@@ -56,14 +56,16 @@
       if (dataType === 'river') {
         getRiverSummary(3)
           .then(_ => {
-            selectedRivers = new Map(rivers[3])
-            selectableSpecies = getSelectableSpecies(rivers)
+            selectedRivers = new Map()
+            selectedRivers.set(3, rivers.get(3))
+            selectableSpecies = getSelectableSpecies(selectedRivers)
           })
       } else {
         getStationSummary(11)
           .then(_ => {
-            selectedStations = new Map(stations[11])
-            selectableSpecies = getSelectableSpecies(stations)
+            selectedStations = new Map()
+            selectedStations.set(11, stations.get(11))
+            selectableSpecies = getSelectableSpecies(selectedStations)
           })
       }
     }
@@ -73,6 +75,7 @@
      */
     function handleClose () {
       showSelectRiverAndStationModal = false
+      onSelectRiverStation()
     }
 
     /**
@@ -119,7 +122,6 @@
     </div>
 
     <div class="graphMain">
-        <button on:click={onSelectRiverStation}>Velg elver/stasjoner</button>
 
         {#if showPlotA}
             <div class="graphBox1">
