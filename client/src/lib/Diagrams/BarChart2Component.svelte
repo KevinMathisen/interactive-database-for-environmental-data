@@ -8,10 +8,10 @@
     // Initializes the Plotly library when the component is mounted.
     onMount(async () => {
       Plotly = await import('plotly.js-dist-min')
-      drawPlot(plotData)
     })
 
-    $: if (Plotly && plotData) {
+    $: if (Plotly && plotData.size > 0) {
+      console.log('drawing plot with plotData: ', plotData)
       drawPlot(plotData)
     }
 
@@ -21,14 +21,19 @@
      */
     function drawPlot (plotData) {
       // Create bars for each species in each observation point
-      const traces = plotData.map((observationPoint, name) => ({
-        x: observationPoint.map(species => species.species),
-        y: observationPoint.map(species => species.count),
-        type: 'bar',
-        name,
-        text: observationPoint.map(species => `${species.species} ${species.count}`),
-        textposition: 'auto'
-      }))
+      const traces = []
+      plotData.forEach((observationPoint, name) => {
+        traces.push({
+          x: Array.from(observationPoint.keys()),
+          y: Array.from(observationPoint.values()),
+          type: 'bar',
+          name,
+          text: Array.from(observationPoint.entries(), ([key, value]) => `${key}: ${value}`),
+          textposition: 'auto'
+        })
+      })
+
+      console.log('traces: ', traces) 
 
       // Set the barmode to 'group', add title, font size and the cornerradius og the displayed bars.
       const layout = {
