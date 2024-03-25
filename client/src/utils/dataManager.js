@@ -168,7 +168,7 @@ export async function getRiverSummary (id) {
   try {
     // Get river summary data
     const fetchedRiversSummary = await fetchRiverSummary(id)
-    
+
     // Update store with river
     updateStoreWithObject(riverStore, fetchedRiversSummary[0], River)
 
