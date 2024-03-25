@@ -54,6 +54,10 @@
     }
 </script>
 
+{#if plotData.size === 0}
+  <p>Velg elv/stasjon</p>
+{/if}
+
 <!--Displays the pie chart with id "sectorOne"-->
 <div id='sectorOne'></div>
 

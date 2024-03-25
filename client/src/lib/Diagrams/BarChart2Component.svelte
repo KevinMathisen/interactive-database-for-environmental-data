@@ -51,6 +51,10 @@
     }
 </script>
 
+{#if plotData.size === 0}
+  <p>Velg elv/stasjon</p>
+{/if}
+
 <!--Displays the grouped bar chart with id='barGroupOne'-->
 <div id='barGroupOne'></div>
 
