@@ -233,7 +233,10 @@
         </CollapsibleSection>
     </div>
 </div>
-<Button type="download" color="orange" on:downloadFile={downloadFile}>Last ned <img src="/dowloadIcon.svg" alt="listIcon" height="50px" class="headerIcon"></Button>
+
+<div class="downloadButton">
+  <Button type="orangeButton" size="medium" on:downloadFile={downloadFile}>Last ned <img src="/dowloadIcon.svg" alt="listIcon" height="50px" class="headerIcon"></Button>
+</div>
 
 <style>
     .downloadHeader {
@@ -263,5 +266,13 @@
 
     .rowItem {
         margin: 20px;
+    }
+
+    .downloadButton {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 5rem;
+        margin-bottom: 5rem;
     }
 </style>
