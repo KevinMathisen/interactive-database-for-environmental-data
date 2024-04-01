@@ -126,7 +126,7 @@ export class Observation {
     round = null,
     species = null,
     length = null,
-    count = 1,
+    count = null,
     gender = null,
     age = null,
     released = null,
@@ -138,7 +138,7 @@ export class Observation {
     this.round = round
     this.species = species
     this.length = length
-    this.count = count
+    this.count = count || 1 // Ensure count is at least 1
     this.gender = gender
     this.age = age
     this.released = released
