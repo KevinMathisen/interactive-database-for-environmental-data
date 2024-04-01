@@ -126,7 +126,7 @@ export class Observation {
     round = null,
     species = null,
     length = null,
-    count = null,
+    count = 1,
     gender = null,
     age = null,
     released = null,
