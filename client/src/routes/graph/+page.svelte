@@ -18,6 +18,8 @@
     let selectedStations = new Map() // Stations the user has chosen
     let selectableSpecies // All unique species in rivers or stations choosen
 
+    let dataFetched = false // Whether data has been fetched
+
     let dataType // "river" or "station", chosen by user
     let selectedSpecies // Species user wants to look at
     let includeOthers // Whether to include 'others' category in the graph
@@ -42,11 +44,18 @@
     $: rivers = $riverStore
     $: stations = $stationStore
 
+    $: if (selectedRivers.size != 0 || selectedStations.size != 0) {
+      onSelectRiverStation()
+    }
+
     // Get selectable species
     $: selectableSpecies = dataType === 'river' ? getSelectableSpecies(selectedRivers) : getSelectableSpecies(selectedStations)
 
-    // Get data to plot from
-    $: plotData = dataType === 'river' ? selectedRivers : selectedStations
+    // Get data to plot from if data has been fetched
+    $: if (dataFetched && (selectedRivers.size > 0 || selectedStations.size > 0) && dataType) {
+      plotData = dataType === 'river' ? selectedRivers : selectedStations
+      dataFetched = false
+    }
 
     /**
      * Get the selectable species from the rivers or stations
@@ -54,19 +63,19 @@
     function onSelectRiverStation () {
       // should get the selected rivers and stations from event
       if (dataType === 'river') {
-        getRiverSummary(3)
-          .then(_ => {
-            selectedRivers = new Map()
-            selectedRivers.set(3, rivers.get(3))
-            selectableSpecies = getSelectableSpecies(selectedRivers)
+        selectedRivers.forEach((_, id) => {
+          getRiverSummary(id).then(_ => {
+            selectedRivers.set(id, rivers.get(id))
+            dataFetched = true // Trigger svelte to update
           })
+        })
       } else {
-        getStationSummary(11)
-          .then(_ => {
-            selectedStations = new Map()
-            selectedStations.set(11, stations.get(11))
-            selectableSpecies = getSelectableSpecies(selectedStations)
+        selectedStations.forEach((_, id) => {
+          getStationSummary(id).then(_ => {
+            selectedStations.set(id, stations.get(id))
+            dataFetched = true // Trigger svelte to update
           })
+        })
       }
     }
 
@@ -75,7 +84,6 @@
      */
     function handleClose () {
       showSelectRiverAndStationModal = false
-      onSelectRiverStation()
     }
 
     /**
