@@ -66,7 +66,7 @@ export class Station {
     this.voltage = voltage
     this.pulse = pulse
     this.conductivity = conductivity
-    this.species = species
+    this.species = species ? species.map(s => s.toLowerCase()) : null, // Ensure species is lowercase
     this.observations = observations ? observations.map(observation => new Observation(observation)) : null
     this.transectLength = transectLength
     this.display = display
