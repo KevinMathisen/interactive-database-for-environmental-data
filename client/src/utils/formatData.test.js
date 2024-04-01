@@ -242,7 +242,7 @@ describe('test formatRiversForExcel function', () => {
         projectId: 'prosjekt2',
         position: { coordinates: [9.1, 60.6] },
         stations: [2],
-        crew: ['Crew2', '', '']
+        crew: ['Crew2', ''] // should work if crew is missing
       })]
     ])
     const stations = new Map([
