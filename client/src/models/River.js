@@ -61,7 +61,7 @@ export class River {
       crew: object.crew,
       position: object.pos,
       comment: object.comment,
-      species: object.species,
+      species: object.species ? object.species.map(species => species.toLowerCase()) : null, // Ensure species is lowercase
       stations: object.stations
     })
   }
