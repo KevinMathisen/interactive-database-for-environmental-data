@@ -98,11 +98,13 @@ CREATE VIEW "river_with_species" AS
     elvedata.posisjon AS pos,
     lower(elvedata.dato) :: date AS start_date,
     (upper(elvedata.dato) - '1 day'::interval) :: date AS end_date,
-    jsonb_agg(DISTINCT individdata.art) AS species,
+    COALESCE(
+      jsonb_agg(DISTINCT individdata.art) 
+      FILTER (WHERE individdata.art IS NOT NULL), '[]') AS species,
     elvedata.prosjektnummer AS project_id
   FROM elvedata
   JOIN stasjonsdata ON elvedata.id = stasjonsdata.elvedata
-  JOIN individdata ON stasjonsdata.id = individdata.stasjon
+  LEFT JOIN individdata ON stasjonsdata.id = individdata.stasjon
   GROUP BY elvedata.id;
 ```
 
@@ -117,11 +119,13 @@ CREATE VIEW "station_with_species" AS
     stasjonsdata.posisjon_stopp AS end_pos,
     (stasjonsdata.klokkeslett_start) :: date AS date,
     (stasjonsdata.klokkeslett_start) :: time AS time,
-    jsonb_agg(DISTINCT individdata.art) AS species,
+    COALESCE(
+      jsonb_agg(DISTINCT individdata.art) 
+      FILTER (WHERE individdata.art IS NOT NULL), '[]') AS species,
     elvedata.prosjektnummer AS project_id
   FROM stasjonsdata
-  INNER JOIN elvedata ON stasjonsdata.elvedata = elvedata.id
-  INNER JOIN individdata ON stasjonsdata.id = individdata.stasjon
+  JOIN elvedata ON stasjonsdata.elvedata = elvedata.id
+  LEFT JOIN individdata ON stasjonsdata.id = individdata.stasjon
   GROUP BY
     stasjonsdata.id,
     elvedata.elv,
@@ -143,7 +147,7 @@ CREATE VIEW river_summary AS
     elvedata.kommentar AS comment,
     jsonb_agg(DISTINCT stasjonsdata.id) AS stations
   FROM elvedata 
-  INNER JOIN stasjonsdata ON elvedata.id = stasjonsdata.elvedata
+  JOIN stasjonsdata ON elvedata.id = stasjonsdata.elvedata
   GROUP BY elvedata.id;
 ```
 
@@ -156,7 +160,7 @@ CREATE VIEW station_summary AS
     (stasjonsdata.klokkeslett_start) :: time AS time,
     stasjonsdata.elvedata AS river_id, 
     stasjonsdata.stasjonsbeskrivelse AS description, 
-    stasjonsdata.dominerende_elvetype AS rivertype, 
+    stasjonsdata.dominerende_elvetype AS river_type, 
     stasjonsdata.vaer AS weather, 
     stasjonsdata.vanntemp AS water_temp, 
     stasjonsdata.lufttemperatur AS air_temp, 
@@ -164,18 +168,18 @@ CREATE VIEW station_summary AS
     stasjonsdata.volt AS voltage, 
     stasjonsdata.puls AS pulse, 
     stasjonsdata.ledningsevne AS conductivity, 
-    jsonb_agg(
+    COALESCE(jsonb_agg(
       jsonb_build_object(
         'id', individdata.id,
         'species', individdata.art, 
         'length', individdata.lengde, 
         'count', individdata.antall
-        )
-      ) AS observations,
+        ) ORDER BY individdata.id
+      ) FILTER (WHERE individdata.id IS NOT NULL), '[]') AS observations,
     elvedata.prosjektnummer AS project_id 
-  FROM stasjonsdata 
-  INNER JOIN elvedata ON stasjonsdata.elvedata = elvedata.id
-  INNER JOIN individdata ON stasjonsdata.id = individdata.stasjon
+  FROM stasjonsdata
+  JOIN elvedata ON stasjonsdata.elvedata = elvedata.id
+  LEFT JOIN individdata ON stasjonsdata.id = individdata.stasjon
   GROUP BY
     stasjonsdata.id,
     elvedata.elv,
@@ -193,7 +197,7 @@ CREATE VIEW station_download AS
     stasjonsdata.transektlengde AS transect_length,
     stasjonsdata.display AS display,
     stasjonsdata.gpx_file AS gpx_file,
-    jsonb_agg(
+    COALESCE(jsonb_agg(
       jsonb_build_object(
         'id', individdata.id,
         'station', individdata.stasjon,
@@ -206,10 +210,10 @@ CREATE VIEW station_download AS
         'released', individdata.gjenutsatt,
         'sampletype', individdata.proevetype,
         'comment', individdata.kommentar
-        )
-      ) AS observations 
+        ) ORDER BY individdata.id
+      ) FILTER (WHERE individdata.id IS NOT NULL), '[]') AS observations
   FROM stasjonsdata
-  INNER JOIN individdata ON stasjonsdata.id = individdata.stasjon
+  LEFT JOIN individdata ON stasjonsdata.id = individdata.stasjon
   GROUP BY stasjonsdata.id;
 ```
 
