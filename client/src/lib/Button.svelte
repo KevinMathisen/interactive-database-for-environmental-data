@@ -10,11 +10,11 @@
   // export let center = true // The default center for the button
   export let href = '#' // The default link for the button
   export let type = '' // Can be either 'download' or any optioneble color 'blue', 'uploadButton'
-  export let size = 'medium' //can be either 'small', 'medium', 'large' or 'extende', as big ass the header. 
-  //export let ifNotPicture = false // Contains an svg icon
+  export let size = 'medium' // can be either 'small', 'medium', 'large' or 'extende', as big ass the header.
+  // export let ifNotPicture = false // Contains an svg icon
 
   /**
-   * Handles the appropriate function when the user clicks on the button. 
+   * Handles the appropriate function when the user clicks on the button.
    */
   function handleClick () {
     // Should only dispatch one event based on type of button
@@ -39,7 +39,9 @@
   a {
     display: flex;
     align-items: center;  /*Centers the content vertically*/
-    justify-content: center;  /*Centers the content in the buttons horizontally*/
+    /* Centers the content in the buttons horizontally */
+    /* justify-content: space-evenly; */
+    justify-content: center;
     white-space: nowrap;  /*Does not lett the text in the buttons wrap*/
     vertical-align: baseline; /*Aligns the icons and the text on the same level.*/
     cursor: pointer;  /*Pointer for the mouse*/
@@ -56,19 +58,20 @@
 
   .medium {
     font-size: 1.2rem;
-    width: 200px;
+    width: 180px;
     height: 60px;
     border-radius: 1rem;
+    justify-content: space-evenly;
   }
 
   .large {
     font-size: 1.5rem;
     width: 250px;
-    height: 80px;
+    height: 70px;
     border-radius: 1rem;
   }
 
-  .extended{      
+  .extended{
     font-size: 1.5rem;
     width: 100%;
     height: 100%;
@@ -79,7 +82,7 @@
     border-style: solid;
     border: 0;
     color: #000000;
-  } 
+  }
 
   .header:hover{
     background-color: rgb(238, 235, 235);
@@ -96,6 +99,13 @@
     color: white;
   }
 
+  .fileSearch{
+    display: flex;
+    background-color: #435768;
+    color: white;
+    width: 240px;
+  }
+
   .blue {
     border-radius: 15px;
     background-color: #435768;
@@ -103,13 +113,15 @@
   }
 
   .blue:hover,
-  .logOut:hover{
+  .logOut:hover,
+  .fileSearch:hover{
     box-shadow: 0px 5px 5px #36526e;
     transform: translateY(-3px);
   }
 
   .blue:active,
-  .logOut:active{
+  .logOut:active,
+  .fileSearch:active{
     background-color: #253544;
     box-shadow: 0px 0px 0px #36526e;
     transform: translateY(-0px);
