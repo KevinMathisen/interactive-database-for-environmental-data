@@ -44,7 +44,7 @@
     $: rivers = $riverStore
     $: stations = $stationStore
 
-    $: if (selectedRivers.size != 0 || selectedStations.size != 0) {
+    $: if (selectedRivers.size !== 0 || selectedStations.size !== 0) {
       onSelectRiverStation()
     }
 

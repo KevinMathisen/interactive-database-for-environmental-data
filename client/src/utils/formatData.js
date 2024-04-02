@@ -157,7 +157,7 @@ export function formatStationObservationsForTable (station) {
  * @returns {string[]} - A row in excel
  */
 function createRowForRiver (river) {
-  const crew = [...river.crew, '', '', ''].slice(0, 3) // Add empty strings to crew array so it always has 3 elements 
+  const crew = [...river.crew, '', '', ''].slice(0, 3) // Add empty strings to crew array so it always has 3 elements
   return [
     river.startDate, river.endDate, river.name, river.boatType, river.position.coordinates[1],
     river.position.coordinates[0], river.waterflow, river.skipper, crew[0], crew[1], crew[2],
