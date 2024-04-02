@@ -1,6 +1,12 @@
 <script>
   import { page } from '$app/stores'
   import Button from './Button.svelte'
+
+  let showDropdown = false;
+
+  function toggleDropdown() {
+    showDropdown = !showDropdown;
+  }
 </script>
 
 <header>
@@ -23,9 +29,24 @@
   <div class="centerItem" class:active={$page.url.pathname === '/download'}>
     <Button color="none" href="/download">Last ned<img src="/dowloadIcon.svg" alt="listIcon" height="50px" class="headerIcon"></Button>
   </div>
+  <div class="Menu centerItem" on:click={toggleDropdown}>
+    <div class="MenuIcon"></div>
+    {#if showDropdown}
+      <div class="Dropdown">
+        <ul>
+          <li><a href="/">Kart</a></li>
+          <li><a href="/list">Liste</a></li>
+          <li><a href="/graph">Graph</a></li>
+          <li><a href="/upload">Last opp</a></li>
+          <li><a href="/download">Last ned</a></li>
+        </ul>
+      </div>
+    {/if}
+    </div>
   <div class="LogOut centerItem">
     <Button color="blue" ifNotPicture={true}>Logg ut</Button>
   </div>
+  
 </header>
 
 <style>
@@ -59,22 +80,101 @@
     height: 80px;
   }
 
-  header > :nth-child(7) {
+  header > :nth-child(8) {
     font-size: 1.5rem;
     width: 180px;
     height: 60px;
     margin-right: 1.5rem;
   }
-/*
-  .LogOut {
-    color:white;
-    background-color: #435768;
-    border-radius: 5px;
-  }
-*/
+
   .centerItem {
     display: flex;
     justify-content: center;
     align-items: center;
   }
+
+  .Menu {
+    display: none;
+    margin-right: 3rem;
+    background-color: #435768;
+    width: 200px;
+    height: 60px;
+    position: relative;
+    border-radius: 5px;
+  }
+
+  .MenuIcon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .MenuIcon,
+  .MenuIcon::before,
+  .MenuIcon::after {
+      background-color: white;
+      width: 40px;
+      height: 5px;
+      border-radius: 5px;
+      position: absolute;
+      transition: all 0.5s;
+  }
+
+  .MenuIcon::before,
+  .MenuIcon::after {
+    content: "";
+  }
+
+  .MenuIcon::before {
+      transform: translate(0, -12px);
+  }
+
+  .MenuIcon::after {
+      transform: translate(0, 12px);
+  }
+
+  @media screen and (max-width: 1350px) {
+    header > :nth-child(2),
+    header > :nth-child(3),
+    header > :nth-child(4),
+    header > :nth-child(5),
+    header > :nth-child(6) {
+      display: none;
+    }
+    header > :nth-child(7) {
+      display: block;
+    }
+  }
+
+  .Dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 180px;
+    z-index: 10005;
+  }
+
+  .Dropdown ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .Dropdown li {
+    padding: 10px;
+  }
+
+  .Dropdown a {
+    color: black;
+    text-decoration: none;
+  }
+
+  .Dropdown a:hover {
+    background-color: #f4f4f4;
+  }
+
 </style>
