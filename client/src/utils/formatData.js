@@ -6,11 +6,15 @@ import headersConstants from '../constants/headers.js'
 import { riverStore } from '../stores/riverStore.js'
 import { stationStore } from '../stores/stationStore.js'
 import { get } from 'svelte/store'
-import { amountOfFishInStation, fishPerMinuteInStation } from './calculateData.js'
+import {
+  amountOfFishInStation,
+  fishPerMinuteInStation,
+  dataForAllSpeciesInStation
+} from './calculateData.js'
 
 /**
  * Converts river objects into arrays for display in a table
- * @param {Map<number, object>} rivers - The rivers to convert to array
+ * @param {Map<number, River>} rivers - The rivers to convert to array
  * @returns {{headers: string[], rows: string[][]}} - Headers and rows for the table
  */
 export function formatRiversForTable (rivers) {
@@ -31,7 +35,7 @@ export function formatRiversForTable (rivers) {
 
 /**
  * Converts station objects into arrays for display in a table
- * @param {Map<number, object>} stations - The stations to convert to array
+ * @param {Map<number, Station>} stations - The stations to convert to array
  * @returns {{headers: string[], rows: string[][]}} - Headers and rows for the table
  */
 export function formatStationsForTable (stations) {
@@ -52,7 +56,7 @@ export function formatStationsForTable (stations) {
 
 /**
  * Formats the station data for the station summary table
- * @param {Map<number, object>} stations - The stations to be formatted
+ * @param {Map<number, Station>} stations - The stations to be formatted
  * @returns {{headers: string[], rows: string[][]}} - Headers and rows for the table
  */
 export function formatStationsForSummaryTable (stations) {
@@ -71,6 +75,77 @@ export function formatStationsForSummaryTable (stations) {
       fishPerMinuteInStation(station)
     ])
   })
+
+  return { headers, rows }
+}
+
+/**
+ * Formats the station conditions for display in a table
+ * @param {Station} station - The station object containing the conditions
+ * @returns {{headers: string[], rows: string[][]}} - The headers and rows for the table
+ */
+export function formatStationConditionsForTable (station) {
+  const headers = headersConstants.STATION_CONDITIONS_HEADERS_TABLE
+
+  // If the station is an empty station, return an empty table
+  if (station.id === null) {
+    return { headers, rows: [] }
+  }
+
+  const rows = []
+  // Create a row with the station conditions
+  rows.push([
+    station.riverType,
+    station.weather,
+    station.waterTemp,
+    station.airTemp,
+    (station.secFished / 60).toFixed(1)
+  ])
+
+  return { headers, rows }
+}
+
+/**
+ * Formats the station settings for display in a table
+ * @param {Station} station - The station object containing the settings
+ * @returns {{headers: string[], rows: string[][]}} - The headers and rows for the table
+ */
+export function formatStationSettingsForTable (station) {
+  const headers = headersConstants.STATION_SETTINGS_HEADERS_TABLE
+
+  // If the station is an empty station, return an empty table
+  if (station.id === null) {
+    return { headers, rows: [] }
+  }
+
+  const rows = []
+  // Create a row with the station settings
+  rows.push([
+    station.voltage,
+    station.pulse,
+    station.conductivity
+  ])
+
+  return { headers, rows }
+}
+
+/**
+ * Formats the station observations for display in a table
+ * @param {Station} station - The station object containing the observations
+ * @returns {{headers: string[], rows: string[][]}} - The headers and rows for the table
+ */
+export function formatStationObservationsForTable (station) {
+  const headers = headersConstants.STATION_OBSERVATIONS_HEADERS_TABLE
+
+  // If the station is an empty station, return an empty table
+  if (station.id === null) {
+    return { headers, rows: [] }
+  }
+
+  const rows = dataForAllSpeciesInStation(station).map(Object.values)
+
+  // For each row, insert the station id at the start of the row
+  rows.forEach(row => row.unshift(station.id))
 
   return { headers, rows }
 }

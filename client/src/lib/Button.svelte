@@ -126,4 +126,10 @@
     width: 200px;
     height: 60px;
   }
+
+  .small {
+    font-size: 1rem;
+    width: 120px;
+    height: 40px;
+  }
 </style>
