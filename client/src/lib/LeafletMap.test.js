@@ -1,6 +1,6 @@
-import { render } from '@testing-library/svelte';
-import { describe, expect, it } from 'vitest';
-import LeafletMap from './LeafletMap.svelte';
+import { render } from '@testing-library/svelte'
+import { describe, expect, it } from 'vitest'
+import LeafletMap from './LeafletMap.svelte'
 
 /**
  * @vitest-environment jsdom
@@ -8,18 +8,18 @@ import LeafletMap from './LeafletMap.svelte';
 
 describe('LeafletMap', () => {
   it('map renders without causing error', () => {
-    const stations = [];
-    const rivers = [];
-    const dataType = 'station';
+    const stations = []
+    const rivers = []
+    const dataType = 'station'
 
-    const { container } = render(LeafletMap, { 
-      props: { 
+    const { container } = render(LeafletMap, {
+      props: {
         stations,
         rivers,
         dataType
-      } 
-    });
+      }
+    })
 
-    expect(container).toBeTruthy();
-  });
-});
+    expect(container).toBeTruthy()
+  })
+})

@@ -1,6 +1,6 @@
-import { render, fireEvent } from '@testing-library/svelte';
-import { describe, expect, it } from 'vitest';
-import Sidebar from './Sidebar.svelte';
+import { render, fireEvent } from '@testing-library/svelte'
+import { describe, expect, it } from 'vitest'
+import Sidebar from './Sidebar.svelte'
 
 /**
  * @vitest-environment jsdom
@@ -8,17 +8,17 @@ import Sidebar from './Sidebar.svelte';
 
 describe('Sidebar', () => {
   it('renders title prop and dispatches close event on handleClick', async () => {
-    let wasCloseEventFired = false;
+    let wasCloseEventFired = false
     const handleClose = () => {
-      wasCloseEventFired = true;
-    };
+      wasCloseEventFired = true
+    }
 
-    const { getByText, component } = render(Sidebar, { title: 'Test Title', onClose: handleClose });
-    
-    expect(getByText('Test Title')).toBeTruthy();
+    const { getByText } = render(Sidebar, { title: 'Test Title', onClose: handleClose })
 
-    await fireEvent.click(getByText('Test Title'));
+    expect(getByText('Test Title')).toBeTruthy()
 
-    expect(wasCloseEventFired).toBe(false);     // should be true, problem with events and unit testing
-  });
-});
+    await fireEvent.click(getByText('Test Title'))
+
+    expect(wasCloseEventFired).toBe(false) // should be true, problem with events and unit testing
+  })
+})

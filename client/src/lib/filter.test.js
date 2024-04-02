@@ -1,6 +1,6 @@
-import { render, fireEvent } from '@testing-library/svelte';
-import { describe, expect, it } from 'vitest';
-import Filter from './Filter.svelte';
+import { render } from '@testing-library/svelte'
+import { describe, expect, it } from 'vitest'
+import Filter from './filter.svelte'
 
 /**
  * @vitest-environment jsdom
@@ -8,13 +8,12 @@ import Filter from './Filter.svelte';
 
 describe('Filter', () => {
   it('species loads correctly', async () => {
-    const selectableSpecies = ['species1', 'species2', 'species3'];
+    const selectableSpecies = ['species1', 'species2', 'species3']
 
-    const { component, getByRole } = render(Filter, { props: {selectableSpecies} });
+    const { getByRole } = render(Filter, { props: { selectableSpecies } })
 
-    const list = getByRole('list');
+    const list = getByRole('list')
 
-    expect(list.childElementCount).toEqual(3);
-
-  });
-});
+    expect(list.childElementCount).toEqual(3)
+  })
+})

@@ -1,6 +1,6 @@
-import { render } from '@testing-library/svelte';
-import { describe, it, expect } from 'vitest';
-import BoxPlotComponent from './BoxPlottComponent.svelte';
+import { render } from '@testing-library/svelte'
+import { describe, it, expect } from 'vitest'
+import BoxPlotComponent from './BoxPlottComponent.svelte'
 
 /**
  * @vitest-environment jsdom
@@ -8,9 +8,9 @@ import BoxPlotComponent from './BoxPlottComponent.svelte';
 
 describe('BoxPlotComponent', () => {
   it('renders correctly', () => {
-    const { container } = render(BoxPlotComponent);
+    const { container } = render(BoxPlotComponent)
 
     // Check if the chart container is rendered
-    expect(container.querySelector('#boxPlot')).toBeTruthy();
-  });
-});
+    expect(container.querySelector('#boxPlot')).toBeTruthy()
+  })
+})

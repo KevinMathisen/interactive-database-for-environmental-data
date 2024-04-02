@@ -1,36 +1,35 @@
-import { render, fireEvent } from '@testing-library/svelte';
-import { describe, expect, it } from 'vitest';
-import PlotLengthOptions from './PlotLengthOptions.svelte';
+import { render, fireEvent } from '@testing-library/svelte'
+import { describe, expect, it } from 'vitest'
+import PlotLengthOptions from './PlotLengthOptions.svelte'
 
 /**
  * @vitest-environment jsdom
  */
 
 describe('PlotLengthOptions', () => {
-  const { getByLabelText, getByPlaceholderText, rerender } 
-  = render(PlotLengthOptions, { showPlotB: false , intervallPlotB: 0, plotTypeB: 'histogram'});
+  const { getByLabelText, getByPlaceholderText } =
+  render(PlotLengthOptions, { showPlotB: false, intervallPlotB: 0, plotTypeB: 'histogram' })
   it('binds showPlotB prop to checkbox', async () => {
-    
-    const checkbox = getByLabelText('Vis');
+    const checkbox = getByLabelText('Vis')
 
-    await fireEvent.click(checkbox);
+    await fireEvent.click(checkbox)
 
-    expect(checkbox.checked).toBe(true);
-  });
+    expect(checkbox.checked).toBe(true)
+  })
 
   it('binds intervallPlotB prop to number input', async () => {
-    const numberInput = getByPlaceholderText('mm');
+    const numberInput = getByPlaceholderText('mm')
 
-    await fireEvent.input(numberInput, { target: { value: '10' } });
+    await fireEvent.input(numberInput, { target: { value: '10' } })
 
-    expect(numberInput.value).toBe('10');
-  });
+    expect(numberInput.value).toBe('10')
+  })
 
   it('binds plotTypeB prop to radio input', async () => {
-    const radioInput = getByLabelText('Histogram');
+    const radioInput = getByLabelText('Histogram')
 
-    await fireEvent.click(radioInput);
+    await fireEvent.click(radioInput)
 
-    expect(radioInput.checked).toBe(true);
-  });
-});
+    expect(radioInput.checked).toBe(true)
+  })
+})
