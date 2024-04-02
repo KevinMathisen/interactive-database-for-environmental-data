@@ -90,70 +90,100 @@ For the download of the data ...
 ## SQL Views
 
 ### All rivers with underlying species
-Elvedata.start_dato og elvedata.slutt_data is not yet included in the SQL schema.
 ```sql
-CREATE VIEW river_with_species AS
-SELECT elvedata.id AS id, 
-elvedata.elv AS name, 
-elvedata.posisjon AS pos, 
-elvedata.start_dato AS start_date, 
-elvedata.slutt_dato AS end_date, 
-jsonb_agg(DISTINCT individdata.art) AS species
-FROM elvedata INNER JOIN stasjonsdata ON elvedata.id = stasjonsdata.elvedata INNER JOIN individdata ON stasjonsdata.id = individdata.stasjon 
-GROUP BY elvedata.id;
+CREATE VIEW "river_with_species" AS 
+  SELECT 
+    elvedata.id,
+    elvedata.elv AS name,
+    elvedata.posisjon AS pos,
+    lower(elvedata.dato) :: date AS start_date,
+    (upper(elvedata.dato) - '1 day'::interval) :: date AS end_date,
+    COALESCE(
+      jsonb_agg(DISTINCT individdata.art) 
+      FILTER (WHERE individdata.art IS NOT NULL), '[]') AS species,
+    elvedata.prosjektnummer AS project_id
+  FROM elvedata
+  JOIN stasjonsdata ON elvedata.id = stasjonsdata.elvedata
+  LEFT JOIN individdata ON stasjonsdata.id = individdata.stasjon
+  GROUP BY elvedata.id;
 ```
 
 ### All stations with underlying species 
 Stasjonsdata.nummer and .dato is not yet included in the SQL schema.
 ```sql
-CREATE VIEW station_with_species AS
-SELECT stasjonsdata.id AS id,
-CONCAT(elvedata.elv, ' ', stasjonsdata.nummer) AS name,
-stasjonsdata.posisjon_start AS start_pos,
-stasjonsdata.posisjon_stop AS end_pos,
-stasjonsdata.dato AS date, 
-jsonb_agg(DISTINCT individdata.art) AS species
-FROM elvedata INNER JOIN stasjonsdata ON elvedata.id = stasjonsdata.elvedata INNER JOIN individdata ON stasjonsdata.id = individdata.stasjon 
-GROUP BY stasjon.id;
+CREATE VIEW "station_with_species" AS
+  SELECT
+    stasjonsdata.id,
+    concat(elvedata.elv, ' ', stasjonsdata.stasjonnummer) AS name,
+    stasjonsdata.posisjon_start AS start_pos,
+    stasjonsdata.posisjon_stopp AS end_pos,
+    (stasjonsdata.klokkeslett_start) :: date AS date,
+    (stasjonsdata.klokkeslett_start) :: time AS time,
+    COALESCE(
+      jsonb_agg(DISTINCT individdata.art) 
+      FILTER (WHERE individdata.art IS NOT NULL), '[]') AS species,
+    elvedata.prosjektnummer AS project_id
+  FROM stasjonsdata
+  JOIN elvedata ON stasjonsdata.elvedata = elvedata.id
+  LEFT JOIN individdata ON stasjonsdata.id = individdata.stasjon
+  GROUP BY
+    stasjonsdata.id,
+    elvedata.elv,
+    elvedata.prosjektnummer;
 ```
 
 ### Summary information for River
 ```sql
 CREATE VIEW river_summary AS
-SELECT elvedata.id AS ID, 
-elvedata.elv AS name, 
-elvedata.start_dato AS start_date,
-elvedata.slutt_dato AS end_date,
-elvedata.prosjektnummer AS project_id,
-elvedata.vannfoering AS waterflow,
-elvedata.baattype AS boattype,
-elvedata.skipper AS skipper,
-elvedata.mannskap AS crew,
-elvedata.comment AS comment,
-jsonb_agg(DISTINCT stasjonsdata.id) AS stations
-FROM elvedata INNER JOIN stasjonsdata ON elvedata.id = stasjonsdata.elvedata
-GROUP BY elvedata.id;
+  SELECT elvedata.id AS id, 
+    elvedata.elv AS name, 
+    lower(elvedata.dato) :: date AS start_date,
+    (upper(elvedata.dato) - '1 day'::interval) :: date AS end_date,
+    elvedata.prosjektnummer AS project_id,
+    elvedata.vannfoering AS waterflow,
+    elvedata.baattype AS boattype,
+    elvedata.skipper AS skipper,
+    elvedata.mannskap AS crew,
+    elvedata.kommentar AS comment,
+    jsonb_agg(DISTINCT stasjonsdata.id) AS stations
+  FROM elvedata 
+  JOIN stasjonsdata ON elvedata.id = stasjonsdata.elvedata
+  GROUP BY elvedata.id;
 ```
 
 ### Summary information for Station
 ```sql
 CREATE VIEW station_summary AS
-SELECT stasjonsdata.id AS id, 
-CONCAT(elvedata.elv, ' ', stasjonsdata.nummer) AS name, 
-stasjonsdata.dato AS date, 
-stasjonsdata.klokkeslett_start AS time, 
-stasjonsdata.elvedata AS river_id, 
-stasjonsdata.stasjonsbeskrivelse AS description, 
-stasjonsdata.dominerende_elvetype AS rivertype, 
-stasjonsdata.vaer AS weather, 
-stasjonsdata.vanntemp AS water_temp, 
-stasjonsdata.lufttemperatur AS air_temp, 
-stasjonsdata.sekunder_fisket AS sec_fished, 
-stasjonsdata.volt AS voltage, 
-stasjonsdata.puls AS pulse, 
-stasjonsdata.ledningsevne AS conductivity, 
-jsonb_agg(jsonb_build_object('species', individdata.art, 'size', individdata.lengde, 'amount', individdata.antall)) AS observations 
-FROM stasjonsdata INNER JOIN elvedata ON stasjonsdata.elvedata = elvedata.id INNER JOIN individdata ON stasjonsdata.id = individdata.stasjon;
+  SELECT stasjonsdata.id AS id, 
+    CONCAT(elvedata.elv, ' ', stasjonsdata.stasjonnummer) AS name, 
+    (stasjonsdata.klokkeslett_start) :: date AS date,
+    (stasjonsdata.klokkeslett_start) :: time AS time,
+    stasjonsdata.elvedata AS river_id, 
+    stasjonsdata.stasjonsbeskrivelse AS description, 
+    stasjonsdata.dominerende_elvetype AS river_type, 
+    stasjonsdata.vaer AS weather, 
+    stasjonsdata.vanntemp AS water_temp, 
+    stasjonsdata.lufttemperatur AS air_temp, 
+    stasjonsdata.sekunder_fisket AS sec_fished, 
+    stasjonsdata.volt AS voltage, 
+    stasjonsdata.puls AS pulse, 
+    stasjonsdata.ledningsevne AS conductivity, 
+    COALESCE(jsonb_agg(
+      jsonb_build_object(
+        'id', individdata.id,
+        'species', individdata.art, 
+        'length', individdata.lengde, 
+        'count', individdata.antall
+        ) ORDER BY individdata.id
+      ) FILTER (WHERE individdata.id IS NOT NULL), '[]') AS observations,
+    elvedata.prosjektnummer AS project_id 
+  FROM stasjonsdata
+  JOIN elvedata ON stasjonsdata.elvedata = elvedata.id
+  LEFT JOIN individdata ON stasjonsdata.id = individdata.stasjon
+  GROUP BY
+    stasjonsdata.id,
+    elvedata.elv,
+    elvedata.prosjektnummer;
 ```
 
 ### Download information for River
@@ -163,26 +193,28 @@ There is no need for a sql view for river download data, as the river summary pa
 All the station information not included in the summary view. Includes all the observation data. 
 ```sql
 CREATE VIEW station_download AS
-SELECT stasjonsdata.id AS id,
-stasjonsdata.transektlengde AS transect_length
-stasjonsdata.display AS display,
-stasjonsdata.gpx_file AS gpx_file,
-jsonb_agg(
-  jsonb_build_object(
-    'id', individdata.id,
-    'station', individdata.stasjon,
-    'round', individdata.omgang,
-    'species', individdata.art,
-    'length', individdata.lengde,
-    'count', individdata.antall,
-    'gender', individdata.kjoenn,
-    'age', individdata.alder,
-    'released', individdata.gjenutsatt,
-    'sampletype', individdata.proevetype,
-    'comment', individdata.kommentar
-    )
-  ) AS observations 
-FROM stasjonsdata INNER JOIN elvedata ON stasjonsdata.elvedata = elvedata.id INNER JOIN individdata ON stasjonsdata.id = individdata.stasjon;
+  SELECT stasjonsdata.id AS id,
+    stasjonsdata.transektlengde AS transect_length,
+    stasjonsdata.display AS display,
+    stasjonsdata.gpx_file AS gpx_file,
+    COALESCE(jsonb_agg(
+      jsonb_build_object(
+        'id', individdata.id,
+        'station', individdata.stasjon,
+        'round', individdata.omgang,
+        'species', individdata.art,
+        'length', individdata.lengde,
+        'count', individdata.antall,
+        'gender', individdata.kjoenn,
+        'age', individdata.alder,
+        'released', individdata.gjenutsatt,
+        'sampletype', individdata.proevetype,
+        'comment', individdata.kommentar
+        ) ORDER BY individdata.id
+      ) FILTER (WHERE individdata.id IS NOT NULL), '[]') AS observations
+  FROM stasjonsdata
+  LEFT JOIN individdata ON stasjonsdata.id = individdata.stasjon
+  GROUP BY stasjonsdata.id;
 ```
 
 ### Observations under River

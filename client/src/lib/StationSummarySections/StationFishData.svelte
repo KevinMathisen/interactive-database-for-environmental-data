@@ -20,6 +20,6 @@
   rows={tableContent.rows}
   clickable=false
   datatype="observation"
-  markRow='Sum'
+  markRow='sum'
   on:rowClick
 />
