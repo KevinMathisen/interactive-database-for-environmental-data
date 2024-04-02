@@ -15,16 +15,16 @@
     <Button type="header" href="/list" size='extended'>Liste<img src="/listIcon.svg" alt="listIcon" height="40em" class="headerIcon"></Button>
   </div>
   <div class="centerItem" class:active={$page.url.pathname === '/graph'}>
-    <Button type="header" href="/graph" size='extended'>Graf<img src="/graphIcon.svg" alt="listIcon" height="40em" class="headerIcon"></Button>
+    <Button type="header" href="/graph" size='extended'>Graf<img src="/graphIcon2.svg" alt="listIcon" height="30em" class="headerIcon"></Button>
   </div>
   <div class="centerItem" class:active={$page.url.pathname === '/upload'}>
-    <Button type="header" href="/upload" size='extended'>Last opp<img src="/uploadIcon.svg" alt="listIcon" height="40em" class="headerIcon"></Button>
+    <Button type="header" href="/upload" size='extended'>Last opp<img src="/uploadIcon2.svg" alt="listIcon" height="40em" class="headerIcon"></Button>
   </div>
   <div class="centerItem" class:active={$page.url.pathname === '/download'}>
     <Button type="header" href="/download" size='extended'>Last ned<img src="/dowloadIcon.svg" alt="listIcon" height="40em" class="headerIcon"></Button>
   </div>
   <div class="LogOut centerItem">
-    <Button type="logOut" size='large'>Logg ut</Button>
+    <Button type="logOut" size='large'>Logg ut<img src="/userIcon.svg" alt="listIcon" height="50em" class="headerIcon"></Button>
   </div>
 </header>
 
@@ -37,8 +37,7 @@
     background-color: white;
     align-items: center;
     height: 80px;
-    margin: 2px;
-    padding-bottom: 5px;
+    padding-bottom: 10px;
   }
 
   .logoHeader{
@@ -65,4 +64,14 @@
   header > :nth-child(7) {
     padding: 1rem;
   }
+
+  /* .centerItem {
+    margin: 10px;
+    height: calc(100% - 20px);
+  } */
+
+  /* class = white */
+  /* .white {
+  filter: invert(100%);
+  } */
 </style>
