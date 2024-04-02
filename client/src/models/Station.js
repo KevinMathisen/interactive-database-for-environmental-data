@@ -136,7 +136,7 @@ export class Observation {
     this.id = id
     this.station = station
     this.round = round
-    this.species = species.toLowerCase() // Ensure species is lowercase
+    this.species = species ? species.toLowerCase() : null // Ensure species is lowercase
     this.length = length
     this.count = count || 1 // Ensure count is at least 1
     this.gender = gender
