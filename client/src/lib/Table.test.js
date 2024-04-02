@@ -32,8 +32,9 @@ describe('Table', () => {
     sortedRows.forEach((row) => {
       const rowElement = getByText(row[1]).closest('tr')
       const cells = rowElement.querySelectorAll('td')
-      expect(cells[0].textContent).toBe(row[1])
-      expect(cells[1].textContent).toBe(String(row[2]))
+      expect(cells[0].textContent).toBe(String(row[0]))
+      expect(cells[1].textContent).toBe(row[1])
+      expect(cells[2].textContent).toBe(String(row[2]))
     })
   })
 })
