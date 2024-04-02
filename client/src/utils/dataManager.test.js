@@ -258,7 +258,7 @@ describe('test getStations function', () => {
     const updatedStationMap = capturedUpdate(initialStationMap)
 
     expect(updatedStationMap.has(1)).toBe(true)
-    expect(updatedStationMap.get(1).observations[0].species).toEqual('Species 1')
+    expect(updatedStationMap.get(1).observations[0].species).toEqual('species 1')
     expect(updatedStationMap.has(2)).toBe(true)
     expect(updatedStationMap.get(2).name).toEqual('Station Test 2')
   })
@@ -623,6 +623,6 @@ describe('test getStationForDownload function', () => {
     const updatedStationMap = capturedUpdate(initialStationMap)
 
     expect(updatedStationMap.has(1)).toBe(true)
-    expect(updatedStationMap.get(1).observations[0].species).toEqual('Species 1')
+    expect(updatedStationMap.get(1).observations[0].species).toEqual('species 1')
   })
 })
