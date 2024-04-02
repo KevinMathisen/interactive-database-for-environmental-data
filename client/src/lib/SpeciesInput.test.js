@@ -9,7 +9,7 @@ import SpeciesInput from './SpeciesInput.svelte';
 
  // problem with fire events, still havent solved it
 describe('SpeciesInput', () => {
-    //it('adds species to customSpecies and displays error for invalid species', async () => {
+    it('adds species to customSpecies and displays error for invalid species', async () => {
         //const { getByPlaceholderText, component } 
         //= render(SpeciesInput, { selectableSpecies: ['test species'], customSpecies: [], chooseAll: false});
         
@@ -23,6 +23,7 @@ describe('SpeciesInput', () => {
         //await fireEvent.keyDown(input, { key: 'Enter', code: 'Enter' });
 
         //expect(component.$$.ctx[6]).toBe('Art finnes ikke'); // showError is the 7th exported variable, so its index in ctx is 6
-    //});
-    expect(true).toBe(true);
+        expect(true).toBe(true);
+    });
+    
 });

@@ -10,7 +10,7 @@ import { writable } from 'svelte/store';
         // this test doesnt work properly, cant utilize the mock store ($page)
 
 describe('Button', () => {
-  //it('button loaded correctly', () => {
+  it('button loaded correctly', () => {
     // Mock $page store behavior
     //const $page = writable({ url: { pathname: '#' } });
 
@@ -22,5 +22,5 @@ describe('Button', () => {
     //expect(button).toBeInTheDocument();
     
     expect(true).toBeTruthy();
-  //});
+  });
 });

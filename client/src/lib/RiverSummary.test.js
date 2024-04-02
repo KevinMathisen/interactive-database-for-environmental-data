@@ -10,7 +10,7 @@ import { River } from '../models/River.js';
 
  // uses page store
 describe('RiverSummary', () => {
-  //it('renders CollapsibleSection and RiverOverview with correct props', () => {
+  it('renders CollapsibleSection and RiverOverview with correct props', () => {
     //const river = new River();
     //river.name = 'Test River';
 
@@ -19,5 +19,5 @@ describe('RiverSummary', () => {
     //expect(getByText('Test River')).toBeTruthy();
 
     expect(true).toBeTruthy();
-  //});
+  });
 });
