@@ -3,7 +3,7 @@
  * @param {Observation[]} observations - The observations to calculate the amount of fish in
  * @returns {number} - The amount of fish in the observations
  */
-function amountOfFishInObservations (observations) {
+export function amountOfFishInObservations (observations) {
   return observations.reduce((amountOfFish, observation) => amountOfFish + observation.count, 0)
 }
 
@@ -30,7 +30,7 @@ export function amountOfFishInStations (stations) {
  * @param {Map<number, Station>} stations - The stations to calculate on
  * @returns {number} - The time spent fishing in all the stations
  */
-function secondsSpentFishingInStations (stations) {
+export function secondsSpentFishingInStations (stations) {
   return Array.from(stations.values()).reduce((secSpentFishing, station) => secSpentFishing + station.secFished, 0)
 }
 
@@ -133,6 +133,19 @@ function dataForSpeciesObservations (observations, secSpentFishing) {
   const observationsWithLength = observations.filter(
     observation => observation.length && observation.length > 0)
 
+  // Return no data for length if there are no observations with length
+  if (observationsWithLength.length === 0) {
+    return {
+      amount: amountOfFish,
+      amountPerMinute: (amountOfFish / (secSpentFishing / 60)).toFixed(2),
+      averageLength: 0,
+      medianLength: 0,
+      minimumLength: 0,
+      maximumLength: 0
+    }
+  }
+
+  // Calculate and return the data for the species
   return {
     amount: amountOfFish,
     amountPerMinute: (amountOfFish / (secSpentFishing / 60)).toFixed(2),
