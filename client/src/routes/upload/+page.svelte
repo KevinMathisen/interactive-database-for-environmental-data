@@ -107,7 +107,7 @@
     <img src="/uploadCloudIcon.svg" alt="listIcon" height="60px" id="uploadCloudIcon" />
     <p>Dra og slipp filer eller</p>
     <br>
-    <Button type="blue" size="medium" on:selectFile={selectFile} ifNotPicture={true}>Bla gjennom Filer </Button>
+    <Button type="fileSearch" size="medium" on:selectFile={selectFile} ifNotPicture={true}>Bla gjennom Filer <img src="/fileSearchIcon.svg" alt="listIcon" height="40px" class="fileSearch white-color"></Button>
   </div>
 
   <!-- Defines the text under the upload files box -->
@@ -125,7 +125,7 @@
 
 <!-- The upload files button -->
 <div class="uploadButtonPlacement">
-  <Button type="orangeButton" size="medium" on:uploadFile={uploadFile}>Last opp <img src="/uploadIcon.svg" alt="listIcon" height="50px" class="headerIcon"></Button>
+  <Button type="orangeButton" size="medium" on:uploadFile={uploadFile}>Last opp <img src="/uploadIcon2.svg" alt="listIcon" height="40px" class="uploadIcon white-color"></Button>
 </div>
 
 <style>
@@ -178,4 +178,8 @@
     margin-bottom: 5rem;
   }
 
+  /* Transformes the icon color to white */
+  .white-color{
+    filter: invert(100%);
+  }
 </style>
