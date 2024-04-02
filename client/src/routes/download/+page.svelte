@@ -235,44 +235,49 @@
 </div>
 
 <div class="downloadButton">
-  <Button type="orangeButton" size="medium" on:downloadFile={downloadFile}>Last ned <img src="/dowloadIcon.svg" alt="listIcon" height="50px" class="headerIcon"></Button>
+  <Button type="orangeButton" size="medium" on:downloadFile={downloadFile}>Last ned <img src="/dowloadIcon.svg" alt="listIcon" height="38px" class="downloadIcon white-color"></Button>
 </div>
 
 <style>
-    .downloadHeader {
-        height: 100px;
-        font-size:3rem;
-        width: 100vw;
-        background-color: #435768;
-        color: white;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+  .downloadHeader {
+      height: 100px;
+      font-size:3rem;
+      width: 100vw;
+      background-color: #435768;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
 
-    .downloadMain {
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-    }
+  .downloadMain {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+  }
 
-    .row {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        margin: 10px;
-    }
+  .row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      margin: 10px;
+  }
 
-    .rowItem {
-        margin: 20px;
-    }
+  .rowItem {
+      margin: 20px;
+  }
 
-    .downloadButton {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-top: 5rem;
-        margin-bottom: 5rem;
-    }
+  .downloadButton {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 5rem;
+      margin-bottom: 5rem;
+  }
+
+  /* Transformes the icon color to white */
+  .white-color{
+    filter: invert(100%);
+  }
 </style>
