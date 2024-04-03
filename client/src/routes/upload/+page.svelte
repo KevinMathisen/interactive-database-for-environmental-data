@@ -170,7 +170,6 @@
     font-size: 1rem;
   }
 
-
   .uploadButtonPlacement {
     display: flex;
     justify-content: center;
