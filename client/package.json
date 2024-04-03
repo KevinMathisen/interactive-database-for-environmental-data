@@ -1,6 +1,6 @@
 {
-	"name": "client2",
-	"version": "0.0.1",
+	"name": "environment-data-visualizer",
+	"version": "0.1.0",
 	"private": true,
 	"directories": {
 		"test": "test"
