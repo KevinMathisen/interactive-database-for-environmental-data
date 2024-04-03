@@ -30,13 +30,15 @@
     <Button color="none" href="/download">Last ned<img src="/dowloadIcon.svg" alt="listIcon" height="50px" class="headerIcon"></Button>
   </div>
   <div class="Menu centerItem" on:click={toggleDropdown}>
-    <div class="MenuIcon"></div>
+    <div class="MenuIcon" class:active={showDropdown}></div>
+    <div class="MenuIcon::before" class:translate-before={showDropdown}></div>
+    <div class="MenuIcon::after" class:translate-after={showDropdown}></div>
     {#if showDropdown}
       <div class="Dropdown">
         <ul>
           <li><a href="/">Kart</a></li>
           <li><a href="/list">Liste</a></li>
-          <li><a href="/graph">Graph</a></li>
+          <li><a href="/graph">Graf</a></li>
           <li><a href="/upload">Last opp</a></li>
           <li><a href="/download">Last ned</a></li>
         </ul>
@@ -133,7 +135,7 @@
   .MenuIcon::after {
       transform: translate(0, 12px);
   }
-
+  
   @media screen and (max-width: 1350px) {
     header > :nth-child(2),
     header > :nth-child(3),
@@ -153,8 +155,8 @@
     left: 0;
     background-color: white;
     border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 180px;
+    border-radius: 10px;
+    width: 200px;
     z-index: 10005;
   }
 
@@ -162,6 +164,9 @@
     list-style-type: none;
     margin: 0;
     padding: 0;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .Dropdown li {
@@ -176,5 +181,25 @@
   .Dropdown a:hover {
     background-color: #f4f4f4;
   }
+  
+  .translate-before {
+    transform: translateX(-20px) rotate(45deg);
+  }
 
+  .translate-after {
+    transform: translateX(-20px) rotate(-45deg);
+  }
+
+  .MenuIcon.active {
+    transform: translateX(-20px);
+    background-color: transparent;
+  }
+
+  .MenuIcon.active::before {
+    transform: rotate(45deg);
+  }
+
+  .MenuIcon.active::after {
+    transform: rotate(-45deg);
+  }
 </style>
