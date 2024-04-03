@@ -244,5 +244,12 @@
         display: flex;
         justify-content: center;
         flex-direction: column;
+        padding: 2rem 15rem 0 15rem;
+    }
+
+    @media screen and (max-width: 900px) {
+      .downloadMain{
+        padding: 2rem 5rem 0 5rem;
+      }
     }
 </style>

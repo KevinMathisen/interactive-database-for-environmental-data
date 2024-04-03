@@ -101,8 +101,8 @@
   .Menu {
     display: none;
     margin-right: 3rem;
-    background-color: #435768;
-    width: 200px;
+    background-color: #ffffff;
+    width: 150px;
     height: 60px;
     position: relative;
     border-radius: 5px;
@@ -118,7 +118,7 @@
   .MenuIcon,
   .MenuIcon::before,
   .MenuIcon::after {
-      background-color: white;
+      background-color: black;
       width: 40px;
       height: 5px;
       border-radius: 5px;
@@ -157,9 +157,9 @@
     top: 100%;
     left: 0;
     background-color: white;
-    border: 1px solid #ccc;
+    border: 1px solid black;
     border-radius: 10px;
-    width: 200px;
+    width: 150px;
     z-index: 10005;
   }
 
@@ -170,6 +170,7 @@
     display:flex;
     flex-direction: column;
     align-items: center;
+    font-size:1.5rem;
   }
 
   .Dropdown li {
