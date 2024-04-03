@@ -72,8 +72,11 @@
       bargap: 0
     }
 
+    // Adjust the graph size according to the screen size.
+    const config = { responsive: true }
+
     // Plot the histogram
-    Plotly.newPlot('fishHistogram', traces, layout)
+    Plotly.newPlot('fishHistogram', traces, layout, config)
   }
 </script>
 

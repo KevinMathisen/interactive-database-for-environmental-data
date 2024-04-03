@@ -42,7 +42,7 @@ export class River {
     this.crew = crew
     this.position = position
     this.comment = comment
-    this.species = species
+    this.species = species ? species.map(s => s.toLowerCase()) : null // Ensure species is lowercase
     this.stations = stations
   }
 

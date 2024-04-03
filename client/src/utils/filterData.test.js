@@ -174,7 +174,7 @@ describe('test getSelectableSpecies function', () => {
     const rivers = new Map([
       [0, new River({ name: 'name', species: ['Torsk', 'Ørret'] })]
     ])
-    expect(getSelectableSpecies(rivers)).toEqual(['Torsk', 'Ørret'])
+    expect(getSelectableSpecies(rivers)).toEqual(['torsk', 'ørret'])
   })
 
   it('should return a unique list of species from multiple rivers', () => {
@@ -182,7 +182,7 @@ describe('test getSelectableSpecies function', () => {
       [0, new River({ name: 'name', species: ['Torsk', 'Ørret'] })],
       [1, new River({ name: 'name2', species: ['Torsk', 'Laks'] })]
     ])
-    expect(getSelectableSpecies(rivers)).toEqual(expect.arrayContaining(['Torsk', 'Ørret', 'Laks']))
+    expect(getSelectableSpecies(rivers)).toEqual(expect.arrayContaining(['torsk', 'ørret', 'laks']))
   })
 
   it('should ignore duplicate species across rivers', () => {
@@ -191,7 +191,7 @@ describe('test getSelectableSpecies function', () => {
       [1, new River({ name: 'name2', species: ['Torsk', 'Ørret'] })],
       [2, new River({ name: 'name3', species: ['Laks'] })]
     ])
-    expect(getSelectableSpecies(rivers)).toEqual(expect.arrayContaining(['Torsk', 'Ørret', 'Laks']))
+    expect(getSelectableSpecies(rivers)).toEqual(expect.arrayContaining(['torsk', 'ørret', 'laks']))
   })
 
   it('should return an empty array if no rivers have species', () => {
