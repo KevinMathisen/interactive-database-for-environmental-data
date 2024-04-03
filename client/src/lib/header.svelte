@@ -9,22 +9,22 @@
     <p>Nina</p>
   </div>
   <div class="centerItem" class:active={$page.url.pathname === '/'}>
-    <Button color="none" href="/">Kart<img src="/mapIcon.svg" alt="listIcon" height="50px" class="headerIcon"></Button>
+    <Button type="header" href="/" size='extended'>Kart<img src="/mapIcon.svg" alt="listIcon" height="40em" class="headerIcon"></Button>
   </div>
   <div class="centerItem" class:active={$page.url.pathname === '/list'}>
-    <Button color="none" href="/list">Liste<img src="/listIcon.svg" alt="listIcon" height="50px" class="headerIcon"></Button>
+    <Button type="header" href="/list" size='extended'>Liste<img src="/listIcon.svg" alt="listIcon" height="40em" class="headerIcon"></Button>
   </div>
   <div class="centerItem" class:active={$page.url.pathname === '/graph'}>
-    <Button color="none" href="/graph">Graph<img src="/graphIcon.svg" alt="listIcon" height="50px" class="headerIcon"></Button>
+    <Button type="header" href="/graph" size='extended'>Graf<img src="/graphIcon2.svg" alt="listIcon" height="30em" class="headerIcon"></Button>
   </div>
   <div class="centerItem" class:active={$page.url.pathname === '/upload'}>
-    <Button color="none" href="/upload">Last opp<img src="/uploadIcon.svg" alt="listIcon" height="50px" class="headerIcon"></Button>
+    <Button type="header" href="/upload" size='extended'>Last opp<img src="/uploadIcon2.svg" alt="listIcon" height="40em" class="headerIcon"></Button>
   </div>
   <div class="centerItem" class:active={$page.url.pathname === '/download'}>
-    <Button color="none" href="/download">Last ned<img src="/dowloadIcon.svg" alt="listIcon" height="50px" class="headerIcon"></Button>
+    <Button type="header" href="/download" size='extended'>Last ned<img src="/dowloadIcon.svg" alt="listIcon" height="40em" class="headerIcon"></Button>
   </div>
   <div class="LogOut centerItem">
-    <Button color="blue" ifNotPicture={true}>Logg ut</Button>
+    <Button type="logOut" size='large'>Logg ut<img src="/userIcon.svg" alt="listIcon" height="50em" class="headerIcon"></Button>
   </div>
 </header>
 
@@ -32,16 +32,18 @@
   header {
     display: flex;
     flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
     background-color: white;
     align-items: center;
     height: 80px;
-    gap: 2rem;
-    justify-content: space-between;
+    padding-bottom: 10px;
   }
 
   .logoHeader{
     display:flex;
     align-items: center;
+    padding-right: 1rem;
     padding-left: 1rem;
     font-size: 2rem;
     font-family: "Inter", sans-serif;
@@ -54,27 +56,22 @@
   }
 
   header > :nth-child(2), header > :nth-child(3), header > :nth-child(4), header > :nth-child(5), header > :nth-child(6)  {
-    font-size: 1.5rem;
-    width: 180px;
-    height: 80px;
+    position: relative;
+    height: 100%;
+    width: 100%;
   }
 
   header > :nth-child(7) {
-    font-size: 1.5rem;
-    width: 180px;
-    height: 60px;
-    margin-right: 1.5rem;
+    padding: 1rem;
   }
-/*
-  .LogOut {
-    color:white;
-    background-color: #435768;
-    border-radius: 5px;
-  }
-*/
-  .centerItem {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+
+  /* .centerItem {
+    margin: 10px;
+    height: calc(100% - 20px);
+  } */
+
+  /* class = white */
+  /* .white {
+  filter: invert(100%);
+  } */
 </style>
