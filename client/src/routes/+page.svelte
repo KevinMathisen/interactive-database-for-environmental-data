@@ -11,6 +11,7 @@
   import StationSummary from '../lib/StationSummary.svelte'
   import { River } from '../models/River.js'
   import { Station } from '../models/Station.js'
+  import UserFeedbackMessage from '../../lib/UserFeedbackMessage.svelte'
 
   let rivers = new Map() // Rivers with coordinates
   let stations = new Map() // Stations with coordinates
@@ -87,6 +88,9 @@
   }
 
 </script>
+
+<!-- User feedback modal, invisible unless there is feedback to show to user -->
+<UserFeedbackMessage />
 
 <LeafletMap {dataType} rivers={filteredRivers} stations={filteredStations} on:stationClicked={stationClicked} on:riverClicked={riverClicked}/>
 

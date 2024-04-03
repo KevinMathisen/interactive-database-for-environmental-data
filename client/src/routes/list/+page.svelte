@@ -9,6 +9,7 @@
     import { riverStore } from '../../stores/riverStore.js'
     import { stationStore } from '../../stores/stationStore.js'
     import { onMount } from 'svelte'
+    import UserFeedbackMessage from '../../lib/UserFeedbackMessage.svelte';
 
     let rivers // Rivers with coordinates
     let stations // Stations with coordinates
@@ -74,6 +75,9 @@
     $: ({ headers, rows } = createHeaderAndData(dataType, filteredBySearchRivers, filteredBySearchStations))
 
 </script>
+
+<!-- User feedback modal, invisible unless there is feedback to show to user -->
+<UserFeedbackMessage />
 
 <!-- Filter sidebar -->
 <div class="sidebar">
