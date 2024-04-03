@@ -169,7 +169,7 @@ describe('test formatStationObservationsForTable function', () => {
     const stations = new Station({ id: 1 })
     calculateData.dataForAllSpeciesInStation.mockReturnValue([
       {
-        species: 'Species1',
+        species: 'species1',
         amount: 1,
         amountPerMinute: '1.11',
         averageLength: '1.11',
@@ -178,7 +178,7 @@ describe('test formatStationObservationsForTable function', () => {
         maximumLength: 1
       },
       {
-        species: 'Species2',
+        species: 'species2',
         amount: 2,
         amountPerMinute: '2.22',
         averageLength: '2.22',
@@ -187,7 +187,7 @@ describe('test formatStationObservationsForTable function', () => {
         maximumLength: 2
       },
       {
-        species: 'Sum',
+        species: 'sum',
         amount: 3,
         amountPerMinute: '3.33',
         averageLength: '3.33',
@@ -200,9 +200,9 @@ describe('test formatStationObservationsForTable function', () => {
     const formatted = formatStationObservationsForTable(stations)
     expect(formatted.headers).toEqual(headersConstants.STATION_OBSERVATIONS_HEADERS_TABLE)
     expect(formatted.rows).toEqual([
-      [1, 'Species1', 1, '1.11', '1.11', '1.11', 1, 1],
-      [1, 'Species2', 2, '2.22', '2.22', '2.22', 2, 2],
-      [1, 'Sum', 3, '3.33', '3.33', '3.33', 3, 3]
+      [1, 'species1', 1, '1.11', '1.11', '1.11', 1, 1],
+      [1, 'species2', 2, '2.22', '2.22', '2.22', 2, 2],
+      [1, 'sum', 3, '3.33', '3.33', '3.33', 3, 3]
     ])
   })
 })
@@ -242,7 +242,7 @@ describe('test formatRiversForExcel function', () => {
         projectId: 'prosjekt2',
         position: { coordinates: [9.1, 60.6] },
         stations: [2],
-        crew: ['Crew2', '', '']
+        crew: ['Crew2', ''] // should work if crew is missing
       })]
     ])
     const stations = new Map([
@@ -290,8 +290,8 @@ describe('test formatRiversForExcel function', () => {
     ])
     expect(formatted.observationHeader).toEqual(headersConstants.OBSERVATION_HEADERS_EXCEL)
     expect(formatted.observationRows).toEqual([
-      [1, 1, '', 'Species1', 2, 1, '', '', '', '', 'Comment1'],
-      [2, 2, '', 'Species2', 3, 1, '', '', '', '', 'Comment2']
+      [1, 1, '', 'species1', 2, 1, '', '', '', '', 'Comment1'],
+      [2, 2, '', 'species2', 3, 1, '', '', '', '', 'Comment2']
     ])
   })
 })
@@ -381,8 +381,8 @@ describe('test formatStationsForExcel function', () => {
     ])
     expect(formatted.observationHeader).toEqual(headersConstants.OBSERVATION_HEADERS_EXCEL)
     expect(formatted.observationRows).toEqual([
-      [1, 1, '', 'Species1', 2, 1, '', '', '', '', 'Comment1'],
-      [2, 2, '', 'Species2', 3, 1, '', '', '', '', 'Comment2']
+      [1, 1, '', 'species1', 2, 1, '', '', '', '', 'Comment1'],
+      [2, 2, '', 'species2', 3, 1, '', '', '', '', 'Comment2']
     ])
   })
 })
@@ -466,10 +466,10 @@ describe('test formatRiversForCsv function', () => {
     expect(formatted.rows).toEqual([
       ['2024-01-01', '', 'Name1', '', 60.5, 9.0, '', '', 'Crew1', '', '', 'prosjekt1', '',
         '1', '2024-01-01', '12:00', 60.5, 9, 60.51, 9.01, '', '', 4, '', '', '', '', '', '', '', '', '', 'Comment1',
-        1, 1, '', 'Species1', 2, 1, '', '', '', '', 'Comment1'],
+        1, 1, '', 'species1', 2, 1, '', '', '', '', 'Comment1'],
       ['2024-01-15', '', 'Name2', '', 60.6, 9.1, '', '', 'Crew2', '', '', 'prosjekt2', '',
         '2', '2024-01-15', '13:00', 60.6, 9.1, 60.61, 9.11, '', '', 6, '', '', '', '', '', '', '', '', '', 'Comment2',
-        2, 2, '', 'Species2', 3, 1, '', '', '', '', 'Comment2']
+        2, 2, '', 'species2', 3, 1, '', '', '', '', 'Comment2']
     ])
   })
 })
@@ -555,10 +555,10 @@ describe('test formatStationsForCsv function', () => {
     expect(formatted.rows).toEqual([
       ['2024-01-01', '', 'Name1', '', 60.5, 9.0, '', '', 'Crew1', '', '', 'prosjekt1', '',
         '1', '2024-01-01', '12:00', 60.5, 9, 60.51, 9.01, '', '', 4, '', '', '', '', '', '', '', '', '', 'Comment1',
-        1, 1, '', 'Species1', 2, 1, '', '', '', '', 'Comment1'],
+        1, 1, '', 'species1', 2, 1, '', '', '', '', 'Comment1'],
       ['2024-01-15', '', 'Name2', '', 60.6, 9.1, '', '', 'Crew2', '', '', 'prosjekt2', '',
         '2', '2024-01-15', '13:00', 60.6, 9.1, 60.61, 9.11, '', '', 6, '', '', '', '', '', '', '', '', '', 'Comment2',
-        2, 2, '', 'Species2', 3, 1, '', '', '', '', 'Comment2']
+        2, 2, '', 'species2', 3, 1, '', '', '', '', 'Comment2']
     ])
   })
 })

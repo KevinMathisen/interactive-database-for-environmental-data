@@ -133,6 +133,19 @@ function dataForSpeciesObservations (observations, secSpentFishing) {
   const observationsWithLength = observations.filter(
     observation => observation.length && observation.length > 0)
 
+  // Return no data for length if there are no observations with length
+  if (observationsWithLength.length === 0) {
+    return {
+      amount: amountOfFish,
+      amountPerMinute: (amountOfFish / (secSpentFishing / 60)).toFixed(2),
+      averageLength: 0,
+      medianLength: 0,
+      minimumLength: 0,
+      maximumLength: 0
+    }
+  }
+
+  // Calculate and return the data for the species
   return {
     amount: amountOfFish,
     amountPerMinute: (amountOfFish / (secSpentFishing / 60)).toFixed(2),

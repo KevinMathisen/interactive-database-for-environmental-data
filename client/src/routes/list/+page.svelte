@@ -62,7 +62,6 @@
      * @returns {{headers: string[], rows: string[][]}} - Headers and rows for the table
      */
     function createHeaderAndData (dataType, filteredBySearchRivers, filteredBySearchStations) {
-      console.log('createHeaderAndData:', dataType, filteredBySearchRivers, filteredBySearchStations)
       if (dataType === 'river') {
         return formatRiversForTable(filteredBySearchRivers)
       } else if (dataType === 'station') {

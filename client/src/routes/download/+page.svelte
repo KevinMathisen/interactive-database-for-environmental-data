@@ -227,27 +227,55 @@
   </CollapsibleSection>
 
 </div>
-<Button type="download" color="orange" on:downloadFile={downloadFile}>Last ned <img src="/dowloadIcon.svg" alt="listIcon" height="50px" class="headerIcon"></Button>
+
+<div class="downloadButton">
+  <Button type="orangeButton" size="medium" on:downloadFile={downloadFile}>Last ned <img src="/dowloadIcon.svg" alt="listIcon" height="38px" class="downloadIcon white-color"></Button>
+</div>
 
 <style>
-    .downloadHeader {
-        height: 100px;
-        font-size:3rem;
-        background-color: #435768;
-        color: white;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+  .downloadHeader {
+      height: 100px;
+      font-size:3rem;
+      background-color: #435768;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
 
-    .downloadMain {
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        padding: 2rem 15rem 0 15rem;
-    }
+  .downloadMain {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      padding: 2rem 15rem 0 15rem;
+  }
 
-    @media screen and (max-width: 900px) {
+  .row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      margin: 10px;
+  }
+
+  .rowItem {
+      margin: 20px;
+  }
+
+  .downloadButton {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 5rem;
+      margin-bottom: 5rem;
+  }
+
+  /* Transformes the icon color to white */
+  .white-color{
+    filter: invert(100%);
+  }
+  
+   @media screen and (max-width: 900px) {
       .downloadMain{
         padding: 2rem 5rem 0 5rem;
       }

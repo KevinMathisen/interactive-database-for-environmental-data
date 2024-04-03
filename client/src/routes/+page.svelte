@@ -36,10 +36,10 @@
    */
   function stationClicked (event) {
     sideBarTitle = event.detail.text.name
-    getStationSummary(11)
+    getStationSummary(event.detail.text.id)
       .then(_ => {
         selectedRiver = new River()
-        selectedStation = stations.get(11)
+        selectedStation = stations.get(event.detail.text.id)
       })
   }
 
@@ -49,10 +49,10 @@
    */
   function riverClicked (event) {
     sideBarTitle = event.detail.text.name
-    getRiverSummary(3)
+    getRiverSummary(event.detail.text.id)
       .then(_ => {
         selectedStation = new Station()
-        selectedRiver = rivers.get(3)
+        selectedRiver = rivers.get(event.detail.text.id)
       })
   }
 

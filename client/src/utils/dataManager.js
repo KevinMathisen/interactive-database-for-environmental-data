@@ -126,7 +126,7 @@ export async function getRivers () {
     updateStoreWithObjects(riverStore, fetchedRivers, River)
   } catch (error) {
     console.log('Error fetching rivers:', error)
-    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
+    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.POSTGREST_UNAVAILABLE, FEEDBACK_MESSAGES.POSTGREST_UNAVAILABLE)
   }
 }
 
@@ -149,7 +149,7 @@ export async function getStations () {
     updateStoreWithObjects(stationStore, fetchedStations, Station)
   } catch (error) {
     console.log('Error fetching stations:', error)
-    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
+    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.POSTGREST_UNAVAILABLE, FEEDBACK_MESSAGES.POSTGREST_UNAVAILABLE)
   }
 }
 
@@ -179,7 +179,7 @@ export async function getRiverSummary (id) {
     updateStoreWithObjects(stationStore, fetchedStations, Station)
   } catch (error) {
     console.log('Error fetching river summary:', error)
-    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
+    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.POSTGREST_UNAVAILABLE, FEEDBACK_MESSAGES.POSTGREST_UNAVAILABLE)
   }
 }
 
@@ -202,7 +202,7 @@ export async function getStationSummary (id) {
     updateStoreWithObject(stationStore, fetchedStationsSummary[0], Station)
   } catch (error) {
     console.log('Error fetching station summary:', error)
-    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
+    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.POSTGREST_UNAVAILABLE, FEEDBACK_MESSAGES.POSTGREST_UNAVAILABLE)
   }
 }
 
@@ -236,7 +236,7 @@ export async function getRiverForDownload (id) {
     updateStoreWithObjects(stationStore, fetchedStations, Station)
   } catch (error) {
     console.log('Error fetching river for download:', error)
-    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
+    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.POSTGREST_UNAVAILABLE, FEEDBACK_MESSAGES.POSTGREST_UNAVAILABLE)
   }
 }
 
@@ -268,7 +268,7 @@ export async function getStationForDownload (id) {
     updateStoreWithObject(stationStore, fetchedStations[0], Station)
   } catch (error) {
     console.log('Error fetching station for download:', error)
-    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
+    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.POSTGREST_UNAVAILABLE, FEEDBACK_MESSAGES.POSTGREST_UNAVAILABLE)
   }
 }
 

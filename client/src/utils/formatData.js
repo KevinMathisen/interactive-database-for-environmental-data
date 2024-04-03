@@ -26,7 +26,7 @@ export function formatRiversForTable (rivers) {
       river.id,
       river.name,
       river.startDate,
-      river.projectId
+      river.projectId || ''
     ])
   })
 
@@ -67,9 +67,9 @@ export function formatStationsForSummaryTable (stations) {
   stations.forEach(station => {
     rows.push([
       station.id,
-      station.name.split(' ')[1], // Get the station number from the name
-      station.riverType,
-      station.weather,
+      station.name.split(' ').pop(), // Get the station number from the name
+      station.riverType || '',
+      station.weather || '',
       station.secFished,
       amountOfFishInStation(station),
       fishPerMinuteInStation(station)
@@ -95,10 +95,10 @@ export function formatStationConditionsForTable (station) {
   const rows = []
   // Create a row with the station conditions
   rows.push([
-    station.riverType,
-    station.weather,
-    station.waterTemp,
-    station.airTemp,
+    station.riverType || '',
+    station.weather || '',
+    station.waterTemp || '',
+    station.airTemp || '',
     (station.secFished / 60).toFixed(1)
   ])
 
@@ -123,7 +123,7 @@ export function formatStationSettingsForTable (station) {
   rows.push([
     station.voltage,
     station.pulse,
-    station.conductivity
+    station.conductivity || ''
   ])
 
   return { headers, rows }
@@ -157,9 +157,10 @@ export function formatStationObservationsForTable (station) {
  * @returns {string[]} - A row in excel
  */
 function createRowForRiver (river) {
+  const crew = [...river.crew, '', '', ''].slice(0, 3) // Add empty strings to crew array so it always has 3 elements
   return [
     river.startDate, river.endDate, river.name, river.boatType, river.position.coordinates[1],
-    river.position.coordinates[0], river.waterflow, river.skipper, river.crew[0], river.crew[1], river.crew[2],
+    river.position.coordinates[0], river.waterflow, river.skipper, crew[0], crew[1], crew[2],
     river.projectId, river.comment
   ].map(attribute => attribute === null ? '' : attribute)
 }
