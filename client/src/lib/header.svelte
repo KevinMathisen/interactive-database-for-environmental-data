@@ -2,10 +2,13 @@
   import { page } from '$app/stores'
   import Button from './Button.svelte'
 
-  let showDropdown = false;
+  let showDropdown = false
 
-  function toggleDropdown() {
-    showDropdown = !showDropdown;
+  /**
+   *
+   */
+  function toggleDropdown () {
+    showDropdown = !showDropdown
   }
 </script>
 
@@ -29,7 +32,7 @@
   <div class="centerItem" class:active={$page.url.pathname === '/download'}>
     <Button color="none" href="/download">Last ned<img src="/dowloadIcon.svg" alt="listIcon" height="50px" class="headerIcon"></Button>
   </div>
-  <div class="Menu centerItem" on:click={toggleDropdown}>
+  <button class="Menu centerItem" on:click={toggleDropdown}>
     <div class="MenuIcon" class:active={showDropdown}></div>
     <div class="MenuIcon::before" class:translate-before={showDropdown}></div>
     <div class="MenuIcon::after" class:translate-after={showDropdown}></div>
@@ -44,11 +47,11 @@
         </ul>
       </div>
     {/if}
-    </div>
+    </button>
   <div class="LogOut centerItem">
     <Button color="blue" ifNotPicture={true}>Logg ut</Button>
   </div>
-  
+
 </header>
 
 <style>
@@ -120,7 +123,7 @@
       height: 5px;
       border-radius: 5px;
       position: absolute;
-      transition: all 0.5s;
+      transition: all 0.2s;
   }
 
   .MenuIcon::before,
@@ -129,13 +132,13 @@
   }
 
   .MenuIcon::before {
-      transform: translate(0, -12px);
+      transform: translate(-20px, -12px);
   }
 
   .MenuIcon::after {
-      transform: translate(0, 12px);
+      transform: translate(-20px, 12px);
   }
-  
+
   @media screen and (max-width: 1350px) {
     header > :nth-child(2),
     header > :nth-child(3),
@@ -181,7 +184,7 @@
   .Dropdown a:hover {
     background-color: #f4f4f4;
   }
-  
+
   .translate-before {
     transform: translateX(-20px) rotate(45deg);
   }
@@ -196,10 +199,10 @@
   }
 
   .MenuIcon.active::before {
-    transform: rotate(45deg);
+    transform: translateX(-20px) rotate(45deg);
   }
 
   .MenuIcon.active::after {
-    transform: rotate(-45deg);
+    transform: translateX(-20px) rotate(-45deg);
   }
 </style>
