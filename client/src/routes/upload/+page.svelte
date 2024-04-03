@@ -182,7 +182,7 @@
   .white-color{
     filter: invert(100%);
   }
-  
+
   @media screen and (max-width: 1000px) {
     .uploadFilesBox {
       width: 500px;

@@ -87,7 +87,6 @@
     width: 100%;
   }
 
-
   header > :nth-child(8) {
     padding: 1rem;
   }

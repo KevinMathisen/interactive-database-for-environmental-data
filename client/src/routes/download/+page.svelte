@@ -250,18 +250,6 @@
       padding: 2rem 15rem 0 15rem;
   }
 
-  .row {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      margin: 10px;
-  }
-
-  .rowItem {
-      margin: 20px;
-  }
-
   .downloadButton {
       display: flex;
       align-items: center;
@@ -274,7 +262,7 @@
   .white-color{
     filter: invert(100%);
   }
-  
+
    @media screen and (max-width: 900px) {
       .downloadMain{
         padding: 2rem 5rem 0 5rem;
