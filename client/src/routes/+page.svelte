@@ -124,16 +124,16 @@
 <style>
   .leftSidebar {
     position: absolute;
-    top: 80px;
+    top: var(--header-height);
     left: 0;
-    height: calc(100vh - 80px);
+    height: calc(100vh - var(--header-height));
     width: 20em;
   }
   .rightSidebar {
     position: absolute;
-    top: 80px;
+    top: var(--header-height);
     right: 0;
-    height: calc(100vh - 80px);
+    height: calc(100vh - var(--header-height));
     width: 35em;
   }
 </style>

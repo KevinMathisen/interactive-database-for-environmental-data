@@ -169,7 +169,7 @@
 
 <style>
     .graphPage {
-        height: calc(100vh - 80px);
+        height: calc(100vh - var(--header-height));
         width: 100%;
         display: flex;
     }
