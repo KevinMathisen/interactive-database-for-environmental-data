@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test'
 
 test.describe('Download data flow', () => {
   test('users can select rivers and download data in the correct format', async ({ page }) => {
-    await page.goto('http://localhost:4173/download') // Navigate to the download page
+    await page.goto('http://localhost:4173/download') // Navigate to the download page ,
     // Click on the 'Edit rivers' button to open the selection modal
     await page.click('text=Rediger elver')
     // Type 'Ha' into the river search box and wait for the suggestions to appear
