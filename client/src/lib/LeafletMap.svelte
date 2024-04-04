@@ -7,15 +7,14 @@
     export let rivers // Imported data containg river objects
     export let dataType // Defines data type chosen by user
 
+    export let selectedRiver // The river the user has chosen
+    export let selectedStation // The station the user has chosen
+
     const dispatch = createEventDispatcher()
     let map
     let mapElement // Used to bind the map to the page
-    let stationMarkers = [] // Array to store stationmarkers used by the map
-    let riverMarkers = [] // Array to store river markers used by the map
-    let lines = [] // Array to store lines used by the map
-    let stationIndex
-    let lineIndex = -1
-    let riverIndex = -1
+    let stationMarkers = new Map // Map to store stationmarkers used by the map
+    let riverMarkers = new Map // Map to store river markers used by the map
 
         // custom icon for the stations
     const redIcon = new leaflet.Icon({
@@ -109,15 +108,19 @@
         ]
         const polyline = leaflet.polyline(positions, { color: 'red' }).addTo(map)
 
-        startMarker.on('click', (e) => { // handles click events for each station
-          stationSelected(station, e)
-        })
-        endMarker.on('click', (e) => { // handles click events for each station
-          stationSelected(station, e)
-        })
-        lines.push(polyline)
-        stationMarkers.push(startMarker)
-        stationMarkers.push(endMarker)
+        // Store the markers and line in object
+        let stationMarker = {
+          startMarker: startMarker,
+          endMarker: endMarker,
+          line: polyline
+        }
+
+        // Add click event handler for each marker
+        startMarker.on('click', () => stationSelected(stationMarker, station))
+        endMarker.on('click', () => stationSelected(stationMarker, station))
+
+        // Store the markers and line in a map using the station id as key
+        stationMarkers.set(station.id, stationMarker)
       })
     }
 
@@ -126,29 +129,24 @@
      * @param {object} station - The station data
      * @param {Event} e - The event object
      */
-    function stationSelected (station, e) {
-      // calculate which points need to be turned red
-      if (lineIndex >= 0) {
-        stationMarkers[stationIndex].setIcon(redIcon);
-        (stationIndex % 2 === 0) ? stationMarkers[stationIndex + 1].setIcon(redIcon) : stationMarkers[stationIndex - 1].setIcon(redIcon)
-        lines[lineIndex].setStyle({ color: 'red' })
+    function stationSelected (stationMarker, station) {
+      // Turn old selected station red
+      if (selectedStation) {
+        let oldSelectedMarker = stationMarkers.get(selectedStation.id)
+        if (oldSelectedMarker) {
+          oldSelectedMarker.startMarker.setIcon(redIcon)
+          oldSelectedMarker.endMarker.setIcon(redIcon)
+          oldSelectedMarker.line.setStyle({ color: 'red' })
+        }
       }
 
-      stationIndex = stationMarkers.indexOf(e.target)
-      stationMarkers[stationIndex].setIcon(orangeIcon);
-      (stationIndex % 2 === 0) ? stationMarkers[stationIndex + 1].setIcon(orangeIcon) : stationMarkers[stationIndex - 1].setIcon(orangeIcon)
-      if (stationIndex <= 1) {
-        lineIndex = 0
-      } else if (stationIndex % 2 === 0) {
-        lineIndex = stationIndex / 2
-      } else {
-        lineIndex = (stationIndex - 1) / 2
-      }
-      lines[lineIndex].setStyle({ color: 'orange' })
-      // Sends the station name to the parent component
-      dispatch('stationClicked', {
-        text: station
-      })
+      // Turn new selected station orange
+      stationMarker.startMarker.setIcon(orangeIcon)
+      stationMarker.endMarker.setIcon(orangeIcon)
+      stationMarker.line.setStyle({ color: 'orange' })
+
+      // Send the selected station to the parent component
+      dispatch('stationClicked', { text: station })
     }
 
     /**
@@ -162,10 +160,8 @@
         const coordinate1 = river.position.coordinates[0]
         const coordinate2 = river.position.coordinates[1]
         const marker = leaflet.marker([coordinate2, coordinate1]).addTo(map)
-        riverMarkers.push(marker)
-        marker.on('click', (e) => { // handles clicks events for each river
-          riverSelected(river, e)
-        })
+        riverMarkers.set(river.id, marker)
+        marker.on('click', () => riverSelected(marker, river))
       })
     }
 
@@ -174,39 +170,37 @@
      * @param {object} river - The river data
      * @param {Event} e - The event object
      */
-    function riverSelected (river, e) {
+    function riverSelected (marker, river) {
+      console.log('River clicked:', river)
       // calculate which river needs to be turned red
-      if (riverIndex >= 0) {
-        riverMarkers[riverIndex].setIcon(blueIcon)
+      if (selectedRiver) {
+        let oldSelectedMarker = riverMarkers.get(selectedRiver.id)
+        if (oldSelectedMarker) {
+          oldSelectedMarker.setIcon(blueIcon)
+        }
       }
-      // calculate which river needs to be turned blue
-      riverIndex = riverMarkers.indexOf(e.target)
-      riverMarkers[riverIndex].setIcon(orangeIcon)
-      // Sends the river name to the parent component
-      dispatch('riverClicked', {
-        text: river
-      })
+
+      // calculate which river needs to be turned orange
+      marker.setIcon(orangeIcon)
+      // Send the selected river to the parent component
+      dispatch('riverClicked', { text: river })
     }
 
     /**
      * Removes all markers from the map
      */
     function removeMarkers () {
-      stationMarkers.forEach(marker => {
-        map.removeLayer(marker)
-      })
-      lines.forEach(line => {
-        map.removeLayer(line)
+      stationMarkers.forEach(stationMarker => {
+        map.removeLayer(stationMarker.startMarker)
+        map.removeLayer(stationMarker.endMarker)
+        map.removeLayer(stationMarker.line)
       })
 
       riverMarkers.forEach(marker => {
         map.removeLayer(marker)
       })
-      riverMarkers = []
-      stationMarkers = []
-      lines = []
-      lineIndex = -1
-      riverIndex = -1
+      riverMarkers = new Map()
+      stationMarkers = new Map()
     }
 
 </script>
