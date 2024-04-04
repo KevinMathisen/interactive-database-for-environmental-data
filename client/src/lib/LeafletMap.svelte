@@ -84,57 +84,62 @@
     }
 
     /**
-     * Adds station markers to the map
+     * Adds each station as a marker in the map
      */
     function updateStations () {
-      // Create a marker for each station
       stations.forEach(station => {
         // Checks if the station already has a marker
         if (stationMarkers.has(station.id)) {
           return
         }
 
-        // creates a marker for the start and end position of the station
-        const startMarker = leaflet.marker(
-          [ station.startPos.coordinates[1], station.startPos.coordinates[0] ], 
-          { icon: redIcon } )
-          .addTo(stationLayerGroup)
-          .on('click', () => stationSelected(stationMarker, station))
-        
-        const endMarker = leaflet.marker(
-          [ station.endPos.coordinates[1], station.endPos.coordinates[0] ], 
-          { icon: redIcon } )
-          .addTo(stationLayerGroup)
-          .on('click', () => stationSelected(stationMarker, station))
-
-        // drawing the line between the start and end position of the station
-        const positions = [
-          [station.startPos.coordinates[1], station.startPos.coordinates[0]],
-          [station.endPos.coordinates[1], station.endPos.coordinates[0]]
-        ]
-        const polyline = leaflet.polyline(positions, { color: 'red' })
-          .addTo(stationLayerGroup)
-          .on('click', () => stationSelected(stationMarker, station))
-
-        // Store the markers and line in object
-        let stationMarker = {
-          startMarker: startMarker,
-          endMarker: endMarker,
-          line: polyline
-        }
+        // Create the station start, end, and line markers
+        let stationMarker = createStationMarker(station)
 
         // Store the markers and line in a map using the station id as key
         stationMarkers.set(station.id, stationMarker)
       })
     }
 
+    function createStationMarker(station) {
+      // Get start and end position of the station
+      const startPos = [station.startPos.coordinates[1], station.startPos.coordinates[0]]
+      const endPos = [station.endPos.coordinates[1], station.endPos.coordinates[0]]
+
+      // creates a marker for the start position of the station
+      const startMarker = leaflet.marker(startPos, { icon: redIcon } )
+        .addTo(stationLayerGroup)
+        .on('click', () => stationSelected(stationMarker, station))
+      
+      // creates a marker for the end position of the station
+      const endMarker = leaflet.marker(endPos, { icon: redIcon } )
+        .addTo(stationLayerGroup)
+        .on('click', () => stationSelected(stationMarker, station))
+
+      // drawing the line between the start and end position of the station
+      const polyline = leaflet.polyline([startPos, endPos], { color: 'red' })
+        .addTo(stationLayerGroup)
+        .on('click', () => stationSelected(stationMarker, station))
+
+      // Return the markers and line in a object
+      const stationMarker = {
+        startMarker: startMarker,
+        endMarker: endMarker,
+        line: polyline
+      }
+
+      return stationMarker
+    }
+
     /**
-     * Called when a station marker is clicked
+     * Handle when a station is clicked
+     * Updates the colors of station markers to reflect the selected station,
+     *  and sends the selected station to the parent component
      * @param {object} stationMarker - The station start, end, and line markers
      * @param {object} station - The station data
      */
     function stationSelected (stationMarker, station) {
-      // Turn old selected station red
+      // Revert the previously selected station to red
       if (selectedStation) {
         let oldSelectedMarker = stationMarkers.get(selectedStation.id)
         if (oldSelectedMarker) {
@@ -154,10 +159,7 @@
     }
 
     /**
-     * Adds river markers to the map
-     *
-     * Iterates the rivers array and adds a marker for each river
-     * Also sets up a click even handler for each marker
+     * Adds each river as a marker in the map
      */
     function updateRivers () {
       rivers.forEach(river => {    
@@ -166,7 +168,7 @@
           return
         }
 
-        // Create a marker for each river
+        // Create a marker for the river
         const marker = leaflet.marker(
           [river.position.coordinates[1], river.position.coordinates[0]])
           .addTo(riverLayerGroup)
@@ -178,13 +180,14 @@
     }
 
     /**
-     * Called when a river marker is clicked
+     * Handle when a river is clicked
+     * Updates the colors of river markers to reflect the selected river,
+     *   and sends the selected river to the parent component
+     * @param {object} marker - The river marker
      * @param {object} river - The river data
-     * @param {Event} e - The event object
      */
     function riverSelected (marker, river) {
-      console.log('River clicked:', river)
-      // calculate which river needs to be turned red
+      // Revert the previously selected river to blue
       if (selectedRiver) {
         let oldSelectedMarker = riverMarkers.get(selectedRiver.id)
         if (oldSelectedMarker) {
@@ -192,29 +195,11 @@
         }
       }
 
-      // calculate which river needs to be turned orange
+      // Set the selected river to orange
       marker.setIcon(orangeIcon)
       // Send the selected river to the parent component
       dispatch('riverClicked', { text: river })
     }
-
-    /**
-     * Removes all markers from the map
-     */
-    function removeMarkers () {
-      stationMarkers.forEach(stationMarker => {
-        map.removeLayer(stationMarker.startMarker)
-        map.removeLayer(stationMarker.endMarker)
-        map.removeLayer(stationMarker.line)
-      })
-
-      riverMarkers.forEach(marker => {
-        map.removeLayer(marker)
-      })
-      riverMarkers = new Map()
-      stationMarkers = new Map()
-    }
-
 </script>
 
 <div class=leaflet bind:this={mapElement}></div>
