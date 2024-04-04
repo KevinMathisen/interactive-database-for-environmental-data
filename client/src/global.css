@@ -15,8 +15,22 @@ body {
     margin: inherit;                    /* Remove default margin */
     display: flex;                      /* Makes the body a flex container */
     flex-direction: column;             /* Orders the items in the body vertically  */
-    background-color: var(--SCOLOR);    /* Sets the secondary color of the body */
+    background-color: var(--WCOLOR);    /* Sets the secondary color of the body */
 }
+
+/* ----------------- Global variables -----------------*/
+:root {
+    /* ----------------- COLORS -----------------*/
+    --PCOLOR: #435768;                  /* Primary color */
+    --SCOLOR: #FF5B37;                  /* Secondary color */
+    --BCOLOR: #000000;                  /* Black color */
+    --WCOLOR: #FFFFFF;                  /* White color */
+    --FCOLOR: #F5F5F5;                  /* Font color */
+
+    /* ----------------- SIZES -----------------*/
+    --header-height: 80px;              /* Height of the header */
+}
+
 
 /* Width of the scrollbar*/
 ::-webkit-scrollbar {

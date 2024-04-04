@@ -62,8 +62,7 @@
     justify-content: space-between;
     background-color: white;
     align-items: center;
-    height: 80px;
-    padding-bottom: 10px;
+    height: var(--header-height);
   }
 
   .logoHeader{

@@ -9,6 +9,7 @@
     import { getRiverSummary, getStationSummary, getRivers, getStations } from '../../utils/dataManager.js'
     import { getSelectableSpecies } from '../../utils/filterData.js'
     import { onMount } from 'svelte'
+    import UserFeedbackMessage from '../../lib/UserFeedbackMessage.svelte'
 
     let showSelectRiverAndStationModal = false // Show the modal to select rivers and stations
 
@@ -95,6 +96,9 @@
 
 </script>
 
+<!-- User feedback modal, invisible unless there is feedback to show to user -->
+<UserFeedbackMessage />
+
 {#if showSelectRiverAndStationModal}
     <Modal on:close={handleClose} large={true}>
         <SelectRiverAndStation
@@ -165,7 +169,7 @@
 
 <style>
     .graphPage {
-        height: calc(100vh - 80px);
+        height: calc(100vh - var(--header-height));
         width: 100%;
         display: flex;
     }

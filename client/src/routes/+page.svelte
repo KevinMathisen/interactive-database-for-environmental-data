@@ -11,6 +11,7 @@
   import StationSummary from '../lib/StationSummary.svelte'
   import { River } from '../models/River.js'
   import { Station } from '../models/Station.js'
+  import UserFeedbackMessage from '../lib/UserFeedbackMessage.svelte'
 
   let rivers = new Map() // Rivers with coordinates
   let stations = new Map() // Stations with coordinates
@@ -88,7 +89,17 @@
 
 </script>
 
-<LeafletMap {dataType} rivers={filteredRivers} stations={filteredStations} on:stationClicked={stationClicked} on:riverClicked={riverClicked}/>
+<!-- User feedback modal, invisible unless there is feedback to show to user -->
+<UserFeedbackMessage />
+
+<LeafletMap
+  {dataType}
+  rivers={filteredRivers}
+  stations={filteredStations}
+  {selectedRiver}
+  {selectedStation}
+  on:stationClicked={stationClicked}
+  on:riverClicked={riverClicked}/>
 
 {#if showLeftSidebar}
   <div class="leftSidebar">
@@ -120,16 +131,16 @@
 <style>
   .leftSidebar {
     position: absolute;
-    top: 80px;
+    top: var(--header-height);
     left: 0;
-    height: calc(100vh - 80px);
+    height: calc(100vh - var(--header-height));
     width: 20em;
   }
   .rightSidebar {
     position: absolute;
-    top: 80px;
+    top: var(--header-height);
     right: 0;
-    height: calc(100vh - 80px);
+    height: calc(100vh - var(--header-height));
     width: 35em;
   }
 </style>

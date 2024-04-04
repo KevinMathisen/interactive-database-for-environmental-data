@@ -9,6 +9,7 @@
     import { riverStore } from '../../stores/riverStore.js'
     import { stationStore } from '../../stores/stationStore.js'
     import { onMount } from 'svelte'
+    import UserFeedbackMessage from '../../lib/UserFeedbackMessage.svelte'
 
     let rivers // Rivers with coordinates
     let stations // Stations with coordinates
@@ -75,6 +76,9 @@
 
 </script>
 
+<!-- User feedback modal, invisible unless there is feedback to show to user -->
+<UserFeedbackMessage />
+
 <!-- Filter sidebar -->
 <div class="sidebar">
     <Sidebar title="Filter">
@@ -106,9 +110,9 @@
 <style>
     .sidebar {
         position: absolute;
-        top: 80px;
+        top: var(--header-height);
         left: 0;
-        height: calc(100vh - 80px);
+        height: calc(100vh - var(--header-height));
         width: 20em;
     }
 

@@ -74,7 +74,8 @@
   .extended{
     font-size: 1.5rem;
     width: 100%;
-    height: 100%;
+    height: calc(100% - 10px);
+    margin: 5px 0px;
   }
 
   .header{

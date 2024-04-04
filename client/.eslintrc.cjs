@@ -30,7 +30,9 @@ module.exports = {
     'jsdoc/no-undefined-types': 'off',
     'jsdoc/check-alignment': 'warn', 
     'jsdoc/check-param-names': 'warn',
-    'jsdoc/check-tag-names': 'warn',
+    'jsdoc/check-tag-names': ['error', {
+      definedTags: ['vitest-environment']
+    }],
     'jsdoc/check-indentation': 'warn',
     'quotes': ['error', 'single'],
     'no-unused-vars': ['error', { 'argsIgnorePattern': '^_' }],
