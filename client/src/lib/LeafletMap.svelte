@@ -37,7 +37,7 @@
       shadowSize: [41, 41]
     })
 
-    const greenIcon = new leaflet.Icon({
+    const orangeIcon = new leaflet.Icon({
       iconUrl: '/marker-icon-orange.png',
       shadowUrl: '/marker-shadow.png',
       iconSize: [25, 41],
@@ -135,8 +135,8 @@
       }
 
       stationIndex = stationMarkers.indexOf(e.target)
-      stationMarkers[stationIndex].setIcon(greenIcon);
-      (stationIndex % 2 === 0) ? stationMarkers[stationIndex + 1].setIcon(greenIcon) : stationMarkers[stationIndex - 1].setIcon(greenIcon)
+      stationMarkers[stationIndex].setIcon(orangeIcon);
+      (stationIndex % 2 === 0) ? stationMarkers[stationIndex + 1].setIcon(orangeIcon) : stationMarkers[stationIndex - 1].setIcon(orangeIcon)
       if (stationIndex <= 1) {
         lineIndex = 0
       } else if (stationIndex % 2 === 0) {
@@ -144,7 +144,7 @@
       } else {
         lineIndex = (stationIndex - 1) / 2
       }
-      lines[lineIndex].setStyle({ color: 'green' })
+      lines[lineIndex].setStyle({ color: 'orange' })
       // Sends the station name to the parent component
       dispatch('stationClicked', {
         text: station
@@ -181,7 +181,7 @@
       }
       // calculate which river needs to be turned blue
       riverIndex = riverMarkers.indexOf(e.target)
-      riverMarkers[riverIndex].setIcon(greenIcon)
+      riverMarkers[riverIndex].setIcon(orangeIcon)
       // Sends the river name to the parent component
       dispatch('riverClicked', {
         text: river
