@@ -172,6 +172,9 @@
       stationMarker.endMarker.setIcon(orangeIcon)
       stationMarker.line.setStyle({ color: 'orange' })
 
+      // Pan to the selected station and zoom in
+      map.flyTo(stationMarker.startMarker.getLatLng(), 13, { duration: 0.5 })
+
       // Send the selected station to the parent component
       dispatch('stationClicked', { text: station })
 
@@ -237,6 +240,10 @@
 
       // Set the selected river to orange
       marker.setIcon(orangeIcon)
+
+      // Pan to the selected station and zoom in
+      map.flyTo(marker.getLatLng(), 11, { duration: 0.5 })
+
       // Send the selected river to the parent component
       dispatch('riverClicked', { text: river })
 
