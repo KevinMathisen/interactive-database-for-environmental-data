@@ -46,27 +46,21 @@
       shadowSize: [41, 41]
     })
 
-        // called when this component is mounted
+    // called when this component is mounted
     onMount(async () => {
-      // defines the map which
+      // defines the map and sets the view to Norway
       map = leaflet.map(mapElement).setView([61, 12.09], 6)
 
-      // adds the actual map to the page
+      // Adds a openstreetmap layer to the map
       leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       }).addTo(map)
 
-      // waits for data to be loaded before adding markers to the map
-      while (rivers.size === 0) {
-        await new Promise(resolve => setTimeout(resolve, 100))
-      }
-      addRivers()
     })
 
-        // called when this component is unmounted
+    // called when this component is unmounted
     onDestroy(async () => {
       if (map) {
-        console.log('Unloading Leaflet map.')
         map.remove()
       }
     })
@@ -87,7 +81,7 @@
         addRivers()
       }
     }
-        // called when the data type is changed
+    // called when the data or data type is changed
     $: if (rivers || stations || dataType) {
       updateMap()
     }
@@ -96,10 +90,17 @@
      * Adds station markers to the map
      */
     function addStations () {
-      // loops through all stations and adds a marker for each
+      // Create a marker for each station
       stations.forEach(station => {
-        const startMarker = leaflet.marker([station.startPos.coordinates[1], station.startPos.coordinates[0]], { icon: redIcon }).addTo(map)
-        const endMarker = leaflet.marker([station.endPos.coordinates[1], station.endPos.coordinates[0]], { icon: redIcon }).addTo(map)
+        // creates a marker for the start and end position of the station
+        const startMarker = leaflet.marker(
+          [ station.startPos.coordinates[1], station.startPos.coordinates[0] ], 
+          { icon: redIcon }
+        ).addTo(map)
+        const endMarker = leaflet.marker(
+          [ station.endPos.coordinates[1], station.endPos.coordinates[0] ], 
+          { icon: redIcon }
+        ).addTo(map)
 
         // drawing the line between the start and end position of the station
         const positions = [
