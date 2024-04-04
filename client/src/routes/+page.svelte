@@ -11,7 +11,7 @@
   import StationSummary from '../lib/StationSummary.svelte'
   import { River } from '../models/River.js'
   import { Station } from '../models/Station.js'
-  import UserFeedbackMessage from '../../lib/UserFeedbackMessage.svelte'
+  import UserFeedbackMessage from '../lib/UserFeedbackMessage.svelte'
 
   let rivers = new Map() // Rivers with coordinates
   let stations = new Map() // Stations with coordinates
