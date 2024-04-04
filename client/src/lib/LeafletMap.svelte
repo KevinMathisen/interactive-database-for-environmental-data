@@ -218,7 +218,8 @@
 
         // Create a marker for the river
         const marker = leaflet.marker(
-          [river.position.coordinates[1], river.position.coordinates[0]])
+          [river.position.coordinates[1], river.position.coordinates[0]],
+          { icon: blueIcon })
           .addTo(riverLayerGroup)
           .on('click', () => riverSelected(marker, river))
 
