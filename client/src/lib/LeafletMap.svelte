@@ -1,6 +1,7 @@
 <script>
     import { onMount, onDestroy, createEventDispatcher } from 'svelte'
-    // import { browser } from '$app/environment';
+    import { redIcon, orangeIcon, blueIcon } from '../constants/leafletIcons.js'
+    import { mapLayers } from '../constants/leafletLayers.js'
     import leaflet from 'leaflet'
 
     export let stations // Imported data containg station objects
@@ -15,48 +16,6 @@
     let mapElement // Used to bind the map to the page
     let stationMarkers = new Map // Map to store stationmarkers used by the map
     let riverMarkers = new Map // Map to store river markers used by the map
-
-        // custom icon for the stations
-    const redIcon = new leaflet.Icon({
-      iconUrl: '/marker-icon-red.png',
-      shadowUrl: '/marker-shadow.png',
-      iconSize: [25, 41],
-      iconAnchor: [12, 41],
-      popupAnchor: [1, -34],
-      shadowSize: [41, 41]
-    })
-
-        // custom icon for the stations
-    const blueIcon = new leaflet.Icon({
-      iconUrl: '/marker-icon-blue.png',
-      shadowUrl: '/marker-shadow.png',
-      iconSize: [25, 41],
-      iconAnchor: [12, 41],
-      popupAnchor: [1, -34],
-      shadowSize: [41, 41]
-    })
-
-    const orangeIcon = new leaflet.Icon({
-      iconUrl: '/marker-icon-orange.png',
-      shadowUrl: '/marker-shadow.png',
-      iconSize: [25, 41],
-      iconAnchor: [12, 41],
-      popupAnchor: [1, -34],
-      shadowSize: [41, 41]
-    })
-
-    const mapLayers = {
-      'Terrain': leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      }),
-      'Satellite': leaflet.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-        attribution: '© <a href="https://www.esri.com/en-us/home">Esri</a>'
-      }),
-      'Topology': leaflet.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-        maxZoom: 17,
-        attribution: '&copy; <a href="https://www.opentopomap.org/">OpenTopoMap</a> contributors'
-      })
-    }
 
     // River and station layer groups
     let riverLayerGroup = leaflet.layerGroup()
