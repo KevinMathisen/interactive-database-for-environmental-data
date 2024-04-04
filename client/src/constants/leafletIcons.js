@@ -9,7 +9,7 @@ export const redIcon = new leaflet.Icon({
   shadowSize: [41, 41]
 })
 
-    // custom icon for the stations
+// custom icon for the stations
 export const blueIcon = new leaflet.Icon({
   iconUrl: '/marker-icon-blue.png',
   shadowUrl: '/marker-shadow.png',

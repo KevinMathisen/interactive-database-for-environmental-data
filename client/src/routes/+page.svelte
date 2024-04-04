@@ -92,13 +92,13 @@
 <!-- User feedback modal, invisible unless there is feedback to show to user -->
 <UserFeedbackMessage />
 
-<LeafletMap 
-  {dataType} 
-  rivers={filteredRivers} 
-  stations={filteredStations} 
+<LeafletMap
+  {dataType}
+  rivers={filteredRivers}
+  stations={filteredStations}
   {selectedRiver}
   {selectedStation}
-  on:stationClicked={stationClicked} 
+  on:stationClicked={stationClicked}
   on:riverClicked={riverClicked}/>
 
 {#if showLeftSidebar}

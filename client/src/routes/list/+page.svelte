@@ -9,7 +9,7 @@
     import { riverStore } from '../../stores/riverStore.js'
     import { stationStore } from '../../stores/stationStore.js'
     import { onMount } from 'svelte'
-    import UserFeedbackMessage from '../../lib/UserFeedbackMessage.svelte';
+    import UserFeedbackMessage from '../../lib/UserFeedbackMessage.svelte'
 
     let rivers // Rivers with coordinates
     let stations // Stations with coordinates

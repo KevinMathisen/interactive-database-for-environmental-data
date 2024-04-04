@@ -14,15 +14,15 @@
     const dispatch = createEventDispatcher()
     let map
     let mapElement // Used to bind the map to the page
-    let stationMarkers = new Map // Map to store stationmarkers used by the map
-    let riverMarkers = new Map // Map to store river markers used by the map
+    const stationMarkers = new Map() // Map to store stationmarkers used by the map
+    const riverMarkers = new Map() // Map to store river markers used by the map
 
     let previousSelectedRiver // The previously selected river
     let previousSelectedStation // The previously selected station
 
     // River and station layer groups
-    let riverLayerGroup = leaflet.layerGroup()
-    let stationLayerGroup = leaflet.layerGroup()
+    const riverLayerGroup = leaflet.layerGroup()
+    const stationLayerGroup = leaflet.layerGroup()
 
     // update river or station points when they change
     $: if (rivers || stations || dataType) {
@@ -114,7 +114,7 @@
         }
 
         // Create the station start, end, and line markers
-        let stationMarker = createStationMarker(station)
+        const stationMarker = createStationMarker(station)
 
         // Store the markers and line in a map using the station id as key
         stationMarkers.set(station.id, stationMarker)
@@ -126,18 +126,18 @@
      * @param {object} station - The station data
      * @returns {object} - The station start, end, and line markers
      */
-    function createStationMarker(station) {
+    function createStationMarker (station) {
       // Get start and end position of the station
       const startPos = [station.startPos.coordinates[1], station.startPos.coordinates[0]]
       const endPos = [station.endPos.coordinates[1], station.endPos.coordinates[0]]
 
       // creates a marker for the start position of the station
-      const startMarker = leaflet.marker(startPos, { icon: redIcon } )
+      const startMarker = leaflet.marker(startPos, { icon: redIcon })
         .addTo(stationLayerGroup)
         .on('click', () => stationSelected(stationMarker, station))
-      
+
       // creates a marker for the end position of the station
-      const endMarker = leaflet.marker(endPos, { icon: redIcon } )
+      const endMarker = leaflet.marker(endPos, { icon: redIcon })
         .addTo(stationLayerGroup)
         .on('click', () => stationSelected(stationMarker, station))
 
@@ -148,8 +148,8 @@
 
       // Return the markers and line in a object
       const stationMarker = {
-        startMarker: startMarker,
-        endMarker: endMarker,
+        startMarker,
+        endMarker,
         line: polyline
       }
 
@@ -159,7 +159,7 @@
     /**
      * Handle when a station is clicked
      * Updates the colors of station markers to reflect the selected station,
-     *  and sends the selected station to the parent component
+     * and sends the selected station to the parent component
      * @param {object} stationMarker - The station start, end, and line markers
      * @param {object} station - The station data
      */
@@ -186,14 +186,14 @@
      * Unselects the selected station by reverting the colors of the markers
      * @param {object} station - The station to unselect
      */
-    function unSelectStation(station) {
+    function unSelectStation (station) {
       // Check if there is a selected station
       if (!station) {
         return
       }
 
       // Get the markers for the selected station
-      let oldSelectedMarker = stationMarkers.get(station.id)
+      const oldSelectedMarker = stationMarkers.get(station.id)
 
       // Check if the selected station has markers
       if (!oldSelectedMarker) {
@@ -210,7 +210,7 @@
      * Adds each river as a marker in the map
      */
     function updateRivers () {
-      rivers.forEach(river => {    
+      rivers.forEach(river => {
         // Checks if the river already has a marker
         if (riverMarkers.has(river.id)) {
           return
@@ -230,7 +230,7 @@
     /**
      * Handle when a river is clicked
      * Updates the colors of river markers to reflect the selected river,
-     *   and sends the selected river to the parent component
+     * and sends the selected river to the parent component
      * @param {object} marker - The river marker
      * @param {object} river - The river data
      */
@@ -255,14 +255,14 @@
      * Unselects the selected river by reverting the color of the marker
      * @param {object} river - The river to unselect
      */
-    function unSelectRiver(river) {
+    function unSelectRiver (river) {
       // Check if there is a selected river
       if (!river) {
         return
       }
 
       // Get the marker for the selected river
-      let oldSelectedMarker = riverMarkers.get(river.id)
+      const oldSelectedMarker = riverMarkers.get(river.id)
 
       // Check if the selected river has a marker
       if (!oldSelectedMarker) {
