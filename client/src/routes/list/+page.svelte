@@ -121,4 +121,12 @@
         padding-right: 100px;
         padding-top: 30px;
     }
+
+    @media screen and (max-width: 1350px) {
+      .tablecontainer {
+        padding-left: 350px;
+        padding-right: 50px;
+        padding-top: 30px;
+      }
+    }
 </style>

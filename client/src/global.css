@@ -30,3 +30,27 @@ body {
     /* ----------------- SIZES -----------------*/
     --header-height: 80px;              /* Height of the header */
 }
+
+
+/* Width of the scrollbar*/
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+/* Color and corner rarius of the scrollbar track */
+::-webkit-scrollbar-track {
+    background: #dbdada; 
+    border-radius: 1rem;
+}
+
+/* The scrollbar */
+::-webkit-scrollbar-thumb {
+    background: #a3a3a3; 
+    border-radius: 1rem;
+}
+
+/* The scrollbar when hovering over */
+::-webkit-scrollbar-thumb:hover {
+    background: #808080; 
+}

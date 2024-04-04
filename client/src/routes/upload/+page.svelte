@@ -182,4 +182,17 @@
   .white-color{
     filter: invert(100%);
   }
+
+  @media screen and (max-width: 1000px) {
+    .uploadFilesBox {
+      width: 500px;
+    }
+    .uploadFilesBoxText {
+      margin-right: 10rem;
+    }
+    .uploadFilesUploaded {
+      width: 500px;
+    }
+
+  }
 </style>
