@@ -45,16 +45,36 @@
       shadowSize: [41, 41]
     })
 
+    const mapLayers = {
+      'Terrain': leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }),
+      'Satellite': leaflet.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        attribution: '© <a href="https://www.esri.com/en-us/home">Esri</a>'
+      }),
+      'Topology': leaflet.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+        maxZoom: 17,
+        attribution: '&copy; <a href="https://www.opentopomap.org/">OpenTopoMap</a> contributors'
+      })
+    }
+
+    // River and station layer groups
+    let riverLayerGroup = leaflet.layerGroup()
+    let stationLayerGroup = leaflet.layerGroup()
+
     // called when this component is mounted
     onMount(async () => {
       // defines the map and sets the view to Norway
-      map = leaflet.map(mapElement).setView([61, 12.09], 6)
+      map = leaflet.map(mapElement, {
+        layers: [mapLayers.Terrain] // Default layer
+      }).setView([61, 12.09], 6)
 
-      // Adds a openstreetmap layer to the map
-      leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      }).addTo(map)
+      // Add terrain and satellite layers to the map
+      leaflet.control.layers(mapLayers).addTo(map)
 
+      // Add river and station layer groups to the map
+      riverLayerGroup.addTo(map)
+      stationLayerGroup.addTo(map)
     })
 
     // called when this component is unmounted
@@ -73,40 +93,69 @@
       }
 
       if (dataType === 'station') { // handles everything when user choses to view station data
-        removeMarkers()
-        addStations()
+        updateStations()
       } else if (dataType === 'river') { // handles everything when user choses to view river data
-        removeMarkers()
-        addRivers()
+        updateRivers()
       }
     }
-    // called when the data or data type is changed
+    // update river or station points when they change
     $: if (rivers || stations || dataType) {
       updateMap()
+    }
+
+    // Update if map displayes rivers or station based on data type
+    $: updateVisibleLayers(dataType)
+
+    /**
+     * Updates the visible layers on the map
+     * @param {string} dataType - The data type chosen by the user
+     */
+    function updateVisibleLayers (dataType) {
+      if (!map) {
+        return
+      }
+
+      if (dataType === 'station') {
+        riverLayerGroup.removeFrom(map)
+        stationLayerGroup.addTo(map)
+      } else if (dataType === 'river') {
+        stationLayerGroup.removeFrom(map)
+        riverLayerGroup.addTo(map)
+      }
     }
 
     /**
      * Adds station markers to the map
      */
-    function addStations () {
+    function updateStations () {
       // Create a marker for each station
       stations.forEach(station => {
+        // Checks if the station already has a marker
+        if (stationMarkers.has(station.id)) {
+          return
+        }
+
         // creates a marker for the start and end position of the station
         const startMarker = leaflet.marker(
           [ station.startPos.coordinates[1], station.startPos.coordinates[0] ], 
-          { icon: redIcon }
-        ).addTo(map)
+          { icon: redIcon } )
+          .addTo(stationLayerGroup)
+          .on('click', () => stationSelected(stationMarker, station))
+        
         const endMarker = leaflet.marker(
           [ station.endPos.coordinates[1], station.endPos.coordinates[0] ], 
-          { icon: redIcon }
-        ).addTo(map)
+          { icon: redIcon } )
+          .addTo(stationLayerGroup)
+          .on('click', () => stationSelected(stationMarker, station))
 
         // drawing the line between the start and end position of the station
         const positions = [
           [station.startPos.coordinates[1], station.startPos.coordinates[0]],
           [station.endPos.coordinates[1], station.endPos.coordinates[0]]
         ]
-        const polyline = leaflet.polyline(positions, { color: 'red' }).addTo(map)
+        const polyline = leaflet.polyline(positions, { color: 'red' })
+          .addTo(stationLayerGroup)
+          .on('click', () => stationSelected(stationMarker, station))
 
         // Store the markers and line in object
         let stationMarker = {
@@ -115,10 +164,6 @@
           line: polyline
         }
 
-        // Add click event handler for each marker
-        startMarker.on('click', () => stationSelected(stationMarker, station))
-        endMarker.on('click', () => stationSelected(stationMarker, station))
-
         // Store the markers and line in a map using the station id as key
         stationMarkers.set(station.id, stationMarker)
       })
@@ -126,8 +171,8 @@
 
     /**
      * Called when a station marker is clicked
+     * @param {object} stationMarker - The station start, end, and line markers
      * @param {object} station - The station data
-     * @param {Event} e - The event object
      */
     function stationSelected (stationMarker, station) {
       // Turn old selected station red
@@ -155,13 +200,21 @@
      * Iterates the rivers array and adds a marker for each river
      * Also sets up a click even handler for each marker
      */
-    function addRivers () {
-      rivers.forEach(river => {
-        const coordinate1 = river.position.coordinates[0]
-        const coordinate2 = river.position.coordinates[1]
-        const marker = leaflet.marker([coordinate2, coordinate1]).addTo(map)
+    function updateRivers () {
+      rivers.forEach(river => {    
+        // Checks if the river already has a marker
+        if (riverMarkers.has(river.id)) {
+          return
+        }
+
+        // Create a marker for each river
+        const marker = leaflet.marker(
+          [river.position.coordinates[1], river.position.coordinates[0]])
+          .addTo(riverLayerGroup)
+          .on('click', () => riverSelected(marker, river))
+
+        // Store the marker in a map using the river id as key
         riverMarkers.set(river.id, marker)
-        marker.on('click', () => riverSelected(marker, river))
       })
     }
 
