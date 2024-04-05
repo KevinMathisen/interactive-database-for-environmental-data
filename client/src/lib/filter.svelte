@@ -15,8 +15,8 @@
     let chooseAll = true // If the user wants to choose all species
     let customSpecies = [] // Species the user has chosen
 
-    // Species the user has choosen; either all or the custom ones
-    $: selectedSpecies = chooseAll ? selectableSpecies : customSpecies
+    // Species the user has choosen; either all (which is an empty array) or the custom ones
+    $: selectedSpecies = chooseAll ? [] : customSpecies
 
     // Options when choosing data type
     const dataOptions = [
