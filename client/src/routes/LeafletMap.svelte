@@ -43,11 +43,20 @@
       setTimeout(() => {
         // defines the map and sets the view to Norway
         map = leaflet.map(mapElement, {
-          layers: [mapLayers.Terrain] // Default layer
+          layers: [mapLayers.Terrain], // Default layer
+          zoomControl: false // Disable default zoom control
         }).setView([61, 12.09], 6)
 
+        // Add zoom control in top right corner
+        leaflet.control.zoom({ position: 'topright' }).addTo(map)
+
         // Add terrain and satellite layers to the map
-        leaflet.control.layers(mapLayers).addTo(map)
+        leaflet.control.layers(mapLayers, null, {
+          position: 'bottomright'
+        }).addTo(map)
+
+        // Add scale in bottom left corner
+        leaflet.control.scale().addTo(map)
 
         // Add river and station layer groups to the map
         riverLayerGroup.addTo(map)
