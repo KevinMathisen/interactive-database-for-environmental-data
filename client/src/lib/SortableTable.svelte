@@ -124,8 +124,11 @@
     position: relative;
     background: #f0f0f0;
     padding: 8px;
-    border-bottom: 1px solid black;
+    box-shadow: 0 1px 0 0 black; /* Shadow at the bottom of the header */
     text-align: left;
+    position: sticky;
+    top: 0;
+    z-index: 10;
   }
 
   /* When the header is selected, change the background color */
