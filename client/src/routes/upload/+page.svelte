@@ -107,7 +107,7 @@
     <img src="/uploadCloudIcon.svg" alt="listIcon" height="60px" id="uploadCloudIcon" />
     <p>Dra og slipp filer eller</p>
     <br>
-    <Button type="fileSearch" size="medium" on:selectFile={selectFile} ifNotPicture={true}>Bla gjennom Filer <img src="/fileSearchIcon.svg" alt="listIcon" height="40px" class="fileSearch white-color"></Button>
+    <Button type="fileSearch" size="medium" on:selectFile={selectFile}>Bla gjennom Filer <img src="/fileSearchIcon.svg" alt="listIcon" height="40px" class="fileSearch white-color"></Button>
   </div>
 
   <!-- Defines the text under the upload files box -->
