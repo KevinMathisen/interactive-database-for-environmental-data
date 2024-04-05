@@ -20,9 +20,13 @@ export const FEEDBACK_CODES = {
 export const FEEDBACK_MESSAGES = {
   UPLOAD_SUCCESS: 'Opplasting vellykket',
   GENERIC: 'En feil oppstod',
+  ERROR_PLOTTING_DATA: 'En feil oppstod under plotting av data',
   NO_FILE_SELCETED: 'Velg en fil før du klikker last opp',
   NO_FILE_FORMAT_SELECTED: 'Ingen filformat valgt, velg enten .xslx eller .csv for å laste ned',
   NOT_FOUND: 'Kunne ikke finne den forespurte ressursen',
+  NO_RIVERS_SELECTED: 'Ingen elver valgt, velg en eller flere elver før du klikker last ned',
+  NO_STATIONS_SELECTED: 'Ingen stasjoner valgt, velg en eller flere stasjoner før du klikker last ned',
+  ERROR_GENERATING_FILE: 'En feil oppstod under nedlasting av filen',
   FORBIDDEN: 'Handlingen du utførte ble ikke akseptert',
   UNAUTHORIZED: 'Du har ikke tillatelse til å utføre handlingen du forsøkte',
   CONTENT_TO_LARGE: 'Filen du forsøkte å laste opp er for stor',

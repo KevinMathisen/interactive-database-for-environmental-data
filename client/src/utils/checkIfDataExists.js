@@ -6,12 +6,11 @@ import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/
 
 /**
  * Check if the store contains any data, and if it contains any data,
- *   check if the objects in the store has species defined.
+ * check if the objects in the store has species defined.
  * Assumes that if the first object in the store does not have any species
- *   that there is not sufficient data in the store to display the data
- *     on the map or list page
- *
- * @param {store} store - The store to check if data exists in
+ * that there is not sufficient data in the store to display the data
+ * on the map or list page
+ * @param {object} store - The store to check if data exists in
  * @returns {boolean} - True if the store contains suficient data, else false
  */
 function doesDataInStoreExist (store) {
@@ -31,8 +30,7 @@ function doesDataInStoreExist (store) {
 
 /**
  * Checks if the store contains sufficient data for all rivers to display
- *    them on the map and list page
- *
+ * them on the map and list page
  * @returns {boolean} - True if the store contains river data for all rivers, else false
  */
 export function doesAllRiversExistInStore () {
@@ -41,8 +39,7 @@ export function doesAllRiversExistInStore () {
 
 /**
  * Checks if the store contains sufficient data for all stations to display
- *   them on the map and list page
- *
+ * them on the map and list page
  * @returns {boolean} - True if the store contains station data for all stations, else false
  */
 export function doesAllStationsExistInStore () {
@@ -51,10 +48,9 @@ export function doesAllStationsExistInStore () {
 
 /**
  * Check if an object with a given key exists in specific store,
- *   and if the object has a given property defined
- *
+ * and if the object has a given property defined
  * @param {store} store - The store to check
- * @param {int} key - The key to check for
+ * @param {number} key - The key to check for
  * @param {string} prop - The property to check for
  * @returns {boolean} - True if the property is defined, else false
  */
@@ -82,9 +78,8 @@ function checkIfObjectHasProperty (store, key, prop) {
 /**
  * Check if the store contains information for a river summary with the given id
  * Assumes that a river that has the property "skipper" defined also has
- *   the rest of the data needed to display the river summary
- *
- * @param {int} id - The id of the river to check for
+ * the rest of the data needed to display the river summary
+ * @param {number} id - The id of the river to check for
  * @returns {boolean} - True if store contains river summary info, else false
  */
 export function checkIfRiverSummaryExists (id) {
@@ -94,9 +89,8 @@ export function checkIfRiverSummaryExists (id) {
 /**
  * Check if the store contains information for a station summary with the given id
  * Assumes that a station that has the property "sec_fished" defined also has
- *   the rest of the data needed to display the station summary
- *
- * @param {int} id - The id of the station to check for
+ * the rest of the data needed to display the station summary
+ * @param {number} id - The id of the station to check for
  * @returns {boolean} - True if store contains station summary info, else false
  */
 export function checkIfStationSummaryExists (id) {
@@ -106,9 +100,8 @@ export function checkIfStationSummaryExists (id) {
 /**
  * Check if the store contains the data needed to download a station
  * Assumes that a station that has the property "display" defined also has
- *   the rest of the data needed to download a station
- *
- * @param {int} id - The id of the station to check for
+ * the rest of the data needed to download a station
+ * @param {number} id - The id of the station to check for
  * @returns {boolean} - True if store contains data needed to download station, else false
  */
 export function checkIfStationDownloadExists (id) {
