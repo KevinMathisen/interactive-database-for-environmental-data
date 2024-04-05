@@ -3,13 +3,17 @@
     import SortableTable from '$lib/SortableTable.svelte'
     import SearchBar from '$lib/user-input/SearchBar.svelte'
     import Sidebar from '$lib/Sidebar.svelte'
-    import { getRivers, getStations } from '../../utils/dataManager.js'
+    import RiverSummary from '$lib/RiverSummary.svelte'
+    import StationSummary from '$lib/StationSummary.svelte'
+    import { getRivers, getStations, getRiverSummary, getStationSummary } from '../../utils/dataManager.js'
     import { getSelectableSpecies, filterRiversByDateAndSpecies, filterStationsByDateAndSpecies, filterRiversBySearch, filterStationsBySearch } from '../../utils/filterData.js'
     import { formatRiversForTable, formatStationsForTable } from '../../utils/formatData.js'
     import { riverStore } from '../../stores/riverStore.js'
     import { stationStore } from '../../stores/stationStore.js'
     import { onMount } from 'svelte'
     import UserFeedbackMessage from '$lib/UserFeedbackMessage.svelte'
+    import { River } from '../../models/River.js';
+    import { Station } from '../../models/Station.js';
 
     let rivers // Rivers with coordinates
     let stations // Stations with coordinates
@@ -21,12 +25,18 @@
     let selectedEndDate // End date for the time user wants to look at
     let searchQuery = '' // Search query from user
 
+    let selectedRiver = new River // River the user has chosen
+    let selectedStation = new Station // Station the user has chosen
+    let riverStationPageTitle = ''
+
     let filteredRivers // Rivers filtered by date and species
     let filteredStations // Stations filtered by date and species
     let filteredBySearchRivers // Rivers filtered by search
     let filteredBySearchStations // Stations filtered by search
     let headers = [] // Header for the table
     let rows = [] // Rows for the table
+
+    $: riverStationPageTitle = dataType === 'river' ? 'Elvedata' : 'Stasjonsdata'
 
     onMount(async () => {
       // Get rivers and stations from API
@@ -53,6 +63,50 @@
      */
     function handleRowClick (event) {
       console.log('Row clicked:', event.detail)
+      if (dataType === 'river') {
+        riverClicked(event)
+      } else if (dataType === 'station') {
+        stationClicked(event)
+      }
+    }
+
+    /**
+     * Handles the click event on a station
+     * @param {Event} event - The click event
+     */
+    function stationClicked (event) {
+      getStationSummary(event.detail.id)
+        .then(_ => {
+          selectedRiver = new River()
+          selectedStation = stations.get(event.detail.id)
+        })
+    }
+
+    /**
+     * Handles the click event on a river
+     * @param {Event} event - The click event
+     */
+    function riverClicked (event) {
+      getRiverSummary(event.detail.id)
+        .then(_ => {
+          selectedStation = new Station()
+          selectedRiver = rivers.get(event.detail.id)
+        })
+    }
+
+    // Remove selected river or station when the user switches between data types
+    $: if (dataType === 'station') {
+      selectedRiver = new River()
+    } else if (dataType === 'river') {
+      selectedStation = new Station()
+    }
+
+    /**
+     * Toggles the river/station summary by resetting the selected river and station
+     */
+    function toggleSummaryPage () {
+      selectedRiver = new River()
+      selectedStation = new Station()
     }
 
     /**
@@ -81,7 +135,7 @@
 
 <!-- Filter sidebar -->
 <div class="sidebar">
-    <Sidebar title="Filter">
+    <Sidebar title="Filter" side='left'>
         <Filter
             showCloseButton=true
             {selectableSpecies}
@@ -91,6 +145,21 @@
             bind:selectedEndDate/>
     </Sidebar>
 </div>
+
+<!-- River/station page, invisible unless a river or station is selected -->
+{#if selectedRiver.id}
+<div class='riverStationPage'>
+  <Sidebar title={riverStationPageTitle} typeClose='cross' on:close={toggleSummaryPage}>
+      <RiverSummary river={selectedRiver} />
+  </Sidebar>
+</div>
+{:else if selectedStation.id}
+<div class='riverStationPage'>
+  <Sidebar title={riverStationPageTitle} typeClose='cross' on:close={toggleSummaryPage}>
+      <StationSummary station={selectedStation} />
+  </Sidebar>
+</div>
+{/if}
 
 <div class=tablecontainer>
     <!-- Search bar -->
@@ -120,6 +189,14 @@
         padding-left: 450px;
         padding-right: 100px;
         padding-top: 30px;
+    }
+
+    .riverStationPage {
+        position: absolute;
+        top: var(--header-height);
+        right: 0;
+        height: calc(100vh - var(--header-height));
+        width: 100%;
     }
 
     @media screen and (max-width: 1350px) {
