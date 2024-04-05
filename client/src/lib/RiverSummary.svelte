@@ -6,6 +6,7 @@
   import RiverInfo from './RiverSummarySections/RiverInfo.svelte'
   import { getStationsForRiver } from '../utils/dataManager.js'
   import RiverStations from './RiverSummarySections/RiverStations.svelte'
+    import RiverFishData from './RiverSummarySections/RiverFishData.svelte';
 
   export let river = new River() // River to show
   export let wide = false // Whether to show the river summary as wide
@@ -37,6 +38,11 @@
       <!-- Stations under the river -->
       <CollapsibleSection title="Stasjoner">
         <RiverStations {stations} on:rowClick/>
+      </CollapsibleSection>
+
+      <!-- Fish data for the river -->
+      <CollapsibleSection title="Fiskedata">
+        <RiverFishData {stations} />
       </CollapsibleSection>
     </div>
   </div>
