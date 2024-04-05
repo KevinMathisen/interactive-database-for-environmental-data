@@ -4,14 +4,13 @@
 
   export let title = ''
   export let typeClose = '' // which way to close the sidebar, "cross" or "sideButton"
-  export let side = 'left'
+  export let side = ''
 
   /**
    *
    */
   function handleClick () {
     dispatch('close')
-    console.log('Close')
   }
 
     /**

@@ -113,7 +113,7 @@
 
 <div class="graphPage">
     <div class="filterContainer">
-        <Sidebar title="Filter for Grafer" typeClose="sideButton">
+        <Sidebar title="Filter for Grafer" typeClose="sideButton" side='left'>
             <GraphFilter
                 {selectedRivers}
                 {selectedStations}
