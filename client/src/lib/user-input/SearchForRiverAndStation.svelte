@@ -5,7 +5,7 @@
     filterStationsByDateAndSpecies,
     filterStationsByNameAndDateCombined
   }
-    from '../utils/filterData'
+    from '../../utils/filterData'
 
   export let rivers
   export let stations

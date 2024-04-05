@@ -1,14 +1,15 @@
 <script>
     import GraphFilter from '$lib/GraphFilter.svelte'
-    import Sidebar from '../../lib/Sidebar.svelte'
+    import Sidebar from '$lib/Sidebar.svelte'
     import PlotlyComponent from './PlotlyComponent.svelte'
-    import Modal from '../../lib/Modal.svelte'
-    import SelectRiverAndStation from '../../lib/SelectRiverAndStation.svelte'
+    import Modal from '$lib/Modal.svelte'
+    import SelectRiverAndStation from '$lib/user-input/SelectRiverAndStation.svelte'
     import { riverStore } from '../../stores/riverStore.js'
     import { stationStore } from '../../stores/stationStore.js'
     import { getRiverSummary, getStationSummary, getRivers, getStations } from '../../utils/dataManager.js'
     import { getSelectableSpecies } from '../../utils/filterData.js'
     import { onMount } from 'svelte'
+    import UserFeedbackMessage from '$lib/UserFeedbackMessage.svelte'
 
     let showSelectRiverAndStationModal = false // Show the modal to select rivers and stations
 
@@ -95,6 +96,9 @@
 
 </script>
 
+<!-- User feedback modal, invisible unless there is feedback to show to user -->
+<UserFeedbackMessage />
+
 {#if showSelectRiverAndStationModal}
     <Modal on:close={handleClose} large={true}>
         <SelectRiverAndStation
@@ -165,7 +169,7 @@
 
 <style>
     .graphPage {
-        height: calc(100vh - 80px);
+        height: calc(100vh - var(--header-height));
         width: 100%;
         display: flex;
     }

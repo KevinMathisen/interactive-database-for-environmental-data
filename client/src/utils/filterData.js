@@ -120,7 +120,7 @@ function filterStationsBasedOnDate (stations, startDate, endDate) {
  */
 function filterObjectsBasedOnSpecies (objects, speciesToFilterOn) {
   // If no species are given, don't filter on species
-  if (speciesToFilterOn.length === 0) return objects
+  if (!speciesToFilterOn || speciesToFilterOn.length === 0) return objects
 
   // Use set instead of array for faster lookups
   const speciesToFilterOnSet = new Set(speciesToFilterOn)

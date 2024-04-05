@@ -7,8 +7,8 @@
     FEEDBACK_MESSAGES
   } from '../../constants/feedbackMessages.js'
   import { addFeedbackToStore } from '../../utils/addFeedbackToStore.js'
-  import UserFeedbackMessage from '../../lib/UserFeedbackMessage.svelte'
-  import Button from '../../lib/Button.svelte'
+  import UserFeedbackMessage from '$lib/UserFeedbackMessage.svelte'
+  import Button from '$lib/user-input/Button.svelte'
   import { validateFile, fileExistsInArray } from '../../utils/fileHandler.js'
 
   const filesArray = []
@@ -181,5 +181,18 @@
   /* Transformes the icon color to white */
   .white-color{
     filter: invert(100%);
+  }
+
+  @media screen and (max-width: 1000px) {
+    .uploadFilesBox {
+      width: 500px;
+    }
+    .uploadFilesBoxText {
+      margin-right: 10rem;
+    }
+    .uploadFilesUploaded {
+      width: 500px;
+    }
+
   }
 </style>

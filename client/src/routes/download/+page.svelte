@@ -1,9 +1,9 @@
 <script>
-    import CollapsibleSection from '../../lib/CollapsibleSection.svelte'
-    import RadioInput from '../../lib/RadioInput.svelte'
-    import SpeciesInput from '../../lib/SpeciesInput.svelte'
-    import Modal from '../../lib/Modal.svelte'
-    import SelectRiverAndStation from '../../lib/SelectRiverAndStation.svelte'
+    import CollapsibleSection from '$lib/CollapsibleSection.svelte'
+    import RadioInput from '$lib/user-input/RadioInput.svelte'
+    import SpeciesInput from '$lib/user-input/SpeciesInput.svelte'
+    import Modal from '$lib/Modal.svelte'
+    import SelectRiverAndStation from '$lib/user-input/SelectRiverAndStation.svelte'
     import { generateExcelFile, generateCSVFile } from '../../utils/fileHandler.js'
     import {
       getRivers, getStations,
@@ -14,14 +14,14 @@
     import { riverStore } from '../../stores/riverStore.js'
     import { stationStore } from '../../stores/stationStore.js'
     import { onMount } from 'svelte'
-    import UserFeedbackMessage from '../../lib/UserFeedbackMessage.svelte'
+    import UserFeedbackMessage from '$lib/UserFeedbackMessage.svelte'
     import {
       FEEDBACK_TYPES,
       FEEDBACK_CODES,
       FEEDBACK_MESSAGES
     } from '../../constants/feedbackMessages.js'
     import { addFeedbackToStore } from '../../utils/addFeedbackToStore.js'
-    import Button from '../../lib/Button.svelte'
+    import Button from '$lib/user-input/Button.svelte'
 
     let showSelectRiverAndStationModal = false
 
@@ -197,41 +197,35 @@
 
     <!-- Defines the area containing the options for dowloading -->
 <div class="downloadMain">
-    <div class="row">
-        <div class="rowItem">
-            <!-- Input for opening selection of river or stations -->
-            <CollapsibleSection title="{dataType === 'river' ? 'Elver' : 'Stasjoner'} valgt">
-                <button on:click={handleSelectRiverStation}>Rediger {dataType === 'river' ? 'elver' : 'stasjoner'}</button>
-                <ul>
-                    {#if dataType === 'river'}
-                        <p>Elver valgt</p>
-                        {#each Array.from(selectedRivers.entries()) as [_, river]}
-                            <li>{river.name + ' ' + river.startDate}</li>
-                        {/each}
-                    {:else}
-                        <p>Stasjoner valgt</p>
-                        {#each Array.from(selectedStations.entries()) as [_, station]}
-                            <li>{station.name + ' ' + station.date}</li>
-                        {/each}
-                    {/if}
-                </ul>
-            </CollapsibleSection>
-        </div>
 
-        <div class="rowItem">
-            <!-- Input for choosing species -->
-            <CollapsibleSection title="Art">
-                <SpeciesInput {selectableSpecies} bind:chooseAll bind:customSpecies />
-            </CollapsibleSection>
-        </div>
-    </div>
+  <!-- Input for opening selection of river or stations -->
+  <CollapsibleSection title="{dataType === 'river' ? 'Elver' : 'Stasjoner'} valgt">
+    <button on:click={handleSelectRiverStation}>Rediger {dataType === 'river' ? 'elver' : 'stasjoner'}</button>
+    <ul>
+      {#if dataType === 'river'}
+        <p>Elver valgt</p>
+        {#each Array.from(selectedRivers.entries()) as [_, river]}
+          <li>{river.name + ' ' + river.startDate}</li>
+        {/each}
+      {:else}
+        <p>Stasjoner valgt</p>
+        {#each Array.from(selectedStations.entries()) as [_, station]}
+        <li>{station.name + ' ' + station.date}</li>
+      {/each}
+      {/if}
+    </ul>
+  </CollapsibleSection>
 
-    <div class="row">
+  <!-- Input for choosing species -->
+  <CollapsibleSection title="Art">
+    <SpeciesInput {selectableSpecies} bind:chooseAll bind:customSpecies />
+  </CollapsibleSection>
+
         <!-- Input for choosing file format -->
-        <CollapsibleSection title="Format">
-            <RadioInput name="format" options={formatOptions} bind:selected={selectedFormat} />
-        </CollapsibleSection>
-    </div>
+  <CollapsibleSection title="Format">
+    <RadioInput name="format" options={formatOptions} bind:selected={selectedFormat} />
+  </CollapsibleSection>
+
 </div>
 
 <div class="downloadButton">
@@ -242,7 +236,6 @@
   .downloadHeader {
       height: 100px;
       font-size:3rem;
-      width: 100vw;
       background-color: #435768;
       color: white;
       display: flex;
@@ -254,18 +247,7 @@
       display: flex;
       justify-content: center;
       flex-direction: column;
-  }
-
-  .row {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      margin: 10px;
-  }
-
-  .rowItem {
-      margin: 20px;
+      padding: 2rem 15rem 0 15rem;
   }
 
   .downloadButton {
@@ -280,4 +262,10 @@
   .white-color{
     filter: invert(100%);
   }
+
+   @media screen and (max-width: 900px) {
+      .downloadMain{
+        padding: 2rem 5rem 0 5rem;
+      }
+    }
 </style>

@@ -26,7 +26,8 @@ http {
 	add_header X-Content-Type-Options "nosniff";
 	add_header X-XSS-Protection "1; mode=block";
 	add_header Referrer-Policy "no-referrer-when-downgrade";
-	add_header Content-Security-Policy "default-src 'self'; img-src 'self' data: https://*.tile.openstreetmap.org; font-src 'self' data: https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';";
+	# TODO: implement content security policy
+	# add_header Content-Security-Policy "default-src 'self';	img-src *;	font-src 'self' https://fonts.gstatic.com https://fonts.googleapis.com;	script-src 'self' 'unsafe-inline';	style-src 'self' 'unsafe-inline';	connect-src 'self' http://localhost:8000;";
 
 	# disable server tokens to hide server version
 	server_tokens off;
@@ -61,12 +62,11 @@ http {
 		}
 
 		location /api/ {
-			proxy_pass http://mock-server:3000/;
-			proxy_http_version 1.1;
-			proxy_set_header Upgrade $http_upgrade;
-			proxy_set_header Connection 'upgrade';
+			proxy_pass http://localhost:8000/postgrest/;
 			proxy_set_header Host $host;
-			proxy_cache_bypass $http_upgrade;
+			proxy_set_header X-Real-IP $remote_addr;
+			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+			proxy_set_header X-Forwarded-Proto $scheme;
 		}
 
 	}

@@ -20,7 +20,7 @@
 <style>
 
     .container {
-        padding: 2em;
+        padding: 2em 2em 2em 0em;
         width: 100%;
         height: fit-content;
     }
