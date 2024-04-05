@@ -39,17 +39,20 @@
 
     // called when this component is mounted
     onMount(async () => {
-      // defines the map and sets the view to Norway
-      map = leaflet.map(mapElement, {
-        layers: [mapLayers.Terrain] // Default layer
-      }).setView([61, 12.09], 6)
+      // Wait until the DOM is rendered before creating the map
+      setTimeout(() => {
+        // defines the map and sets the view to Norway
+        map = leaflet.map(mapElement, {
+          layers: [mapLayers.Terrain] // Default layer
+        }).setView([61, 12.09], 6)
 
-      // Add terrain and satellite layers to the map
-      leaflet.control.layers(mapLayers).addTo(map)
+        // Add terrain and satellite layers to the map
+        leaflet.control.layers(mapLayers).addTo(map)
 
-      // Add river and station layer groups to the map
-      riverLayerGroup.addTo(map)
-      stationLayerGroup.addTo(map)
+        // Add river and station layer groups to the map
+        riverLayerGroup.addTo(map)
+        stationLayerGroup.addTo(map)
+      }, 0)
     })
 
     // called when this component is unmounted
@@ -218,7 +221,8 @@
 
         // Create a marker for the river
         const marker = leaflet.marker(
-          [river.position.coordinates[1], river.position.coordinates[0]])
+          [river.position.coordinates[1], river.position.coordinates[0]],
+          { icon: blueIcon })
           .addTo(riverLayerGroup)
           .on('click', () => riverSelected(marker, river))
 
