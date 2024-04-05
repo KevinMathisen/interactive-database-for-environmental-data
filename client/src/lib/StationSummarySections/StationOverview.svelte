@@ -2,12 +2,14 @@
   import Button from '../user-input/Button.svelte'
 
   export let station // Station to show
+
+  let projectId = (station.projectId && station.projectId !== 'None') ? station.projectId : 'N/A'
 </script>
 
 <div class='container'>
   <div class='text'>
     <p>{station.date} - {station.time}</p>
-    <p>Prosjektnummer: TODO</p>
+    <p>Prosjektnummer: {projectId}</p>
   </div>
 
   <!-- Button to go to river data -->
