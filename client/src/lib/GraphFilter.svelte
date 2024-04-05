@@ -1,8 +1,8 @@
 <script>
     import CollapsibleSection from './CollapsibleSection.svelte'
-    import SpeciesInput from './SpeciesInput.svelte'
-    import PlotSpeciesOptions from './PlotSpeciesOptions.svelte'
-    import PlotLengthOptions from './PlotLengthOptions.svelte'
+    import SpeciesInput from './user-input/SpeciesInput.svelte'
+    import PlotSpeciesOptions from './user-input/PlotSpeciesOptions.svelte'
+    import PlotLengthOptions from './user-input/PlotLengthOptions.svelte'
     import { createEventDispatcher } from 'svelte'
     const dispatch = createEventDispatcher()
 

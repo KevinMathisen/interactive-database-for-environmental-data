@@ -1,8 +1,8 @@
 <script>
     import CollapsibleSection from './CollapsibleSection.svelte'
-    import RadioInput from './RadioInput.svelte'
-    import DateInput from './DateInput.svelte'
-    import SpeciesInput from './SpeciesInput.svelte'
+    import RadioInput from './user-input/RadioInput.svelte'
+    import DateInput from './user-input/DateInput.svelte'
+    import SpeciesInput from './user-input/SpeciesInput.svelte'
 
     export let selectableSpecies = [] // Species the user can choose
 

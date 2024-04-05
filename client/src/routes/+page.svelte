@@ -1,17 +1,17 @@
 <script>
-  import LeafletMap from '$lib/LeafletMap.svelte'
+  import LeafletMap from './LeafletMap.svelte'
   import Filter from '$lib/filter.svelte'
   import { getRivers, getStations, getRiverSummary, getStationSummary } from '../utils/dataManager.js'
   import { getSelectableSpecies, filterRiversByDateAndSpecies, filterStationsByDateAndSpecies } from '../utils/filterData.js'
   import { riverStore } from '../stores/riverStore.js'
   import { stationStore } from '../stores/stationStore.js'
-  import Sidebar from '../lib/Sidebar.svelte'
+  import Sidebar from '$lib/Sidebar.svelte'
   import { onMount } from 'svelte'
-  import RiverSummary from '../lib/RiverSummary.svelte'
-  import StationSummary from '../lib/StationSummary.svelte'
+  import RiverSummary from '$lib/RiverSummary.svelte'
+  import StationSummary from '$lib/StationSummary.svelte'
   import { River } from '../models/River.js'
   import { Station } from '../models/Station.js'
-  import UserFeedbackMessage from '../lib/UserFeedbackMessage.svelte'
+  import UserFeedbackMessage from '$lib/UserFeedbackMessage.svelte'
 
   let rivers = new Map() // Rivers with coordinates
   let stations = new Map() // Stations with coordinates

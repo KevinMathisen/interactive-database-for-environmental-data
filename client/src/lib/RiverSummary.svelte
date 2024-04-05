@@ -1,7 +1,7 @@
 <script>
   import { River } from '../models/River.js'
   import CollapsibleSection from './CollapsibleSection.svelte'
-  import Button from './Button.svelte'
+  import Button from './user-input/Button.svelte'
   import RiverOverview from './RiverSummarySections/RiverOverview.svelte'
   import RiverInfo from './RiverSummarySections/RiverInfo.svelte'
   import { getStationsForRiver } from '../utils/dataManager.js'
