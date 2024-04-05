@@ -29,14 +29,16 @@
   let selectedStation = new Station() // Station the user has chosen
 
   let showLeftSidebar = true
-  let sideBarTitle = 'Sidebar'
+  let sideBarTitle = ''
+
+  // Set sidebar title based on data type
+  $: sideBarTitle = dataType === 'river' ? 'Elvedata' : 'Stasjonsdata'
 
   /**
    * Handles the click event on a station
    * @param {Event} event - The click event
    */
   function stationClicked (event) {
-    sideBarTitle = event.detail.text.name
     getStationSummary(event.detail.text.id)
       .then(_ => {
         selectedRiver = new River()
@@ -49,7 +51,6 @@
    * @param {Event} event - The click event
    */
   function riverClicked (event) {
-    sideBarTitle = event.detail.text.name
     getRiverSummary(event.detail.text.id)
       .then(_ => {
         selectedStation = new Station()
