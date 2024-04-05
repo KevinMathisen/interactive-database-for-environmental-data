@@ -44,3 +44,10 @@
   <h4>Kommentar</h4>
   <p>{river.comment}</p>
 </div>
+
+<style>
+  p {
+    margin-left: 0.5em;
+  }
+</style>
+
