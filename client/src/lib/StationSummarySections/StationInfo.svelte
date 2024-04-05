@@ -23,8 +23,10 @@
 </script>
 
 <div class='container'>
-  <h4>Stasjonsbeskrivelse</h4>
-  <p>{station.description}</p>
+  {#if station.description}
+    <h4>Stasjonsbeskrivelse</h4>
+    <p>{station.description}</p>
+  {/if}
 
   {#if station.comment}
     <h4>Kommentar</h4>
