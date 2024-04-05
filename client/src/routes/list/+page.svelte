@@ -136,7 +136,7 @@
 <div class='listPage'>
   <!-- Filter sidebar -->
   <div class="sidebar">
-      <Sidebar title="Filter" side='left'>
+      <Sidebar title="Filter" side='left' typeClose="sideButton">
           <Filter
               showCloseButton=true
               {selectableSpecies}
@@ -189,7 +189,7 @@
 
   .sidebar {
     height: 100%;
-    width: 20em;
+    width: fit-content;
   }
 
   .listMain {

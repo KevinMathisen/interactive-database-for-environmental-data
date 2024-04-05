@@ -81,13 +81,6 @@
   }
 
   /**
-   * Toggles the left sidebar
-   */
-  function toggleLeftSidebar () {
-    showLeftSidebar = !showLeftSidebar
-  }
-
-  /**
    * Toggles the right sidebar by resetting the selected river and station
    */
   function toggleRightSidebar () {
@@ -109,18 +102,18 @@
   on:stationClicked={stationClicked}
   on:riverClicked={riverClicked}/>
 
-{#if showLeftSidebar}
-  <div class="leftSidebar">
-    <Sidebar title="Filter" typeClose="sideButton" side="left" on:close={toggleLeftSidebar}>
-      <Filter
-        {selectableSpecies}
-        bind:dataType
-        bind:selectedSpecies
-        bind:selectedStartDate
-        bind:selectedEndDate/>
-    </Sidebar>
-  </div>
-{/if}
+
+<div class="leftSidebar">
+  <Sidebar title="Filter" typeClose="sideButton" side="left">
+    <Filter
+      {selectableSpecies}
+      bind:dataType
+      bind:selectedSpecies
+      bind:selectedStartDate
+      bind:selectedEndDate/>
+  </Sidebar>
+</div>
+
 
 {#if selectedRiver.id}
   <div class="rightSidebar">
@@ -142,13 +135,13 @@
     top: var(--header-height);
     left: 0;
     height: calc(100vh - var(--header-height));
-    width: 20em;
+    width: fit-content;
   }
   .rightSidebar {
     position: absolute;
     top: var(--header-height);
     right: 0;
     height: calc(100vh - var(--header-height));
-    width: 35em;
+    width: fit-content;
   }
 </style>

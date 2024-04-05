@@ -5,12 +5,16 @@
   export let title = ''
   export let typeClose = '' // which way to close the sidebar, "cross" or "sideButton"
   export let side = ''
+  export let showSidebar = true
 
   /**
    *
    */
   function handleClick () {
     dispatch('close')
+    if (typeClose === 'sideButton') {
+      showSidebar = !showSidebar
+    }
   }
 
     /**
@@ -24,19 +28,21 @@
   }
 </script>
 
-<div class="sidebarContainer {side}">
-  <!-- Header with title and optional close button -->
-  <div class="header">
-    <h1>{title}</h1>
-    {#if typeClose === 'cross'}
-      <div class="crossButton" on:click={handleClick} on:keydown={handleKeyDown} role="button" tabindex="0"></div>
-    {/if}
-  </div>
+<div class="sidebarContainer {side}" style="width: {!showSidebar ? '0' : ''};">
+  {#if showSidebar}
+    <!-- Header with title and optional close button -->
+    <div class="header">
+      <h1>{title}</h1>
+      {#if typeClose === 'cross'}
+        <div class="crossButton" on:click={handleClick} on:keydown={handleKeyDown} role="button" tabindex="0"></div>
+      {/if}
+    </div>
 
-  <!-- Main content -->
-  <div class=mainContent>
-    <slot></slot>
-  </div>
+    <!-- Main content -->
+    <div class=mainContent>
+      <slot></slot>
+    </div>
+  {/if}
 
   <!-- Optional close button on side -->
   {#if typeClose === 'sideButton'}
@@ -46,7 +52,6 @@
 
 <style>
   .sidebarContainer {
-    width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -55,14 +60,17 @@
     background-color: white;
     z-index: 2000;
     position: relative;
+    transition: width 0.15s ease-in-out;
   }
 
   .left {
     box-shadow: 5px 0 5px rgba(0, 0, 0, 0.1);
+    width: 20em;
   }
 
   .right {
     box-shadow: -5px 0 5px rgba(0, 0, 0, 0.1);
+    width: 35em;
   }
 
   .header {

@@ -175,7 +175,7 @@
     }
 
     .filterContainer {
-        width: 300px;
+        width: fit-content;
         height: 100%;
     }
 
