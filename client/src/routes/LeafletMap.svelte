@@ -110,6 +110,8 @@
      * Adds each station as a marker in the map
      */
     function updateStations () {
+
+      // Add each station not already added to the map
       stations.forEach(station => {
         // Checks if the station already has a marker
         if (stationMarkers.has(station.id)) {
@@ -121,6 +123,16 @@
 
         // Store the markers and line in a map using the station id as key
         stationMarkers.set(station.id, stationMarker)
+      })
+
+      // Remove station markers that are not in the data
+      stationMarkers.forEach((stationMarker, id) => {
+        if (!stations.has(id)) {
+          stationMarker.startMarker.removeFrom(stationLayerGroup)
+          stationMarker.endMarker.removeFrom(stationLayerGroup)
+          stationMarker.line.removeFrom(stationLayerGroup)
+          stationMarkers.delete(id)
+        }
       })
     }
 
@@ -213,6 +225,8 @@
      * Adds each river as a marker in the map
      */
     function updateRivers () {
+
+      // Add each river not already added to the map
       rivers.forEach(river => {
         // Checks if the river already has a marker
         if (riverMarkers.has(river.id)) {
@@ -228,6 +242,14 @@
 
         // Store the marker in a map using the river id as key
         riverMarkers.set(river.id, marker)
+      })
+
+      // Remove river markers that are not in the data
+      riverMarkers.forEach((marker, id) => {
+        if (!rivers.has(id)) {
+          marker.removeFrom(riverLayerGroup)
+          riverMarkers.delete(id)
+        }
       })
     }
 
