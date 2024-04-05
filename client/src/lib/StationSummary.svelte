@@ -77,7 +77,10 @@
   
   .maincontent.wide {
     flex-direction: row;
-    margin: 2em;
+    margin: 2em 0em;
+    padding: 0em 2em;
+    height: calc(100% - 4em);
+    width: calc(100% - 4em);
   }
 
   .column {
