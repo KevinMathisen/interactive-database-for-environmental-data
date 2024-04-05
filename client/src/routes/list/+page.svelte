@@ -1,15 +1,15 @@
 <script> // List page logic here
     import Filter from '$lib/filter.svelte'
-    import SortableTable from '../../lib/SortableTable.svelte'
-    import SearchBar from '../../lib/user-input/SearchBar.svelte'
-    import Sidebar from '../../lib/Sidebar.svelte'
+    import SortableTable from '$lib/SortableTable.svelte'
+    import SearchBar from '$lib/user-input/SearchBar.svelte'
+    import Sidebar from '$lib/Sidebar.svelte'
     import { getRivers, getStations } from '../../utils/dataManager.js'
     import { getSelectableSpecies, filterRiversByDateAndSpecies, filterStationsByDateAndSpecies, filterRiversBySearch, filterStationsBySearch } from '../../utils/filterData.js'
     import { formatRiversForTable, formatStationsForTable } from '../../utils/formatData.js'
     import { riverStore } from '../../stores/riverStore.js'
     import { stationStore } from '../../stores/stationStore.js'
     import { onMount } from 'svelte'
-    import UserFeedbackMessage from '../../lib/UserFeedbackMessage.svelte'
+    import UserFeedbackMessage from '$lib/UserFeedbackMessage.svelte'
 
     let rivers // Rivers with coordinates
     let stations // Stations with coordinates

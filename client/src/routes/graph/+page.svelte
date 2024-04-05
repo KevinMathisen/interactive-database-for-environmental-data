@@ -1,15 +1,15 @@
 <script>
     import GraphFilter from '$lib/GraphFilter.svelte'
-    import Sidebar from '../../lib/Sidebar.svelte'
+    import Sidebar from '$lib/Sidebar.svelte'
     import PlotlyComponent from './PlotlyComponent.svelte'
-    import Modal from '../../lib/Modal.svelte'
-    import SelectRiverAndStation from '../../lib/user-input/SelectRiverAndStation.svelte'
+    import Modal from '$lib/Modal.svelte'
+    import SelectRiverAndStation from '$lib/user-input/SelectRiverAndStation.svelte'
     import { riverStore } from '../../stores/riverStore.js'
     import { stationStore } from '../../stores/stationStore.js'
     import { getRiverSummary, getStationSummary, getRivers, getStations } from '../../utils/dataManager.js'
     import { getSelectableSpecies } from '../../utils/filterData.js'
     import { onMount } from 'svelte'
-    import UserFeedbackMessage from '../../lib/UserFeedbackMessage.svelte'
+    import UserFeedbackMessage from '$lib/UserFeedbackMessage.svelte'
 
     let showSelectRiverAndStationModal = false // Show the modal to select rivers and stations
 
