@@ -47,7 +47,8 @@ export class Station {
     observations = null,
     transectLength = null,
     display = null,
-    gpxFile = null
+    gpxFile = null,
+    projectId = null
   } = {}) {
     this.id = id
     this.name = name
@@ -71,6 +72,7 @@ export class Station {
     this.transectLength = transectLength
     this.display = display
     this.gpxFile = gpxFile
+    this.projectId = projectId
   }
 
   // Diable eslint camelcase rule because of the PostgreSQL naming convention
@@ -98,7 +100,8 @@ export class Station {
       observations: object.observations,
       transectLength: object.transect_length,
       display: object.display,
-      gpxFile: object.gpx_file
+      gpxFile: object.gpx_file,
+      projectId: object.project_id
     })
   }
   /* eslint-enable camelcase */
