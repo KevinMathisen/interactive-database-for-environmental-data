@@ -4,9 +4,9 @@
 
   const dispatch = createEventDispatcher()
 
-  export let href = '#'       // The default link for the button
-  export let type = ''        // Can be either 'download' or any optioneble color 'blue'.
-  export let size = 'medium'  // Button sizes 'small', 'medium', 'large' or 'extende'.
+  export let href = '#' // The default link for the button
+  export let type = '' // Can be either 'download' or any optioneble color 'blue'.
+  export let size = 'medium' // Button sizes 'small', 'medium', 'large' or 'extende'.
 
   /**
    * Handles the appropriate function when the user clicks on the button.
