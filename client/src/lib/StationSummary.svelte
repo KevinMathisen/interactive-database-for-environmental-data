@@ -71,7 +71,7 @@
     flex-direction: column;
     justify-content: flex-start;
     overflow: auto;
-    width: calc(100% - 4em);
+    width: 100%;
     flex-direction: column;
   }
   
