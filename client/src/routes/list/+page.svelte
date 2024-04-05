@@ -133,77 +133,83 @@
 <!-- User feedback modal, invisible unless there is feedback to show to user -->
 <UserFeedbackMessage />
 
-<!-- Filter sidebar -->
-<div class="sidebar">
-    <Sidebar title="Filter" side='left'>
-        <Filter
-            showCloseButton=true
-            {selectableSpecies}
-            bind:dataType
-            bind:selectedSpecies
-            bind:selectedStartDate
-            bind:selectedEndDate/>
-    </Sidebar>
+<div class='listPage'>
+  <!-- Filter sidebar -->
+  <div class="sidebar">
+      <Sidebar title="Filter" side='left'>
+          <Filter
+              showCloseButton=true
+              {selectableSpecies}
+              bind:dataType
+              bind:selectedSpecies
+              bind:selectedStartDate
+              bind:selectedEndDate/>
+      </Sidebar>
+  </div>
+
+  <div class='listMain'>
+      <!-- Search bar -->
+      <SearchBar
+          bind:searchQuery
+          bind:dataType/>
+
+      <!-- Table with Rivers or Stations -->
+      <div class='tablecontainer'>
+        <SortableTable
+            {headers}
+            {rows}
+            clickable=true
+            on:rowClick={handleRowClick}
+        />
+      </div>
+  </div>
 </div>
 
 <!-- River/station page, invisible unless a river or station is selected -->
 {#if selectedRiver.id}
 <div class='riverStationPage'>
   <Sidebar title={riverStationPageTitle} typeClose='cross' on:close={toggleSummaryPage}>
-      <RiverSummary river={selectedRiver} />
+      <RiverSummary river={selectedRiver} wide={true}/>
   </Sidebar>
 </div>
 {:else if selectedStation.id}
 <div class='riverStationPage'>
   <Sidebar title={riverStationPageTitle} typeClose='cross' on:close={toggleSummaryPage}>
-      <StationSummary station={selectedStation} />
+      <StationSummary station={selectedStation} wide={true}/>
   </Sidebar>
 </div>
 {/if}
 
-<div class=tablecontainer>
-    <!-- Search bar -->
-    <SearchBar
-        bind:searchQuery
-        bind:dataType/>
-
-    <!-- Table with Rivers or Stations -->
-    <SortableTable
-        {headers}
-        {rows}
-        clickable=true
-        on:rowClick={handleRowClick}
-    />
-</div>
-
 <style>
-    .sidebar {
-        position: absolute;
-        top: var(--header-height);
-        left: 0;
-        height: calc(100vh - var(--header-height));
-        width: 20em;
-    }
+  .listPage {
+    height: calc(100vh - var(--header-height));
+    width: 100%;
+    display: flex;
+  }
 
-    .tablecontainer {
-        padding-left: 450px;
-        padding-right: 100px;
-        padding-top: 30px;
-    }
+  .sidebar {
+    height: 100%;
+    width: 20em;
+  }
 
-    .riverStationPage {
-        position: absolute;
-        top: var(--header-height);
-        right: 0;
-        height: calc(100vh - var(--header-height));
-        width: 100%;
-    }
+  .listMain {
+    flex-grow: 1;
+    padding: 4em;
+    display: flex;
+    flex-direction: column;
+  }
 
-    @media screen and (max-width: 1350px) {
-      .tablecontainer {
-        padding-left: 350px;
-        padding-right: 50px;
-        padding-top: 30px;
-      }
-    }
+  .tablecontainer {
+    flex-grow: 1;
+    overflow-y: auto;
+    display: block;
+  }
+
+  .riverStationPage {
+    position: absolute;
+    top: var(--header-height);
+    right: 0;
+    height: calc(100vh - var(--header-height));
+    width: 100%;
+  }
 </style>
