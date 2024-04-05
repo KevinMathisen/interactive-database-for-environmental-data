@@ -42,17 +42,6 @@
         <CollapsibleSection title="Art">
             <SpeciesInput {selectableSpecies} bind:chooseAll bind:customSpecies />
         </CollapsibleSection>
-
-        <CollapsibleSection title="Valg">
-            <p>{dataType}</p>
-            <p>Fra {selectedStartDate}, til {selectedEndDate}</p>
-            <ul>
-                {#each selectedSpecies as species}
-                    <li>{species}</li>
-                {/each}
-            </ul>
-        </CollapsibleSection>
-
     </form>
 </div>
 
