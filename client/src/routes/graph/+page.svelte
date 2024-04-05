@@ -3,7 +3,7 @@
     import Sidebar from '../../lib/Sidebar.svelte'
     import PlotlyComponent from './PlotlyComponent.svelte'
     import Modal from '../../lib/Modal.svelte'
-    import SelectRiverAndStation from '../../lib/SelectRiverAndStation.svelte'
+    import SelectRiverAndStation from '../../lib/user-input/SelectRiverAndStation.svelte'
     import { riverStore } from '../../stores/riverStore.js'
     import { stationStore } from '../../stores/stationStore.js'
     import { getRiverSummary, getStationSummary, getRivers, getStations } from '../../utils/dataManager.js'

@@ -1,5 +1,5 @@
 <script>
-  import CollapsibleSection from './CollapsibleSection.svelte'
+  import CollapsibleSection from '../CollapsibleSection.svelte'
   import RadioInput from './RadioInput.svelte'
   import DateInput from './DateInput.svelte'
   import SearchForRiverAndStation from './SearchForRiverAndStation.svelte'

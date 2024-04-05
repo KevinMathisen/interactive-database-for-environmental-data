@@ -1,6 +1,6 @@
 <script>
   import CollapsibleSection from './CollapsibleSection.svelte'
-  import Button from './Button.svelte'
+  import Button from './user-input/Button.svelte'
   import StationOverview from './StationSummarySections/StationOverview.svelte'
   import StationInfo from './StationSummarySections/StationInfo.svelte'
   import StationFishData from './StationSummarySections/StationFishData.svelte'

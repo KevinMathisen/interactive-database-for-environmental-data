@@ -1,9 +1,9 @@
 <script>
     import CollapsibleSection from '../../lib/CollapsibleSection.svelte'
-    import RadioInput from '../../lib/RadioInput.svelte'
-    import SpeciesInput from '../../lib/SpeciesInput.svelte'
+    import RadioInput from '../../lib/user-input/RadioInput.svelte'
+    import SpeciesInput from '../../lib/user-input/SpeciesInput.svelte'
     import Modal from '../../lib/Modal.svelte'
-    import SelectRiverAndStation from '../../lib/SelectRiverAndStation.svelte'
+    import SelectRiverAndStation from '../../lib/user-input/SelectRiverAndStation.svelte'
     import { generateExcelFile, generateCSVFile } from '../../utils/fileHandler.js'
     import {
       getRivers, getStations,
@@ -21,7 +21,7 @@
       FEEDBACK_MESSAGES
     } from '../../constants/feedbackMessages.js'
     import { addFeedbackToStore } from '../../utils/addFeedbackToStore.js'
-    import Button from '../../lib/Button.svelte'
+    import Button from '../../lib/user-input/Button.svelte'
 
     let showSelectRiverAndStationModal = false
 

@@ -1,7 +1,7 @@
 <script> // List page logic here
     import Filter from '$lib/filter.svelte'
     import SortableTable from '../../lib/SortableTable.svelte'
-    import SearchBar from '../../lib/SearchBar.svelte'
+    import SearchBar from '../../lib/user-input/SearchBar.svelte'
     import Sidebar from '../../lib/Sidebar.svelte'
     import { getRivers, getStations } from '../../utils/dataManager.js'
     import { getSelectableSpecies, filterRiversByDateAndSpecies, filterStationsByDateAndSpecies, filterRiversBySearch, filterStationsBySearch } from '../../utils/filterData.js'

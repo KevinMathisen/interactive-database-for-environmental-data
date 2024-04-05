@@ -1,6 +1,6 @@
 <script>
   import { page } from '$app/stores'
-  import Button from './Button.svelte'
+  import Button from './user-input/Button.svelte'
 
   let showDropdown = false
 
