@@ -39,10 +39,10 @@
    * @param {Event} event - The click event
    */
   function stationClicked (event) {
-    getStationSummary(event.detail.text.id)
+    getStationSummary(event.detail.station.id)
       .then(_ => {
         selectedRiver = new River()
-        selectedStation = stations.get(event.detail.text.id)
+        selectedStation = stations.get(event.detail.station.id)
       })
   }
 
@@ -51,10 +51,10 @@
    * @param {Event} event - The click event
    */
   function riverClicked (event) {
-    getRiverSummary(event.detail.text.id)
+    getRiverSummary(event.detail.river.id)
       .then(_ => {
         selectedStation = new Station()
-        selectedRiver = rivers.get(event.detail.text.id)
+        selectedRiver = rivers.get(event.detail.river.id)
       })
   }
 

@@ -179,7 +179,7 @@
       map.flyTo(stationMarker.startMarker.getLatLng(), 13, { duration: 0.5 })
 
       // Send the selected station to the parent component
-      dispatch('stationClicked', { text: station })
+      dispatch('stationClicked', { station })
 
       // Save the selected station as the previous selected station
       previousSelectedStation = station
@@ -249,7 +249,7 @@
       map.flyTo(marker.getLatLng(), 11, { duration: 0.5 })
 
       // Send the selected river to the parent component
-      dispatch('riverClicked', { text: river })
+      dispatch('riverClicked', { river })
 
       // Save the selected river as the previous selected river
       previousSelectedRiver = river
