@@ -72,6 +72,13 @@
   $: filteredRivers = filterRiversByDateAndSpecies(rivers, selectedSpecies, selectedStartDate, selectedEndDate)
   $: filteredStations = filterStationsByDateAndSpecies(stations, selectedSpecies, selectedStartDate, selectedEndDate)
 
+  // Remove selected river or station when the user switches between data types
+  $: if (dataType === 'station') {
+    selectedRiver = new River()
+  } else if (dataType === 'river') {
+    selectedStation = new Station()
+  }
+
   /**
    * Toggles the left sidebar
    */
