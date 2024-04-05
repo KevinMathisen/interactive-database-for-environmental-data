@@ -7,24 +7,31 @@
   import { Station } from '../models/Station'
 
   export let station = new Station() // Station to show
+  export let wide = false // Whether to show the station summary as wide
+
+  $: mainContentClass = wide ? 'maincontent wide' : 'maincontent';
 </script>
 
 <div class='container'>
-  <div class='maincontent'>
-    <!-- Station name, date, time, and button to go to river -->
-    <CollapsibleSection title={station.name} collapsable={false}>
-      <StationOverview {station} />
-    </CollapsibleSection>
+  <div class={mainContentClass}>
+    <div class="column">
+      <!-- Station name, date, time, and button to go to river -->
+      <CollapsibleSection title={station.name} collapsable={false}>
+        <StationOverview {station} />
+      </CollapsibleSection>
 
-    <!-- General station info such as description, weather, power settings -->
-    <CollapsibleSection title='Info'>
-      <StationInfo {station} />
-    </CollapsibleSection>
+      <!-- General station info such as description, weather, power settings -->
+      <CollapsibleSection title='Info'>
+        <StationInfo {station} />
+      </CollapsibleSection>
+    </div>
 
-    <!-- Fish data for the station -->
-    <CollapsibleSection title='Fiskedata'>
-      <StationFishData {station} />
-    </CollapsibleSection>
+    <div class="column">
+      <!-- Fish data for the station -->
+      <CollapsibleSection title='Fiskedata'>
+        <StationFishData {station} />
+      </CollapsibleSection>
+    </div>
   </div>
 
   <!-- Buttons to show diagram and download data -->
@@ -33,6 +40,14 @@
       Diagram
       <img src='/graphIcon.svg' alt='graphIcon' height='50px' class='headerIcon'>
     </Button>
+
+    <!-- Show in map button if the summary is wide -->
+    {#if wide}
+      <Button color="blue" type="medium">
+        Se i kart
+        <img src="/mapIcon.svg" alt="mapIcon" height="50px" class="headerIcon">
+      </Button>
+    {/if}
 
     <Button color='orange' type='medium'>
       Last ned
@@ -56,7 +71,17 @@
     flex-direction: column;
     justify-content: flex-start;
     overflow: auto;
-    width: 100%;
+    width: calc(100% - 4em);
+    flex-direction: column;
+  }
+  
+  .maincontent.wide {
+    flex-direction: row;
+    margin: 2em;
+  }
+
+  .column {
+    flex: 1;
   }
 
   .footer {

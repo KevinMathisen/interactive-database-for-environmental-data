@@ -8,30 +8,37 @@
   import RiverStations from './RiverSummarySections/RiverStations.svelte'
 
   export let river = new River() // River to show
+  export let wide = false // Whether to show the river summary as wide
 
   let stations = new Map() // Stations under river
 
   // Get stations for the river
   $: stations = getStationsForRiver(river)
+
+  $: mainContentClass = wide ? 'maincontent wide' : 'maincontent';
 </script>
 
 <div class='container'>
 
-  <div class="maincontent">
-    <!-- River name, project id, and date -->
-    <CollapsibleSection title={river.name} collapsable={false}>
-      <RiverOverview {river} />
-    </CollapsibleSection>
+  <div class={mainContentClass}>
+    <div class="column">
+      <!-- River name, project id, and date -->
+      <CollapsibleSection title={river.name} collapsable={false}>
+        <RiverOverview {river} />
+      </CollapsibleSection>
 
-    <!-- River info such as observation data, crew, and comments -->
-    <CollapsibleSection title="Info">
-      <RiverInfo {river} {stations}/>
-    </CollapsibleSection>
+      <!-- River info such as observation data, crew, and comments -->
+      <CollapsibleSection title="Info">
+        <RiverInfo {river} {stations}/>
+      </CollapsibleSection>
+    </div>
 
-    <!-- Stations under the river -->
-    <CollapsibleSection title="Stasjoner">
-      <RiverStations {stations} on:rowClick/>
-    </CollapsibleSection>
+    <div class="column">
+      <!-- Stations under the river -->
+      <CollapsibleSection title="Stasjoner">
+        <RiverStations {stations} on:rowClick/>
+      </CollapsibleSection>
+    </div>
   </div>
 
   <!-- Buttons to show diagram and download data -->
@@ -41,10 +48,19 @@
       <img src="/graphIcon.svg" alt="graphIcon" height="50px" class="headerIcon">
     </Button>
 
+    <!-- Show in map button if the summary is wide -->
+    {#if wide}
+      <Button color="blue" type="medium">
+        Se i kart
+        <img src="/mapIcon.svg" alt="mapIcon" height="50px" class="headerIcon">
+      </Button>
+    {/if}
+
     <Button color="orange" type="medium">
       Last ned
       <img src="/dowloadIcon.svg" alt="dowloadIcon" height="50px" class="headerIcon">
     </Button>
+
   </div>
 </div>
 
@@ -64,6 +80,16 @@
     justify-content: flex-start;
     overflow: auto;
     width: 100%;
+    flex-direction: column;
+  }
+  
+  .maincontent.wide {
+    flex-direction: row;
+    margin: 2em;
+  }
+
+  .column {
+    flex: 1;
   }
 
   .footer {
