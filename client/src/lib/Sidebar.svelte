@@ -46,7 +46,9 @@
 
   <!-- Optional close button on side -->
   {#if typeClose === 'sideButton'}
-    <button class="sideButton" on:click={handleClick}>&gt;</button>
+    <button class="sideButton" on:click={handleClick}>
+      <div class="arrow {showSidebar ? 'left' : 'right'}"></div>
+    </button>
   {/if}
 </div>
 
@@ -107,19 +109,36 @@
     height: 80px;
     width: 35px;
     background-color: white;
-    border: 1px solid black;
-    border-radius: 0 1rem 1rem 0;
-    font-size: 2rem;
-    font-weight: lighter;
-    transition: transform 1.5s ease;
-    z-index: 1000;                       /* Makes the button overlap the map*/
+    border: 0px;
+    border-radius: 0 15px 15px 0;
+    z-index: 1000; /* Ensure button is on top of map*/
     cursor: pointer;
-    /*Create shadow only on right, top, and bottom of element**/
-    box-shadow: 5px 0 5px rgba(0, 0, 0, 0.1);
+    /*Create shadow only on right, top, and bottom of element*/
+    box-shadow: 10px 0 10px rgba(0, 0, 0, 0.15);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .arrow {
+    width: 0;
+    height: 0;
+    border-top: 13px solid transparent;
+    border-bottom: 13px solid transparent;
+    box-shadow: none;
+  }
+
+  .arrow.left {
+    border-right: 13px solid rgb(58, 58, 58);
+    margin-right: 10px;
+  }
+
+  .arrow.right {
+    border-left: 13px solid rgb(58, 58, 58);
   }
 
   .sideButton:hover {
-    background-color: #435768;
+    background-color: #a3a3a3;
   }
 
   /* Container for the close symbol */
