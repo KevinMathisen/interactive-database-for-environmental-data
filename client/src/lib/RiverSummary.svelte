@@ -12,6 +12,10 @@
   export let wide = false // Whether to show the river summary as wide
 
   let stations = new Map() // Stations under river
+  
+  // Path to the map with the river selected as a query parameter
+  let mapRef = ''
+  $: mapRef = `/?river=${river.id}`
 
   // Get stations for the river
   $: stations = getStationsForRiver(river)
@@ -56,7 +60,7 @@
 
     <!-- Show in map button if the summary is wide -->
     {#if wide}
-      <Button type="blue" size="medium">
+      <Button type="blue" size="medium" href={mapRef}>
         Se i kart
         <img src="/mapIcon.svg" alt="mapIcon" height="50px" class="headerIcon">
       </Button>

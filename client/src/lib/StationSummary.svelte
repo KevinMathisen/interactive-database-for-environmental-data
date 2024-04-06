@@ -9,6 +9,10 @@
   export let station = new Station() // Station to show
   export let wide = false // Whether to show the station summary as wide
 
+  // Path to the map with the station selected as a query parameter
+  let mapRef = ''
+  $: mapRef = `/?station=${station.id}`
+
   $: mainContentClass = wide ? 'maincontent wide' : 'maincontent';
 </script>
 
@@ -43,7 +47,7 @@
 
     <!-- Show in map button if the summary is wide -->
     {#if wide}
-      <Button type="blue" size="medium">
+      <Button type="blue" size="medium" href={mapRef}>
         Se i kart
         <img src="/mapIcon.svg" alt="mapIcon" height="50px" class="headerIcon">
       </Button>
