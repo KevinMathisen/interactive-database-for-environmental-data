@@ -162,17 +162,17 @@
       // creates a marker for the start position of the station
       const startMarker = leaflet.marker(startPos, { icon: redIcon })
         .addTo(stationLayerGroup)
-        .on('click', () => dispatch('stationClicked', { station }))
+        .on('click', () => dispatch('stationClicked', { id: station.id }))
 
       // creates a marker for the end position of the station
       const endMarker = leaflet.marker(endPos, { icon: redIcon })
         .addTo(stationLayerGroup)
-        .on('click', () => dispatch('stationClicked', { station }))
+        .on('click', () => dispatch('stationClicked', { id: station.id }))
 
       // drawing the line between the start and end position of the station
       const polyline = leaflet.polyline([startPos, endPos], { color: 'red' })
         .addTo(stationLayerGroup)
-        .on('click', () => dispatch('stationClicked', { station }))
+        .on('click', () => dispatch('stationClicked', { id: station.id }))
 
       // Return the markers and line in a object
       const stationMarker = {
@@ -249,7 +249,7 @@
           [river.position.coordinates[1], river.position.coordinates[0]],
           { icon: blueIcon })
           .addTo(riverLayerGroup)
-          .on('click', () => dispatch('riverClicked', { river }))
+          .on('click', () => dispatch('riverClicked', { id: river.id }))
 
         // Store the marker in a map using the river id as key
         riverMarkers.set(river.id, marker)

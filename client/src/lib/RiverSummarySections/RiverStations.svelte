@@ -21,7 +21,7 @@
    */
   function goToStationData (event) {
     console.log('goToStationData',  event.detail.id)
-    dispatch('goToStationData', { station: { id: event.detail.id } })
+    dispatch('goToStationData', { id: event.detail.id })
   }
 </script>
 

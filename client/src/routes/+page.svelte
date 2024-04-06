@@ -71,7 +71,7 @@
    * @param {Event} event - The click event
    */
   function stationClicked (event) {
-    selectStation(event.detail.station.id)
+    selectStation(event.detail.id)
   }
 
   function selectStation (stationId) {
@@ -95,7 +95,7 @@
    * @param {Event} event - The click event
    */
   function riverClicked (event) {
-    selectRiver(event.detail.river.id)
+    selectRiver(event.detail.id)
   }
 
   function selectRiver (riverId) {

@@ -12,7 +12,7 @@
    * Handles when user clicks on button to go to river by firing event with river id
    */
   function goToRiverData () {
-    dispatch('goToRiverData', { river: { id: station.riverId } })
+    dispatch('goToRiverData', { id: station.riverId })
   }
 </script>
 

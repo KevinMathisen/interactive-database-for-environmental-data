@@ -223,13 +223,13 @@
 {#if selectedRiver.id}
 <div class='riverStationPage'>
   <Sidebar title={riverStationPageTitle} typeClose='cross' on:close={toggleSummaryPage}>
-      <RiverSummary river={selectedRiver} wide={true}/>
+      <RiverSummary river={selectedRiver} wide={true} on:goToStationData={stationClicked}/>
   </Sidebar>
 </div>
 {:else if selectedStation.id}
 <div class='riverStationPage'>
   <Sidebar title={riverStationPageTitle} typeClose='cross' on:close={toggleSummaryPage}>
-      <StationSummary station={selectedStation} wide={true}/>
+      <StationSummary station={selectedStation} wide={true} on:goToRiverData={riverClicked}/>
   </Sidebar>
 </div>
 {/if}
