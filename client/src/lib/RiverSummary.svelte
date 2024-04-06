@@ -56,7 +56,7 @@
 
     <!-- Show in map button if the summary is wide -->
     {#if wide}
-      <Button color="blue" type="medium">
+      <Button type="blue" size="medium">
         Se i kart
         <img src="/mapIcon.svg" alt="mapIcon" height="50px" class="headerIcon">
       </Button>
