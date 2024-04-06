@@ -12,12 +12,14 @@
   import { River } from '../models/River.js'
   import { Station } from '../models/Station.js'
   import UserFeedbackMessage from '$lib/UserFeedbackMessage.svelte'
+  import { page } from '$app/stores'
+ 
 
   let rivers = new Map() // Rivers with coordinates
   let stations = new Map() // Stations with coordinates
   let selectableSpecies // All unique species
 
-  let dataType // "river" or "station", chosen by user
+  let dataType = 'river' // "river" or "station", chosen by user
   let selectedSpecies // Species user wants to look at
   let selectedStartDate // Start date for the time user wants to look at
   let selectedEndDate // End date for the time user wants to look at
@@ -60,8 +62,9 @@
 
   onMount(async () => {
     // Get rivers and stations from API
-    getRivers()
-    getStations()
+    await Promise.all([getRivers(), getStations()])
+    // Get if the user has selected a river or station from URL
+    getUrlParams()
   })
 
   // Get rivers and stations from stores
@@ -80,12 +83,63 @@
     selectedStation = new Station()
   }
 
+  // Update URL to reflect selected river or station
+  $: updateUrl(selectedRiver, selectedStation)
+
   /**
    * Toggles the right sidebar by resetting the selected river and station
    */
   function toggleRightSidebar () {
     selectedRiver = new River()
     selectedStation = new Station()
+  }
+
+  /**
+   * Updates the URL to reflect the selected river or station
+   * @param {River} selectedRiver - The selected river
+   * @param {Station} selectedStation - The selected station
+   */
+  function updateUrl(selectedRiver, selectedStation) {
+    let url = new URL(window.location.href)
+    if (selectedRiver.id) {
+      url.searchParams.set('river', selectedRiver.id)
+    } else {
+      url.searchParams.delete('river')
+    }
+
+    if (selectedStation.id) {
+      url.searchParams.set('station', selectedStation.id)
+    } else {
+      url.searchParams.delete('station')
+    }
+
+    history.pushState({}, '', url)
+  }
+
+  /**
+   * Gets the river or station based on the URL parameters
+   */
+  function getUrlParams() {
+    let searchParams = new URLSearchParams($page.url.search)
+    let riverId = Number(searchParams.get('river'))
+    let stationId = Number(searchParams.get('station'))
+
+    if (riverId) {
+      dataType = 'river'
+      getRiverSummary(riverId)
+        .then(_ => {
+          selectedStation = new Station()
+          selectedRiver = rivers.get(riverId)
+        })
+    } else if (stationId) {
+      dataType = 'station'
+      getStationSummary(stationId)
+        .then(_ => {
+          selectedRiver = new River()
+          selectedStation = stations.get(stationId)
+        })
+    }
+  
   }
 
 </script>
