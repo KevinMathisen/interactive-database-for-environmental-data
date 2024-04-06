@@ -17,7 +17,7 @@
     <div class="column">
       <!-- Station name, date, time, and button to go to river -->
       <CollapsibleSection title={station.name} collapsable={false}>
-        <StationOverview {station} />
+        <StationOverview {station} on:goToRiverData />
       </CollapsibleSection>
 
       <!-- General station info such as description, weather, power settings -->
