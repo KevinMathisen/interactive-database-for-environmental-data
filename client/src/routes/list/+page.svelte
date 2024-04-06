@@ -190,32 +190,32 @@
 <div class='listPage'>
   <!-- Filter sidebar -->
   <div class="sidebar">
-      <Sidebar title="Filter" side='left' typeClose="sideButton">
-          <Filter
-              showCloseButton=true
-              {selectableSpecies}
-              bind:dataType
-              bind:selectedSpecies
-              bind:selectedStartDate
-              bind:selectedEndDate/>
-      </Sidebar>
+    <Sidebar title="Filter" side='left' typeClose="sideButton">
+      <Filter
+        showCloseButton=true
+        {selectableSpecies}
+        bind:dataType
+        bind:selectedSpecies
+        bind:selectedStartDate
+        bind:selectedEndDate/>
+    </Sidebar>
   </div>
 
   <div class='listMain'>
-      <!-- Search bar -->
-      <SearchBar
-          bind:searchQuery
-          bind:dataType/>
+    <!-- Search bar -->
+    <SearchBar
+      bind:searchQuery
+      bind:dataType/>
 
-      <!-- Table with Rivers or Stations -->
-      <div class='tablecontainer'>
-        <SortableTable
-            {headers}
-            {rows}
-            clickable=true
-            on:rowClick={handleRowClick}
-        />
-      </div>
+    <!-- Table with Rivers or Stations -->
+    <div class='tablecontainer'>
+      <SortableTable
+        {headers}
+        {rows}
+        clickable=true
+        on:rowClick={handleRowClick}
+      />
+    </div>
   </div>
 </div>
 
@@ -223,13 +223,13 @@
 {#if selectedRiver.id}
 <div class='riverStationPage'>
   <Sidebar title={riverStationPageTitle} typeClose='cross' on:close={toggleSummaryPage}>
-      <RiverSummary river={selectedRiver} wide={true} on:goToStationData={stationClicked}/>
+    <RiverSummary river={selectedRiver} wide={true} on:goToStationData={stationClicked}/>
   </Sidebar>
 </div>
 {:else if selectedStation.id}
 <div class='riverStationPage'>
   <Sidebar title={riverStationPageTitle} typeClose='cross' on:close={toggleSummaryPage}>
-      <StationSummary station={selectedStation} wide={true} on:goToRiverData={riverClicked}/>
+    <StationSummary station={selectedStation} wide={true} on:goToRiverData={riverClicked}/>
   </Sidebar>
 </div>
 {/if}
