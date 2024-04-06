@@ -17,25 +17,27 @@
     <img src="/NINA_logo_emblem.png" alt="Logo" height="60px">
     <p>Nina</p>
   </div>
-  <div class="centerItem" class:active={$page.url.pathname === '/'}>
-    <Button type="header" href="/" size='extended'>Kart<img src="/mapIcon.svg" alt="listIcon" height="40em" class="headerIcon"></Button>
+  <div class="navigation">
+    <div class="navButton" class:active={$page.url.pathname === '/'}>
+      <Button type="header" href="/" size='extended'>Kart<img src="/mapIcon.svg" alt="listIcon" height="40em" class="headerIcon"></Button>
+    </div>
+    <div class="navButton" class:active={$page.url.pathname === '/list'}>
+      <Button type="header" href="/list" size='extended'>Liste<img src="/listIcon.svg" alt="listIcon" height="40em" class="headerIcon"></Button>
+    </div>
+    <div class="navButton" class:active={$page.url.pathname === '/graph'}>
+      <Button type="header" href="/graph" size='extended'>Graf<img src="/graphIcon2.svg" alt="listIcon" height="30em" class="headerIcon"></Button>
+    </div>
+    <div class="navButton" class:active={$page.url.pathname === '/upload'}>
+      <Button type="header" href="/upload" size='extended'>Last opp<img src="/uploadIcon2.svg" alt="listIcon" height="40em" class="headerIcon"></Button>
+    </div>
+    <div class="navButton" class:active={$page.url.pathname === '/download'}>
+      <Button type="header" href="/download" size='extended'>Last ned<img src="/dowloadIcon.svg" alt="listIcon" height="40em" class="headerIcon"></Button>
+    </div>
   </div>
-  <div class="centerItem" class:active={$page.url.pathname === '/list'}>
-    <Button type="header" href="/list" size='extended'>Liste<img src="/listIcon.svg" alt="listIcon" height="40em" class="headerIcon"></Button>
-  </div>
-  <div class="centerItem" class:active={$page.url.pathname === '/graph'}>
-    <Button type="header" href="/graph" size='extended'>Graf<img src="/graphIcon2.svg" alt="listIcon" height="30em" class="headerIcon"></Button>
-  </div>
-  <div class="centerItem" class:active={$page.url.pathname === '/upload'}>
-    <Button type="header" href="/upload" size='extended'>Last opp<img src="/uploadIcon2.svg" alt="listIcon" height="40em" class="headerIcon"></Button>
-  </div>
-  <div class="centerItem" class:active={$page.url.pathname === '/download'}>
-    <Button type="header" href="/download" size='extended'>Last ned<img src="/dowloadIcon.svg" alt="listIcon" height="40em" class="headerIcon"></Button>
-  </div>
-  <button class="Menu centerItem" on:click={toggleDropdown}>
-    <div class="MenuIcon" class:active={showDropdown}></div>
-    <div class="MenuIcon::before" class:translate-before={showDropdown}></div>
-    <div class="MenuIcon::after" class:translate-after={showDropdown}></div>
+  <button class="menu" on:click={toggleDropdown}>
+    <div class="menuIcon" class:active={showDropdown}></div>
+    <div class="menuIcon::before" class:translate-before={showDropdown}></div>
+    <div class="menuIcon::after" class:translate-after={showDropdown}></div>
     {#if showDropdown}
       <div class="Dropdown">
         <ul>
@@ -48,7 +50,7 @@
       </div>
     {/if}
     </button>
-  <div class="LogOut centerItem">
+  <div class="logOut">
     <Button type="blue" size='medium'>Logg ut<img src="/userIcon.svg" alt="listIcon" height="50em" class="headerIcon"></Button>
   </div>
 
@@ -63,6 +65,15 @@
     background-color: white;
     align-items: center;
     height: var(--header-height);
+  }
+
+  .navigation {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    width: 60%;
   }
 
   .logoHeader{
@@ -80,19 +91,18 @@
     font-size:2rem;
   }
 
-  header > :nth-child(2), header > :nth-child(3), header > :nth-child(4), header > :nth-child(5), header > :nth-child(6)  {
+  .navButton {
     position: relative;
     height: 100%;
     width: 100%;
   }
 
-  header > :nth-child(8) {
+  .logOut {
     padding: 1rem;
   }
 
-  .Menu {
+  .menu {
     display: none;
-    margin-right: 3rem;
     background-color: #ffffff;
     width: 150px;
     height: 60px;
@@ -100,16 +110,16 @@
     border-radius: 5px;
   }
 
-  .MenuIcon {
+  .menuIcon {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
   }
 
-  .MenuIcon,
-  .MenuIcon::before,
-  .MenuIcon::after {
+  .menuIcon,
+  .menuIcon::before,
+  .menuIcon::after {
       background-color: black;
       width: 40px;
       height: 5px;
@@ -118,29 +128,31 @@
       transition: all 0.2s;
   }
 
-  .MenuIcon::before,
-  .MenuIcon::after {
+  .menuIcon::before,
+  .menuIcon::after {
     content: "";
   }
 
-  .MenuIcon::before {
+  .menuIcon::before {
       transform: translate(-20px, -12px);
   }
 
-  .MenuIcon::after {
+  .menuIcon::after {
       transform: translate(-20px, 12px);
   }
 
-  @media screen and (max-width: 1350px) {
-    header > :nth-child(2),
-    header > :nth-child(3),
-    header > :nth-child(4),
-    header > :nth-child(5),
-    header > :nth-child(6) {
+  @media screen and (max-width: 1000px) {
+    .navigation {
       display: none;
     }
-    header > :nth-child(7) {
+    .menu {
       display: block;
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    .logoHeader p {
+      display: none;
     }
   }
 
@@ -186,26 +198,16 @@
     transform: translateX(-20px) rotate(-45deg);
   }
 
-  .MenuIcon.active {
+  .menuIcon.active {
     transform: translateX(-20px);
     background-color: transparent;
   }
 
-  .MenuIcon.active::before {
+  .menuIcon.active::before {
     transform: translateX(-20px) rotate(45deg);
   }
 
-  .MenuIcon.active::after {
+  .menuIcon.active::after {
     transform: translateX(-20px) rotate(-45deg);
   }
-
-  /* .centerItem {
-    margin: 10px;
-    height: calc(100% - 20px);
-  } */
-
-  /* class = white */
-  /* .white {
-  filter: invert(100%);
-  } */
 </style>
