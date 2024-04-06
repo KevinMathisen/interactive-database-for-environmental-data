@@ -86,7 +86,9 @@
   }
 
   // Update URL to reflect selected river or station
-  $: updateUrl(selectedRiver, selectedStation)
+  $: if (selectedRiver && selectedRiver.id || selectedStation && selectedStation.id) {
+    updateUrl(selectedRiver, selectedStation)
+  }
 
   /**
    * Toggles the right sidebar by resetting the selected river and station
