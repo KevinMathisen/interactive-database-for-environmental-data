@@ -20,14 +20,14 @@
   let stations // Stations with coordinates
   let selectableSpecies // All unique species
 
-  let dataType // "river" or "station", chosen by user
+  let dataType = 'river' // "river" or "station", chosen by user
   let selectedSpecies // Species user wants to look at
   let selectedStartDate // Start date for the time user wants to look at
   let selectedEndDate // End date for the time user wants to look at
   let searchQuery = '' // Search query from user
 
-  let selectedRiver = new River // River the user has chosen
-  let selectedStation = new Station // Station the user has chosen
+  let selectedRiver = new River() // River the user has chosen
+  let selectedStation = new Station() // Station the user has chosen
   let riverStationPageTitle = ''
 
   let filteredRivers // Rivers filtered by date and species
@@ -64,7 +64,7 @@
   $: ({ headers, rows } = createHeaderAndData(dataType, filteredBySearchRivers, filteredBySearchStations))
 
   // Update URL to reflect selected river or station
-  $: if (selectedRiver && selectedRiver.id || selectedStation && selectedStation.id) {
+  $: if (selectedRiver || selectedStation) {
     updateUrl(selectedRiver, selectedStation)
   }
 
@@ -91,10 +91,15 @@
    * @param {Event} event - The click event
    */
   function stationClicked (event) {
-    getStationSummary(event.detail.id)
+    selectStation(event.detail.id)
+  }
+
+  function selectStation (stationId) {
+    dataType = 'station'
+    getStationSummary(stationId)
       .then(_ => {
         selectedRiver = new River()
-        selectedStation = stations.get(event.detail.id)
+        selectedStation = stations.get(stationId)
       })
   }
 
@@ -103,10 +108,15 @@
    * @param {Event} event - The click event
    */
   function riverClicked (event) {
-    getRiverSummary(event.detail.id)
+    selectRiver(event.detail.id)
+  }
+
+  function selectRiver (riverId) {
+    dataType = 'river'
+    getRiverSummary(riverId)
       .then(_ => {
         selectedStation = new Station()
-        selectedRiver = rivers.get(event.detail.id)
+        selectedRiver = rivers.get(riverId)
       })
   }
 
@@ -140,6 +150,8 @@
    * @param {Station} selectedStation - The selected station
    */
   function updateUrl(selectedRiver, selectedStation) {
+    if (typeof window === 'undefined') return
+
     let url = new URL(window.location.href)
     if (selectedRiver.id) {
       url.searchParams.set('river', selectedRiver.id)
@@ -165,19 +177,9 @@
     let stationId = Number(searchParams.get('station'))
 
     if (riverId) {
-      dataType = 'river'
-      getRiverSummary(riverId)
-        .then(_ => {
-          selectedStation = new Station()
-          selectedRiver = rivers.get(riverId)
-        })
+      selectRiver(riverId)
     } else if (stationId) {
-      dataType = 'station'
-      getStationSummary(stationId)
-        .then(_ => {
-          selectedRiver = new River()
-          selectedStation = stations.get(stationId)
-        })
+      selectStation(stationId)
     }
   }
 </script>

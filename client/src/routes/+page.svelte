@@ -55,7 +55,7 @@
   }
 
   // Update URL to reflect selected river or station
-  $: if (selectedRiver && selectedRiver.id || selectedStation && selectedStation.id) {
+  $: if (selectedRiver || selectedStation) {
     updateUrl(selectedRiver, selectedStation)
   }
 
@@ -128,6 +128,8 @@
    * @param {Station} selectedStation - The selected station
    */
   function updateUrl(selectedRiver, selectedStation) {
+    if (typeof window === 'undefined') return
+
     let url = new URL(window.location.href)
     if (selectedRiver.id) {
       url.searchParams.set('river', selectedRiver.id)
