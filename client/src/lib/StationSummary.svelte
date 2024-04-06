@@ -36,9 +36,9 @@
 
   <!-- Buttons to show diagram and download data -->
   <div class='footer'>
-    <Button color='blue' type='medium'>
+    <Button type='blue' size='medium'>
       Diagram
-      <img src='/graphIcon.svg' alt='graphIcon' height='50px' class='headerIcon'>
+      <img src='/graphIcon2.svg' alt='graphIcon' height='40px' class='headerIcon white-color'>
     </Button>
 
     <!-- Show in map button if the summary is wide -->
@@ -49,9 +49,9 @@
       </Button>
     {/if}
 
-    <Button color='orange' type='medium'>
+    <Button type='orangeButton' size='medium'>
       Last ned
-      <img src='/dowloadIcon.svg' alt='dowloadIcon' height='50px' class='headerIcon'>
+      <img src='/dowloadIcon.svg' alt='dowloadIcon' height='50px' class='headerIcon white-color'>
     </Button>
   </div>
 </div>
@@ -107,5 +107,10 @@
     left: 10%;
     width: 80%;
     border-top: 2px solid #435768;
+  }
+
+  /* Transformes the icon color to white */
+  .white-color{
+    filter: invert(100%);
   }
 </style>
