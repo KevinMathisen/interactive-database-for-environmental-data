@@ -37,7 +37,7 @@
     <div class="column">
       <!-- Stations under the river -->
       <CollapsibleSection title="Stasjoner">
-        <RiverStations {stations} on:rowClick/>
+        <RiverStations {stations} on:goToStationData/>
       </CollapsibleSection>
 
       <!-- Fish data for the river -->
