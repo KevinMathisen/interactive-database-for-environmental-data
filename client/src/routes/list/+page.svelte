@@ -37,25 +37,42 @@
   let headers = [] // Header for the table
   let rows = [] // Rows for the table
 
+  // Set data page title based on data type
   $: riverStationPageTitle = dataType === 'river' ? 'Elvedata' : 'Stasjonsdata'
-
-  onMount(async () => {
-    // Get rivers and stations from API
-    await Promise.all([getRivers(), getStations()])
-    getUrlParams()
-  })
 
   // Get rivers and stations from stores
   $: rivers = $riverStore
   $: stations = $stationStore
   $: selectableSpecies = getSelectableSpecies(rivers)
 
-  // Find which rivers and stations to show on the map based on user input
+  // Find which rivers and stations to show be searchable based on filters
   $: filteredRivers = filterRiversByDateAndSpecies(rivers, selectedSpecies, selectedStartDate, selectedEndDate)
   $: filteredStations = filterStationsByDateAndSpecies(stations, selectedSpecies, selectedStartDate, selectedEndDate)
 
+  // Filter rivers and stations to display based on search query
   $: filteredBySearchRivers = filterRiversBySearch(filteredRivers, searchQuery)
   $: filteredBySearchStations = filterStationsBySearch(filteredStations, searchQuery)
+
+  // Remove selected river or station when the user switches between data types
+  $: if (dataType === 'station') {
+    selectedRiver = new River()
+  } else if (dataType === 'river') {
+    selectedStation = new Station()
+  }
+
+  // Update the table when the user input changes
+  $: ({ headers, rows } = createHeaderAndData(dataType, filteredBySearchRivers, filteredBySearchStations))
+
+  // Update URL to reflect selected river or station
+  $: if (selectedRiver && selectedRiver.id || selectedStation && selectedStation.id) {
+    updateUrl(selectedRiver, selectedStation)
+  }
+
+  onMount(async () => {
+    // Get rivers and stations from API
+    await Promise.all([getRivers(), getStations()])
+    getUrlParams()
+  })
 
   /**
    * Log the river/station clicked by the user,
@@ -93,13 +110,6 @@
       })
   }
 
-  // Remove selected river or station when the user switches between data types
-  $: if (dataType === 'station') {
-    selectedRiver = new River()
-  } else if (dataType === 'river') {
-    selectedStation = new Station()
-  }
-
   /**
    * Toggles the river/station summary by resetting the selected river and station
    */
@@ -122,14 +132,6 @@
       return formatStationsForTable(filteredBySearchStations)
     }
     return { headers: [], rows: [] }
-  }
-
-  // Update the table when the user input changes
-  $: ({ headers, rows } = createHeaderAndData(dataType, filteredBySearchRivers, filteredBySearchStations))
-
-  // Update URL to reflect selected river or station
-  $: if (selectedRiver && selectedRiver.id || selectedStation && selectedStation.id) {
-    updateUrl(selectedRiver, selectedStation)
   }
 
   /**
