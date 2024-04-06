@@ -36,6 +36,34 @@
   // Set sidebar title based on data type
   $: sideBarTitle = dataType === 'river' ? 'Elvedata' : 'Stasjonsdata'
 
+  // Get rivers and stations from stores
+  $: rivers = $riverStore
+  $: stations = $stationStore
+  $: selectableSpecies = getSelectableSpecies(rivers)
+
+  // Find which rivers and stations to show on the map based on user input
+  $: filteredRivers = filterRiversByDateAndSpecies(rivers, selectedSpecies, selectedStartDate, selectedEndDate)
+  $: filteredStations = filterStationsByDateAndSpecies(stations, selectedSpecies, selectedStartDate, selectedEndDate)
+
+  // Remove selected river or station when the user switches between data types
+  $: if (dataType === 'station') {
+    selectedRiver = new River()
+  } else if (dataType === 'river') {
+    selectedStation = new Station()
+  }
+
+  // Update URL to reflect selected river or station
+  $: if (selectedRiver && selectedRiver.id || selectedStation && selectedStation.id) {
+    updateUrl(selectedRiver, selectedStation)
+  }
+
+  onMount(async () => {
+    // Get rivers and stations from API
+    await Promise.all([getRivers(), getStations()])
+    // Get if the user has selected a river or station from URL
+    getUrlParams()
+  })
+
   /**
    * Handles the click event on a station
    * @param {Event} event - The click event
@@ -60,34 +88,6 @@
         selectedStation = new Station()
         selectedRiver = rivers.get(event.detail.river.id)
       })
-  }
-
-  onMount(async () => {
-    // Get rivers and stations from API
-    await Promise.all([getRivers(), getStations()])
-    // Get if the user has selected a river or station from URL
-    getUrlParams()
-  })
-
-  // Get rivers and stations from stores
-  $: rivers = $riverStore
-  $: stations = $stationStore
-  $: selectableSpecies = getSelectableSpecies(rivers)
-
-  // Find which rivers and stations to show on the map based on user input
-  $: filteredRivers = filterRiversByDateAndSpecies(rivers, selectedSpecies, selectedStartDate, selectedEndDate)
-  $: filteredStations = filterStationsByDateAndSpecies(stations, selectedSpecies, selectedStartDate, selectedEndDate)
-
-  // Remove selected river or station when the user switches between data types
-  $: if (dataType === 'station') {
-    selectedRiver = new River()
-  } else if (dataType === 'river') {
-    selectedStation = new Station()
-  }
-
-  // Update URL to reflect selected river or station
-  $: if (selectedRiver && selectedRiver.id || selectedStation && selectedStation.id) {
-    updateUrl(selectedRiver, selectedStation)
   }
 
   /**
