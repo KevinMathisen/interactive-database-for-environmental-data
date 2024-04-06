@@ -229,7 +229,7 @@
 </div>
 
 <div class="downloadButton">
-  <Button type="orangeButton" size="medium" on:downloadFile={downloadFile}>Last ned <img src="/dowloadIcon.svg" alt="listIcon" height="38px" class="downloadIcon white-color"></Button>
+  <Button type="orange" size="medium" on:buttonClick={downloadFile}>Last ned <img src="/dowloadIcon.svg" alt="listIcon" height="38px" class="downloadIcon white-color"></Button>
 </div>
 
 <style>

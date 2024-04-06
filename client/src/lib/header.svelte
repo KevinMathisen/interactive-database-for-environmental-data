@@ -49,7 +49,7 @@
     {/if}
     </button>
   <div class="LogOut centerItem">
-    <Button type="logOut" size='large'>Logg ut<img src="/userIcon.svg" alt="listIcon" height="50em" class="headerIcon"></Button>
+    <Button type="blue" size='medium'>Logg ut<img src="/userIcon.svg" alt="listIcon" height="50em" class="headerIcon"></Button>
   </div>
 
 </header>

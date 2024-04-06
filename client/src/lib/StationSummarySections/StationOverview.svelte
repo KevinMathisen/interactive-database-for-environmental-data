@@ -13,7 +13,7 @@
   </div>
 
   <!-- Button to go to river data -->
-  <Button color='blue' type='small'>
+  <Button type='blue' size='medium'>
     Til elvedata
   </Button>
 

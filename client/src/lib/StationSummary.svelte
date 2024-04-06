@@ -49,7 +49,7 @@
       </Button>
     {/if}
 
-    <Button type='orangeButton' size='medium'>
+    <Button type='orange' size='medium'>
       Last ned
       <img src='/dowloadIcon.svg' alt='dowloadIcon' height='50px' class='headerIcon white-color'>
     </Button>
