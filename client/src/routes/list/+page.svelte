@@ -12,8 +12,9 @@
     import { stationStore } from '../../stores/stationStore.js'
     import { onMount } from 'svelte'
     import UserFeedbackMessage from '$lib/UserFeedbackMessage.svelte'
-    import { River } from '../../models/River.js';
-    import { Station } from '../../models/Station.js';
+    import { River } from '../../models/River.js'
+    import { Station } from '../../models/Station.js'
+    import { page } from '$app/stores'
 
     let rivers // Rivers with coordinates
     let stations // Stations with coordinates
@@ -40,8 +41,8 @@
 
     onMount(async () => {
       // Get rivers and stations from API
-      getRivers()
-      getStations()
+      await Promise.all([getRivers(), getStations()])
+      getUrlParams()
     })
 
     // Get rivers and stations from stores
@@ -58,11 +59,9 @@
 
     /**
      * Log the river/station clicked by the user,
-     * TODO: should open a new page with the data
      * @param {Event} event - The click event
      */
     function handleRowClick (event) {
-      console.log('Row clicked:', event.detail)
       if (dataType === 'river') {
         riverClicked(event)
       } else if (dataType === 'station') {
@@ -128,6 +127,57 @@
     // Update the table when the user input changes
     $: ({ headers, rows } = createHeaderAndData(dataType, filteredBySearchRivers, filteredBySearchStations))
 
+    // Update URL to reflect selected river or station
+    $: if (selectedRiver && selectedRiver.id || selectedStation && selectedStation.id) {
+      updateUrl(selectedRiver, selectedStation)
+    }
+
+    /**
+     * Updates the URL to reflect the selected river or station
+     * @param {River} selectedRiver - The selected river
+     * @param {Station} selectedStation - The selected station
+     */
+    function updateUrl(selectedRiver, selectedStation) {
+      let url = new URL(window.location.href)
+      if (selectedRiver.id) {
+        url.searchParams.set('river', selectedRiver.id)
+      } else {
+        url.searchParams.delete('river')
+      }
+
+      if (selectedStation.id) {
+        url.searchParams.set('station', selectedStation.id)
+      } else {
+        url.searchParams.delete('station')
+      }
+
+      history.pushState({}, '', url)
+    }
+
+    /**
+     * Gets the river or station based on the URL parameters
+     */
+    function getUrlParams() {
+      let searchParams = new URLSearchParams($page.url.search)
+      let riverId = Number(searchParams.get('river'))
+      let stationId = Number(searchParams.get('station'))
+
+      if (riverId) {
+        dataType = 'river'
+        getRiverSummary(riverId)
+          .then(_ => {
+            selectedStation = new Station()
+            selectedRiver = rivers.get(riverId)
+          })
+      } else if (stationId) {
+        dataType = 'station'
+        getStationSummary(stationId)
+          .then(_ => {
+            selectedRiver = new River()
+            selectedStation = stations.get(stationId)
+          })
+      }
+    }
 </script>
 
 <!-- User feedback modal, invisible unless there is feedback to show to user -->
