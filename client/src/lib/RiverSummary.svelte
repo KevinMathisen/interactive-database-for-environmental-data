@@ -62,7 +62,7 @@
       </Button>
     {/if}
 
-    <Button type="orange" size="medium">
+    <Button type="orangeButton" size="medium">
       Last ned
       <img src="/dowloadIcon.svg" alt="dowloadIcon" height="50px" class="white-color">
     </Button>
@@ -107,7 +107,7 @@
     justify-content: space-around;
     align-items: center;
     flex-wrap: wrap;
-    width: 100% - 2em;
+    width: calc(100% - 2em);
     height: fit-content;
     padding: 1em;
     margin-top: 0.5em;

@@ -93,7 +93,7 @@
     justify-content: space-around;
     align-items: center;
     flex-wrap: wrap;
-    width: 100% - 2em;
+    width: calc(100% - 2em);
     height: fit-content;
     padding: 1em;
     margin-top: 0.5em;
