@@ -13,6 +13,8 @@
   import { Station } from '../models/Station.js'
   import UserFeedbackMessage from '$lib/UserFeedbackMessage.svelte'
   import { page } from '$app/stores'
+  import { addFeedbackToStore } from '../utils/addFeedbackToStore'
+  import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/feedbackMessages'
  
 
   let rivers = new Map() // Rivers with coordinates
@@ -69,11 +71,22 @@
    * @param {Event} event - The click event
    */
   function stationClicked (event) {
+    selectStation(event.detail.station.id)
+  }
+
+  function selectStation (stationId) {
+    // Check if the station clicked is in filtered stations
+    if (!filteredStations.has(stationId)) {
+      addFeedbackToStore(FEEDBACK_TYPES.INFO, FEEDBACK_CODES.NOT_FOUND, FEEDBACK_MESSAGES.STATION_NOT_SELECTABLE)
+      return
+    }
+
+    // Set the data type to station and get the station summary
     dataType = 'station'
-    getStationSummary(event.detail.station.id)
+    getStationSummary(stationId)
       .then(_ => {
         selectedRiver = new River()
-        selectedStation = stations.get(event.detail.station.id)
+        selectedStation = stations.get(stationId)
       })
   }
 
@@ -82,13 +95,24 @@
    * @param {Event} event - The click event
    */
   function riverClicked (event) {
+    selectRiver(event.detail.river.id)
+  }
+
+  function selectRiver (riverId) {
+    // Check if the river clicked is in filtered rivers
+    if (!filteredRivers.has(riverId)) {
+      addFeedbackToStore(FEEDBACK_TYPES.INFO, FEEDBACK_CODES.NOT_FOUND, FEEDBACK_MESSAGES.RIVER_NOT_SELECTABLE)
+      return
+    }
+
+    // Set the data type to river and get the river summary
     dataType = 'river'
-    getRiverSummary(event.detail.river.id)
+    getRiverSummary(riverId)
       .then(_ => {
         selectedStation = new Station()
-        selectedRiver = rivers.get(event.detail.river.id)
+        selectedRiver = rivers.get(riverId)
       })
-  }
+  } 
 
   /**
    * Toggles the right sidebar by resetting the selected river and station
@@ -129,19 +153,9 @@
     let stationId = Number(searchParams.get('station'))
 
     if (riverId) {
-      dataType = 'river'
-      getRiverSummary(riverId)
-        .then(_ => {
-          selectedStation = new Station()
-          selectedRiver = rivers.get(riverId)
-        })
+      selectRiver(riverId)
     } else if (stationId) {
-      dataType = 'station'
-      getStationSummary(stationId)
-        .then(_ => {
-          selectedRiver = new River()
-          selectedStation = stations.get(stationId)
-        })
+      selectStation(stationId)
     }
   
   }
