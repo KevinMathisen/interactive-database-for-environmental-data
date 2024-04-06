@@ -4,14 +4,18 @@
 
   const dispatch = createEventDispatcher()
 
-  export let href = '#' // The default link for the button
+  export let href = '' // The default link for the button
   export let type = '' // Can be either 'header', 'blue', 'orange', 'green'.
   export let size = 'medium' // Button sizes 'small', 'medium', 'large' or 'extende'.
 
   /**
    * Handles the appropriate function when the user clicks on the button.
+   * @param {Event} event - The event object
    */
-  function handleClick () {
+  function handleClick (event) {
+    if (href === '') {
+      event.preventDefault()
+    }
     dispatch('buttonClick')
   }
 </script>
