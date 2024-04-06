@@ -41,6 +41,7 @@
    * @param {Event} event - The click event
    */
   function stationClicked (event) {
+    dataType = 'station'
     getStationSummary(event.detail.station.id)
       .then(_ => {
         selectedRiver = new River()
@@ -53,6 +54,7 @@
    * @param {Event} event - The click event
    */
   function riverClicked (event) {
+    dataType = 'river'
     getRiverSummary(event.detail.river.id)
       .then(_ => {
         selectedStation = new Station()
@@ -172,13 +174,13 @@
 {#if selectedRiver.id}
   <div class="rightSidebar">
     <Sidebar title={sideBarTitle} typeClose="cross" side="right" on:close={toggleRightSidebar}>
-      <RiverSummary river={selectedRiver} />
+      <RiverSummary river={selectedRiver} on:goToStationData={stationClicked}/>
     </Sidebar>
   </div>
 {:else if selectedStation.id}
   <div class="rightSidebar">
     <Sidebar title={sideBarTitle} typeClose="cross" side="right" on:close={toggleRightSidebar}>
-      <StationSummary station={selectedStation} />
+      <StationSummary station={selectedStation} on:goToRiverData={riverClicked}/>
     </Sidebar>
   </div>
 {/if}
