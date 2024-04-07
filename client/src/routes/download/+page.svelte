@@ -33,7 +33,7 @@
     let selectedRivers = new Map() // Rivers the user has chosen
     let selectedStations = new Map() // Stations the user has chosen
 
-    // let selectedSpecies = [];
+    let selectedSpecies = [];
 
     let selectedFormat = ''
 
@@ -44,7 +44,7 @@
     $: selectableSpecies = dataType === 'river' ? getSelectableSpecies(selectedRivers) : getSelectableSpecies(selectedStations)
 
     // Species the user has choosen; either all or the custom ones
-    // $: selectedSpecies = chooseAll ? selectableSpecies : customSpecies;
+    $: selectedSpecies = chooseAll ? selectableSpecies : customSpecies;
 
     const formatOptions = [
       { value: 'xlsx', label: 'xlsx' },
@@ -61,33 +61,23 @@
     $: rivers = $riverStore
     $: stations = $stationStore
 
-    // Keep the selected rivers and stations up to date when the rivers and stations are updated
-    $: if (rivers) {
-      selectedRivers.forEach((_, key) => {
-        selectedRivers.set(key, rivers.get(key))
-      })
-    }
-    $: if (stations) {
-      selectedStations.forEach((_, key) => {
-        selectedStations.set(key, stations.get(key))
-      })
-    }
-
     /**
-     * When the user has chosen rivers or stations, get the data needed for download
-     * @returns {void}
+     * Get the data needed for downloading the selected rivers or stations
      */
-    function onSelectRiverStation () {
-      // Should get the selected rivers and stations from event
+    function fetchRiverStationData () {
       if (dataType === 'river') {
-        // For each river in the selectedRivers map, get the data needed for download if it is not already in the store
-        selectedRivers.forEach((_, key) => {
-          getRiverForDownload(key)
+        // For each selected river, get the summary data and update the selected rivers
+        selectedRivers.forEach((_, id) => {
+          getRiverForDownload(id).then(_ => {
+            selectedRivers.set(id, rivers.get(id))
+          })
         })
       } else {
-        // For each station in the selectedStations map, get the data needed for download if it is not already in the store
-        selectedStations.forEach((_, key) => {
-          getStationForDownload(key)
+        // For each selected station, get the summary data and update the selected stations
+        selectedStations.forEach((_, id) => {
+          getStationForDownload(id).then(_ => {
+            selectedStations.set(id, stations.get(id))
+          })
         })
       }
     }
@@ -100,7 +90,7 @@
       // Close modal
       showSelectRiverAndStationModal = false
       // Retrieve the data needed for the rivers/stations choosen
-      onSelectRiverStation()
+      fetchRiverStationData()
     }
 
     /**
