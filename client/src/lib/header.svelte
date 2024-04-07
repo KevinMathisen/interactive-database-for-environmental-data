@@ -64,7 +64,8 @@
     justify-content: space-between;
     background-color: white;
     align-items: center;
-    height: var(--header-height);
+    height: calc(var(--header-height) - 2px);
+    border-bottom: 2px solid white;
   }
 
   .navigation {
