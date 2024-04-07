@@ -22,6 +22,7 @@
   } from '../../constants/feedbackMessages.js'
   import { addFeedbackToStore } from '../../utils/addFeedbackToStore.js'
   import Button from '$lib/user-input/Button.svelte'
+  import { page } from '$app/stores'
 
   let showSelectRiverAndStationModal = false
 
@@ -53,13 +54,18 @@
 
   onMount(async () => {
     // Get rivers and stations from API
-    getRivers()
-    getStations()
+    await Promise.all([getRivers(), getStations()])
+    getUrlParams()
   })
 
   // Get rivers and stations from stores
   $: rivers = $riverStore
   $: stations = $stationStore
+
+  // Update URL to reflect selected rivers or stations
+  $: if (dataType && (selectedRivers || selectedStations)) {
+    updateUrl(selectedRivers, selectedStations)
+  }
 
   /**
    * Get the data needed for downloading the selected rivers or stations
@@ -164,6 +170,64 @@
 
     // Remove the anchor element from the DOM
     document.body.removeChild(a)
+  }
+
+  /**
+   * Updates the URL to reflect the selected rivers or stations
+   * @param {Map} selectedRivers - The selected rivers
+   * @param {Map} selectedStations - The selected stations
+   */
+   function updateUrl(selectedRivers, selectedStations) {
+    // Check if the component is running in the browser
+    if (typeof window === 'undefined') return
+
+    // Get the current URL and remove any old river and station parameters
+    let url = new URL(window.location.href)
+    url.searchParams.delete('rivers')
+    url.searchParams.delete('stations')
+
+    // Add the selected rivers to the URL
+    if (dataType === 'river') {
+      selectedRivers.forEach((_, id) => {
+        url.searchParams.append('rivers', id)
+      })
+    } else if (dataType === 'station') {
+      // Add the selected stations to the URL
+      selectedStations.forEach((_, id) => {
+        url.searchParams.append('stations', id)
+      })
+    }
+
+    // Update the URL
+    history.pushState({}, '', url)
+  }
+
+  /**
+   * Gets the rivers or stations based on the URL parameters
+   */
+   function getUrlParams() {
+    // Get the river and station ids
+    let searchParams = new URLSearchParams($page.url.search)
+    let riverIds = searchParams.getAll('rivers').map(Number)
+    let stationIds = searchParams.getAll('stations').map(Number)
+
+    let selectedRiversUrl = new Map()
+    let selectedStationsUrl = new Map()
+
+    // Select the rivers or stations and datatype based on the ids
+    if (riverIds.length > 0) {
+      dataType = 'river'
+      riverIds.forEach(id => {
+        selectedRiversUrl.set(id, rivers.get(id))
+      })
+      selectedRivers = selectedRiversUrl
+    } else if (stationIds.length > 0) {
+      dataType = 'station'
+      stationIds.forEach(id => {
+        selectedStationsUrl.set(id, stations.get(id))
+      })
+      selectedStations = selectedStationsUrl
+    }
   }
 </script>
 
