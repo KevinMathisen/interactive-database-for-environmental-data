@@ -1,191 +1,191 @@
 <script>
-    import CollapsibleSection from '$lib/CollapsibleSection.svelte'
-    import RadioInput from '$lib/user-input/RadioInput.svelte'
-    import SpeciesInput from '$lib/user-input/SpeciesInput.svelte'
-    import Modal from '$lib/Modal.svelte'
-    import SelectRiverAndStation from '$lib/user-input/SelectRiverAndStation.svelte'
-    import { generateExcelFile, generateCSVFile } from '../../utils/fileHandler.js'
-    import {
-      getRivers, getStations,
-      getRiverForDownload,
-      getStationForDownload
-    } from '../../utils/dataManager.js'
-    import { getSelectableSpecies } from '../../utils/filterData.js'
-    import { riverStore } from '../../stores/riverStore.js'
-    import { stationStore } from '../../stores/stationStore.js'
-    import { onMount } from 'svelte'
-    import UserFeedbackMessage from '$lib/UserFeedbackMessage.svelte'
-    import {
-      FEEDBACK_TYPES,
-      FEEDBACK_CODES,
-      FEEDBACK_MESSAGES
-    } from '../../constants/feedbackMessages.js'
-    import { addFeedbackToStore } from '../../utils/addFeedbackToStore.js'
-    import Button from '$lib/user-input/Button.svelte'
+  import CollapsibleSection from '$lib/CollapsibleSection.svelte'
+  import RadioInput from '$lib/user-input/RadioInput.svelte'
+  import SpeciesInput from '$lib/user-input/SpeciesInput.svelte'
+  import Modal from '$lib/Modal.svelte'
+  import SelectRiverAndStation from '$lib/user-input/SelectRiverAndStation.svelte'
+  import { generateExcelFile, generateCSVFile } from '../../utils/fileHandler.js'
+  import {
+    getRivers, getStations,
+    getRiverForDownload,
+    getStationForDownload
+  } from '../../utils/dataManager.js'
+  import { getSelectableSpecies } from '../../utils/filterData.js'
+  import { riverStore } from '../../stores/riverStore.js'
+  import { stationStore } from '../../stores/stationStore.js'
+  import { onMount } from 'svelte'
+  import UserFeedbackMessage from '$lib/UserFeedbackMessage.svelte'
+  import {
+    FEEDBACK_TYPES,
+    FEEDBACK_CODES,
+    FEEDBACK_MESSAGES
+  } from '../../constants/feedbackMessages.js'
+  import { addFeedbackToStore } from '../../utils/addFeedbackToStore.js'
+  import Button from '$lib/user-input/Button.svelte'
 
-    let showSelectRiverAndStationModal = false
+  let showSelectRiverAndStationModal = false
 
-    let rivers = new Map() // Rivers with coordinates
-    let stations = new Map() // Stations with coordinates
-    let selectableSpecies = [] // All unique species
+  let rivers = new Map() // Rivers with coordinates
+  let stations = new Map() // Stations with coordinates
+  let selectableSpecies = [] // All unique species
 
-    let dataType = 'river' // "river" or "station", chosen by user
-    let selectedRivers = new Map() // Rivers the user has chosen
-    let selectedStations = new Map() // Stations the user has chosen
+  let dataType = 'river' // "river" or "station", chosen by user
+  let selectedRivers = new Map() // Rivers the user has chosen
+  let selectedStations = new Map() // Stations the user has chosen
 
-    let selectedSpecies = [];
+  let selectedSpecies = [];
 
-    let selectedFormat = ''
+  let selectedFormat = ''
 
-    let chooseAll = true // If the user wants to choose all species
-    let customSpecies = [] // Species the user has chosen
+  let chooseAll = true // If the user wants to choose all species
+  let customSpecies = [] // Species the user has chosen
 
-    // Species the user can choose
-    $: selectableSpecies = dataType === 'river' ? getSelectableSpecies(selectedRivers) : getSelectableSpecies(selectedStations)
+  // Species the user can choose
+  $: selectableSpecies = dataType === 'river' ? getSelectableSpecies(selectedRivers) : getSelectableSpecies(selectedStations)
 
-    // Species the user has choosen; either all or the custom ones
-    $: selectedSpecies = chooseAll ? selectableSpecies : customSpecies;
+  // Species the user has choosen; either all or the custom ones
+  $: selectedSpecies = chooseAll ? selectableSpecies : customSpecies;
 
-    const formatOptions = [
-      { value: 'xlsx', label: 'xlsx' },
-      { value: 'csv', label: 'csv' }
-    ]
+  const formatOptions = [
+    { value: 'xlsx', label: 'xlsx' },
+    { value: 'csv', label: 'csv' }
+  ]
 
-    onMount(async () => {
-      // Get rivers and stations from API
-      getRivers()
-      getStations()
-    })
+  onMount(async () => {
+    // Get rivers and stations from API
+    getRivers()
+    getStations()
+  })
 
-    // Get rivers and stations from stores
-    $: rivers = $riverStore
-    $: stations = $stationStore
+  // Get rivers and stations from stores
+  $: rivers = $riverStore
+  $: stations = $stationStore
 
-    /**
-     * Get the data needed for downloading the selected rivers or stations
-     */
-    function fetchRiverStationData () {
-      if (dataType === 'river') {
-        // For each selected river, get the summary data and update the selected rivers
-        selectedRivers.forEach((_, id) => {
-          getRiverForDownload(id).then(_ => {
-            selectedRivers.set(id, rivers.get(id))
-          })
+  /**
+   * Get the data needed for downloading the selected rivers or stations
+   */
+  function fetchRiverStationData () {
+    if (dataType === 'river') {
+      // For each selected river, get the summary data and update the selected rivers
+      selectedRivers.forEach((_, id) => {
+        getRiverForDownload(id).then(_ => {
+          selectedRivers.set(id, rivers.get(id))
         })
-      } else {
-        // For each selected station, get the summary data and update the selected stations
-        selectedStations.forEach((_, id) => {
-          getStationForDownload(id).then(_ => {
-            selectedStations.set(id, stations.get(id))
-          })
+      })
+    } else {
+      // For each selected station, get the summary data and update the selected stations
+      selectedStations.forEach((_, id) => {
+        getStationForDownload(id).then(_ => {
+          selectedStations.set(id, stations.get(id))
         })
-      }
+      })
+    }
+  }
+
+  /**
+   * Handles the close event from the modal
+   * @returns {void}
+   */
+  function handleClose () {
+    // Close modal
+    showSelectRiverAndStationModal = false
+    // Retrieve the data needed for the rivers/stations choosen
+    fetchRiverStationData()
+  }
+
+  /**
+   * Handles when the user wants to select rivers or stations
+   * @returns {void}
+   */
+  function handleSelectRiverStation () {
+    showSelectRiverAndStationModal = true
+  }
+
+  /**
+   * Downloads a file with the content specified by the user
+   * @returns {void}
+   */
+  async function downloadFile () {
+    // Check if the user has chosen a file format
+    if (selectedFormat === '') {
+      addFeedbackToStore(
+        FEEDBACK_TYPES.ERROR,
+        FEEDBACK_CODES.NOT_FOUND,
+        FEEDBACK_MESSAGES.NO_FILE_FORMAT_SELECTED
+      )
+      return
     }
 
-    /**
-     * Handles the close event from the modal
-     * @returns {void}
-     */
-    function handleClose () {
-      // Close modal
-      showSelectRiverAndStationModal = false
-      // Retrieve the data needed for the rivers/stations choosen
-      fetchRiverStationData()
+    // Check if the user has chosen rivers but not selected any
+    if (dataType === 'river' && selectedRivers.size === 0) {
+      addFeedbackToStore(
+        FEEDBACK_TYPES.ERROR,
+        FEEDBACK_CODES.NOT_FOUND,
+        FEEDBACK_MESSAGES.NO_RIVERS_SELECTED
+      )
+      return
     }
 
-    /**
-     * Handles when the user wants to select rivers or stations
-     * @returns {void}
-     */
-    function handleSelectRiverStation () {
-      showSelectRiverAndStationModal = true
+    // Check if the user has chosen stations but not selected any
+    if (dataType === 'station' && selectedStations.size === 0) {
+      addFeedbackToStore(
+        FEEDBACK_TYPES.ERROR,
+        FEEDBACK_CODES.NOT_FOUND,
+        FEEDBACK_MESSAGES.NO_STATIONS_SELECTED
+      )
+      return
     }
 
-    /**
-     * Downloads a file with the content specified by the user
-     * @returns {void}
-     */
-    async function downloadFile () {
-      // Check if the user has chosen a file format
-      if (selectedFormat === '') {
-        addFeedbackToStore(
-          FEEDBACK_TYPES.ERROR,
-          FEEDBACK_CODES.NOT_FOUND,
-          FEEDBACK_MESSAGES.NO_FILE_FORMAT_SELECTED
-        )
-        return
-      }
+    // Create a file name and file extension
+    const fileExtension = selectedFormat === 'xlsx' ? '.xlsx' : '.csv'
+    const fileName = dataType === 'river' ? 'elver' : 'stasjoner' + fileExtension
 
-      // Check if the user has chosen rivers but not selected any
-      if (dataType === 'river' && selectedRivers.size === 0) {
-        addFeedbackToStore(
-          FEEDBACK_TYPES.ERROR,
-          FEEDBACK_CODES.NOT_FOUND,
-          FEEDBACK_MESSAGES.NO_RIVERS_SELECTED
-        )
-        return
-      }
+    // Create a blob with the data
+    const blob = selectedFormat === 'xlsx'
+      ? await generateExcelFile(selectedRivers, selectedStations, dataType)
+      : generateCSVFile(selectedRivers, selectedStations, dataType)
 
-      // Check if the user has chosen stations but not selected any
-      if (dataType === 'station' && selectedStations.size === 0) {
-        addFeedbackToStore(
-          FEEDBACK_TYPES.ERROR,
-          FEEDBACK_CODES.NOT_FOUND,
-          FEEDBACK_MESSAGES.NO_STATIONS_SELECTED
-        )
-        return
-      }
-
-      // Create a file name and file extension
-      const fileExtension = selectedFormat === 'xlsx' ? '.xlsx' : '.csv'
-      const fileName = dataType === 'river' ? 'elver' : 'stasjoner' + fileExtension
-
-      // Create a blob with the data
-      const blob = selectedFormat === 'xlsx'
-        ? await generateExcelFile(selectedRivers, selectedStations, dataType)
-        : generateCSVFile(selectedRivers, selectedStations, dataType)
-
-      // If no file was created, return
-      if (blob.size === 0) {
-        return
-      }
-
-      // Create a URL for the blob
-      const blobUrl = URL.createObjectURL(blob)
-
-      // Create a temporary anchor element, set the href and download attributes to the URL and file name
-      const a = document.createElement('a')
-      a.href = blobUrl
-      a.download = fileName
-      a.style.display = 'none'
-
-      // Append the anchor element to the DOM and click it
-      document.body.appendChild(a).click()
-
-      // Remove the anchor element from the DOM
-      document.body.removeChild(a)
+    // If no file was created, return
+    if (blob.size === 0) {
+      return
     }
+
+    // Create a URL for the blob
+    const blobUrl = URL.createObjectURL(blob)
+
+    // Create a temporary anchor element, set the href and download attributes to the URL and file name
+    const a = document.createElement('a')
+    a.href = blobUrl
+    a.download = fileName
+    a.style.display = 'none'
+
+    // Append the anchor element to the DOM and click it
+    document.body.appendChild(a).click()
+
+    // Remove the anchor element from the DOM
+    document.body.removeChild(a)
+  }
 </script>
 
 <UserFeedbackMessage />
 
 {#if showSelectRiverAndStationModal}
-    <Modal on:close={handleClose} large={true}>
-        <SelectRiverAndStation
-            {rivers}
-            {stations}
-            bind:dataType
-            bind:selectedRivers
-            bind:selectedStations
-            />
-    </Modal>
+  <Modal on:close={handleClose} large={true}>
+    <SelectRiverAndStation
+      {rivers}
+      {stations}
+      bind:dataType
+      bind:selectedRivers
+      bind:selectedStations
+      />
+  </Modal>
 {/if}
 
 <div>
-    <div class="downloadHeader">Last ned data</div>
+  <div class="downloadHeader">Last ned data</div>
 </div>
 
-    <!-- Defines the area containing the options for dowloading -->
+<!-- Defines the area containing the options for dowloading -->
 <div class="downloadMain">
 
   <!-- Input for opening selection of river or stations -->
