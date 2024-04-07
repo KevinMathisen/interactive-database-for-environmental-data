@@ -10,6 +10,7 @@
   import { getSelectableSpecies } from '../../utils/filterData.js'
   import { onMount } from 'svelte'
   import UserFeedbackMessage from '$lib/UserFeedbackMessage.svelte'
+  import { page } from '$app/stores'
 
   let showSelectRiverAndStationModal = false // Show the modal to select rivers and stations
 
@@ -37,33 +38,39 @@
 
   onMount(async () => {
     // Get rivers and stations from API
-    getRivers()
-    getStations()
+    await Promise.all([getRivers(), getStations()])
+    getUrlParams()
   })
 
   // Get rivers and stations from stores
   $: rivers = $riverStore
   $: stations = $stationStore
 
+  // Fetched data for all rivers or stations that are selected
   $: if (selectedRivers.size !== 0 || selectedStations.size !== 0) {
-    onSelectRiverStation()
+    fetchRiverStationData()
   }
 
   // Get selectable species
   $: selectableSpecies = dataType === 'river' ? getSelectableSpecies(selectedRivers) : getSelectableSpecies(selectedStations)
 
-  // Get data to plot from if data has been fetched
+  // Set the data to plot if data has been updated and rivers or stations are selected
   $: if (dataFetched && (selectedRivers.size > 0 || selectedStations.size > 0) && dataType) {
     plotData = dataType === 'river' ? selectedRivers : selectedStations
     dataFetched = false
   }
 
+  // Update URL to reflect selected rivers or stations
+  $: if (selectedRivers.size > 0 || selectedStations.size > 0) {
+    updateUrl(selectedRivers, selectedStations)
+  }
+
   /**
-   * Get the selectable species from the rivers or stations
+   * Get the data needed for plotting the selected rivers or stations
    */
-  function onSelectRiverStation () {
-    // should get the selected rivers and stations from event
+  function fetchRiverStationData () {
     if (dataType === 'river') {
+      // For each selected river, get the summary data and update the selected rivers
       selectedRivers.forEach((_, id) => {
         getRiverSummary(id).then(_ => {
           selectedRivers.set(id, rivers.get(id))
@@ -71,6 +78,7 @@
         })
       })
     } else {
+      // For each selected station, get the summary data and update the selected stations
       selectedStations.forEach((_, id) => {
         getStationSummary(id).then(_ => {
           selectedStations.set(id, stations.get(id))
@@ -92,6 +100,62 @@
    */
   function handleSelectRiverStation () {
     showSelectRiverAndStationModal = true
+  }
+
+  /**
+   * Updates the URL to reflect the selected rivers or stations
+   * @param {Map} selectedRivers - The selected rivers
+   * @param {Map} selectedStations - The selected stations
+   */
+  function updateUrl(selectedRivers, selectedStations) {
+    // Check if the component is running in the browser
+    if (typeof window === 'undefined') return
+
+    // Get the current URL and remove any old river and station parameters
+    let url = new URL(window.location.href)
+    url.searchParams.delete('rivers')
+    url.searchParams.delete('stations')
+
+    // Add the selected rivers to the URL
+    selectedRivers.forEach((_, id) => {
+      url.searchParams.append('rivers', id)
+    })
+
+    // Add the selected stations to the URL
+    selectedStations.forEach((_, id) => {
+      url.searchParams.append('stations', id)
+    })
+
+    // Update the URL
+    history.pushState({}, '', url)
+  }
+
+  /**
+   * Gets the rivers or stations based on the URL parameters
+   */
+   function getUrlParams() {
+    // Get the river and station ids
+    let searchParams = new URLSearchParams($page.url.search)
+    let riverIds = searchParams.getAll('rivers').map(Number)
+    let stationIds = searchParams.getAll('stations').map(Number)
+
+    let selectedRiversUrl = new Map()
+    let selectedStationsUrl = new Map()
+
+    // Select the rivers or stations and datatype based on the ids
+    if (riverIds.length > 0) {
+      dataType = 'river'
+      riverIds.forEach(id => {
+        selectedRiversUrl.set(id, rivers.get(id))
+      })
+      selectedRivers = selectedRiversUrl
+    } else if (stationIds.length > 0) {
+      dataType = 'station'
+      stationIds.forEach(id => {
+        selectedStationsUrl.set(id, stations.get(id))
+      })
+      selectedStations = selectedStationsUrl
+    }
   }
 
 </script>
