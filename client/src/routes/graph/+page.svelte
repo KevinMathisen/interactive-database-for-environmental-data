@@ -61,7 +61,7 @@
   }
 
   // Update URL to reflect selected rivers or stations
-  $: if (selectedRivers.size > 0 || selectedStations.size > 0) {
+  $: if (dataType && (selectedRivers || selectedStations)) {
     updateUrl(selectedRivers, selectedStations)
   }
 
@@ -117,14 +117,16 @@
     url.searchParams.delete('stations')
 
     // Add the selected rivers to the URL
-    selectedRivers.forEach((_, id) => {
-      url.searchParams.append('rivers', id)
-    })
-
-    // Add the selected stations to the URL
-    selectedStations.forEach((_, id) => {
-      url.searchParams.append('stations', id)
-    })
+    if (dataType === 'river') {
+      selectedRivers.forEach((_, id) => {
+        url.searchParams.append('rivers', id)
+      })
+    } else if (dataType === 'station') {
+      // Add the selected stations to the URL
+      selectedStations.forEach((_, id) => {
+        url.searchParams.append('stations', id)
+      })
+    }
 
     // Update the URL
     history.pushState({}, '', url)
