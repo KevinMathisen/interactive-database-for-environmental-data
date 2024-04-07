@@ -29,13 +29,18 @@
     $: console.log('formatted data: ', formattedData, ' ', type)
 </script>
 
-<!-- Plot graph choosen by user -->
-{#if type === 'barchart'}
-    <BarChart2Component plotData={formattedData} {absoluteValues}/>
-{:else if type === 'piechart'}
-    <PieChartComponent plotData={formattedData} {absoluteValues}/>
-{:else if type === 'boxplot'}
-    <BoxPlotComponent plotData={formattedData}/>
+{#if !plotData || plotData.size === 0}
+    <p>Velg elv/stasjon for å se data</p>
 {:else}
+    <!-- Plot graph choosen by user -->
+    {#if type === 'barchart'}
+    <BarChart2Component plotData={formattedData} {absoluteValues}/>
+    {:else if type === 'piechart'}
+    <PieChartComponent plotData={formattedData} {absoluteValues}/>
+    {:else if type === 'boxplot'}
+    <BoxPlotComponent plotData={formattedData}/>
+    {:else}
     <HistogramComponent plotData={formattedData}/>
+    {/if}
 {/if}
+
