@@ -13,6 +13,10 @@
   let mapRef = ''
   $: mapRef = `/?station=${station.id}`
 
+  // Path to the graph with the station selected as a query parameter
+  let graphRef = ''
+  $: graphRef = `/graph?stations=${station.id}`
+
   $: mainContentClass = wide ? 'maincontent wide' : 'maincontent';
 </script>
 
@@ -40,7 +44,7 @@
 
   <!-- Buttons to show diagram and download data -->
   <div class='footer'>
-    <Button type='blue' size='medium'>
+    <Button type='blue' size='medium' href={graphRef}>
       Diagram
       <img src='/graphIcon2.svg' alt='graphIcon' height='40px' class='headerIcon white-color'>
     </Button>

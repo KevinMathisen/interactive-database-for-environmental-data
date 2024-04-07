@@ -17,6 +17,10 @@
   let mapRef = ''
   $: mapRef = `/?river=${river.id}`
 
+  // Path to the graph with the river selected as a query parameter
+  let graphRef = ''
+  $: graphRef = `/graph?rivers=${river.id}`
+
   // Get stations for the river
   $: stations = getStationsForRiver(river)
 
@@ -53,7 +57,7 @@
 
   <!-- Buttons to show diagram and download data -->
   <div class="footer">
-    <Button type="blue" size="medium">
+    <Button type="blue" size="medium" href={graphRef}>
       Diagram
       <img src="/graphIcon.svg" alt="graphIcon2" height="40px" class="white-color">
     </Button>
