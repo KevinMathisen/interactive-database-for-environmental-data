@@ -20,7 +20,7 @@
   let selectedStations = new Map() // Stations the user has chosen
   let selectableSpecies // All unique species in rivers or stations choosen
 
-  let dataFetched = false // Whether data has been fetched
+  let dataUpdated = false // Whether data has been fetched
 
   let dataType // "river" or "station", chosen by user
   let selectedSpecies // Species user wants to look at
@@ -54,15 +54,43 @@
   // Get selectable species
   $: selectableSpecies = dataType === 'river' ? getSelectableSpecies(selectedRivers) : getSelectableSpecies(selectedStations)
 
-  // Set the data to plot if data has been updated and rivers or stations are selected
-  $: if (dataFetched && (selectedRivers.size > 0 || selectedStations.size > 0) && dataType) {
-    plotData = dataType === 'river' ? selectedRivers : selectedStations
-    dataFetched = false
+  // Set the data to plot if selected rivers or stations was modified, if new data was fetched or if the data type was changed
+  $: if (dataUpdated && (selectedRivers || selectedSpecies) && dataType) {
+    updatePlotData()
+  } 
+
+  $: if (dataType) {
+    dataUpdated = true
   }
 
   // Update URL to reflect selected rivers or stations
   $: if (dataType && (selectedRivers || selectedStations)) {
     updateUrl(selectedRivers, selectedStations)
+  }
+
+  /**
+   * Update the plot data based on the selected rivers or stations
+   * Will only update if either all rivers or all stations have been fetched
+   */
+   function updatePlotData() {
+    // Reset plot data and set data updated to false
+    plotData = new Map()
+    dataUpdated = false
+    
+    if (dataType === 'river') {
+      // Check if all rivers have been fetched and can be plotted
+      let allRiversFetched = Array.from(selectedRivers.values()).every(river => river?.stations)
+      
+      // If all rivers have been fetched, set the plot data to the selected rivers
+      plotData = allRiversFetched ? selectedRivers : plotData
+
+    } else if (dataType === 'station') {
+      // Check if all stations have been fetched and can be plotted
+      let allStationsFetched = Array.from(selectedStations.values()).every(station => station?.observations)
+
+      // If all stations have been fetched, set the plot data to the selected stations
+      plotData = allStationsFetched ? selectedStations : plotData
+    }
   }
 
   /**
@@ -74,7 +102,8 @@
       selectedRivers.forEach((_, id) => {
         getRiverSummary(id).then(_ => {
           selectedRivers.set(id, rivers.get(id))
-          dataFetched = true // Trigger svelte to update
+          dataUpdated = true // Trigger svelte to update
+          
         })
       })
     } else {
@@ -82,7 +111,7 @@
       selectedStations.forEach((_, id) => {
         getStationSummary(id).then(_ => {
           selectedStations.set(id, stations.get(id))
-          dataFetched = true // Trigger svelte to update
+          dataUpdated = true // Trigger svelte to update
         })
       })
     }
