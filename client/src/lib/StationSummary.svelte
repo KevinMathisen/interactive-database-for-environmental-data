@@ -17,6 +17,10 @@
   let graphRef = ''
   $: graphRef = `/graph?stations=${station.id}`
 
+  // Path to the download page with the station selected as a query parameter
+  let downloadRef = ''
+  $: downloadRef = `/download?stations=${station.id}`
+
   $: mainContentClass = wide ? 'maincontent wide' : 'maincontent';
 </script>
 
@@ -57,7 +61,7 @@
       </Button>
     {/if}
 
-    <Button type='orange' size='medium'>
+    <Button type='orange' size='medium' href={downloadRef}>
       Last ned
       <img src='/dowloadIcon.svg' alt='dowloadIcon' height='50px' class='headerIcon white-color'>
     </Button>
