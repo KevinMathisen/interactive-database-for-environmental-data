@@ -181,48 +181,59 @@
   </Modal>
 {/if}
 
-<div>
-  <div class="downloadHeader">Last ned data</div>
-</div>
+<div class="downloadPage">
 
-<!-- Defines the area containing the options for dowloading -->
-<div class="downloadMain">
+  <div>
+    <div class="downloadHeader">Last ned data</div>
+  </div>
 
-  <!-- Input for opening selection of river or stations -->
-  <CollapsibleSection title="{dataType === 'river' ? 'Elver' : 'Stasjoner'} valgt">
-    <button on:click={handleSelectRiverStation}>Rediger {dataType === 'river' ? 'elver' : 'stasjoner'}</button>
-    <ul>
-      {#if dataType === 'river'}
-        <p>Elver valgt</p>
-        {#each Array.from(selectedRivers.entries()) as [_, river]}
-          <li>{river.name + ' ' + river.startDate}</li>
+  <!-- Defines the area containing the options for dowloading -->
+  <div class="downloadMain">
+
+    <!-- Input for opening selection of river or stations -->
+    <CollapsibleSection title="{dataType === 'river' ? 'Elver' : 'Stasjoner'} valgt">
+      <button on:click={handleSelectRiverStation}>Rediger {dataType === 'river' ? 'elver' : 'stasjoner'}</button>
+      <ul>
+        {#if dataType === 'river'}
+          <p>Elver valgt</p>
+          {#each Array.from(selectedRivers.entries()) as [_, river]}
+            <li>{river.name + ' ' + river.startDate}</li>
+          {/each}
+        {:else}
+          <p>Stasjoner valgt</p>
+          {#each Array.from(selectedStations.entries()) as [_, station]}
+          <li>{station.name + ' ' + station.date}</li>
         {/each}
-      {:else}
-        <p>Stasjoner valgt</p>
-        {#each Array.from(selectedStations.entries()) as [_, station]}
-        <li>{station.name + ' ' + station.date}</li>
-      {/each}
-      {/if}
-    </ul>
-  </CollapsibleSection>
+        {/if}
+      </ul>
+    </CollapsibleSection>
 
-  <!-- Input for choosing species -->
-  <CollapsibleSection title="Art">
-    <SpeciesInput {selectableSpecies} bind:chooseAll bind:customSpecies />
-  </CollapsibleSection>
+    <!-- Input for choosing species -->
+    <CollapsibleSection title="Art">
+      <SpeciesInput {selectableSpecies} bind:chooseAll bind:customSpecies />
+    </CollapsibleSection>
 
-        <!-- Input for choosing file format -->
-  <CollapsibleSection title="Format">
-    <RadioInput name="format" options={formatOptions} bind:selected={selectedFormat} />
-  </CollapsibleSection>
+          <!-- Input for choosing file format -->
+    <CollapsibleSection title="Format">
+      <RadioInput name="format" options={formatOptions} bind:selected={selectedFormat} />
+    </CollapsibleSection>
 
-</div>
+  </div>
 
-<div class="downloadButton">
-  <Button type="orange" size="medium" on:buttonClick={downloadFile}>Last ned <img src="/dowloadIcon.svg" alt="listIcon" height="38px" class="downloadIcon white-color"></Button>
+  <div class="downloadButton">
+    <Button type="orange" size="medium" on:buttonClick={downloadFile}>Last ned <img src="/dowloadIcon.svg" alt="listIcon" height="38px" class="downloadIcon white-color"></Button>
+  </div>
+
 </div>
 
 <style>
+  .downloadPage {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - var(--header-height));
+    width: 100%;
+  }
+
   .downloadHeader {
     height: 100px;
     font-size:3rem;
