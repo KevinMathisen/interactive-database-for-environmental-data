@@ -224,28 +224,28 @@
 
 <style>
   .downloadHeader {
-      height: 100px;
-      font-size:3rem;
-      background-color: #435768;
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    height: 100px;
+    font-size:3rem;
+    background-color: #435768;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .downloadMain {
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      padding: 2rem 15rem 0 15rem;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 2rem 15rem 0 15rem;
   }
 
   .downloadButton {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: 5rem;
-      margin-bottom: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5rem;
+    margin-bottom: 5rem;
   }
 
   /* Transformes the icon color to white */
@@ -253,9 +253,9 @@
     filter: invert(100%);
   }
 
-   @media screen and (max-width: 900px) {
-      .downloadMain{
-        padding: 2rem 5rem 0 5rem;
-      }
+  @media screen and (max-width: 900px) {
+    .downloadMain{
+      padding: 2rem 5rem 0 5rem;
     }
+  }
 </style>
