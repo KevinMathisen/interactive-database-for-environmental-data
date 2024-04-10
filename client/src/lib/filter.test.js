@@ -13,13 +13,12 @@ describe('Filter', () => {
 
   it('renders correctly', () => {
     const { container } = render(Filter, { props: { selectableSpecies: [] } })
-    expect(container).toMatchSnapshot();
+    expect(container).toMatchSnapshot()
   })
-
 
   it('renders child components', () => {
     const { getByText } = render(Filter, { props: { selectableSpecies: [] } })
-    
+
     // Checking if the child components are rendered
     expect(getByText('Type data')).not.toBeNull()
     expect(getByText('Dato')).not.toBeNull()

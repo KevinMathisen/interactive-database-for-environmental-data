@@ -74,7 +74,7 @@
 
   /**
    * Selects a station and fetches its data
-   * @param stationId - The id of the station to select
+   * @param {number} stationId - The id of the station to select
    */
   function selectStation (stationId) {
     // Check if the station clicked is in filtered stations
