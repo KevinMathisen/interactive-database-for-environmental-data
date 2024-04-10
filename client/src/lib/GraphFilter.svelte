@@ -41,7 +41,7 @@
 
 <div class="main">
     <!-- Input for opening selection of river or stations -->
-    <CollapsibleSection title="{dataType === 'river' ? 'Elver' : 'Stasjoner'} valgt">
+    <CollapsibleSection title="Velg elver/stasjoner">
         <Button 
             on:buttonClick={handleSelectRiverStation}
             type="blue"
@@ -50,19 +50,22 @@
             Rediger
             <img src="/editIcon.svg" alt="editIcon" height="30em" class="white-color">
         </Button>
-        <ul>
-            {#if dataType === 'river'}
-                <p>Elver valgt</p>
+        
+            {#if dataType === 'river' && selectedRivers.size !== 0}
+                <h4>Elver valgt</h4>
+                <ul>
                 {#each Array.from(selectedRivers.entries()) as [_, river]}
                     <li>{river.name + ' ' + river.startDate}</li>
                 {/each}
-            {:else}
+                </ul>
+            {:else if dataType === 'station' && selectedStations.size !== 0}
                 <p>Stasjoner valgt</p>
+                <ul>
                 {#each Array.from(selectedStations.entries()) as [_, station]}
                     <li>{station.name + ' ' + station.date}</li>
                 {/each}
+                </ul>
             {/if}
-        </ul>
     </CollapsibleSection>
 
     <!-- Input for choosing species -->
@@ -102,6 +105,10 @@
     /* Transformes the icon color to white */
     .white-color{
         filter: invert(100%);
+    }
+
+    h4 {
+        margin-bottom: 0;
     }
 
 </style>
