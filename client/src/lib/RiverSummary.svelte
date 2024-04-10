@@ -36,14 +36,14 @@
 
   <!-- Buttons to show diagram and download data -->
   <div class="footer">
-    <Button color="blue" type="medium">
+    <Button type="blue" size="medium">
       Diagram
-      <img src="/graphIcon.svg" alt="graphIcon" height="50px" class="headerIcon">
+      <img src="/graphIcon.svg" alt="graphIcon2" height="40px" class="white-color">
     </Button>
 
-    <Button color="orange" type="medium">
+    <Button type="orange" size="medium">
       Last ned
-      <img src="/dowloadIcon.svg" alt="dowloadIcon" height="50px" class="headerIcon">
+      <img src="/dowloadIcon.svg" alt="dowloadIcon" height="50px" class="white-color">
     </Button>
   </div>
 </div>
@@ -88,4 +88,8 @@
     border-top: 2px solid #435768;
   }
 
+  /* Transformes the icon color to white */
+  .white-color{
+    filter: invert(100%);
+  }
 </style>

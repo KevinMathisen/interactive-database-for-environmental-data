@@ -4,14 +4,9 @@
 
   const dispatch = createEventDispatcher()
 
-  // Should only take in type of button and derive other properties from that
-
-  // export let color = 'blue' // Can be either 'none', 'blue', 'orange' or 'green'
-  // export let center = true // The default center for the button
   export let href = '#' // The default link for the button
-  export let type = '' // Can be either 'download' or any optioneble color 'blue', 'uploadButton'
-  export let size = 'medium' // can be either 'small', 'medium', 'large' or 'extende', as big ass the header.
-  // export let ifNotPicture = false // Contains an svg icon
+  export let type = '' // Can be either 'download' or any optioneble color 'blue'.
+  export let size = 'medium' // Button sizes 'small', 'medium', 'large' or 'extende'.
 
   /**
    * Handles the appropriate function when the user clicks on the button.
@@ -23,11 +18,8 @@
     dispatch('selectFile')
   }
 </script>
-<!-- class:ifNotPicture={ifNotPicture} -->
-<!-- class:center={center} -->
-<!-- size={size} -->
 
-<!-- What the button does and the variables it takes inn.  -->
+<!-- The variables needed for the button. -->
 <a class="{type} {size}"
   href={href}
   class:active={$page.url.pathname === href}
@@ -38,15 +30,13 @@
 <style>
   a {
     display: flex;
-    align-items: center;  /*Centers the content vertically*/
-    /* Centers the content in the buttons horizontally */
-    /* justify-content: space-evenly; */
-    justify-content: center;
-    white-space: nowrap;  /*Does not lett the text in the buttons wrap*/
+    align-items: center;      /*Centers the content vertically*/
+    justify-content: center;  /* Centers the content in the buttons horizontally */
+    white-space: nowrap;      /*Does not lett the text in the buttons wrap*/
     vertical-align: baseline; /*Aligns the icons and the text on the same level.*/
-    cursor: pointer;  /*Pointer for the mouse*/
-    text-decoration: none;  /*Deletes the underline on the link*/
-    font-weight: bold;  /*Bold text*/
+    cursor: pointer;          /*Pointer for the mouse*/
+    text-decoration: none;    /*Deletes the underline on the link*/
+    font-weight: bold;        /*Bold text*/
   }
 
   .small {
