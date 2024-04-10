@@ -42,7 +42,13 @@
       yaxis: { title: 'Lengde (mm)' }
     }
 
-    const config = { responsive: true }
+    // Make graph responsive, remove some buttons from the modebar, add edit link
+    const config = { 
+      responsive: true,
+      modeBarButtonsToRemove: ['select2d', 'lasso2d', 'zoomIn2d', 'zoomOut2d'],
+      showLink: true,
+      plotlyServerURL: 'https://chart-studio.plotly.com'
+    }
 
     // Creates the boxplot.
     Plotly.newPlot('boxPlot', traces, layout, config)

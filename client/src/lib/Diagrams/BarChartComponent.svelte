@@ -41,8 +41,13 @@
       barcornerradius: 10
     }
 
-    // Adjust the graph size according to the screen size.
-    const config = { responsive: true }
+    // Make graph responsive, remove some buttons from the modebar, add edit link
+    const config = { 
+      responsive: true,
+      modeBarButtonsToRemove: ['select2d', 'lasso2d', 'zoomIn2d', 'zoomOut2d'],
+      showLink: true,
+      plotlyServerURL: 'https://chart-studio.plotly.com'
+    }
 
     // Creates the grouped bar chart.
     Plotly.newPlot('barGroupOne', traces, layout, config)
