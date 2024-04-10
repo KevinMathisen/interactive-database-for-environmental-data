@@ -7,22 +7,22 @@
   import { createEventDispatcher } from 'svelte'
   const dispatch = createEventDispatcher()
 
-  export let selectedRivers
-  export let selectedStations
-  export let selectableSpecies = [] // Species the user can choose
-  export let dataType = 'river'
+  export let selectedRivers // Rivers user has chosen to plot
+  export let selectedStations // Stations user has chosen to plot
+  export let selectableSpecies = [] // Species user can choose
+  export let dataType = 'river' // 'river' or 'station'
 
-  export let selectedSpecies = []
-  export let includeOthers = false
+  export let selectedSpecies = [] // Species user has chosen
+  export let includeOthers = false // If to include 'others' category in graphs
 
-  export let showPlotA = true
-  export let showValueA = 'absolute'
-  export let plotTypeA = 'barchart'
+  export let showPlotA = true // Show the first plot
+  export let showValueA = 'absolute' // 'absolute' or 'relative'
+  export let plotTypeA = 'barchart' // 'barchart' or 'piechart'
 
-  export let showPlotB = true
-  export let intervallPlotB = 20
-  export let plotTypeB = 'histogram'
-  export let combineSpecies = false
+  export let showPlotB = true // Show the second plot
+  export let intervallPlotB = 20 // Interval for the histogram
+  export let plotTypeB = 'histogram' // 'histogram' or 'boxplot'
+  export let combineSpecies = false // Whether to combine species for each river/station in plot B
 
   let chooseAll = true // If the user wants to choose all species
   let customSpecies = [] // Species the user has chosen
@@ -31,7 +31,7 @@
   $: selectedSpecies = (chooseAll || customSpecies.length === 0 ) ? selectableSpecies : customSpecies
 
   /**
-   *
+   * Handles when user wants to select rivers or stations
    */
   function handleSelectRiverStation () {
     dispatch('selectRiverAndStation')
@@ -52,6 +52,7 @@
     </Button>
     
       {#if dataType === 'river' && selectedRivers.size !== 0}
+        <!-- Rivers choosen -->
         <h4>Elver valgt</h4>
         <ul>
         {#each Array.from(selectedRivers.entries()) as [_, river]}
@@ -59,6 +60,7 @@
         {/each}
         </ul>
       {:else if dataType === 'station' && selectedStations.size !== 0}
+        <!-- Stations choosen -->
         <p>Stasjoner valgt</p>
         <ul>
         {#each Array.from(selectedStations.entries()) as [_, station]}
@@ -102,7 +104,7 @@
     overflow: auto;
   }
 
-  /* Transformes the icon color to white */
+  /* Transformes icon color to white */
   .white-color{
     filter: invert(100%);
   }
