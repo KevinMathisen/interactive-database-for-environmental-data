@@ -169,7 +169,7 @@ export function formatRiverObservationsForTable (stations) {
   // Get data from all observations under river
   const rows = dataForAllSpeciesInStations(stations).map(Object.values)
 
-  // For each row, insert an empty value the start of the row 
+  // For each row, insert an empty value the start of the row
   rows.forEach(row => row.unshift(0))
 
   return { headers, rows }

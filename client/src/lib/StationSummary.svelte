@@ -21,7 +21,7 @@
   let downloadRef = ''
   $: downloadRef = `/download?stations=${station.id}`
 
-  $: mainContentClass = wide ? 'maincontent wide' : 'maincontent';
+  $: mainContentClass = wide ? 'maincontent wide' : 'maincontent'
 </script>
 
 <div class='container'>
@@ -86,7 +86,7 @@
     width: 100%;
     flex-direction: column;
   }
-  
+
   .maincontent.wide {
     flex-direction: row;
     margin: 2em 0em;

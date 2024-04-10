@@ -12,7 +12,7 @@
 
     export let selectedRiver // The river the user has chosen
     export let selectedStation // The station the user has chosen
-  
+
     let map
     let mapElement // Used to bind the map to the page
     const stationMarkers = new Map() // Map to store stationmarkers used by the map
@@ -123,7 +123,6 @@
      * Adds each station as a marker in the map
      */
     function updateStations () {
-
       // Add each station not already added to the map
       stations.forEach(station => {
         // Checks if the station already has a marker
@@ -189,7 +188,7 @@
      * Deselects the previous selected station
      * @param {object} station - The station to select
      */
-    function selectStation(station) {
+    function selectStation (station) {
       // Revert the previously selected station to red
       unSelectStation(previousSelectedStation)
 
@@ -236,7 +235,6 @@
      * Adds each river as a marker in the map
      */
     function updateRivers () {
-
       // Add each river not already added to the map
       rivers.forEach(river => {
         // Checks if the river already has a marker
@@ -269,7 +267,7 @@
      * Deselects the previous selected river
      * @param {object} river - The river to select
      */
-    function selectRiver(river) {
+    function selectRiver (river) {
       // Revert the previously selected river to blue
       unSelectRiver(previousSelectedRiver)
 

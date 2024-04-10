@@ -20,7 +20,7 @@
    * @param {Event} event - The click event
    */
   function goToStationData (event) {
-    console.log('goToStationData',  event.detail.id)
+    console.log('goToStationData', event.detail.id)
     dispatch('goToStationData', { id: event.detail.id })
   }
 </script>

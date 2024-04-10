@@ -6,7 +6,7 @@
 
   const dispatch = createEventDispatcher()
 
-  let projectId = (station.projectId && station.projectId !== 'None') ? station.projectId : 'N/A'
+  const projectId = (station.projectId && station.projectId !== 'None') ? station.projectId : 'N/A'
 
   /**
    * Handles when user clicks on button to go to river by firing event with river id

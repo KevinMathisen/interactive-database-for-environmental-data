@@ -43,4 +43,3 @@
     <HistogramComponent plotData={formattedData}/>
     {/if}
 {/if}
-

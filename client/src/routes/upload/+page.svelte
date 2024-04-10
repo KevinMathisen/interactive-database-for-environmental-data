@@ -129,8 +129,6 @@
 
 </div>
 
-
-
 <style>
   .uploadPage {
     display: flex;

@@ -57,7 +57,7 @@
   // Set the data to plot if selected rivers or stations was modified, if new data was fetched or if the data type was changed
   $: if (dataUpdated && (selectedRivers || selectedSpecies) && dataType) {
     updatePlotData()
-  } 
+  }
 
   $: if (dataType) {
     dataUpdated = true
@@ -72,26 +72,25 @@
    * Update the plot data based on the selected rivers or stations
    * Will only update if either all rivers or all stations have been fetched
    */
-   function updatePlotData() {
-    // Reset plot data and set data updated to false
-    plotData = new Map()
-    dataUpdated = false
-    
-    if (dataType === 'river') {
-      // Check if all rivers have been fetched and can be plotted
-      let allRiversFetched = Array.from(selectedRivers.values()).every(river => river?.stations)
-      
-      // If all rivers have been fetched, set the plot data to the selected rivers
-      plotData = allRiversFetched ? selectedRivers : plotData
+   function updatePlotData () {
+     // Reset plot data and set data updated to false
+     plotData = new Map()
+     dataUpdated = false
 
-    } else if (dataType === 'station') {
-      // Check if all stations have been fetched and can be plotted
-      let allStationsFetched = Array.from(selectedStations.values()).every(station => station?.observations)
+     if (dataType === 'river') {
+       // Check if all rivers have been fetched and can be plotted
+       const allRiversFetched = Array.from(selectedRivers.values()).every(river => river?.stations)
 
-      // If all stations have been fetched, set the plot data to the selected stations
-      plotData = allStationsFetched ? selectedStations : plotData
-    }
-  }
+       // If all rivers have been fetched, set the plot data to the selected rivers
+       plotData = allRiversFetched ? selectedRivers : plotData
+     } else if (dataType === 'station') {
+       // Check if all stations have been fetched and can be plotted
+       const allStationsFetched = Array.from(selectedStations.values()).every(station => station?.observations)
+
+       // If all stations have been fetched, set the plot data to the selected stations
+       plotData = allStationsFetched ? selectedStations : plotData
+     }
+   }
 
   /**
    * Get the data needed for plotting the selected rivers or stations
@@ -103,7 +102,6 @@
         getRiverSummary(id).then(_ => {
           selectedRivers.set(id, rivers.get(id))
           dataUpdated = true // Trigger svelte to update
-          
         })
       })
     } else {
@@ -136,12 +134,12 @@
    * @param {Map} selectedRivers - The selected rivers
    * @param {Map} selectedStations - The selected stations
    */
-  function updateUrl(selectedRivers, selectedStations) {
+  function updateUrl (selectedRivers, selectedStations) {
     // Check if the component is running in the browser
     if (typeof window === 'undefined') return
 
     // Get the current URL and remove any old river and station parameters
-    let url = new URL(window.location.href)
+    const url = new URL(window.location.href)
     url.searchParams.delete('rivers')
     url.searchParams.delete('stations')
 
@@ -164,30 +162,30 @@
   /**
    * Gets the rivers or stations based on the URL parameters
    */
-   function getUrlParams() {
-    // Get the river and station ids
-    let searchParams = new URLSearchParams($page.url.search)
-    let riverIds = searchParams.getAll('rivers').map(Number)
-    let stationIds = searchParams.getAll('stations').map(Number)
+   function getUrlParams () {
+     // Get the river and station ids
+     const searchParams = new URLSearchParams($page.url.search)
+     const riverIds = searchParams.getAll('rivers').map(Number)
+     const stationIds = searchParams.getAll('stations').map(Number)
 
-    let selectedRiversUrl = new Map()
-    let selectedStationsUrl = new Map()
+     const selectedRiversUrl = new Map()
+     const selectedStationsUrl = new Map()
 
-    // Select the rivers or stations and datatype based on the ids
-    if (riverIds.length > 0) {
-      dataType = 'river'
-      riverIds.forEach(id => {
-        selectedRiversUrl.set(id, rivers.get(id))
-      })
-      selectedRivers = selectedRiversUrl
-    } else if (stationIds.length > 0) {
-      dataType = 'station'
-      stationIds.forEach(id => {
-        selectedStationsUrl.set(id, stations.get(id))
-      })
-      selectedStations = selectedStationsUrl
-    }
-  }
+     // Select the rivers or stations and datatype based on the ids
+     if (riverIds.length > 0) {
+       dataType = 'river'
+       riverIds.forEach(id => {
+         selectedRiversUrl.set(id, rivers.get(id))
+       })
+       selectedRivers = selectedRiversUrl
+     } else if (stationIds.length > 0) {
+       dataType = 'station'
+       stationIds.forEach(id => {
+         selectedStationsUrl.set(id, stations.get(id))
+       })
+       selectedStations = selectedStationsUrl
+     }
+   }
 
 </script>
 

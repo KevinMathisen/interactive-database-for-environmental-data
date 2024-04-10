@@ -15,7 +15,6 @@
   import { page } from '$app/stores'
   import { addFeedbackToStore } from '../utils/addFeedbackToStore'
   import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/feedbackMessages'
- 
 
   let rivers = new Map() // Rivers with coordinates
   let stations = new Map() // Stations with coordinates
@@ -32,7 +31,6 @@
   let selectedRiver = new River() // River the user has chosen
   let selectedStation = new Station() // Station the user has chosen
 
-  let showLeftSidebar = true
   let sideBarTitle = ''
 
   // Set sidebar title based on data type
@@ -74,6 +72,10 @@
     selectStation(event.detail.id)
   }
 
+  /**
+   * Selects a station and fetches its data
+   * @param stationId - The id of the station to select
+   */
   function selectStation (stationId) {
     // Check if the station clicked is in filtered stations
     if (!filteredStations.has(stationId)) {
@@ -98,6 +100,10 @@
     selectRiver(event.detail.id)
   }
 
+  /**
+   * Selects a river and fetches its data
+   * @param {number} riverId - The id of the river to select
+   */
   function selectRiver (riverId) {
     // Check if the river clicked is in filtered rivers
     if (!filteredRivers.has(riverId)) {
@@ -112,7 +118,7 @@
         selectedStation = new Station()
         selectedRiver = rivers.get(riverId)
       })
-  } 
+  }
 
   /**
    * Toggles the right sidebar by resetting the selected river and station
@@ -127,10 +133,10 @@
    * @param {River} selectedRiver - The selected river
    * @param {Station} selectedStation - The selected station
    */
-  function updateUrl(selectedRiver, selectedStation) {
+  function updateUrl (selectedRiver, selectedStation) {
     if (typeof window === 'undefined') return
 
-    let url = new URL(window.location.href)
+    const url = new URL(window.location.href)
     if (selectedRiver.id) {
       url.searchParams.set('river', selectedRiver.id)
     } else {
@@ -149,17 +155,16 @@
   /**
    * Gets the river or station based on the URL parameters
    */
-  function getUrlParams() {
-    let searchParams = new URLSearchParams($page.url.search)
-    let riverId = Number(searchParams.get('river'))
-    let stationId = Number(searchParams.get('station'))
+  function getUrlParams () {
+    const searchParams = new URLSearchParams($page.url.search)
+    const riverId = Number(searchParams.get('river'))
+    const stationId = Number(searchParams.get('station'))
 
     if (riverId) {
       selectRiver(riverId)
     } else if (stationId) {
       selectStation(stationId)
     }
-  
   }
 
 </script>
@@ -176,7 +181,6 @@
   on:stationClicked={stationClicked}
   on:riverClicked={riverClicked}/>
 
-
 <div class="leftSidebar">
   <Sidebar title="Filter" typeClose="sideButton" side="left">
     <Filter
@@ -187,7 +191,6 @@
       bind:selectedEndDate/>
   </Sidebar>
 </div>
-
 
 {#if selectedRiver.id}
   <div class="rightSidebar">

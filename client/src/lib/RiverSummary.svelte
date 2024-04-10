@@ -6,13 +6,13 @@
   import RiverInfo from './RiverSummarySections/RiverInfo.svelte'
   import { getStationsForRiver } from '../utils/dataManager.js'
   import RiverStations from './RiverSummarySections/RiverStations.svelte'
-  import RiverFishData from './RiverSummarySections/RiverFishData.svelte';
+  import RiverFishData from './RiverSummarySections/RiverFishData.svelte'
 
   export let river = new River() // River to show
   export let wide = false // Whether to show the river summary as wide
 
   let stations = new Map() // Stations under river
-  
+
   // Path to the map with the river selected as a query parameter
   let mapRef = ''
   $: mapRef = `/?river=${river.id}`
@@ -28,7 +28,7 @@
   // Get stations for the river
   $: stations = getStationsForRiver(river)
 
-  $: mainContentClass = wide ? 'maincontent wide' : 'maincontent';
+  $: mainContentClass = wide ? 'maincontent wide' : 'maincontent'
 </script>
 
 <div class='container'>
@@ -100,7 +100,7 @@
     width: 100%;
     flex-direction: column;
   }
-  
+
   .maincontent.wide {
     flex-direction: row;
     margin: 2em 0em;
