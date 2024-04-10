@@ -229,7 +229,7 @@
   <div class="graphMain">
 
     {#if showPlotA}
-      <div class="graphBox1">
+      <div class="graphBox">
         <h3>FORDELING AV ARTER</h3>
         <PlotlyComponent
           type={plotTypeA}
@@ -243,7 +243,7 @@
     {/if}
 
     {#if showPlotB}
-      <div class="graphBox2">
+      <div class="graphBox">
         <h3>FORDELING AV LENGDE</h3>
         <PlotlyComponent
           type={plotTypeB}
@@ -278,11 +278,12 @@
     overflow:auto;
   }
 
-  .graphBox1 h3 {
+  .graphBox {
+    width: 100%;
+  }
+
+  .graphBox h3 {
     padding: 1rem 0 0 8rem;
   }
 
-  .graphBox2 h3 {
-    padding: 1rem 0 0 8rem;
-  }
 </style>
