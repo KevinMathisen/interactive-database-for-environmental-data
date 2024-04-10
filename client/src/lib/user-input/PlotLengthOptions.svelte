@@ -31,7 +31,38 @@
 
   <h4>Grupper arter</h4>
   <label for="combineSpecies">
-    Grupper arter valgt for hver elv/stasjon
+    Vis sum av valgte arter for hver elv/stasjon
     <input type="checkbox" id="combineSpecies" name="combineSpecies" bind:checked={combineSpecies}>
   </label>
 {/if}
+
+<style>
+  h4 {
+    margin-bottom: 0;
+  }
+
+  input[type="number"] {
+    width: 60%;
+    font-size: 16px;
+    padding: 0.5em;
+    margin: 0.5em;
+    border-radius: 0.5em;
+  }
+
+  label {
+    display: block;
+    padding: 0.5em;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border-radius: 0.5em;
+  }
+
+  label:hover {
+    background-color: #435768;
+    color: white;
+  }
+
+  input[type="checkbox"] {
+    transform: scale(1.25);
+  }
+</style>
