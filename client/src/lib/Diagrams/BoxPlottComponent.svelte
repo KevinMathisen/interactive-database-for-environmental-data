@@ -23,14 +23,12 @@
     // Create boxplot with dots and mean with standard deviation for each species in each observation point
     const traces = []
     plotData.forEach((observationPoint, name) => {
+      const nameWithEnter = name.replace(' ', '<br>')
       traces.push({
         y: observationPoint.lengths,
         type: 'box',
-        name,
+        name: nameWithEnter,
         boxpoints: 'all',
-        marker: {
-          color: observationPoint.color
-        },
         boxmean: 'sd'
       })
     })
@@ -47,7 +45,15 @@
       responsive: true,
       modeBarButtonsToRemove: ['select2d', 'lasso2d', 'zoomIn2d', 'zoomOut2d'],
       showLink: true,
-      plotlyServerURL: 'https://chart-studio.plotly.com'
+      plotlyServerURL: 'https://chart-studio.plotly.com',
+      modeBarButtonsToAdd: [{
+        name: 'Vis punkter',
+        icon: Plotly.Icons.pencil,
+        click: function(gd) {
+          const showPoints = gd.data[0].boxpoints === 'all' ? false : 'all'
+          Plotly.restyle(gd, 'boxpoints', showPoints)
+        }
+      }]
     }
 
     // Creates the boxplot.
