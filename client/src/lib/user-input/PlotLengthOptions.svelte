@@ -38,7 +38,7 @@
 
 <style>
   h4 {
-    margin-bottom: 0;
+    margin-bottom: 0.5em;
   }
 
   input[type="number"] {

@@ -32,6 +32,10 @@
 {/if}
 
 <style>
+  h4 {
+    margin-bottom: 0.5em;
+  }
+
   label {
     display: block;
     padding: 0.5em;
