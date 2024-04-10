@@ -30,3 +30,23 @@
   <h4>Y-akse verdi</h4>
   <RadioInput name="showPlotA" options={yValueOptions} bind:selected={showValueA}/>
 {/if}
+
+<style>
+  label {
+    display: block;
+    padding: 0.5em;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border-radius: 0.5em;
+  }
+
+  label:hover {
+    background-color: #435768;
+    color: white;
+  }
+
+  input[type="checkbox"] {
+    /* Make the input radio button larger */
+    transform: scale(1.25);
+  }
+</style>
