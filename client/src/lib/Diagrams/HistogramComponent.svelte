@@ -39,12 +39,14 @@
         return `${start.toFixed(1)} - ${end.toFixed(1)}, Antall: ${observationPoint.count[index]}`	
       })
 
+      const nameWithEnter = name.replace(' ', '<br>')
+
       // Create bars for histogram
       traces.push({
         x: observationPoint.intervals,
         y: observationPoint.count,
         type: 'bar',
-        name,
+        name: nameWithEnter,
         width: observationPoint.interval,
         marker: { color: color, opacity: 0.6 },
         hovertext: hoverText,
@@ -56,7 +58,7 @@
         y: observationPoint.count,
         mode: 'lines+markers',
         type: 'scatter',
-        name,
+        name: nameWithEnter,
         line: { shape: 'line', color: color, width: 2 },
         marker: { color: color, size: 8 },
         hovertext: hoverText,
