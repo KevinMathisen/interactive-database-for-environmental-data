@@ -194,7 +194,7 @@
 
 {#if showSelectRiverAndStationModal}
   <Modal on:close={handleClose} large={true}>
-      <SelectRiverAndStation
+      <SelectRiverAndStation on:close={handleClose}
         {rivers}
         {stations}
         bind:dataType
