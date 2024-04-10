@@ -160,7 +160,7 @@
   bind:value={input}
   on:keydown={handleKeydown}
   placeholder="Legg til {dataTypeText}"/>
-<button on:click={addInput}>+</button>
+<button on:click={addInput} class="smallButton">+</button>
 
 <!-- Error message to display to the user -->
 {#if showError}
@@ -194,7 +194,7 @@
     {#each Array.from(selectedRivers.entries()) as [key, river]}
       <li>
         {capitalizeFirstLetter(river.name + ' ' + river.startDate)}
-        <button on:click={() => removeRiverStation(key)}>x</button>
+        <button on:click={() => removeRiverStation(key)} class="smallButton">x</button>
       </li>
     {/each}
   </ul>
@@ -205,8 +205,37 @@
     {#each Array.from(selectedStations.entries()) as [key, station]}
       <li>
         {capitalizeFirstLetter(station.name + ' ' + station.date)}
-        <button on:click={() => removeRiverStation(key)}>x</button>
+        <button on:click={() => removeRiverStation(key)} class="smallButton">x</button>
       </li>
     {/each}
   </ul>
 {/if}
+
+<style>
+  input[type="text"] {
+    width: 60%;
+    font-size: 16px;
+    padding: 0.5em;
+    margin: 0.5em 0;
+    border-radius: 0.5em;
+  }
+
+  .smallButton {
+    padding: 0.5em;
+    border-radius: 0.5em;
+    cursor: pointer;
+  }
+
+  /* Show when a user hovers over the button */
+  .smallButton:hover {
+    background-color: #435768;
+    color: white;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 0;
+    margin-left: 0.5em;
+  }
+</style>
