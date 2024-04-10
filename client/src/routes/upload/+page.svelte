@@ -101,13 +101,13 @@
 
 <UserFeedbackMessage />
 
-<div class="uploadBody">
+<div class="uploadPage">
   <!--Defines the box where you click to choose files -->
   <div class="uploadFilesBox">
     <img src="/uploadCloudIcon.svg" alt="listIcon" height="60px" id="uploadCloudIcon" />
     <p>Dra og slipp filer eller</p>
     <br>
-    <Button type="fileSearch" size="medium" on:selectFile={selectFile}>Bla gjennom Filer <img src="/fileSearchIcon.svg" alt="listIcon" height="40px" class="fileSearch white-color"></Button>
+    <Button type="blue" size="large" on:buttonClick={selectFile}>Bla gjennom Filer <img src="/fileSearchIcon.svg" alt="listIcon" height="40px" class="white-color"></Button>
   </div>
 
   <!-- Defines the text under the upload files box -->
@@ -121,61 +121,68 @@
     <p id="filesChosenText">Filer som er valgt:</p>
     <div id="filesChosen"></div>
   </div>
-</div>
 
-<!-- The upload files button -->
-<div class="uploadButtonPlacement">
-  <Button type="orangeButton" size="medium" on:uploadFile={uploadFile}>Last opp <img src="/uploadIcon2.svg" alt="listIcon" height="40px" class="uploadIcon white-color"></Button>
+  <!-- The upload files button -->
+  <div class="uploadButtonPlacement">
+    <Button type="orange" size="medium" on:buttonClick={uploadFile}>Last opp <img src="/uploadIcon2.svg" alt="listIcon" height="40px" class="uploadIcon white-color"></Button>
+  </div>
+
 </div>
 
 <style>
-  .uploadBody {
+  .uploadPage {
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: calc(100vh - var(--header-height));
+    width: 100%;
   }
 
   .uploadFilesBox {
     border: 2px dashed black;
     margin-top: 3rem;
+    padding: 2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 900px;
+    width: 80%;
+    max-width: 900px;
     height: 13em;
     font-size: 1.5rem;
   }
 
   #uploadCloudIcon {
-    margin-top: 1rem;
     height: 100px;
   }
 
   .uploadFilesBoxText {
-    margin-right: 33rem;
+    width: 80%;
+    max-width: 900px;
+    padding: 1rem;
+    text-align: left;
   }
 
   .uploadFilesUploaded {
-    margin-top: 3rem;
-    font-size: 2rem;
-    height: 200px;
-    width: 900px;
+    width: 80%;
+    max-width: 900px;
+    padding: 1rem;
+    text-align: left;
   }
 
   #filesChosenText {
-    margin-bottom: 1rem;
+    font-size: 2rem;
+    margin: 0;
   }
 
   #filesChosen {
-    font-size: 1rem;
+    padding: 1rem;
   }
 
   .uploadButtonPlacement {
     display: flex;
     justify-content: center;
-    margin-top: 5rem;
-    margin-left: 43rem;
-    margin-bottom: 5rem;
+    margin-left: auto;
+    margin-right: 20%;
   }
 
   /* Transformes the icon color to white */
@@ -183,7 +190,7 @@
     filter: invert(100%);
   }
 
-  @media screen and (max-width: 1000px) {
+  /* @media screen and (max-width: 1000px) {
     .uploadFilesBox {
       width: 500px;
     }
@@ -194,5 +201,5 @@
       width: 500px;
     }
 
-  }
+  } */
 </style>

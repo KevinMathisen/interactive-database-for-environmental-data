@@ -4,18 +4,19 @@
 
   const dispatch = createEventDispatcher()
 
-  export let href = '#' // The default link for the button
-  export let type = '' // Can be either 'download' or any optioneble color 'blue'.
+  export let href = '' // The default link for the button
+  export let type = '' // Can be either 'header', 'blue', 'orange', 'green'.
   export let size = 'medium' // Button sizes 'small', 'medium', 'large' or 'extende'.
 
   /**
    * Handles the appropriate function when the user clicks on the button.
+   * @param {Event} event - The event object
    */
-  function handleClick () {
-    // Should only dispatch one event based on type of button
-    dispatch('downloadFile')
-    dispatch('uploadFile')
-    dispatch('selectFile')
+  function handleClick (event) {
+    if (href === '') {
+      event.preventDefault()
+    }
+    dispatch('buttonClick')
   }
 </script>
 
@@ -40,14 +41,14 @@
   }
 
   .small {
-    font-size: 1rem;
+    font-size: 0.8rem;
     width: 120px;
     height: 40px;
     border-radius: 1rem;
   }
 
   .medium {
-    font-size: 1.2rem;
+    font-size: 1rem;
     width: 180px;
     height: 60px;
     border-radius: 1rem;
@@ -55,14 +56,14 @@
   }
 
   .large {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     width: 250px;
     height: 70px;
     border-radius: 1rem;
   }
 
   .extended{
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     width: 100%;
     height: calc(100% - 10px);
     margin: 5px 0px;
@@ -84,35 +85,18 @@
     border-bottom: 5px solid #435768;
   }
 
-  .logOut{
-    display: flex;
-    background-color: #435768;
-    color: white;
-  }
-
-  .fileSearch{
-    display: flex;
-    background-color: #435768;
-    color: white;
-    width: 240px;
-  }
-
   .blue {
     border-radius: 15px;
     background-color: #435768;
     color: white;
   }
 
-  .blue:hover,
-  .logOut:hover,
-  .fileSearch:hover{
+  .blue:hover {
     box-shadow: 0px 5px 5px #36526e;
     transform: translateY(-3px);
   }
 
-  .blue:active,
-  .logOut:active,
-  .fileSearch:active{
+  .blue:active {
     background-color: #253544;
     box-shadow: 0px 0px 0px #36526e;
     transform: translateY(-0px);
@@ -135,20 +119,19 @@
     transform: translateY(-0px);
   }
 
-  .orangeButton {
+  .orange {
     display: flex;
-    position: absolute;
     background-color: #FF5B37;
     color: white;
   }
 
-  .orangeButton:hover {
+  .orange:hover {
     background-color: #ff3c11;
     box-shadow: 0px 5px 5px #ff6c47;
     transform: translateY(-3px);
   }
 
-  .orangeButton:active {
+  .orange:active {
     background-color: #aa1f00;
     box-shadow: 0px 0px 0px #ff6c47;
     transform: translateY(-0px);

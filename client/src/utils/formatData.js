@@ -9,7 +9,8 @@ import { get } from 'svelte/store'
 import {
   amountOfFishInStation,
   fishPerMinuteInStation,
-  dataForAllSpeciesInStation
+  dataForAllSpeciesInStation,
+  dataForAllSpeciesInStations
 } from './calculateData.js'
 
 /**
@@ -146,6 +147,30 @@ export function formatStationObservationsForTable (station) {
 
   // For each row, insert the station id at the start of the row
   rows.forEach(row => row.unshift(station.id))
+
+  return { headers, rows }
+}
+
+/**
+ * Formats the observations under a river for display in a table
+ * @param {Map<number, Station>} stations - The stations under the river containing the observations
+ * @returns {{headers: string[], rows: string[][]}} - The headers and rows for the table
+ */
+export function formatRiverObservationsForTable (stations) {
+  const headers = headersConstants.STATION_OBSERVATIONS_HEADERS_TABLE
+
+  console.log('stations:', stations)
+
+  // If no stations is given, return an empty table
+  if (!stations || stations.size === 0) {
+    return { headers, rows: [] }
+  }
+
+  // Get data from all observations under river
+  const rows = dataForAllSpeciesInStations(stations).map(Object.values)
+
+  // For each row, insert an empty value the start of the row
+  rows.forEach(row => row.unshift(0))
 
   return { headers, rows }
 }
