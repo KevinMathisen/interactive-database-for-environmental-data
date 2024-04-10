@@ -37,9 +37,9 @@
 
     // The title, font size and the title of the y-axis.
     const layout = {
-      title: 'Box Plot Styling Mean and Standard Deviation',
+      title: 'Boksplott for lengde på fisk observert i elv/stasjon',
       font: { size: 15 },
-      yaxis: { title: 'Size (cm)' }
+      yaxis: { title: 'Lengde (mm)' }
     }
 
     const config = { responsive: true }

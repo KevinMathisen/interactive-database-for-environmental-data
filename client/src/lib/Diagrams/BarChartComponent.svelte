@@ -36,7 +36,7 @@
     // Set the barmode to 'group', add title, font size and the cornerradius og the displayed bars.
     const layout = {
       barmode: 'group',
-      title: 'Fordelign av arter',
+      title: 'Stolpediagram for antall arter observert i elv/stasjon',
       font: { size: 15 },
       barcornerradius: 10
     }
