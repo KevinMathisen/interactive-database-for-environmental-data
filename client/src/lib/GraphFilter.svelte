@@ -28,7 +28,7 @@
     let customSpecies = [] // Species the user has chosen
 
     // Species the user has choosen; either all or the custom ones
-    $: selectedSpecies = chooseAll ? selectableSpecies : customSpecies
+    $: selectedSpecies = (chooseAll || customSpecies.length === 0 ) ? selectableSpecies : customSpecies
 
     /**
      *
