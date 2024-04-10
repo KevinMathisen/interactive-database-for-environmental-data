@@ -22,15 +22,33 @@
   function drawPlot (plotData) {
     // Creates histogram and lines for each species in each observation point
     const traces = []
+
+    // Define color palette for the histogram
+    const colorPalette = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf']
+    let colorIndex = 0
+
+
     plotData.forEach((observationPoint, name) => {
+      // Get color for observationPoint, wrap around if run out of colors
+      const color = colorPalette[colorIndex++ % colorPalette.length]
+
+      // Create the text for hover
+      const hoverText = observationPoint.intervals.map((intervalCenter, index) => {
+        const start = intervalCenter - observationPoint.interval / 2
+        const end = intervalCenter + observationPoint.interval / 2
+        return `${start.toFixed(1)} - ${end.toFixed(1)}, Antall: ${observationPoint.count[index]}`	
+      })
+
       // Create bars for histogram
       traces.push({
         x: observationPoint.intervals,
         y: observationPoint.count,
         type: 'bar',
         name,
-        width: observationPoint.interval
-        // marker: { color: 'blue', opacity: 0.6 },
+        width: observationPoint.interval,
+        marker: { color: color, opacity: 0.6 },
+        hovertext: hoverText,
+        hoverinfo: 'text'
       })
       // Create line to outline histogram
       traces.push({
@@ -39,8 +57,10 @@
         mode: 'lines+markers',
         type: 'scatter',
         name,
-        line: { shape: 'line' }, // line: { shape: 'line', color: 'blue', width: 2 },
-        marker: { size: 8 } // marker: { color: 'blue', size: 8 }
+        line: { shape: 'line', color: color, width: 2 },
+        marker: { color: color, size: 8 },
+        hovertext: hoverText,
+        hoverinfo: 'text'
       })
     })
 
