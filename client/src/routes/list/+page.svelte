@@ -75,7 +75,7 @@
   })
 
   /**
-   * Log the river/station clicked by the user,
+   * Handles when a river or station in the table is clicked
    * @param {Event} event - The click event
    */
   function handleRowClick (event) {
@@ -94,8 +94,15 @@
     selectStation(event.detail.id)
   }
 
+  /**
+   * Selects a station and fetches its data
+   * @param {number} stationId - The id of the station to select
+   */
   function selectStation (stationId) {
+    // Set the data type to station
     dataType = 'station'
+
+    // Get the station data and set the station as the selected station
     getStationSummary(stationId)
       .then(_ => {
         selectedRiver = new River()
@@ -111,8 +118,15 @@
     selectRiver(event.detail.id)
   }
 
+  /**
+   * Selects a river and fetches its data
+   * @param {number} riverId - The id of the river to select
+   */
   function selectRiver (riverId) {
+    // Set the data type to river
     dataType = 'river'
+
+    // Get the river data and set the river as the selected river
     getRiverSummary(riverId)
       .then(_ => {
         selectedStation = new Station()
@@ -149,33 +163,41 @@
    * @param {River} selectedRiver - The selected river
    * @param {Station} selectedStation - The selected station
    */
-  function updateUrl(selectedRiver, selectedStation) {
+  function updateUrl (selectedRiver, selectedStation) {
+    // Check if the code is running in the browser, if not return
     if (typeof window === 'undefined') return
 
-    let url = new URL(window.location.href)
+    // Get the current URL
+    const url = new URL(window.location.href)
+
+    // Set the selected river in the url
     if (selectedRiver.id) {
       url.searchParams.set('river', selectedRiver.id)
     } else {
       url.searchParams.delete('river')
     }
 
+    // Set the selected station in the url
     if (selectedStation.id) {
       url.searchParams.set('station', selectedStation.id)
     } else {
       url.searchParams.delete('station')
     }
 
+    // Update the URL
     history.pushState({}, '', url)
   }
 
   /**
    * Gets the river or station based on the URL parameters
    */
-  function getUrlParams() {
-    let searchParams = new URLSearchParams($page.url.search)
-    let riverId = Number(searchParams.get('river'))
-    let stationId = Number(searchParams.get('station'))
+  function getUrlParams () {
+    // Get the river and station id from the URL if they are defined
+    const searchParams = new URLSearchParams($page.url.search)
+    const riverId = Number(searchParams.get('river'))
+    const stationId = Number(searchParams.get('station'))
 
+    // Select the river or station based on the id in the URL
     if (riverId) {
       selectRiver(riverId)
     } else if (stationId) {
