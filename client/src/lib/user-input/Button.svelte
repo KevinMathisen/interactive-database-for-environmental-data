@@ -42,9 +42,10 @@
 
   .small {
     font-size: 0.8rem;
-    width: 120px;
-    height: 40px;
+    width: 140px;
+    height: 50px;
     border-radius: 1rem;
+    justify-content: space-evenly;
   }
 
   .medium {
@@ -60,6 +61,7 @@
     width: 250px;
     height: 70px;
     border-radius: 1rem;
+    justify-content: space-evenly;
   }
 
   .extended{
