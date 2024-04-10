@@ -22,31 +22,49 @@
   function drawPlot (plotData) {
     // Find the rows and columns for the pie charts
     // The number of rows and columns should be as close to each other as possible
-    const rows = Math.ceil(Math.sqrt(plotData.size))
-    const columns = Math.ceil(plotData.size / rows)
+    const columns = plotData.size === 1 ? 1 : plotData.size === 2 ? 2 : 3
+    const rows = Math.ceil(plotData.size / columns)
+    
 
     // Create pie charts for each observation point
     const piecharts = []
+    let annotations = []
+
     plotData.forEach((observationPoint, name) => {
+      const nameWithEnter = name.replace(/\s/g, '<br>')
+
+      // Find the position of the pie chart in the grid based on its index and the number of columns
+      const row = Math.floor(piecharts.length / columns)
+      const column = piecharts.length % columns
+
       piecharts.push({
         labels: Array.from(observationPoint.keys()),
         values: Array.from(observationPoint.values()),
         type: 'pie',
-        name,
-        // text: Array.from(observationPoint.entries(), ([key, value]) => `${key}: ${value}`),
+        name: nameWithEnter,
         textposition: 'auto',
-        domain: { // Find the position of the pie chart in the grid based on its index and the number of columns
-          row: Math.floor(piecharts.length / columns),
-          column: piecharts.length % columns
-        }
+        domain: { row, column },
+        hoverinfo: 'label+percent+value+name',
+        textinfo: 'label+percent+value',
+      })
+
+      annotations.push({ 
+        text: nameWithEnter,
+        showarrow: false,
+        xref: 'paper',
+        yref: 'paper',
+        x: (column + 0.5) / columns,
+        y: 1 - row / rows,
+        font: { size: 16, color: 'black' }
       })
     })
 
     // The title and fontsize.
     const layout = {
-      title: 'FORDELING AV ARTER',
+      title: 'Sektordiagram for antall arter observert i elv/stasjon',
       font: { size: 14 },
-      grid: { rows, columns }
+      grid: { rows, columns, ygaps: 0.2 },
+      annotations
     }
 
     // Adjust the graph size according to the screen size.
@@ -56,10 +74,6 @@
     Plotly.newPlot('sectorOne', piecharts, layout, config)
   }
 </script>
-
-{#if plotData.size === 0}
-  <p>Velg elv/stasjon</p>
-{/if}
 
 <!--Displays the pie chart with id "sectorOne"-->
 <div id='sectorOne'></div>
