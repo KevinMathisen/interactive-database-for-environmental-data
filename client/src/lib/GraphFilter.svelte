@@ -3,6 +3,7 @@
     import SpeciesInput from './user-input/SpeciesInput.svelte'
     import PlotSpeciesOptions from './user-input/PlotSpeciesOptions.svelte'
     import PlotLengthOptions from './user-input/PlotLengthOptions.svelte'
+    import Button from './user-input/Button.svelte'
     import { createEventDispatcher } from 'svelte'
     const dispatch = createEventDispatcher()
 
@@ -41,7 +42,14 @@
 <div class="main">
     <!-- Input for opening selection of river or stations -->
     <CollapsibleSection title="{dataType === 'river' ? 'Elver' : 'Stasjoner'} valgt">
-        <button on:click={handleSelectRiverStation}>Rediger {dataType === 'river' ? 'elver' : 'stasjoner'}</button>
+        <Button 
+            on:buttonClick={handleSelectRiverStation}
+            type="blue"
+            size="small"
+            >
+            Rediger
+            <img src="/editIcon.svg" alt="editIcon" height="30em" class="white-color">
+        </Button>
         <ul>
             {#if dataType === 'river'}
                 <p>Elver valgt</p>
@@ -89,6 +97,11 @@
         flex-direction: column;
         justify-content: flex-start;
         overflow: auto;
+    }
+
+    /* Transformes the icon color to white */
+    .white-color{
+        filter: invert(100%);
     }
 
 </style>
