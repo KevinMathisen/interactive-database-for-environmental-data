@@ -2,10 +2,10 @@
   import { page } from '$app/stores'
   import Button from './user-input/Button.svelte'
 
-  let showDropdown = false
+  let showDropdown = false // Whether the dropdown menu is shown
 
   /**
-   *
+   * Toggles the dropdown menu
    */
   function toggleDropdown () {
     showDropdown = !showDropdown
@@ -13,10 +13,12 @@
 </script>
 
 <header>
+  <!-- Logo  -->
   <div class="logoHeader">
     <img src="/NINA_logo_emblem.png" alt="Logo" height="60px">
     <p>Nina</p>
   </div>
+  <!-- Navigation -->
   <div class="navigation">
     <div class="navButton" class:active={$page.url.pathname === '/'}>
       <Button type="header" href="/" size='extended'>Kart<img src="/mapIcon.svg" alt="listIcon" height="40em" class="headerIcon"></Button>
@@ -34,6 +36,7 @@
       <Button type="header" href="/download" size='extended'>Last ned<img src="/dowloadIcon.svg" alt="listIcon" height="40em" class="headerIcon"></Button>
     </div>
   </div>
+  <!-- Dropdown menu  for navigation -->
   <button class="menu" on:click={toggleDropdown}>
     <div class="menuIcon" class:active={showDropdown}></div>
     <div class="menuIcon::before" class:translate-before={showDropdown}></div>
@@ -50,6 +53,7 @@
       </div>
     {/if}
     </button>
+  <!-- Log out button -->
   <div class="logOut">
     <Button type="blue" size='medium'>Logg ut<img src="/userIcon.svg" alt="listIcon" height="50em" class="headerIcon"></Button>
   </div>
