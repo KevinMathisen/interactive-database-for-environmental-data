@@ -42,7 +42,7 @@
     }
 
     // Make graph responsive, remove some buttons from the modebar, add edit link
-    const config = { 
+    const config = {
       responsive: true,
       modeBarButtonsToRemove: ['select2d', 'lasso2d', 'zoomIn2d', 'zoomOut2d'],
       showLink: true,

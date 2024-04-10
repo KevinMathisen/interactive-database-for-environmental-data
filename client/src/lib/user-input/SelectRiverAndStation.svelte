@@ -3,7 +3,7 @@
   import RadioInput from './RadioInput.svelte'
   import DateInput from './DateInput.svelte'
   import SearchForRiverAndStation from './SearchForRiverAndStation.svelte'
-  import Button from './Button.svelte';
+  import Button from './Button.svelte'
   import { createEventDispatcher } from 'svelte'
 
   export let rivers

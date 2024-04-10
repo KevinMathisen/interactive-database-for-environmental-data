@@ -41,7 +41,7 @@
     }
 
     // Make graph responsive, remove some buttons from the modebar, add edit link
-    const config = { 
+    const config = {
       responsive: true,
       modeBarButtonsToRemove: ['select2d', 'lasso2d', 'zoomIn2d', 'zoomOut2d'],
       showLink: true,
@@ -49,7 +49,7 @@
       modeBarButtonsToAdd: [{
         name: 'Vis punkter',
         icon: Plotly.Icons.pencil,
-        click: function(gd) {
+        click: function (gd) {
           const showPoints = gd.data[0].boxpoints === 'all' ? false : 'all'
           Plotly.restyle(gd, 'boxpoints', showPoints)
         }

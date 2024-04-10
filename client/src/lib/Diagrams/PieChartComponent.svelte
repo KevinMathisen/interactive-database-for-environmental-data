@@ -24,11 +24,10 @@
     // The number of rows and columns should be as close to each other as possible
     const columns = plotData.size === 1 ? 1 : plotData.size === 2 ? 2 : 3
     const rows = Math.ceil(plotData.size / columns)
-    
 
     // Create pie charts for each observation point
     const piecharts = []
-    let annotations = []
+    const annotations = []
 
     plotData.forEach((observationPoint, name) => {
       const nameWithEnter = name.replace(/\s/g, '<br>')
@@ -45,10 +44,10 @@
         textposition: 'auto',
         domain: { row, column },
         hoverinfo: 'label+percent+value+name',
-        textinfo: 'label+percent+value',
+        textinfo: 'label+percent+value'
       })
 
-      annotations.push({ 
+      annotations.push({
         text: nameWithEnter,
         showarrow: false,
         xref: 'paper',
@@ -68,7 +67,7 @@
     }
 
     // Make graph responsive, remove some buttons from the modebar, add edit link
-    const config = { 
+    const config = {
       responsive: true,
       modeBarButtonsToRemove: ['select2d', 'lasso2d', 'zoomIn2d', 'zoomOut2d'],
       showLink: true,

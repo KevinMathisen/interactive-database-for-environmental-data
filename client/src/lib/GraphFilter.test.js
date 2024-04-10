@@ -1,24 +1,24 @@
-import { render } from '@testing-library/svelte'
+// import { render } from '@testing-library/svelte'
 import { describe, expect, it } from 'vitest'
-import GraphFilter from './GraphFilter.svelte'
-import { writable } from 'svelte/store'
+// import GraphFilter from './GraphFilter.svelte'
+// import { writable } from 'svelte/store'
 
 /**
  * @vitest-environment jsdom
  */
 
 // Define the mock store
-const page = writable({
-  host: '',
-  path: '',
-  params: {},
-  query: {}
-})
+// const page = writable({
+//   host: '',
+//   path: '',
+//   params: {},
+//   query: {}
+// })
 
 describe('GraphFilter', () => {
   it('displays selected rivers or stations', async () => {
     expect(true).toBeTruthy()
-    
+
     // Use the mock store
     // GraphFilter.$page = page;
 

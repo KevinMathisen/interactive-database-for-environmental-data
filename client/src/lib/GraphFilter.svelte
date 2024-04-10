@@ -28,7 +28,7 @@
   let customSpecies = [] // Species the user has chosen
 
   // Species the user has choosen; either all or the custom ones
-  $: selectedSpecies = (chooseAll || customSpecies.length === 0 ) ? selectableSpecies : customSpecies
+  $: selectedSpecies = (chooseAll || customSpecies.length === 0) ? selectableSpecies : customSpecies
 
   /**
    * Handles when user wants to select rivers or stations
@@ -42,7 +42,7 @@
 <div class="main">
   <!-- Input for opening selection of river or stations -->
   <CollapsibleSection title="Velg elver/stasjoner">
-    <Button 
+    <Button
       on:buttonClick={handleSelectRiverStation}
       type="blue"
       size="small"
@@ -50,7 +50,7 @@
       Rediger
       <img src="/editIcon.svg" alt="editIcon" height="30em" class="white-color">
     </Button>
-    
+
       {#if dataType === 'river' && selectedRivers.size !== 0}
         <!-- Rivers choosen -->
         <h4>Elver valgt</h4>
