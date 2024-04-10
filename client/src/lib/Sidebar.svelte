@@ -14,6 +14,9 @@
     dispatch('close')
     if (typeClose === 'sideButton') {
       showSidebar = !showSidebar
+
+      // Trigger resize event to update plotly graph size after sidebar is closed
+      setTimeout(() => window.dispatchEvent(new Event('resize')), 200)
     }
   }
 

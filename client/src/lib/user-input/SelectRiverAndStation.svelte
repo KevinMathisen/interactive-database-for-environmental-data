@@ -3,6 +3,8 @@
   import RadioInput from './RadioInput.svelte'
   import DateInput from './DateInput.svelte'
   import SearchForRiverAndStation from './SearchForRiverAndStation.svelte'
+  import Button from './Button.svelte'
+  import { createEventDispatcher } from 'svelte'
 
   export let rivers
   export let stations
@@ -14,10 +16,19 @@
   let selectedStartDate
   let selectedEndDate
 
+  const dispatch = createEventDispatcher()
+
   const dataOptions = [
     { value: 'river', label: 'Elvedata' },
     { value: 'station', label: 'Stasjonsdata' }
   ]
+
+  /**
+   * Close the modal
+   */
+  function handleDone () {
+    dispatch('close')
+  }
 
 </script>
 
@@ -45,6 +56,9 @@
         {selectedEndDate} />
     </div>
   </div>
+  <Button type="green" size="medium" on:buttonClick={handleDone}>
+    Ferdig
+  </Button>
 </div>
 
 <style>
@@ -69,6 +83,8 @@
     height: 100%;
     width: 100%;
     margin: 2em;
+    margin-bottom: 0;
+    overflow: auto;
   }
 
   .leftColumn {
@@ -77,5 +93,6 @@
 
   .rightColumn {
     flex: 1;
+    overflow: auto;
   }
 </style>

@@ -42,9 +42,10 @@
 
   .small {
     font-size: 0.8rem;
-    width: 120px;
-    height: 40px;
+    width: 140px;
+    height: 50px;
     border-radius: 1rem;
+    justify-content: space-evenly;
   }
 
   .medium {
@@ -60,6 +61,7 @@
     width: 250px;
     height: 70px;
     border-radius: 1rem;
+    justify-content: space-evenly;
   }
 
   .extended{
@@ -108,14 +110,14 @@
   }
 
   .green:hover {
-    background-color: #00ac06;
-    box-shadow: 0px 5px 5px #00ff08;
+    background-color: #48c24c;
+    box-shadow: 0px 5px 5px #24b129;
     transform: translateY(-3px);
   }
 
   .green:active {
     background-color: #005e03;
-    box-shadow: 0px 0px 0px #00ff08;
+    box-shadow: 0px 0px 0px #24b129;
     transform: translateY(-0px);
   }
 

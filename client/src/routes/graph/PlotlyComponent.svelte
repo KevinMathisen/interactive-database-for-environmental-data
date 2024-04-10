@@ -1,5 +1,5 @@
 <script>
-    import BarChart2Component from '../../lib/Diagrams/BarChart2Component.svelte'
+    import BarChartComponent from '../../lib/Diagrams/BarChartComponent.svelte'
     import PieChartComponent from '../../lib/Diagrams/PieChartComponent.svelte'
     import BoxPlotComponent from '../../lib/Diagrams/BoxPlottComponent.svelte'
     import HistogramComponent from '../../lib/Diagrams/HistogramComponent.svelte'
@@ -34,7 +34,7 @@
 {:else}
     <!-- Plot graph choosen by user -->
     {#if type === 'barchart'}
-    <BarChart2Component plotData={formattedData} {absoluteValues}/>
+    <BarChartComponent plotData={formattedData} {absoluteValues}/>
     {:else if type === 'piechart'}
     <PieChartComponent plotData={formattedData} {absoluteValues}/>
     {:else if type === 'boxplot'}
