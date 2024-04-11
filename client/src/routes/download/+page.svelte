@@ -38,7 +38,7 @@
   // TODO: use selectedSpecies to filter download data
   // let selectedSpecies = []
 
-  let selectedFormat = ''
+  let selectedFormat = '' // Either 'xlsx' or 'csv'
 
   let chooseAll = true // If the user wants to choose all species
   let customSpecies = [] // Species the user has chosen
@@ -233,9 +233,11 @@
    }
 </script>
 
+<!-- User feedback modal, invisible unless there is feedback to show to user -->
 <UserFeedbackMessage />
 
 {#if showSelectRiverAndStationModal}
+  <!-- Modal for selecting rivers and stations -->
   <Modal on:close={handleClose} large={true}>
     <SelectRiverAndStation on:close={handleClose}
       {rivers}
@@ -298,6 +300,7 @@
   </div>
 
   <div class="downloadButton">
+    <!-- Button for downloading the file -->
     <Button type="orange" size="medium" on:buttonClick={downloadFile}>Last ned <img src="/dowloadIcon.svg" alt="listIcon" height="38px" class="downloadIcon white-color"></Button>
   </div>
 
