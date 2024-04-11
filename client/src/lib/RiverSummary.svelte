@@ -7,6 +7,7 @@
   import { getStationsForRiver } from '../utils/dataManager.js'
   import RiverStations from './RiverSummarySections/RiverStations.svelte'
   import RiverFishData from './RiverSummarySections/RiverFishData.svelte'
+  import { DATATYPE_RIVER } from '../constants/dataTypes'
 
   export let river = new River() // River to show
   export let wide = false // Whether to show the river summary as wide
@@ -15,15 +16,15 @@
 
   // Path to the map with the river selected as a query parameter
   let mapRef = ''
-  $: mapRef = `/?river=${river.id}`
+  $: mapRef = `/?${DATATYPE_RIVER}=${river.id}`
 
   // Path to the graph with the river selected as a query parameter
   let graphRef = ''
-  $: graphRef = `/graph?rivers=${river.id}`
+  $: graphRef = `/graph?${DATATYPE_RIVER}=${river.id}`
 
   // Path to the download page with the river selected as a query parameter
   let downloadRef = ''
-  $: downloadRef = `/download?rivers=${river.id}`
+  $: downloadRef = `/download?${DATATYPE_RIVER}=${river.id}`
 
   // Get stations for the river
   $: stations = getStationsForRiver(river)

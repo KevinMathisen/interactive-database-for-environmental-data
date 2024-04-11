@@ -5,21 +5,22 @@
   import StationInfo from './StationSummarySections/StationInfo.svelte'
   import StationFishData from './StationSummarySections/StationFishData.svelte'
   import { Station } from '../models/Station'
+  import { DATATYPE_STATION } from '../constants/dataTypes'
 
   export let station = new Station() // Station to show
   export let wide = false // Whether to show the station summary as wide
 
   // Path to the map with the station selected as a query parameter
   let mapRef = ''
-  $: mapRef = `/?station=${station.id}`
+  $: mapRef = `/?${DATATYPE_STATION}=${station.id}`
 
   // Path to the graph with the station selected as a query parameter
   let graphRef = ''
-  $: graphRef = `/graph?stations=${station.id}`
+  $: graphRef = `/graph?${DATATYPE_STATION}=${station.id}`
 
   // Path to the download page with the station selected as a query parameter
   let downloadRef = ''
-  $: downloadRef = `/download?stations=${station.id}`
+  $: downloadRef = `/download?${DATATYPE_STATION}=${station.id}`
 
   $: mainContentClass = wide ? 'maincontent wide' : 'maincontent'
 </script>

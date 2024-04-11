@@ -5,11 +5,12 @@
   import SearchForRiverAndStation from './SearchForRiverAndStation.svelte'
   import Button from './Button.svelte'
   import { createEventDispatcher } from 'svelte'
+  import { DATATYPE_RIVER, DATATYPE_STATION } from '../../constants/dataTypes'
 
   export let rivers
   export let stations
 
-  export let dataType = 'river'
+  export let dataType = DATATYPE_RIVER
   export let selectedRivers = new Map()
   export let selectedStations = new Map()
 
@@ -19,8 +20,8 @@
   const dispatch = createEventDispatcher()
 
   const dataOptions = [
-    { value: 'river', label: 'Elvedata' },
-    { value: 'station', label: 'Stasjonsdata' }
+    { value: DATATYPE_RIVER, label: 'Elvedata' },
+    { value: DATATYPE_STATION, label: 'Stasjonsdata' }
   ]
 
   /**

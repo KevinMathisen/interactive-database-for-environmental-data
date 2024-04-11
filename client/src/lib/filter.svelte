@@ -3,11 +3,12 @@
     import RadioInput from './user-input/RadioInput.svelte'
     import DateInput from './user-input/DateInput.svelte'
     import SpeciesInput from './user-input/SpeciesInput.svelte'
+    import { DATATYPE_RIVER, DATATYPE_STATION } from '../constants/dataTypes'
 
     export let selectableSpecies = [] // Species the user can choose
 
     // User input exported to the page
-    export let dataType = 'river'
+    export let dataType = DATATYPE_RIVER
     export let selectedStartDate = ''
     export let selectedEndDate = ''
     export let selectedSpecies = []
@@ -20,8 +21,8 @@
 
     // Options when choosing data type
     const dataOptions = [
-      { value: 'river', label: 'Elvedata' },
-      { value: 'station', label: 'Stasjonsdata' }
+      { value: DATATYPE_RIVER, label: 'Elvedata' },
+      { value: DATATYPE_STATION, label: 'Stasjonsdata' }
     ]
 
 </script>
