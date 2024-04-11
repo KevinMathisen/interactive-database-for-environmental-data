@@ -61,8 +61,8 @@
     updatePlotData()
   }
 
-  // Trigger update of plot data when data type is changed
-  $: if (dataType) {
+  // Trigger update of plot data when data type is changed, or if 
+  $: if (dataType || (selectedRivers.size === 0 && dataType === DATATYPE_RIVER) || (selectedStations.size === 0 && dataType === DATATYPE_STATION)) {
     dataUpdated = true
   }
 
