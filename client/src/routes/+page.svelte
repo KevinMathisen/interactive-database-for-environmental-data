@@ -16,6 +16,7 @@
   import { addFeedbackToStore } from '../utils/addFeedbackToStore'
   import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/feedbackMessages'
   import { DATATYPE_RIVER, DATATYPE_STATION } from '../constants/dataTypes'
+  import { goto } from '$app/navigation'
 
   let rivers = new Map() // Rivers with coordinates
   let stations = new Map() // Stations with coordinates
@@ -150,7 +151,8 @@
       url.searchParams.delete(DATATYPE_STATION)
     }
 
-    history.pushState({}, '', url)
+    // Update the URL
+    goto(url.toString(), { replaceState: true })
   }
 
   /**

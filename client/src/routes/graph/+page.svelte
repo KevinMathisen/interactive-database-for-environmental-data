@@ -12,6 +12,7 @@
   import UserFeedbackMessage from '$lib/UserFeedbackMessage.svelte'
   import { page } from '$app/stores'
   import { DATATYPE_RIVER, DATATYPE_STATION } from '../../constants/dataTypes'
+  import { goto } from '$app/navigation'
 
   let showSelectRiverAndStationModal = false // Show the modal to select rivers and stations
 
@@ -158,7 +159,7 @@
     }
 
     // Update the URL
-    history.pushState({}, '', url)
+    goto(url.toString(), { replaceState: true })
   }
 
   /**

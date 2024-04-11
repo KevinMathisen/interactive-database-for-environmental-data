@@ -16,6 +16,7 @@
   import { Station } from '../../models/Station.js'
   import { page } from '$app/stores'
   import { DATATYPE_RIVER, DATATYPE_STATION } from '../../constants/dataTypes'
+  import { goto } from '$app/navigation'
 
   let rivers // Rivers with coordinates
   let stations // Stations with coordinates
@@ -186,7 +187,7 @@
     }
 
     // Update the URL
-    history.pushState({}, '', url)
+    goto(url.toString(), { replaceState: true })
   }
 
   /**

@@ -24,6 +24,7 @@
   import Button from '$lib/user-input/Button.svelte'
   import { page } from '$app/stores'
   import { DATATYPE_RIVER, DATATYPE_STATION } from '../../constants/dataTypes'
+  import { goto } from '$app/navigation'
 
   let showSelectRiverAndStationModal = false
 
@@ -201,7 +202,7 @@
      }
 
      // Update the URL
-     history.pushState({}, '', url)
+     goto(url.toString(), { replaceState: true })
    }
 
   /**
