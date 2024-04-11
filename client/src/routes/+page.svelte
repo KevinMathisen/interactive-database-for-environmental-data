@@ -173,6 +173,7 @@
 <!-- User feedback modal, invisible unless there is feedback to show to user -->
 <UserFeedbackMessage />
 
+<!-- Map with rivers and stations -->
 <LeafletMap
   {dataType}
   rivers={filteredRivers}
@@ -183,6 +184,7 @@
   on:riverClicked={riverClicked}/>
 
 <div class="leftSidebar">
+  <!-- Filter sidebar -->
   <Sidebar title="Filter" typeClose="sideButton" side="left">
     <Filter
       {selectableSpecies}
@@ -194,12 +196,14 @@
 </div>
 
 {#if selectedRiver.id}
+  <!-- Right sidebar with river summary -->
   <div class="rightSidebar">
     <Sidebar title={sideBarTitle} typeClose="cross" side="right" on:close={toggleRightSidebar}>
       <RiverSummary river={selectedRiver} on:goToStationData={stationClicked}/>
     </Sidebar>
   </div>
 {:else if selectedStation.id}
+  <!-- Right sidebar with station summary -->
   <div class="rightSidebar">
     <Sidebar title={sideBarTitle} typeClose="cross" side="right" on:close={toggleRightSidebar}>
       <StationSummary station={selectedStation} on:goToRiverData={riverClicked}/>
