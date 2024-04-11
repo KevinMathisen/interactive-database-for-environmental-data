@@ -27,7 +27,7 @@
 
 <div class='container'>
   <div class={mainContentClass}>
-    <div class="column">
+    <div class='column'>
       <!-- Station name, date, time, and button to go to river -->
       <CollapsibleSection title={station.name} collapsable={false}>
         <StationOverview {station} on:goToRiverData />
@@ -39,7 +39,7 @@
       </CollapsibleSection>
     </div>
 
-    <div class="column">
+    <div class='column'>
       <!-- Fish data for the station -->
       <CollapsibleSection title='Fiskedata'>
         <StationFishData {station} />
@@ -56,9 +56,9 @@
 
     <!-- Show in map button if the summary is wide -->
     {#if wide}
-      <Button type="blue" size="medium" href={mapRef}>
+      <Button type='blue' size='medium' href={mapRef}>
         Se i kart
-        <img src="/mapIcon.svg" alt="mapIcon" height="50px" class="headerIcon">
+        <img src='/mapIcon.svg' alt='mapIcon' height='50px' class='headerIcon'>
       </Button>
     {/if}
 
@@ -114,7 +114,7 @@
   }
 
   .footer::before {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     left: 10%;

@@ -33,20 +33,20 @@
 
 </script>
 
-<div class="container">
-  <h1 class="header">Velg elver eller stasjoner</h1>
-  <div class="main">
-    <div class="leftColumn">
-      <CollapsibleSection title="Type data" collapsable={false}>
-        <RadioInput name="dataType" options={dataOptions} bind:selected={dataType} />
+<div class='container'>
+  <h1 class='header'>Velg elver eller stasjoner</h1>
+  <div class='main'>
+    <div class='leftColumn'>
+      <CollapsibleSection title='Type data' collapsable={false}>
+        <RadioInput name='dataType' options={dataOptions} bind:selected={dataType} />
       </CollapsibleSection>
 
-      <CollapsibleSection title="Filtrer søk etter dato" collapsable={false}>
+      <CollapsibleSection title='Filtrer søk etter dato' collapsable={false}>
         <DateInput bind:selectedStartDate bind:selectedEndDate/>
       </CollapsibleSection>
     </div>
 
-    <div class="rightColumn">
+    <div class='rightColumn'>
       <SearchForRiverAndStation
         {rivers}
         {stations}
@@ -57,7 +57,7 @@
         {selectedEndDate} />
     </div>
   </div>
-  <Button type="green" size="medium" on:buttonClick={handleDone}>
+  <Button type='green' size='medium' on:buttonClick={handleDone}>
     Ferdig
   </Button>
 </div>

@@ -21,7 +21,7 @@
 </script>
 
 <!-- The variables needed for the button. -->
-<a class="{type} {size}"
+<a class='{type} {size}'
   href={href}
   class:active={$page.url.pathname === href}
   on:click={handleClick}>

@@ -89,7 +89,7 @@
 </script>
 
 <!--Displays the bar chart with id "fishHistogram"-->
-<div id="fishHistogram"></div>
+<div id='fishHistogram'></div>
 
 <style>
 

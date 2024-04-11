@@ -21,7 +21,7 @@
   }
 </script>
 
-<div class="container">
+<div class='container'>
   <h4>Observasjoner</h4>
   <p>Antall stasjoner: {amountOfStations}</p>
   <p>Fisk fanget: {fishInStations} stk</p>

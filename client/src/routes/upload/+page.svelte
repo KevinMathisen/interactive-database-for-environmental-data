@@ -101,30 +101,30 @@
 
 <UserFeedbackMessage />
 
-<div class="uploadPage">
+<div class='uploadPage'>
   <!--Defines the box where you click to choose files -->
-  <div class="uploadFilesBox">
-    <img src="/uploadCloudIcon.svg" alt="listIcon" height="60px" id="uploadCloudIcon" />
+  <div class='uploadFilesBox'>
+    <img src='/uploadCloudIcon.svg' alt='listIcon' height='60px' id='uploadCloudIcon' />
     <p>Dra og slipp filer eller</p>
     <br>
-    <Button type="blue" size="large" on:buttonClick={selectFile}>Bla gjennom Filer <img src="/fileSearchIcon.svg" alt="listIcon" height="40px" class="white-color"></Button>
+    <Button type='blue' size='large' on:buttonClick={selectFile}>Bla gjennom Filer <img src='/fileSearchIcon.svg' alt='listIcon' height='40px' class='white-color'></Button>
   </div>
 
   <!-- Defines the text under the upload files box -->
-  <div class="uploadFilesBoxText">
+  <div class='uploadFilesBoxText'>
     <p>Maksimal fil størrelse: 10 MB</p>
     <p>Kun tillatt å laste opp filer av typen: .csv and .xlsx</p>
   </div>
 
   <!-- Defines the overview over files selected -->
-  <div class="uploadFilesUploaded">
-    <p id="filesChosenText">Filer som er valgt:</p>
-    <div id="filesChosen"></div>
+  <div class='uploadFilesUploaded'>
+    <p id='filesChosenText'>Filer som er valgt:</p>
+    <div id='filesChosen'></div>
   </div>
 
   <!-- The upload files button -->
-  <div class="uploadButtonPlacement">
-    <Button type="orange" size="medium" on:buttonClick={uploadFile}>Last opp <img src="/uploadIcon2.svg" alt="listIcon" height="40px" class="uploadIcon white-color"></Button>
+  <div class='uploadButtonPlacement'>
+    <Button type='orange' size='medium' on:buttonClick={uploadFile}>Last opp <img src='/uploadIcon2.svg' alt='listIcon' height='40px' class='uploadIcon white-color'></Button>
   </div>
 
 </div>

@@ -30,17 +30,17 @@
 <div class=main>
     <form >
         <!-- Input for choosing data type -->
-        <CollapsibleSection title="Type data">
-            <RadioInput name="dataType" options={dataOptions} bind:selected={dataType} />
+        <CollapsibleSection title='Type data'>
+            <RadioInput name='dataType' options={dataOptions} bind:selected={dataType} />
         </CollapsibleSection>
 
         <!-- Input for choosing date -->
-        <CollapsibleSection title="Dato">
+        <CollapsibleSection title='Dato'>
             <DateInput bind:selectedStartDate bind:selectedEndDate/>
         </CollapsibleSection>
 
         <!-- Input for choosing species -->
-        <CollapsibleSection title="Art">
+        <CollapsibleSection title='Art'>
             <SpeciesInput {selectableSpecies} bind:chooseAll bind:customSpecies />
         </CollapsibleSection>
     </form>

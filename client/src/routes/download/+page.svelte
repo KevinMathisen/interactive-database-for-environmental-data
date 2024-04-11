@@ -31,7 +31,7 @@
   let stations = new Map() // Stations with coordinates
   let selectableSpecies = [] // All unique species
 
-  let dataType = DATATYPE_RIVER // "river" or "station", chosen by user
+  let dataType = DATATYPE_RIVER // 'river' or 'station', chosen by user
   let selectedRivers = new Map() // Rivers the user has chosen
   let selectedStations = new Map() // Stations the user has chosen
 
@@ -249,23 +249,23 @@
   </Modal>
 {/if}
 
-<div class="downloadPage">
+<div class='downloadPage'>
 
   <div>
-    <div class="downloadHeader">Last ned data</div>
+    <div class='downloadHeader'>Last ned data</div>
   </div>
 
   <!-- Defines the area containing the options for dowloading -->
-  <div class="downloadMain">
+  <div class='downloadMain'>
 
     <!-- Input for opening selection of river or stations -->
-    <CollapsibleSection title="Velg elver/stasjoner">
+    <CollapsibleSection title='Velg elver/stasjoner'>
       <Button
         on:buttonClick={handleSelectRiverStation}
-        type="blue"
-        size="small">
+        type='blue'
+        size='small'>
           Rediger
-          <img src="/editIcon.svg" alt="editIcon" height="30em" class="white-color">
+          <img src='/editIcon.svg' alt='editIcon' height='30em' class='white-color'>
       </Button>
 
       {#if dataType === DATATYPE_RIVER && selectedRivers.size !== 0}
@@ -288,20 +288,20 @@
     </CollapsibleSection>
 
     <!-- Input for choosing species -->
-    <CollapsibleSection title="Art">
+    <CollapsibleSection title='Art'>
       <SpeciesInput {selectableSpecies} bind:chooseAll bind:customSpecies />
     </CollapsibleSection>
 
           <!-- Input for choosing file format -->
-    <CollapsibleSection title="Format">
-      <RadioInput name="format" options={formatOptions} bind:selected={selectedFormat} />
+    <CollapsibleSection title='Format'>
+      <RadioInput name='format' options={formatOptions} bind:selected={selectedFormat} />
     </CollapsibleSection>
 
   </div>
 
-  <div class="downloadButton">
+  <div class='downloadButton'>
     <!-- Button for downloading the file -->
-    <Button type="orange" size="medium" on:buttonClick={downloadFile}>Last ned <img src="/dowloadIcon.svg" alt="listIcon" height="38px" class="downloadIcon white-color"></Button>
+    <Button type='orange' size='medium' on:buttonClick={downloadFile}>Last ned <img src='/dowloadIcon.svg' alt='listIcon' height='38px' class='downloadIcon white-color'></Button>
   </div>
 
 </div>

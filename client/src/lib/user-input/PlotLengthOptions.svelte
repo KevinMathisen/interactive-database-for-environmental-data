@@ -13,26 +13,26 @@
     ]
 </script>
 
-<label for="showPlotB">
+<label for='showPlotB'>
   Vis
-  <input type="checkbox" id="showPlotB" name="showPlotB" bind:checked={showPlotB}>
+  <input type='checkbox' id='showPlotB' name='showPlotB' bind:checked={showPlotB}>
 </label>
 
 {#if showPlotB}
   <h4>Diagram type</h4>
 
-  <RadioInput name="plotTypeB" options={plotTypeOptions} bind:selected={plotTypeB}/>
+  <RadioInput name='plotTypeB' options={plotTypeOptions} bind:selected={plotTypeB}/>
 
   {#if plotTypeB === 'histogram'}
     <h4>Intervall i mm</h4>
     <!-- Input intervall for plotting-->
-    <input type="number" id="intervallPlotB" name="intervallPlotB" bind:value={intervallPlotB} placeholder="mm" />
+    <input type='number' id='intervallPlotB' name='intervallPlotB' bind:value={intervallPlotB} placeholder='mm' />
   {/if}
 
   <h4>Grupper arter</h4>
-  <label for="combineSpecies">
+  <label for='combineSpecies'>
     Vis sum av valgte arter for hver elv/stasjon
-    <input type="checkbox" id="combineSpecies" name="combineSpecies" bind:checked={combineSpecies}>
+    <input type='checkbox' id='combineSpecies' name='combineSpecies' bind:checked={combineSpecies}>
   </label>
 {/if}
 
@@ -41,7 +41,7 @@
     margin-bottom: 0.5em;
   }
 
-  input[type="number"] {
+  input[type='number'] {
     width: 60%;
     font-size: 16px;
     padding: 0.5em;
@@ -62,7 +62,7 @@
     color: white;
   }
 
-  input[type="checkbox"] {
+  input[type='checkbox'] {
     transform: scale(1.25);
   }
 </style>

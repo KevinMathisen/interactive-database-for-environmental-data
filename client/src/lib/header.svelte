@@ -14,48 +14,48 @@
 
 <header>
   <!-- Logo  -->
-  <div class="logoHeader">
-    <img src="/NINA_logo_emblem.png" alt="Logo" height="60px">
+  <div class='logoHeader'>
+    <img src='/NINA_logo_emblem.png' alt='Logo' height='60px'>
     <p>Nina</p>
   </div>
   <!-- Navigation -->
-  <div class="navigation">
-    <div class="navButton" class:active={$page.url.pathname === '/'}>
-      <Button type="header" href="/" size='extended'>Kart<img src="/mapIcon.svg" alt="listIcon" height="40em" class="headerIcon"></Button>
+  <div class='navigation'>
+    <div class='navButton' class:active={$page.url.pathname === '/'}>
+      <Button type='header' href='/' size='extended'>Kart<img src='/mapIcon.svg' alt='listIcon' height='40em' class='headerIcon'></Button>
     </div>
-    <div class="navButton" class:active={$page.url.pathname === '/list'}>
-      <Button type="header" href="/list" size='extended'>Liste<img src="/listIcon.svg" alt="listIcon" height="40em" class="headerIcon"></Button>
+    <div class='navButton' class:active={$page.url.pathname === '/list'}>
+      <Button type='header' href='/list' size='extended'>Liste<img src='/listIcon.svg' alt='listIcon' height='40em' class='headerIcon'></Button>
     </div>
-    <div class="navButton" class:active={$page.url.pathname === '/graph'}>
-      <Button type="header" href="/graph" size='extended'>Graf<img src="/graphIcon2.svg" alt="listIcon" height="30em" class="headerIcon"></Button>
+    <div class='navButton' class:active={$page.url.pathname === '/graph'}>
+      <Button type='header' href='/graph' size='extended'>Graf<img src='/graphIcon2.svg' alt='listIcon' height='30em' class='headerIcon'></Button>
     </div>
-    <div class="navButton" class:active={$page.url.pathname === '/upload'}>
-      <Button type="header" href="/upload" size='extended'>Last opp<img src="/uploadIcon2.svg" alt="listIcon" height="40em" class="headerIcon"></Button>
+    <div class='navButton' class:active={$page.url.pathname === '/upload'}>
+      <Button type='header' href='/upload' size='extended'>Last opp<img src='/uploadIcon2.svg' alt='listIcon' height='40em' class='headerIcon'></Button>
     </div>
-    <div class="navButton" class:active={$page.url.pathname === '/download'}>
-      <Button type="header" href="/download" size='extended'>Last ned<img src="/dowloadIcon.svg" alt="listIcon" height="40em" class="headerIcon"></Button>
+    <div class='navButton' class:active={$page.url.pathname === '/download'}>
+      <Button type='header' href='/download' size='extended'>Last ned<img src='/dowloadIcon.svg' alt='listIcon' height='40em' class='headerIcon'></Button>
     </div>
   </div>
   <!-- Dropdown menu  for navigation -->
-  <button class="menu" on:click={toggleDropdown}>
-    <div class="menuIcon" class:active={showDropdown}></div>
-    <div class="menuIcon::before" class:translate-before={showDropdown}></div>
-    <div class="menuIcon::after" class:translate-after={showDropdown}></div>
+  <button class='menu' on:click={toggleDropdown}>
+    <div class='menuIcon' class:active={showDropdown}></div>
+    <div class='menuIcon::before' class:translate-before={showDropdown}></div>
+    <div class='menuIcon::after' class:translate-after={showDropdown}></div>
     {#if showDropdown}
-      <div class="Dropdown">
+      <div class='Dropdown'>
         <ul>
-          <li><a href="/">Kart</a></li>
-          <li><a href="/list">Liste</a></li>
-          <li><a href="/graph">Graf</a></li>
-          <li><a href="/upload">Last opp</a></li>
-          <li><a href="/download">Last ned</a></li>
+          <li><a href='/'>Kart</a></li>
+          <li><a href='/list'>Liste</a></li>
+          <li><a href='/graph'>Graf</a></li>
+          <li><a href='/upload'>Last opp</a></li>
+          <li><a href='/download'>Last ned</a></li>
         </ul>
       </div>
     {/if}
     </button>
   <!-- Log out button -->
-  <div class="logOut">
-    <Button type="blue" size='medium'>Logg ut<img src="/userIcon.svg" alt="listIcon" height="50em" class="headerIcon"></Button>
+  <div class='logOut'>
+    <Button type='blue' size='medium'>Logg ut<img src='/userIcon.svg' alt='listIcon' height='50em' class='headerIcon'></Button>
   </div>
 
 </header>
@@ -87,7 +87,7 @@
     padding-right: 1rem;
     padding-left: 1rem;
     font-size: 2rem;
-    font-family: "Inter", sans-serif;
+    font-family: 'Inter', sans-serif;
     font-weight: 540;
   }
 
@@ -135,7 +135,7 @@
 
   .menuIcon::before,
   .menuIcon::after {
-    content: "";
+    content: '';
   }
 
   .menuIcon::before {

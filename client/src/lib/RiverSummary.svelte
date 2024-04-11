@@ -35,49 +35,49 @@
 <div class='container'>
 
   <div class={mainContentClass}>
-    <div class="column">
+    <div class='column'>
       <!-- River name, project id, and date -->
       <CollapsibleSection title={river.name} collapsable={false}>
         <RiverOverview {river} />
       </CollapsibleSection>
 
       <!-- River info such as observation data, crew, and comments -->
-      <CollapsibleSection title="Info">
+      <CollapsibleSection title='Info'>
         <RiverInfo {river} {stations}/>
       </CollapsibleSection>
     </div>
 
-    <div class="column">
+    <div class='column'>
       <!-- Stations under the river -->
-      <CollapsibleSection title="Stasjoner">
+      <CollapsibleSection title='Stasjoner'>
         <RiverStations {stations} on:goToStationData/>
       </CollapsibleSection>
 
       <!-- Fish data for the river -->
-      <CollapsibleSection title="Fiskedata">
+      <CollapsibleSection title='Fiskedata'>
         <RiverFishData {stations} />
       </CollapsibleSection>
     </div>
   </div>
 
   <!-- Buttons to show diagram and download data -->
-  <div class="footer">
-    <Button type="blue" size="medium" href={graphRef}>
+  <div class='footer'>
+    <Button type='blue' size='medium' href={graphRef}>
       Diagram
-      <img src="/graphIcon.svg" alt="graphIcon2" height="40px" class="white-color">
+      <img src='/graphIcon.svg' alt='graphIcon2' height='40px' class='white-color'>
     </Button>
 
     <!-- Show in map button if the summary is wide -->
     {#if wide}
-      <Button type="blue" size="medium" href={mapRef}>
+      <Button type='blue' size='medium' href={mapRef}>
         Se i kart
-        <img src="/mapIcon.svg" alt="mapIcon" height="50px" class="headerIcon">
+        <img src='/mapIcon.svg' alt='mapIcon' height='50px' class='headerIcon'>
       </Button>
     {/if}
 
-    <Button type="orange" size="medium" href={downloadRef}>
+    <Button type='orange' size='medium' href={downloadRef}>
       Last ned
-      <img src="/dowloadIcon.svg" alt="dowloadIcon" height="50px" class="white-color">
+      <img src='/dowloadIcon.svg' alt='dowloadIcon' height='50px' class='white-color'>
     </Button>
 
   </div>
@@ -128,7 +128,7 @@
   }
 
   .footer::before {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     left: 10%;

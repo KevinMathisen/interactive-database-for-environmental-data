@@ -155,14 +155,14 @@
 
 </script>
 
-<div class="inputContainer">
+<div class='inputContainer'>
   <!-- Input for adding a river/station to the selected rivers/stations -->
   <input
-    type="text"
+    type='text'
     bind:value={input}
     on:keydown={handleKeydown}
-    placeholder="Legg til {dataTypeText}"/>
-  <button on:click={addInput} class="smallButton">+</button>
+    placeholder='Legg til {dataTypeText}'/>
+  <button on:click={addInput} class='smallButton'>+</button>
 
   <!-- Error message to display to the user -->
   {#if showError}
@@ -171,7 +171,7 @@
 
   <!-- Suggestions for rivers -->
   {#if showRiverSuggestions}
-    <div class="suggestions">
+    <div class='suggestions'>
       {#each Array.from(selectableRivers.entries()) as [_, river]}
         <button on:click={() => { input = river.name + ' ' + river.startDate; addInput() }}>
           {capitalizeFirstLetter(river.name + ' ' + river.startDate)}
@@ -180,7 +180,7 @@
     </div>
   {:else if showStationSuggestions}
     <!-- Suggestions for stations -->
-    <div class="suggestions">
+    <div class='suggestions'>
       {#each Array.from(selectableStations.entries()) as [_, station]}
         <button on:click={() => { input = station.name + ' ' + station.date; addInput() }}>
           {capitalizeFirstLetter(station.name + ' ' + station.date)}
@@ -196,7 +196,7 @@
     {#each Array.from(selectedRivers.entries()) as [key, river]}
       <li>
         {capitalizeFirstLetter(river.name + ' ' + river.startDate)}
-        <button on:click={() => removeRiverStation(key)} class="smallButton">x</button>
+        <button on:click={() => removeRiverStation(key)} class='smallButton'>x</button>
       </li>
     {/each}
   </ul>
@@ -207,14 +207,14 @@
     {#each Array.from(selectedStations.entries()) as [key, station]}
       <li>
         {capitalizeFirstLetter(station.name + ' ' + station.date)}
-        <button on:click={() => removeRiverStation(key)} class="smallButton">x</button>
+        <button on:click={() => removeRiverStation(key)} class='smallButton'>x</button>
       </li>
     {/each}
   </ul>
 {/if}
 
 <style>
-  input[type="text"] {
+  input[type='text'] {
     width: 60%;
     font-size: 16px;
     padding: 0.5em;

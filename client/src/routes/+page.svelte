@@ -21,7 +21,7 @@
   let stations = new Map() // Stations with coordinates
   let selectableSpecies // All unique species
 
-  let dataType = DATATYPE_RIVER // "river" or "station", chosen by user
+  let dataType = DATATYPE_RIVER // 'river' or 'station', chosen by user
   let selectedSpecies // Species user wants to look at
   let selectedStartDate // Start date for the time user wants to look at
   let selectedEndDate // End date for the time user wants to look at
@@ -183,9 +183,9 @@
   on:stationClicked={stationClicked}
   on:riverClicked={riverClicked}/>
 
-<div class="leftSidebar">
+<div class='leftSidebar'>
   <!-- Filter sidebar -->
-  <Sidebar title="Filter" typeClose="sideButton" side="left">
+  <Sidebar title='Filter' typeClose='sideButton' side='left'>
     <Filter
       {selectableSpecies}
       bind:dataType
@@ -197,15 +197,15 @@
 
 {#if selectedRiver.id}
   <!-- Right sidebar with river summary -->
-  <div class="rightSidebar">
-    <Sidebar title={sideBarTitle} typeClose="cross" side="right" on:close={toggleRightSidebar}>
+  <div class='rightSidebar'>
+    <Sidebar title={sideBarTitle} typeClose='cross' side='right' on:close={toggleRightSidebar}>
       <RiverSummary river={selectedRiver} on:goToStationData={stationClicked}/>
     </Sidebar>
   </div>
 {:else if selectedStation.id}
   <!-- Right sidebar with station summary -->
-  <div class="rightSidebar">
-    <Sidebar title={sideBarTitle} typeClose="cross" side="right" on:close={toggleRightSidebar}>
+  <div class='rightSidebar'>
+    <Sidebar title={sideBarTitle} typeClose='cross' side='right' on:close={toggleRightSidebar}>
       <StationSummary station={selectedStation} on:goToRiverData={riverClicked}/>
     </Sidebar>
   </div>

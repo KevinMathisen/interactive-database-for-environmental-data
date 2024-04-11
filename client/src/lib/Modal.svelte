@@ -32,11 +32,11 @@
 
 </script>
 
-<div class="backdrop" on:click|self={handleClose} on:keydown={handleKeyDown} role="presentation">
-  <div class="modal" style="width: {width}px; height: {height}px;">
+<div class='backdrop' on:click|self={handleClose} on:keydown={handleKeyDown} role='presentation'>
+  <div class='modal' style='width: {width}px; height: {height}px;'>
     <slot></slot>
-    <button class="close" on:click={handleClose}>
-      <img src={SVG_PATHS.CLOSE} alt="Close" />
+    <button class='close' on:click={handleClose}>
+      <img src={SVG_PATHS.CLOSE} alt='Close' />
     </button>
   </div>
 </div>

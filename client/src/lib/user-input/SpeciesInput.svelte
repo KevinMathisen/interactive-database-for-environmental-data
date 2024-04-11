@@ -89,22 +89,22 @@
 
 <!-- Input for choosing all or custom species -->
 <label>
-  <input type="radio" bind:group={chooseAll} value={true}> Velg alle
+  <input type='radio' bind:group={chooseAll} value={true}> Velg alle
 </label>
 <label>
-  <input type="radio" bind:group={chooseAll} value={false}> Egendefinert
+  <input type='radio' bind:group={chooseAll} value={false}> Egendefinert
 </label>
 
 <!-- Input for handling custom species -->
 {#if !chooseAll}
-  <div class="inputContainer">
+  <div class='inputContainer'>
     <!-- Input for adding a species to the custom species-->
     <input
-      type="text"
+      type='text'
       bind:value={inputSpecies}
       on:keydown={handleKeydown}
-      placeholder="Legg til art"/>
-    <button on:click={addSpecies} class="smallButton">+</button>
+      placeholder='Legg til art'/>
+    <button on:click={addSpecies} class='smallButton'>+</button>
 
     <!-- Error message to display to the user -->
     {#if showError}
@@ -113,7 +113,7 @@
 
     <!-- Suggestions based on user input -->
     {#if showSuggestions}
-      <div class="suggestions">
+      <div class='suggestions'>
         {#each suggestSpecies as species}
           <button class='suggestSpecies' on:click={() => { inputSpecies = capitalizeFirstLetter(species); addSpecies() }}>
             {capitalizeFirstLetter(species)}
@@ -128,14 +128,14 @@
     <p>Valgte arter:</p>
     <ul>
       {#each customSpecies as species}
-        <li>{capitalizeFirstLetter(species)} <button on:click={() => removeSpecies(species)} class="smallButton">x</button></li>
+        <li>{capitalizeFirstLetter(species)} <button on:click={() => removeSpecies(species)} class='smallButton'>x</button></li>
       {/each}
     </ul>
 
     <!-- Option to include 'others' category -->
     {#if showIncludeOthers}
       <label>
-        <input type="checkbox" bind:checked={includeOthers}> Grupper og vis ikke valgte arter sammen
+        <input type='checkbox' bind:checked={includeOthers}> Grupper og vis ikke valgte arter sammen
       </label>
     {/if}
   {/if}
@@ -156,12 +156,12 @@
     color: white;
   }
 
-  input[type="radio"] {
+  input[type='radio'] {
     /* Make the input radio button larger */
     transform: scale(1.25);
   }
 
-  input[type="text"] {
+  input[type='text'] {
     width: 60%;
     font-size: 16px;
     padding: 0.5em;

@@ -23,7 +23,7 @@
 
   let dataUpdated = false // Whether data has been fetched
 
-  let dataType // "river" or "station", chosen by user
+  let dataType // 'river' or 'station', chosen by user
   let selectedSpecies // Species user wants to look at
   let includeOthers // Whether to include 'others' category in the graph
   let plotData = new Map() // Data to plot
@@ -207,10 +207,10 @@
   </Modal>
 {/if}
 
-<div class="graphPage">
+<div class='graphPage'>
   <!-- Filter sidebar -->
-  <div class="filterContainer">
-    <Sidebar title="Filter for Grafer" typeClose="sideButton" side='left'>
+  <div class='filterContainer'>
+    <Sidebar title='Filter for Grafer' typeClose='sideButton' side='left'>
       <GraphFilter
         {selectedRivers}
         {selectedStations}
@@ -230,11 +230,11 @@
     </Sidebar>
   </div>
 
-  <div class="graphMain">
+  <div class='graphMain'>
 
     {#if showPlotA}
       <!-- Graph for distribution of species -->
-      <div class="graphBox">
+      <div class='graphBox'>
         <h3>FORDELING AV ARTER</h3>
         <PlotlyComponent
           type={plotTypeA}
@@ -249,7 +249,7 @@
 
     {#if showPlotB}
       <!-- Graph for distribution of length -->
-      <div class="graphBox">
+      <div class='graphBox'>
         <h3>FORDELING AV LENGDE</h3>
         <PlotlyComponent
           type={plotTypeB}
