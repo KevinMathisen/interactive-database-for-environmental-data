@@ -257,8 +257,14 @@
   <div class="downloadMain">
 
     <!-- Input for opening selection of river or stations -->
-    <CollapsibleSection title="{dataType === DATATYPE_RIVER ? 'Elver' : 'Stasjoner'} valgt">
-      <button on:click={handleSelectRiverStation}>Rediger {dataType === DATATYPE_RIVER ? 'elver' : 'stasjoner'}</button>
+    <CollapsibleSection title="Velg elver/stasjoner">
+      <Button
+        on:buttonClick={handleSelectRiverStation}
+        type="blue"
+        size="small">
+          Rediger
+          <img src="/editIcon.svg" alt="editIcon" height="30em" class="white-color">
+      </Button>
       <ul>
         {#if dataType === DATATYPE_RIVER}
           <p>Elver valgt</p>
