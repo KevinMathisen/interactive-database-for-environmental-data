@@ -15,12 +15,13 @@
   import { page } from '$app/stores'
   import { addFeedbackToStore } from '../utils/addFeedbackToStore'
   import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/feedbackMessages'
+  import { DATATYPE_RIVER, DATATYPE_STATION, RIVER_DATA, STATION_DATA } from '../constants/uiConstants'
 
   let rivers = new Map() // Rivers with coordinates
   let stations = new Map() // Stations with coordinates
   let selectableSpecies // All unique species
 
-  let dataType = 'river' // "river" or "station", chosen by user
+  let dataType = DATATYPE_RIVER // "river" or "station", chosen by user
   let selectedSpecies // Species user wants to look at
   let selectedStartDate // Start date for the time user wants to look at
   let selectedEndDate // End date for the time user wants to look at
@@ -34,7 +35,7 @@
   let sideBarTitle = ''
 
   // Set sidebar title based on data type
-  $: sideBarTitle = dataType === 'river' ? 'Elvedata' : 'Stasjonsdata'
+  $: sideBarTitle = dataType === DATATYPE_RIVER ? RIVER_DATA : STATION_DATA
 
   // Get rivers and stations from stores
   $: rivers = $riverStore
@@ -46,9 +47,9 @@
   $: filteredStations = filterStationsByDateAndSpecies(stations, selectedSpecies, selectedStartDate, selectedEndDate)
 
   // Remove selected river or station when the user switches between data types
-  $: if (dataType === 'station') {
+  $: if (dataType === DATATYPE_STATION) {
     selectedRiver = new River()
-  } else if (dataType === 'river') {
+  } else if (dataType === DATATYPE_RIVER) {
     selectedStation = new Station()
   }
 
@@ -84,7 +85,7 @@
     }
 
     // Set the data type to station and get the station summary
-    dataType = 'station'
+    dataType = DATATYPE_STATION
     getStationSummary(stationId)
       .then(_ => {
         selectedRiver = new River()
@@ -112,7 +113,7 @@
     }
 
     // Set the data type to river and get the river summary
-    dataType = 'river'
+    dataType = DATATYPE_RIVER
     getRiverSummary(riverId)
       .then(_ => {
         selectedStation = new Station()
@@ -138,15 +139,15 @@
 
     const url = new URL(window.location.href)
     if (selectedRiver.id) {
-      url.searchParams.set('river', selectedRiver.id)
+      url.searchParams.set(DATATYPE_RIVER, selectedRiver.id)
     } else {
-      url.searchParams.delete('river')
+      url.searchParams.delete(DATATYPE_RIVER)
     }
 
     if (selectedStation.id) {
-      url.searchParams.set('station', selectedStation.id)
+      url.searchParams.set(DATATYPE_STATION, selectedStation.id)
     } else {
-      url.searchParams.delete('station')
+      url.searchParams.delete(DATATYPE_STATION)
     }
 
     history.pushState({}, '', url)
@@ -157,8 +158,8 @@
    */
   function getUrlParams () {
     const searchParams = new URLSearchParams($page.url.search)
-    const riverId = Number(searchParams.get('river'))
-    const stationId = Number(searchParams.get('station'))
+    const riverId = Number(searchParams.get(DATATYPE_RIVER))
+    const stationId = Number(searchParams.get(DATATYPE_STATION))
 
     if (riverId) {
       selectRiver(riverId)
