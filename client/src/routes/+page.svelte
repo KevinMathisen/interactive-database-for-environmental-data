@@ -15,7 +15,7 @@
   import { page } from '$app/stores'
   import { addFeedbackToStore } from '../utils/addFeedbackToStore'
   import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/feedbackMessages'
-  import { DATATYPE_RIVER, DATATYPE_STATION, RIVER_DATA, STATION_DATA } from '../constants/uiConstants'
+  import { DATATYPE_RIVER, DATATYPE_STATION } from '../constants/dataTypes'
 
   let rivers = new Map() // Rivers with coordinates
   let stations = new Map() // Stations with coordinates
@@ -35,7 +35,7 @@
   let sideBarTitle = ''
 
   // Set sidebar title based on data type
-  $: sideBarTitle = dataType === DATATYPE_RIVER ? RIVER_DATA : STATION_DATA
+  $: sideBarTitle = dataType === DATATYPE_RIVER ? 'Elvedata' : 'Stasjonsdata'
 
   // Get rivers and stations from stores
   $: rivers = $riverStore

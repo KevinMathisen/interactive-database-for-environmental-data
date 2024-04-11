@@ -15,7 +15,7 @@
   import { River } from '../../models/River.js'
   import { Station } from '../../models/Station.js'
   import { page } from '$app/stores'
-  import { DATATYPE_RIVER, DATATYPE_STATION, RIVER_DATA, STATION_DATA } from '../../constants/uiConstants'
+  import { DATATYPE_RIVER, DATATYPE_STATION } from '../../constants/dataTypes'
 
   let rivers // Rivers with coordinates
   let stations // Stations with coordinates
@@ -39,7 +39,7 @@
   let rows = [] // Rows for the table
 
   // Set data page title based on data type
-  $: riverStationPageTitle = dataType === DATATYPE_RIVER ? RIVER_DATA : STATION_DATA
+  $: riverStationPageTitle = dataType === DATATYPE_RIVER ? 'Elvedata' : 'Stasjonsdata'
 
   // Get rivers and stations from stores
   $: rivers = $riverStore

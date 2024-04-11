@@ -11,6 +11,7 @@
   import { onMount } from 'svelte'
   import UserFeedbackMessage from '$lib/UserFeedbackMessage.svelte'
   import { page } from '$app/stores'
+  import { DATATYPE_RIVER, DATATYPE_STATION } from '../../constants/dataTypes'
 
   let showSelectRiverAndStationModal = false // Show the modal to select rivers and stations
 
@@ -52,7 +53,7 @@
   }
 
   // Get selectable species
-  $: selectableSpecies = dataType === 'river' ? getSelectableSpecies(selectedRivers) : getSelectableSpecies(selectedStations)
+  $: selectableSpecies = dataType === DATATYPE_RIVER ? getSelectableSpecies(selectedRivers) : getSelectableSpecies(selectedStations)
 
   // Set the data to plot if selected rivers or stations was modified, if new data was fetched or if the data type was changed
   $: if (dataUpdated && (selectedRivers || selectedSpecies) && dataType) {
@@ -77,13 +78,13 @@
      plotData = new Map()
      dataUpdated = false
 
-     if (dataType === 'river') {
+     if (dataType === DATATYPE_RIVER) {
        // Check if all rivers have been fetched and can be plotted
        const allRiversFetched = Array.from(selectedRivers.values()).every(river => river?.stations)
 
        // If all rivers have been fetched, set the plot data to the selected rivers
        plotData = allRiversFetched ? selectedRivers : plotData
-     } else if (dataType === 'station') {
+     } else if (dataType === DATATYPE_STATION) {
        // Check if all stations have been fetched and can be plotted
        const allStationsFetched = Array.from(selectedStations.values()).every(station => station?.observations)
 
@@ -96,7 +97,7 @@
    * Get the data needed for plotting the selected rivers or stations
    */
   function fetchRiverStationData () {
-    if (dataType === 'river') {
+    if (dataType === DATATYPE_RIVER) {
       // For each selected river, get the summary data and update the selected rivers
       selectedRivers.forEach((_, id) => {
         getRiverSummary(id).then(_ => {
@@ -140,18 +141,18 @@
 
     // Get the current URL and remove any old river and station parameters
     const url = new URL(window.location.href)
-    url.searchParams.delete('rivers')
-    url.searchParams.delete('stations')
+    url.searchParams.delete(DATATYPE_RIVER)
+    url.searchParams.delete(DATATYPE_STATION)
 
     // Add the selected rivers to the URL
-    if (dataType === 'river') {
+    if (dataType === DATATYPE_RIVER) {
       selectedRivers.forEach((_, id) => {
-        url.searchParams.append('rivers', id)
+        url.searchParams.append(DATATYPE_RIVER, id)
       })
-    } else if (dataType === 'station') {
+    } else if (dataType === DATATYPE_STATION) {
       // Add the selected stations to the URL
       selectedStations.forEach((_, id) => {
-        url.searchParams.append('stations', id)
+        url.searchParams.append(DATATYPE_STATION, id)
       })
     }
 
@@ -165,21 +166,21 @@
    function getUrlParams () {
      // Get the river and station ids
      const searchParams = new URLSearchParams($page.url.search)
-     const riverIds = searchParams.getAll('rivers').map(Number)
-     const stationIds = searchParams.getAll('stations').map(Number)
+     const riverIds = searchParams.getAll(DATATYPE_RIVER).map(Number)
+     const stationIds = searchParams.getAll(DATATYPE_STATION).map(Number)
 
      const selectedRiversUrl = new Map()
      const selectedStationsUrl = new Map()
 
      // Select the rivers or stations and datatype based on the ids
      if (riverIds.length > 0) {
-       dataType = 'river'
+       dataType = DATATYPE_RIVER
        riverIds.forEach(id => {
          selectedRiversUrl.set(id, rivers.get(id))
        })
        selectedRivers = selectedRiversUrl
      } else if (stationIds.length > 0) {
-       dataType = 'station'
+       dataType = DATATYPE_STATION
        stationIds.forEach(id => {
          selectedStationsUrl.set(id, stations.get(id))
        })
