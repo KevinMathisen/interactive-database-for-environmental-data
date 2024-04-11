@@ -25,8 +25,6 @@
         : dataForHistogramAndBoxplot(type, plotData, dataType, species, interval, includeOthers, combineSpecies)
     }
 
-    $: console.log('plotData: ', plotData, ' ', type)
-    $: console.log('formatted data: ', formattedData, ' ', type)
 </script>
 
 {#if !plotData || plotData.size === 0}
