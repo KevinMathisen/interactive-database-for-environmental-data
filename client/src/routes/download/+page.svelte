@@ -23,6 +23,7 @@
   import { addFeedbackToStore } from '../../utils/addFeedbackToStore.js'
   import Button from '$lib/user-input/Button.svelte'
   import { page } from '$app/stores'
+  import { DATATYPE_RIVER, DATATYPE_STATION } from '../../constants/dataTypes'
 
   let showSelectRiverAndStationModal = false
 
@@ -30,7 +31,7 @@
   let stations = new Map() // Stations with coordinates
   let selectableSpecies = [] // All unique species
 
-  let dataType = 'river' // "river" or "station", chosen by user
+  let dataType = DATATYPE_RIVER // "river" or "station", chosen by user
   let selectedRivers = new Map() // Rivers the user has chosen
   let selectedStations = new Map() // Stations the user has chosen
 
@@ -43,7 +44,7 @@
   let customSpecies = [] // Species the user has chosen
 
   // Species the user can choose
-  $: selectableSpecies = dataType === 'river' ? getSelectableSpecies(selectedRivers) : getSelectableSpecies(selectedStations)
+  $: selectableSpecies = dataType === DATATYPE_RIVER ? getSelectableSpecies(selectedRivers) : getSelectableSpecies(selectedStations)
 
   // Species the user has choosen; either all or the custom ones
   // $: selectedSpecies = chooseAll ? selectableSpecies : customSpecies
@@ -72,7 +73,7 @@
    * Get the data needed for downloading the selected rivers or stations
    */
   function fetchRiverStationData () {
-    if (dataType === 'river') {
+    if (dataType === DATATYPE_RIVER) {
       // For each selected river, get the summary data and update the selected rivers
       selectedRivers.forEach((_, id) => {
         getRiverForDownload(id).then(_ => {
@@ -124,7 +125,7 @@
     }
 
     // Check if the user has chosen rivers but not selected any
-    if (dataType === 'river' && selectedRivers.size === 0) {
+    if (dataType === DATATYPE_RIVER && selectedRivers.size === 0) {
       addFeedbackToStore(
         FEEDBACK_TYPES.ERROR,
         FEEDBACK_CODES.NOT_FOUND,
@@ -134,7 +135,7 @@
     }
 
     // Check if the user has chosen stations but not selected any
-    if (dataType === 'station' && selectedStations.size === 0) {
+    if (dataType === DATATYPE_STATION && selectedStations.size === 0) {
       addFeedbackToStore(
         FEEDBACK_TYPES.ERROR,
         FEEDBACK_CODES.NOT_FOUND,
@@ -145,7 +146,7 @@
 
     // Create a file name and file extension
     const fileExtension = selectedFormat === 'xlsx' ? '.xlsx' : '.csv'
-    const fileName = dataType === 'river' ? 'elver' : 'stasjoner' + fileExtension
+    const fileName = dataType === DATATYPE_RIVER ? 'elver' : 'stasjoner' + fileExtension
 
     // Create a blob with the data
     const blob = selectedFormat === 'xlsx'
@@ -188,11 +189,11 @@
      url.searchParams.delete('stations')
 
      // Add the selected rivers to the URL
-     if (dataType === 'river') {
+     if (dataType === DATATYPE_RIVER) {
        selectedRivers.forEach((_, id) => {
          url.searchParams.append('rivers', id)
        })
-     } else if (dataType === 'station') {
+     } else if (dataType === DATATYPE_STATION) {
        // Add the selected stations to the URL
        selectedStations.forEach((_, id) => {
          url.searchParams.append('stations', id)
@@ -217,13 +218,13 @@
 
      // Select the rivers or stations and datatype based on the ids
      if (riverIds.length > 0) {
-       dataType = 'river'
+       dataType = DATATYPE_RIVER
        riverIds.forEach(id => {
          selectedRiversUrl.set(id, rivers.get(id))
        })
        selectedRivers = selectedRiversUrl
      } else if (stationIds.length > 0) {
-       dataType = 'station'
+       dataType = DATATYPE_STATION
        stationIds.forEach(id => {
          selectedStationsUrl.set(id, stations.get(id))
        })
@@ -256,10 +257,10 @@
   <div class="downloadMain">
 
     <!-- Input for opening selection of river or stations -->
-    <CollapsibleSection title="{dataType === 'river' ? 'Elver' : 'Stasjoner'} valgt">
-      <button on:click={handleSelectRiverStation}>Rediger {dataType === 'river' ? 'elver' : 'stasjoner'}</button>
+    <CollapsibleSection title="{dataType === DATATYPE_RIVER ? 'Elver' : 'Stasjoner'} valgt">
+      <button on:click={handleSelectRiverStation}>Rediger {dataType === DATATYPE_RIVER ? 'elver' : 'stasjoner'}</button>
       <ul>
-        {#if dataType === 'river'}
+        {#if dataType === DATATYPE_RIVER}
           <p>Elver valgt</p>
           {#each Array.from(selectedRivers.entries()) as [_, river]}
             <li>{river.name + ' ' + river.startDate}</li>
