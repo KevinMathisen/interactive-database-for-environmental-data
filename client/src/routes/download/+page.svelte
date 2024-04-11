@@ -265,19 +265,24 @@
           Rediger
           <img src="/editIcon.svg" alt="editIcon" height="30em" class="white-color">
       </Button>
-      <ul>
-        {#if dataType === DATATYPE_RIVER}
-          <p>Elver valgt</p>
-          {#each Array.from(selectedRivers.entries()) as [_, river]}
-            <li>{river.name + ' ' + river.startDate}</li>
-          {/each}
-        {:else}
-          <p>Stasjoner valgt</p>
-          {#each Array.from(selectedStations.entries()) as [_, station]}
+
+      {#if dataType === 'river' && selectedRivers.size !== 0}
+        <!-- Rivers choosen -->
+        <h4>Elver valgt</h4>
+        <ul>
+        {#each Array.from(selectedRivers.entries()) as [_, river]}
+          <li>{river.name + ' ' + river.startDate}</li>
+        {/each}
+        </ul>
+      {:else if dataType === 'station' && selectedStations.size !== 0}
+        <!-- Stations choosen -->
+        <p>Stasjoner valgt</p>
+        <ul>
+        {#each Array.from(selectedStations.entries()) as [_, station]}
           <li>{station.name + ' ' + station.date}</li>
         {/each}
-        {/if}
-      </ul>
+        </ul>
+      {/if}
     </CollapsibleSection>
 
     <!-- Input for choosing species -->
@@ -334,6 +339,10 @@
   /* Transformes the icon color to white */
   .white-color{
     filter: invert(100%);
+  }
+
+  h4 {
+    margin-bottom: 0;
   }
 
   @media screen and (max-width: 900px) {
