@@ -18,6 +18,8 @@
   import { DATATYPE_RIVER, DATATYPE_STATION } from '../../constants/dataTypes'
   import { goto } from '$app/navigation'
 
+  let urlParamsLoaded = false // Whether URL parameters have been loaded
+
   let rivers // Rivers with coordinates
   let stations // Stations with coordinates
   let selectableSpecies // All unique species
@@ -66,7 +68,7 @@
   $: ({ headers, rows } = createHeaderAndData(dataType, filteredBySearchRivers, filteredBySearchStations))
 
   // Update URL to reflect selected river or station
-  $: if (selectedRiver || selectedStation) {
+  $: if ((selectedRiver || selectedStation) && urlParamsLoaded) {
     updateUrl(selectedRiver, selectedStation)
   }
 
@@ -205,6 +207,8 @@
     } else if (stationId) {
       selectStation(stationId)
     }
+
+    urlParamsLoaded = true // Set that URL parameters have been loaded
   }
 </script>
 

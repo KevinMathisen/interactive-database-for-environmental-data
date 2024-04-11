@@ -26,6 +26,8 @@
   import { DATATYPE_RIVER, DATATYPE_STATION } from '../../constants/dataTypes'
   import { goto } from '$app/navigation'
 
+  let urlParamsLoaded = false // Whether URL parameters have been loaded
+
   let showSelectRiverAndStationModal = false
 
   let rivers = new Map() // Rivers with coordinates
@@ -66,7 +68,7 @@
   $: stations = $stationStore
 
   // Update URL to reflect selected rivers or stations
-  $: if (dataType && (selectedRivers || selectedStations)) {
+  $: if (dataType && (selectedRivers || selectedStations) && urlParamsLoaded) {
     updateUrl(selectedRivers, selectedStations)
   }
 
@@ -231,6 +233,8 @@
        })
        selectedStations = selectedStationsUrl
      }
+
+     urlParamsLoaded = true // Set that URL parameters have been loaded
    }
 </script>
 

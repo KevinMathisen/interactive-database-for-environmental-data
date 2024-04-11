@@ -23,6 +23,7 @@
   let selectableSpecies // All unique species in rivers or stations choosen
 
   let dataUpdated = false // Whether data has been fetched
+  let urlParamsLoaded = false // Whether URL parameters have been loaded
 
   let dataType // 'river' or 'station', chosen by user
   let selectedSpecies // Species user wants to look at
@@ -67,7 +68,7 @@
   }
 
   // Update URL to reflect selected rivers or stations
-  $: if (dataType && (selectedRivers || selectedStations)) {
+  $: if (dataType && (selectedRivers || selectedStations) && urlParamsLoaded) {
     updateUrl(selectedRivers, selectedStations)
   }
 
@@ -166,28 +167,30 @@
    * Gets the rivers or stations based on the URL parameters
    */
    function getUrlParams () {
-     // Get the river and station ids
-     const searchParams = new URLSearchParams($page.url.search)
-     const riverIds = searchParams.getAll(DATATYPE_RIVER).map(Number)
-     const stationIds = searchParams.getAll(DATATYPE_STATION).map(Number)
+    // Get the river and station ids
+    const searchParams = new URLSearchParams($page.url.search)
+    const riverIds = searchParams.getAll(DATATYPE_RIVER).map(Number)
+    const stationIds = searchParams.getAll(DATATYPE_STATION).map(Number)
 
-     const selectedRiversUrl = new Map()
-     const selectedStationsUrl = new Map()
+    const selectedRiversUrl = new Map()
+    const selectedStationsUrl = new Map()
 
-     // Select the rivers or stations and datatype based on the ids
-     if (riverIds.length > 0) {
-       dataType = DATATYPE_RIVER
-       riverIds.forEach(id => {
-         selectedRiversUrl.set(id, rivers.get(id))
-       })
-       selectedRivers = selectedRiversUrl
-     } else if (stationIds.length > 0) {
-       dataType = DATATYPE_STATION
-       stationIds.forEach(id => {
-         selectedStationsUrl.set(id, stations.get(id))
-       })
-       selectedStations = selectedStationsUrl
-     }
+    // Select the rivers or stations and datatype based on the ids
+    if (riverIds.length > 0) {
+      dataType = DATATYPE_RIVER
+      riverIds.forEach(id => {
+        selectedRiversUrl.set(id, rivers.get(id))
+      })
+      selectedRivers = selectedRiversUrl
+    } else if (stationIds.length > 0) {
+      dataType = DATATYPE_STATION
+      stationIds.forEach(id => {
+        selectedStationsUrl.set(id, stations.get(id))
+      })
+      selectedStations = selectedStationsUrl
+    }
+
+    urlParamsLoaded = true // Set that URL parameters have been loaded
    }
 
 </script>
