@@ -185,18 +185,18 @@
 
      // Get the current URL and remove any old river and station parameters
      const url = new URL(window.location.href)
-     url.searchParams.delete('rivers')
-     url.searchParams.delete('stations')
+     url.searchParams.delete(DATATYPE_RIVER)
+     url.searchParams.delete(DATATYPE_STATION)
 
      // Add the selected rivers to the URL
      if (dataType === DATATYPE_RIVER) {
        selectedRivers.forEach((_, id) => {
-         url.searchParams.append('rivers', id)
+         url.searchParams.append(DATATYPE_RIVER, id)
        })
      } else if (dataType === DATATYPE_STATION) {
        // Add the selected stations to the URL
        selectedStations.forEach((_, id) => {
-         url.searchParams.append('stations', id)
+         url.searchParams.append(DATATYPE_STATION, id)
        })
      }
 
@@ -210,8 +210,8 @@
    function getUrlParams () {
      // Get the river and station ids
      const searchParams = new URLSearchParams($page.url.search)
-     const riverIds = searchParams.getAll('rivers').map(Number)
-     const stationIds = searchParams.getAll('stations').map(Number)
+     const riverIds = searchParams.getAll(DATATYPE_RIVER).map(Number)
+     const stationIds = searchParams.getAll(DATATYPE_STATION).map(Number)
 
      const selectedRiversUrl = new Map()
      const selectedStationsUrl = new Map()
@@ -266,7 +266,7 @@
           <img src="/editIcon.svg" alt="editIcon" height="30em" class="white-color">
       </Button>
 
-      {#if dataType === 'river' && selectedRivers.size !== 0}
+      {#if dataType === DATATYPE_RIVER && selectedRivers.size !== 0}
         <!-- Rivers choosen -->
         <h4>Elver valgt</h4>
         <ul>
@@ -274,7 +274,7 @@
           <li>{river.name + ' ' + river.startDate}</li>
         {/each}
         </ul>
-      {:else if dataType === 'station' && selectedStations.size !== 0}
+      {:else if dataType === DATATYPE_STATION && selectedStations.size !== 0}
         <!-- Stations choosen -->
         <p>Stasjoner valgt</p>
         <ul>
