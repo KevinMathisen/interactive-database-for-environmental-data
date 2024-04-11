@@ -60,6 +60,7 @@
     updatePlotData()
   }
 
+  // Trigger update of plot data when data type is changed
   $: if (dataType) {
     dataUpdated = true
   }
@@ -194,6 +195,7 @@
 <UserFeedbackMessage />
 
 {#if showSelectRiverAndStationModal}
+  <!-- Modal to select river and stations -->
   <Modal on:close={handleClose} large={true}>
       <SelectRiverAndStation on:close={handleClose}
         {rivers}
@@ -206,6 +208,7 @@
 {/if}
 
 <div class="graphPage">
+  <!-- Filter sidebar -->
   <div class="filterContainer">
     <Sidebar title="Filter for Grafer" typeClose="sideButton" side='left'>
       <GraphFilter
@@ -230,6 +233,7 @@
   <div class="graphMain">
 
     {#if showPlotA}
+      <!-- Graph for distribution of species -->
       <div class="graphBox">
         <h3>FORDELING AV ARTER</h3>
         <PlotlyComponent
@@ -244,6 +248,7 @@
     {/if}
 
     {#if showPlotB}
+      <!-- Graph for distribution of length -->
       <div class="graphBox">
         <h3>FORDELING AV LENGDE</h3>
         <PlotlyComponent
