@@ -15,10 +15,10 @@ import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/
  * @returns {Map<string, Map<string, number>>} - Map of rivers or stations with count of each species
  */
 export function dataForBarAndPieChart (
-  observationPoints, 
-  dataType, 
-  species, 
-  includeOthers, 
+  observationPoints,
+  dataType,
+  species,
+  includeOthers,
   absoluteValues = true,
   aggregateData = false
 ) {
@@ -67,17 +67,17 @@ export function dataForBarAndPieChart (
  * @returns {Map<string, Map<string, number>>} - Map of observationPoints with count of each species
  */
 function createDataForBarAndPieChart (
-  observationPoints, 
-  allSpecies, 
-  includeOthers, 
+  observationPoints,
+  allSpecies,
+  includeOthers,
   absoluteValues,
-  aggregateData, 
-  getObservations, 
-  getDisplayName, 
+  aggregateData,
+  getObservations,
+  getDisplayName,
   getTimespentFishing
 ) {
   const speciesCountForPoints = new Map()
-  
+
   // If the data should be aggregated, combine the data for all observationPoints
   if (aggregateData) {
     const allObservations = Array.from(observationPoints.values()).flatMap(getObservations)
@@ -180,12 +180,12 @@ function getObservationSpeciesCount (observations, allSpecies, includeOthers) {
  * @returns {Map<string, Map<string, number>>} - Map of rivers or stations with count of each species
  */
 export function dataForHistogramAndBoxplot (
-  plotType, 
-  observationPoints, 
-  dataType, 
-  species, 
-  interval = 1, 
-  includeOthers = false, 
+  plotType,
+  observationPoints,
+  dataType,
+  species,
+  interval = 1,
+  includeOthers = false,
   combineSpecies = false,
   aggregateData = false
 ) {
@@ -237,14 +237,14 @@ export function dataForHistogramAndBoxplot (
  * } - Map of observationPoints with count of each species in intervals
  */
 function createDataForHistogramAndBoxplot (
-  plotType, 
-  observationPoints, 
-  allSpecies, 
-  interval, 
-  includeOthers, 
-  combineSpecies, 
+  plotType,
+  observationPoints,
+  allSpecies,
+  interval,
+  includeOthers,
+  combineSpecies,
   aggregateData,
-  getObservations, 
+  getObservations,
   getDisplayName
 ) {
   const allSpeciesIntervals = new Map()
