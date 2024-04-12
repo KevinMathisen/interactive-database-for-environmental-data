@@ -1,5 +1,4 @@
 <script>
-  import Papa from 'papaparse'
   import ExcelJS from 'exceljs'
   import {
     FEEDBACK_TYPES,
@@ -9,35 +8,30 @@
   import { addFeedbackToStore } from '../../utils/addFeedbackToStore.js'
   import UserFeedbackMessage from '$lib/UserFeedbackMessage.svelte'
   import Button from '$lib/user-input/Button.svelte'
-  import { validateFile, fileExistsInArray } from '../../utils/fileHandler.js'
+  import { validateFile } from '../../utils/fileHandler.js'
+  import { uploadFileToServer } from '../../api/upload.js'
 
-  const filesArray = []
-  // let isUploading = false;
+  let uploadedFile = null
+  let hover = false
 
   /**
-   * Selects files from the user's computer
+   * Selects file from the user's computer
    */
   function selectFile () {
     const fileInput = document.createElement('input')
     fileInput.type = 'file'
-    fileInput.multiple = true
-    fileInput.accept = '.csv, .xlsx'
+    fileInput.multiple = false
+    fileInput.accept = '.xlsx'
     fileInput.click()
     fileInput.addEventListener('change', (e) => {
-      const files = e.target.files
-      const uploadFilesUploaded = document.querySelector('#filesChosen')
-      for (let i = 0; i < files.length; i++) {
-        const file = files[i]
-        if (!validateFile(file) || fileExistsInArray(file, filesArray)) {
-          continue
-        }
-        const fileDiv = document.createElement('div')
-        fileDiv.innerHTML = file.name
-        uploadFilesUploaded.appendChild(fileDiv)
+      const file = e.target.files[0]
 
-        // Add file to array
-        filesArray.push(file)
+      if (!validateFile(file)) {
+        return
       }
+
+      // Select the file
+      uploadedFile = file
     })
   }
 
@@ -45,8 +39,7 @@
    *
    */
   function uploadFile () {
-    // isUploading = true;
-    if (filesArray.length === 0) {
+    if (!uploadedFile) {
       addFeedbackToStore(
         FEEDBACK_TYPES.ERROR,
         FEEDBACK_CODES.NOT_FOUND,
@@ -54,58 +47,77 @@
       )
       return
     }
-    // need to validate that the files are actually csv or xls files. Do this by converting to json
-    // and checking if the json data follows the format we have specified
-    let allFilesValid = true
-    for (const file of filesArray) {
-      // Parse CSV file
-      if (file.name.endsWith('.csv')) {
-        Papa.parse(file, {
-          header: true,
-          complete: function (results) {
-            console.log(results.data)
-          }
-        })
-      } else if (file.name.endsWith('.xlsx')) { // Parse XLSX file
-        const reader = new FileReader()
-        reader.onload = async function (e) {
-          const buffer = new Uint8Array(e.target.result)
-          const workbook = new ExcelJS.Workbook()
-          await workbook.xlsx.load(buffer)
-          const worksheet = workbook.worksheets[0]
-          const jsonData = worksheet.getRows(1, worksheet.rowCount).map((row) => row.values)
-          console.log(jsonData)
-        }
-        reader.readAsArrayBuffer(file)
-      } else {
-        allFilesValid = false
-        break
-      }
+    // Parse and validate XLSX file
+    const reader = new FileReader()
+    reader.onload = async function (e) {
+      const buffer = new Uint8Array(e.target.result)
+      const workbook = new ExcelJS.Workbook()
+      await workbook.xlsx.load(buffer)
+      const worksheet = workbook.worksheets[0]
+      const jsonData = worksheet.getRows(1, worksheet.rowCount).map((row) => row.values)
+      console.log(jsonData) // Should reject if not valid
     }
+    reader.readAsArrayBuffer(uploadedFile)
 
-    if (allFilesValid) {
-      addFeedbackToStore(
-        FEEDBACK_TYPES.SUCCESS,
-        FEEDBACK_CODES.CREATED,
-        FEEDBACK_MESSAGES.UPLOAD_SUCCESS
-      )
-    } else {
+    // Upload file to server
+    uploadFileToServer(uploadedFile).then((success) => {
+      // Reset the uploaded file if the upload was successful
+      if (success) {
+        uploadedFile = null
+      }
+    })
+  }
+
+  /**
+   * Handles the drop event when a file is dropped in the upload box
+   * @param {Event} e - The event object
+   */
+  function handleDrop (e) {
+    console.log('Dropped')
+    // Get the files and check if there is more than one file
+    const files = e.dataTransfer.files
+    if (files.length > 1) {
       addFeedbackToStore(
         FEEDBACK_TYPES.ERROR,
-        FEEDBACK_CODES.NOT_FOUND,
-        FEEDBACK_MESSAGES.NOT_FOUND
+        FEEDBACK_CODES.FORBIDDEN,
+        FEEDBACK_MESSAGES.MULTIPLE_FILES
       )
+      return
     }
+
+    // Check if the file is valid
+    const file = files[0]
+    if (!validateFile(file)) {
+      return
+    }
+
+    // Select the file
+    uploadedFile = file
+    hover = false
   }
 </script>
 
 <UserFeedbackMessage />
 
 <div class='uploadPage'>
-  <!--Defines the box where you click to choose files -->
-  <div class='uploadFilesBox'>
+  <!--Defines the box where you can drag and drop or choose files -->
+  <div
+    class='uploadFilesBox'
+    class:hover={hover}
+    on:dragover|preventDefault
+    on:dragenter|preventDefault={() => { hover = true }}
+    on:dragleave|preventDefault={(e) => {
+      if (!e.currentTarget.contains(e.relatedTarget)) {
+        hover = false
+      }
+    }}
+    on:drop|preventDefault={handleDrop}
+    role='button'
+    label='Drop files here to load'
+    tabindex='0'
+  >
     <img src='/uploadCloudIcon.svg' alt='listIcon' height='60px' id='uploadCloudIcon' />
-    <p>Dra og slipp filer eller</p>
+    <p>Dra og slipp fil eller</p>
     <br>
     <Button type='blue' size='large' on:buttonClick={selectFile}>Bla gjennom Filer <img src='/fileSearchIcon.svg' alt='listIcon' height='40px' class='white-color'></Button>
   </div>
@@ -113,13 +125,20 @@
   <!-- Defines the text under the upload files box -->
   <div class='uploadFilesBoxText'>
     <p>Maksimal fil størrelse: 10 MB</p>
-    <p>Kun tillatt å laste opp filer av typen: .csv and .xlsx</p>
+    <p>Kun tillatt å laste opp filer av typen: .xlsx</p>
   </div>
 
   <!-- Defines the overview over files selected -->
-  <div class='uploadFilesUploaded'>
-    <p id='filesChosenText'>Filer som er valgt:</p>
-    <div id='filesChosen'></div>
+  <div class='uploadFileUploaded'>
+    <p id='fileChosenText'>Valgt fil:</p>
+    {#if uploadedFile}
+      <p>{uploadedFile.name}
+        <button on:click={() => { uploadedFile = null }} class='smallButton'>x</button>
+      </p>
+
+    {:else}
+      <p>Ingen fil valgt</p>
+    {/if}
   </div>
 
   <!-- The upload files button -->
@@ -151,6 +170,10 @@
     font-size: 1.5rem;
   }
 
+  .hover {
+    background: lightblue;
+  }
+
   #uploadCloudIcon {
     height: 100px;
   }
@@ -162,20 +185,28 @@
     text-align: left;
   }
 
-  .uploadFilesUploaded {
+  .uploadFileUploaded {
     width: 80%;
     max-width: 900px;
     padding: 1rem;
     text-align: left;
   }
 
-  #filesChosenText {
+  #fileChosenText {
     font-size: 2rem;
     margin: 0;
   }
 
-  #filesChosen {
-    padding: 1rem;
+  .smallButton {
+    padding: 0.5em;
+    margin: 0.5em 0;
+    border-radius: 0.5em;
+    cursor: pointer;
+  }
+
+  .smallButton:hover {
+    background-color: #435768;
+    color: white;
   }
 
   .uploadButtonPlacement {
@@ -189,17 +220,4 @@
   .white-color{
     filter: invert(100%);
   }
-
-  /* @media screen and (max-width: 1000px) {
-    .uploadFilesBox {
-      width: 500px;
-    }
-    .uploadFilesBoxText {
-      margin-right: 10rem;
-    }
-    .uploadFilesUploaded {
-      width: 500px;
-    }
-
-  } */
 </style>
