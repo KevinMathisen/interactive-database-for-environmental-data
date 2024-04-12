@@ -84,6 +84,7 @@
    * @param {Event} e - The event object
    */
   function handleDrop (e) {    
+    console.log('Dropped')
     // Get the files and check if there is more than one file
     const files = e.dataTransfer.files
     if (files.length > 1) {
@@ -103,6 +104,7 @@
 
     // Select the file
     uploadedFile = file
+    hover = false
   }
 </script>
 
@@ -113,6 +115,7 @@
   <div 
     class='uploadFilesBox'
     class:hover={hover}
+    on:dragover|preventDefault
     on:dragenter|preventDefault={() =>{hover = true}}
     on:dragleave|preventDefault={(e) => {
       if (!e.currentTarget.contains(e.relatedTarget)) {
