@@ -1,7 +1,3 @@
-// TODO: Should add error handling for when the object is empty
-
-// import { addFeedbackToStore } from './addFeedbackToStore.js';
-// import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/feedbackMessages';
 import headersConstants from '../constants/headers.js'
 import { riverStore } from '../stores/riverStore.js'
 import { stationStore } from '../stores/stationStore.js'
@@ -158,8 +154,6 @@ export function formatStationObservationsForTable (station) {
  */
 export function formatRiverObservationsForTable (stations) {
   const headers = headersConstants.STATION_OBSERVATIONS_HEADERS_TABLE
-
-  console.log('stations:', stations)
 
   // If no stations is given, return an empty table
   if (!stations || stations.size === 0) {
