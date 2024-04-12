@@ -38,8 +38,7 @@
   let selectedRivers = new Map() // Rivers the user has chosen
   let selectedStations = new Map() // Stations the user has chosen
 
-  // TODO: use selectedSpecies to filter download data
-  // let selectedSpecies = []
+  let selectedSpecies = [] // Species to inlude in the download
 
   let selectedFormat = '' // Either 'xlsx' or 'csv'
 
@@ -50,7 +49,7 @@
   $: selectableSpecies = dataType === DATATYPE_RIVER ? getSelectableSpecies(selectedRivers) : getSelectableSpecies(selectedStations)
 
   // Species the user has choosen; either all or the custom ones
-  // $: selectedSpecies = chooseAll ? selectableSpecies : customSpecies
+  $: selectedSpecies = chooseAll ? selectableSpecies : customSpecies
 
   const formatOptions = [
     { value: 'xlsx', label: 'xlsx' },
@@ -102,6 +101,9 @@
     showSelectRiverAndStationModal = false
     // Retrieve the data needed for the rivers/stations choosen
     fetchRiverStationData()
+
+    // Reset the species selected
+    customSpecies = []
   }
 
   /**
