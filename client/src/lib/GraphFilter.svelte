@@ -12,6 +12,7 @@
   export let selectedStations // Stations user has chosen to plot
   export let selectableSpecies = [] // Species user can choose
   export let dataType = DATATYPE_RIVER // DATATYPE_RIVER or DATATYPE_STATION
+  export let aggregateData = false // If to aggregate data for rivers/stations
 
   export let selectedSpecies = [] // Species user has chosen
   export let includeOthers = false // If to include 'others' category in graphs
@@ -69,6 +70,15 @@
         {/each}
         </ul>
       {/if}
+
+      {#if selectedRivers.size !== 0 || selectedStations.size !== 0 }
+        <!-- Input for aggregating choosen rivers/stations -->
+        <label for='aggregateData'>
+          Aggreger data
+          <input type='checkbox' id='aggregateData' name='aggregateData' bind:checked={aggregateData}>
+        </label>
+      {/if}
+
   </CollapsibleSection>
 
   <!-- Input for choosing species -->
@@ -112,6 +122,24 @@
 
   h4 {
     margin-bottom: 0;
+  }
+
+  label {
+    display: block;
+    padding: 0.5em;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 0.5em;
+  }
+
+  label:hover {
+    background-color: #435768;
+    color: white;
+  }
+
+  input[type='checkbox'] {
+    /* Make the input radio button larger */
+    transform: scale(1.25);
   }
 
 </style>

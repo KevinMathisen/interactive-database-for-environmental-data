@@ -17,7 +17,7 @@ const STATION_HEADERS_EXCEL = [
   'Lat stopp', 'Long stopp', 'Dominerende elvtype', 'Vær',
   'Vanntemperatur (Celsius)', 'Lufttemperatur (Celsius)',
   'Ledningsevne (µs/cm)', 'Transektlengde (m)', 'Sekunder fisket (s)', 'Volt',
-  'Puls (DC)', 'Oservasjoner', 'Display', 'Gpx File', 'Stasjonsbeskrivelse',
+  'Puls (DC)', 'Display', 'Gpx File', 'Stasjonsbeskrivelse',
   'Kommentar til fiske (observasjoner osv)'
 ]
 const OBSERVATION_HEADERS_EXCEL = [

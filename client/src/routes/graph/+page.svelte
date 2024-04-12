@@ -28,6 +28,7 @@
   let dataType // 'river' or 'station', chosen by user
   let selectedSpecies // Species user wants to look at
   let includeOthers // Whether to include 'others' category in the graph
+  let aggregateData // If to aggregate data for rivers/stations
   let plotData = new Map() // Data to plot
 
   let showPlotA // Show the first plot
@@ -220,6 +221,7 @@
         {selectedStations}
         {selectableSpecies}
         bind:dataType
+        bind:aggregateData
         bind:selectedSpecies
         bind:includeOthers
         bind:showPlotA
@@ -244,6 +246,7 @@
           type={plotTypeA}
           {plotData}
           {dataType}
+          {aggregateData}
           species={selectedSpecies}
           absoluteValues={showValueA}
           {includeOthers}
@@ -259,6 +262,7 @@
           type={plotTypeB}
           {plotData}
           {dataType}
+          {aggregateData}
           species={selectedSpecies}
           interval={intervallPlotB}
           {includeOthers}

@@ -38,8 +38,7 @@
   let selectedRivers = new Map() // Rivers the user has chosen
   let selectedStations = new Map() // Stations the user has chosen
 
-  // TODO: use selectedSpecies to filter download data
-  // let selectedSpecies = []
+  let selectedSpecies = [] // Species to inlude in the download
 
   let selectedFormat = '' // Either 'xlsx' or 'csv'
 
@@ -50,7 +49,7 @@
   $: selectableSpecies = dataType === DATATYPE_RIVER ? getSelectableSpecies(selectedRivers) : getSelectableSpecies(selectedStations)
 
   // Species the user has choosen; either all or the custom ones
-  // $: selectedSpecies = chooseAll ? selectableSpecies : customSpecies
+  $: selectedSpecies = chooseAll ? selectableSpecies : customSpecies
 
   const formatOptions = [
     { value: 'xlsx', label: 'xlsx' },
@@ -102,6 +101,9 @@
     showSelectRiverAndStationModal = false
     // Retrieve the data needed for the rivers/stations choosen
     fetchRiverStationData()
+
+    // Reset the species selected
+    customSpecies = []
   }
 
   /**
@@ -153,8 +155,8 @@
 
     // Create a blob with the data
     const blob = selectedFormat === 'xlsx'
-      ? await generateExcelFile(selectedRivers, selectedStations, dataType)
-      : generateCSVFile(selectedRivers, selectedStations, dataType)
+      ? await generateExcelFile(selectedRivers, selectedStations, dataType, selectedSpecies)
+      : await generateCSVFile(selectedRivers, selectedStations, dataType, selectedSpecies)
 
     // If no file was created, return
     if (blob.size === 0) {
@@ -234,6 +236,9 @@
        selectedStations = selectedStationsUrl
      }
 
+     // Fetch the data needed for the rivers/stations choosen
+     fetchRiverStationData()
+
      urlParamsLoaded = true // Set that URL parameters have been loaded
    }
 </script>
@@ -263,44 +268,52 @@
   <!-- Defines the area containing the options for dowloading -->
   <div class='downloadMain'>
 
-    <!-- Input for opening selection of river or stations -->
-    <CollapsibleSection title='Velg elver/stasjoner'>
-      <Button
-        on:buttonClick={handleSelectRiverStation}
-        type='blue'
-        size='small'>
-          Rediger
-          <img src='/editIcon.svg' alt='editIcon' height='30em' class='white-color'>
-      </Button>
+    <div class='downloadRow'>
+      <div class='rowItem'>
+        <!-- Input for opening selection of river or stations -->
+        <CollapsibleSection title='Velg elver/stasjoner'>
+          <Button
+            on:buttonClick={handleSelectRiverStation}
+            type='blue'
+            size='small'>
+              Rediger
+              <img src='/editIcon.svg' alt='editIcon' height='30em' class='white-color'>
+          </Button>
 
-      {#if dataType === DATATYPE_RIVER && selectedRivers.size !== 0}
-        <!-- Rivers choosen -->
-        <h4>Elver valgt</h4>
-        <ul>
-        {#each Array.from(selectedRivers.entries()) as [_, river]}
-          <li>{river.name + ' ' + river.startDate}</li>
-        {/each}
-        </ul>
-      {:else if dataType === DATATYPE_STATION && selectedStations.size !== 0}
-        <!-- Stations choosen -->
-        <p>Stasjoner valgt</p>
-        <ul>
-        {#each Array.from(selectedStations.entries()) as [_, station]}
-          <li>{station.name + ' ' + station.date}</li>
-        {/each}
-        </ul>
-      {/if}
-    </CollapsibleSection>
+          {#if dataType === DATATYPE_RIVER && selectedRivers.size !== 0}
+            <!-- Rivers choosen -->
+            <h4>Elver valgt</h4>
+            <ul>
+            {#each Array.from(selectedRivers.entries()) as [_, river]}
+              <li>{river.name + ' ' + river.startDate}</li>
+            {/each}
+            </ul>
+          {:else if dataType === DATATYPE_STATION && selectedStations.size !== 0}
+            <!-- Stations choosen -->
+            <p>Stasjoner valgt</p>
+            <ul>
+            {#each Array.from(selectedStations.entries()) as [_, station]}
+              <li>{station.name + ' ' + station.date}</li>
+            {/each}
+            </ul>
+          {/if}
+        </CollapsibleSection>
+      </div>
 
-    <!-- Input for choosing species -->
-    <CollapsibleSection title='Art'>
-      <SpeciesInput {selectableSpecies} bind:chooseAll bind:customSpecies />
-    </CollapsibleSection>
+      <div class='rowItem'>
+        <!-- Input for choosing species -->
+        <CollapsibleSection title='Art'>
+          <SpeciesInput {selectableSpecies} bind:chooseAll bind:customSpecies />
+        </CollapsibleSection>
+      </div>
+    </div>
 
-          <!-- Input for choosing file format -->
-    <CollapsibleSection title='Format'>
-      <RadioInput name='format' options={formatOptions} bind:selected={selectedFormat} />
-    </CollapsibleSection>
+    <div class='rowItem2'>
+      <!-- Input for choosing file format -->
+      <CollapsibleSection title='Format'>
+        <RadioInput name='format' options={formatOptions} bind:selected={selectedFormat} />
+      </CollapsibleSection>
+    </div>
 
   </div>
 
@@ -333,7 +346,26 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
-    padding: 2rem 15rem 0 15rem;
+    padding: 2rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    max-width: 1000px;
+    align-items: center;
+  }
+
+  .downloadRow {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .rowItem {
+    width: 50%;
+  }
+
+  .rowItem2 {
+    width: 100%;
   }
 
   .downloadButton {
@@ -354,8 +386,11 @@
   }
 
   @media screen and (max-width: 900px) {
-    .downloadMain{
-      padding: 2rem 5rem 0 5rem;
+    .downloadRow{
+      flex-direction: column;
+    }
+    .rowItem {
+      width: 100%;
     }
   }
 </style>
