@@ -5,12 +5,13 @@
   import PlotLengthOptions from './user-input/PlotLengthOptions.svelte'
   import Button from './user-input/Button.svelte'
   import { createEventDispatcher } from 'svelte'
+  import { DATATYPE_RIVER, DATATYPE_STATION } from '../constants/dataTypes'
   const dispatch = createEventDispatcher()
 
   export let selectedRivers // Rivers user has chosen to plot
   export let selectedStations // Stations user has chosen to plot
   export let selectableSpecies = [] // Species user can choose
-  export let dataType = 'river' // 'river' or 'station'
+  export let dataType = DATATYPE_RIVER // DATATYPE_RIVER or DATATYPE_STATION
 
   export let selectedSpecies = [] // Species user has chosen
   export let includeOthers = false // If to include 'others' category in graphs
@@ -39,19 +40,19 @@
 
 </script>
 
-<div class="main">
+<div class='main'>
   <!-- Input for opening selection of river or stations -->
-  <CollapsibleSection title="Velg elver/stasjoner">
+  <CollapsibleSection title='Velg elver/stasjoner'>
     <Button
       on:buttonClick={handleSelectRiverStation}
-      type="blue"
-      size="small"
+      type='blue'
+      size='small'
       >
       Rediger
-      <img src="/editIcon.svg" alt="editIcon" height="30em" class="white-color">
+      <img src='/editIcon.svg' alt='editIcon' height='30em' class='white-color'>
     </Button>
 
-      {#if dataType === 'river' && selectedRivers.size !== 0}
+      {#if dataType === DATATYPE_RIVER && selectedRivers.size !== 0}
         <!-- Rivers choosen -->
         <h4>Elver valgt</h4>
         <ul>
@@ -59,7 +60,7 @@
           <li>{river.name + ' ' + river.startDate}</li>
         {/each}
         </ul>
-      {:else if dataType === 'station' && selectedStations.size !== 0}
+      {:else if dataType === DATATYPE_STATION && selectedStations.size !== 0}
         <!-- Stations choosen -->
         <p>Stasjoner valgt</p>
         <ul>
@@ -71,12 +72,12 @@
   </CollapsibleSection>
 
   <!-- Input for choosing species -->
-  <CollapsibleSection title="Art">
+  <CollapsibleSection title='Art'>
     <SpeciesInput {selectableSpecies} bind:chooseAll bind:customSpecies bind:includeOthers showIncludeOthers={true}/>
   </CollapsibleSection>
 
   <!-- Input for choosing how plot A is displayed -->
-  <CollapsibleSection title="Fordeling av arter">
+  <CollapsibleSection title='Fordeling av arter'>
     <PlotSpeciesOptions
       bind:showPlotA
       bind:showValueA
@@ -84,7 +85,7 @@
   </CollapsibleSection>
 
   <!-- Input for choosing how plot B is displayed -->
-  <CollapsibleSection title="Fordeling av lengde">
+  <CollapsibleSection title='Fordeling av lengde'>
     <PlotLengthOptions
       bind:showPlotB
       bind:intervallPlotB

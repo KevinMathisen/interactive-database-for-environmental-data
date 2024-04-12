@@ -15,12 +15,16 @@
   import { page } from '$app/stores'
   import { addFeedbackToStore } from '../utils/addFeedbackToStore'
   import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/feedbackMessages'
+  import { DATATYPE_RIVER, DATATYPE_STATION } from '../constants/dataTypes'
+  import { goto } from '$app/navigation'
+
+  let urlParamsLoaded = false // Whether URL parameters have been loaded
 
   let rivers = new Map() // Rivers with coordinates
   let stations = new Map() // Stations with coordinates
   let selectableSpecies // All unique species
 
-  let dataType = 'river' // "river" or "station", chosen by user
+  let dataType = DATATYPE_RIVER // 'river' or 'station', chosen by user
   let selectedSpecies // Species user wants to look at
   let selectedStartDate // Start date for the time user wants to look at
   let selectedEndDate // End date for the time user wants to look at
@@ -34,7 +38,7 @@
   let sideBarTitle = ''
 
   // Set sidebar title based on data type
-  $: sideBarTitle = dataType === 'river' ? 'Elvedata' : 'Stasjonsdata'
+  $: sideBarTitle = dataType === DATATYPE_RIVER ? 'Elvedata' : 'Stasjonsdata'
 
   // Get rivers and stations from stores
   $: rivers = $riverStore
@@ -46,14 +50,14 @@
   $: filteredStations = filterStationsByDateAndSpecies(stations, selectedSpecies, selectedStartDate, selectedEndDate)
 
   // Remove selected river or station when the user switches between data types
-  $: if (dataType === 'station') {
+  $: if (dataType === DATATYPE_STATION) {
     selectedRiver = new River()
-  } else if (dataType === 'river') {
+  } else if (dataType === DATATYPE_RIVER) {
     selectedStation = new Station()
   }
 
   // Update URL to reflect selected river or station
-  $: if (selectedRiver || selectedStation) {
+  $: if ((selectedRiver || selectedStation) && urlParamsLoaded) {
     updateUrl(selectedRiver, selectedStation)
   }
 
@@ -84,7 +88,7 @@
     }
 
     // Set the data type to station and get the station summary
-    dataType = 'station'
+    dataType = DATATYPE_STATION
     getStationSummary(stationId)
       .then(_ => {
         selectedRiver = new River()
@@ -112,7 +116,7 @@
     }
 
     // Set the data type to river and get the river summary
-    dataType = 'river'
+    dataType = DATATYPE_RIVER
     getRiverSummary(riverId)
       .then(_ => {
         selectedStation = new Station()
@@ -138,18 +142,19 @@
 
     const url = new URL(window.location.href)
     if (selectedRiver.id) {
-      url.searchParams.set('river', selectedRiver.id)
+      url.searchParams.set(DATATYPE_RIVER, selectedRiver.id)
     } else {
-      url.searchParams.delete('river')
+      url.searchParams.delete(DATATYPE_RIVER)
     }
 
     if (selectedStation.id) {
-      url.searchParams.set('station', selectedStation.id)
+      url.searchParams.set(DATATYPE_STATION, selectedStation.id)
     } else {
-      url.searchParams.delete('station')
+      url.searchParams.delete(DATATYPE_STATION)
     }
 
-    history.pushState({}, '', url)
+    // Update the URL
+    goto(url.toString(), { replaceState: true })
   }
 
   /**
@@ -157,14 +162,16 @@
    */
   function getUrlParams () {
     const searchParams = new URLSearchParams($page.url.search)
-    const riverId = Number(searchParams.get('river'))
-    const stationId = Number(searchParams.get('station'))
+    const riverId = Number(searchParams.get(DATATYPE_RIVER))
+    const stationId = Number(searchParams.get(DATATYPE_STATION))
 
     if (riverId) {
       selectRiver(riverId)
     } else if (stationId) {
       selectStation(stationId)
     }
+
+    urlParamsLoaded = true // Set that URL parameters have been loaded
   }
 
 </script>
@@ -172,6 +179,7 @@
 <!-- User feedback modal, invisible unless there is feedback to show to user -->
 <UserFeedbackMessage />
 
+<!-- Map with rivers and stations -->
 <LeafletMap
   {dataType}
   rivers={filteredRivers}
@@ -181,8 +189,9 @@
   on:stationClicked={stationClicked}
   on:riverClicked={riverClicked}/>
 
-<div class="leftSidebar">
-  <Sidebar title="Filter" typeClose="sideButton" side="left">
+<div class='leftSidebar'>
+  <!-- Filter sidebar -->
+  <Sidebar title='Filter' typeClose='sideButton' side='left'>
     <Filter
       {selectableSpecies}
       bind:dataType
@@ -193,14 +202,16 @@
 </div>
 
 {#if selectedRiver.id}
-  <div class="rightSidebar">
-    <Sidebar title={sideBarTitle} typeClose="cross" side="right" on:close={toggleRightSidebar}>
+  <!-- Right sidebar with river summary -->
+  <div class='rightSidebar'>
+    <Sidebar title={sideBarTitle} typeClose='cross' side='right' on:close={toggleRightSidebar}>
       <RiverSummary river={selectedRiver} on:goToStationData={stationClicked}/>
     </Sidebar>
   </div>
 {:else if selectedStation.id}
-  <div class="rightSidebar">
-    <Sidebar title={sideBarTitle} typeClose="cross" side="right" on:close={toggleRightSidebar}>
+  <!-- Right sidebar with station summary -->
+  <div class='rightSidebar'>
+    <Sidebar title={sideBarTitle} typeClose='cross' side='right' on:close={toggleRightSidebar}>
       <StationSummary station={selectedStation} on:goToRiverData={riverClicked}/>
     </Sidebar>
   </div>

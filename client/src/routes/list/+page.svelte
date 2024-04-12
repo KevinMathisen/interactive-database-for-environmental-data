@@ -15,12 +15,16 @@
   import { River } from '../../models/River.js'
   import { Station } from '../../models/Station.js'
   import { page } from '$app/stores'
+  import { DATATYPE_RIVER, DATATYPE_STATION } from '../../constants/dataTypes'
+  import { goto } from '$app/navigation'
+
+  let urlParamsLoaded = false // Whether URL parameters have been loaded
 
   let rivers // Rivers with coordinates
   let stations // Stations with coordinates
   let selectableSpecies // All unique species
 
-  let dataType = 'river' // "river" or "station", chosen by user
+  let dataType = DATATYPE_RIVER // "river" or "station", chosen by user
   let selectedSpecies // Species user wants to look at
   let selectedStartDate // Start date for the time user wants to look at
   let selectedEndDate // End date for the time user wants to look at
@@ -38,7 +42,7 @@
   let rows = [] // Rows for the table
 
   // Set data page title based on data type
-  $: riverStationPageTitle = dataType === 'river' ? 'Elvedata' : 'Stasjonsdata'
+  $: riverStationPageTitle = dataType === DATATYPE_RIVER ? 'Elvedata' : 'Stasjonsdata'
 
   // Get rivers and stations from stores
   $: rivers = $riverStore
@@ -54,9 +58,9 @@
   $: filteredBySearchStations = filterStationsBySearch(filteredStations, searchQuery)
 
   // Remove selected river or station when the user switches between data types
-  $: if (dataType === 'station') {
+  $: if (dataType === DATATYPE_STATION) {
     selectedRiver = new River()
-  } else if (dataType === 'river') {
+  } else if (dataType === DATATYPE_RIVER) {
     selectedStation = new Station()
   }
 
@@ -64,7 +68,7 @@
   $: ({ headers, rows } = createHeaderAndData(dataType, filteredBySearchRivers, filteredBySearchStations))
 
   // Update URL to reflect selected river or station
-  $: if (selectedRiver || selectedStation) {
+  $: if ((selectedRiver || selectedStation) && urlParamsLoaded) {
     updateUrl(selectedRiver, selectedStation)
   }
 
@@ -79,9 +83,9 @@
    * @param {Event} event - The click event
    */
   function handleRowClick (event) {
-    if (dataType === 'river') {
+    if (dataType === DATATYPE_RIVER) {
       riverClicked(event)
-    } else if (dataType === 'station') {
+    } else if (dataType === DATATYPE_STATION) {
       stationClicked(event)
     }
   }
@@ -100,7 +104,7 @@
    */
   function selectStation (stationId) {
     // Set the data type to station
-    dataType = 'station'
+    dataType = DATATYPE_STATION
 
     // Get the station data and set the station as the selected station
     getStationSummary(stationId)
@@ -124,7 +128,7 @@
    */
   function selectRiver (riverId) {
     // Set the data type to river
-    dataType = 'river'
+    dataType = DATATYPE_RIVER
 
     // Get the river data and set the river as the selected river
     getRiverSummary(riverId)
@@ -150,9 +154,9 @@
    * @returns {{headers: string[], rows: string[][]}} - Headers and rows for the table
    */
   function createHeaderAndData (dataType, filteredBySearchRivers, filteredBySearchStations) {
-    if (dataType === 'river') {
+    if (dataType === DATATYPE_RIVER) {
       return formatRiversForTable(filteredBySearchRivers)
-    } else if (dataType === 'station') {
+    } else if (dataType === DATATYPE_STATION) {
       return formatStationsForTable(filteredBySearchStations)
     }
     return { headers: [], rows: [] }
@@ -172,20 +176,20 @@
 
     // Set the selected river in the url
     if (selectedRiver.id) {
-      url.searchParams.set('river', selectedRiver.id)
+      url.searchParams.set(DATATYPE_RIVER, selectedRiver.id)
     } else {
-      url.searchParams.delete('river')
+      url.searchParams.delete(DATATYPE_RIVER)
     }
 
     // Set the selected station in the url
     if (selectedStation.id) {
-      url.searchParams.set('station', selectedStation.id)
+      url.searchParams.set(DATATYPE_STATION, selectedStation.id)
     } else {
-      url.searchParams.delete('station')
+      url.searchParams.delete(DATATYPE_STATION)
     }
 
     // Update the URL
-    history.pushState({}, '', url)
+    goto(url.toString(), { replaceState: true })
   }
 
   /**
@@ -194,8 +198,8 @@
   function getUrlParams () {
     // Get the river and station id from the URL if they are defined
     const searchParams = new URLSearchParams($page.url.search)
-    const riverId = Number(searchParams.get('river'))
-    const stationId = Number(searchParams.get('station'))
+    const riverId = Number(searchParams.get(DATATYPE_RIVER))
+    const stationId = Number(searchParams.get(DATATYPE_STATION))
 
     // Select the river or station based on the id in the URL
     if (riverId) {
@@ -203,6 +207,8 @@
     } else if (stationId) {
       selectStation(stationId)
     }
+
+    urlParamsLoaded = true // Set that URL parameters have been loaded
   }
 </script>
 

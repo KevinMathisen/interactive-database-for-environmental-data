@@ -30,5 +30,5 @@
   headers={tableContent.headers}
   rows={tableContent.rows}
   clickable=true
-  datatype="station"
+  datatype='station'
   on:rowClick={goToStationData} />

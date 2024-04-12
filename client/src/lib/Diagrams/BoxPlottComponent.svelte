@@ -11,7 +11,6 @@
   })
 
   $: if (Plotly && plotData.size > 0) {
-    console.log('drawing plot with plotData: ', plotData)
     drawPlot(plotData)
   }
 
@@ -20,6 +19,9 @@
    * @param {Map<string, {lengths}>} plotData - The data to be displayed in the box plot
    */
   function drawPlot (plotData) {
+    // Width of boxplot given amount of observation points
+    const boxWidth = 0.6 - (1 / plotData.size)
+
     // Create boxplot with dots and mean with standard deviation for each species in each observation point
     const traces = []
     plotData.forEach((observationPoint, name) => {
@@ -28,8 +30,9 @@
         y: observationPoint.lengths,
         type: 'box',
         name: nameWithEnter,
-        boxpoints: 'all',
-        boxmean: 'sd'
+        boxpoints: 'none',
+        boxmean: 'sd',
+        width: boxWidth
       })
     })
 
@@ -37,7 +40,8 @@
     const layout = {
       title: 'Boksplott for lengde på fisk observert i elv/stasjon',
       font: { size: 15 },
-      yaxis: { title: 'Lengde (mm)' }
+      yaxis: { title: 'Lengde (mm)' },
+      boxmode: 'overlay'
     }
 
     // Make graph responsive, remove some buttons from the modebar, add edit link

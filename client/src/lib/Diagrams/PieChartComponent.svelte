@@ -11,7 +11,6 @@
   })
 
   $: if (Plotly && plotData.size > 0) {
-    console.log('drawing plot with plotData: ', plotData)
     drawPlot(plotData)
   }
 

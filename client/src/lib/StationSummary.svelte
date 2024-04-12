@@ -5,28 +5,29 @@
   import StationInfo from './StationSummarySections/StationInfo.svelte'
   import StationFishData from './StationSummarySections/StationFishData.svelte'
   import { Station } from '../models/Station'
+  import { DATATYPE_STATION } from '../constants/dataTypes'
 
   export let station = new Station() // Station to show
   export let wide = false // Whether to show the station summary as wide
 
   // Path to the map with the station selected as a query parameter
   let mapRef = ''
-  $: mapRef = `/?station=${station.id}`
+  $: mapRef = `/?${DATATYPE_STATION}=${station.id}`
 
   // Path to the graph with the station selected as a query parameter
   let graphRef = ''
-  $: graphRef = `/graph?stations=${station.id}`
+  $: graphRef = `/graph?${DATATYPE_STATION}=${station.id}`
 
   // Path to the download page with the station selected as a query parameter
   let downloadRef = ''
-  $: downloadRef = `/download?stations=${station.id}`
+  $: downloadRef = `/download?${DATATYPE_STATION}=${station.id}`
 
   $: mainContentClass = wide ? 'maincontent wide' : 'maincontent'
 </script>
 
 <div class='container'>
   <div class={mainContentClass}>
-    <div class="column">
+    <div class='column'>
       <!-- Station name, date, time, and button to go to river -->
       <CollapsibleSection title={station.name} collapsable={false}>
         <StationOverview {station} on:goToRiverData />
@@ -38,7 +39,7 @@
       </CollapsibleSection>
     </div>
 
-    <div class="column">
+    <div class='column'>
       <!-- Fish data for the station -->
       <CollapsibleSection title='Fiskedata'>
         <StationFishData {station} />
@@ -55,9 +56,9 @@
 
     <!-- Show in map button if the summary is wide -->
     {#if wide}
-      <Button type="blue" size="medium" href={mapRef}>
+      <Button type='blue' size='medium' href={mapRef}>
         Se i kart
-        <img src="/mapIcon.svg" alt="mapIcon" height="50px" class="headerIcon">
+        <img src='/mapIcon.svg' alt='mapIcon' height='50px' class='headerIcon'>
       </Button>
     {/if}
 
@@ -113,7 +114,7 @@
   }
 
   .footer::before {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     left: 10%;

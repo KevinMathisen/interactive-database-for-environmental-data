@@ -63,12 +63,8 @@ function createDataForBarAndPieChart (observationPoints, allSpecies, includeOthe
     // Get the observations from the observationPoint
     const observations = getObservations(observationPoint)
 
-    // Filter out observations which have no length
-    const observationsWithLength = observations.filter(
-      observation => observation.length && observation.length > 0)
-
     // Get the species count for the observations
-    const speciesCount = getObservationSpeciesCount(observationsWithLength, allSpecies, includeOthers)
+    const speciesCount = getObservationSpeciesCount(observations, allSpecies, includeOthers)
 
     // If the data should be relative to time spent fishing, divide the count by the time spent fishing
     if (!absoluteValues) {

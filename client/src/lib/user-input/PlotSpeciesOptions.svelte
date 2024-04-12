@@ -18,17 +18,17 @@
     ]
 </script>
 
-<label for="showPlotA">
+<label for='showPlotA'>
   Vis
-  <input type="checkbox" id="showPlotA" name="showPlotA" bind:checked={showPlotA}>
+  <input type='checkbox' id='showPlotA' name='showPlotA' bind:checked={showPlotA}>
 </label>
 
 {#if showPlotA}
   <h4>Diagram type</h4>
-  <RadioInput name="plotTypeA" options={plotTypeOptions} bind:selected={plotTypeA}/>
+  <RadioInput name='plotTypeA' options={plotTypeOptions} bind:selected={plotTypeA}/>
 
   <h4>Y-akse verdi</h4>
-  <RadioInput name="showPlotA" options={yValueOptions} bind:selected={showValueA}/>
+  <RadioInput name='showPlotA' options={yValueOptions} bind:selected={showValueA}/>
 {/if}
 
 <style>
@@ -49,7 +49,7 @@
     color: white;
   }
 
-  input[type="checkbox"] {
+  input[type='checkbox'] {
     /* Make the input radio button larger */
     transform: scale(1.25);
   }

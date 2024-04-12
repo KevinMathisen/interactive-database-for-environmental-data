@@ -11,7 +11,6 @@
 
   // Draw the plot when plotdate is updated and plotly is loaded
   $: if (Plotly && plotData.size > 0) {
-    console.log('drawing plot with plotData: ', plotData)
     drawPlot(plotData)
   }
 
@@ -89,7 +88,7 @@
 </script>
 
 <!--Displays the bar chart with id "fishHistogram"-->
-<div id="fishHistogram"></div>
+<div id='fishHistogram'></div>
 
 <style>
 

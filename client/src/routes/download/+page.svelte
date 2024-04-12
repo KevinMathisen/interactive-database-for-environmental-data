@@ -23,6 +23,10 @@
   import { addFeedbackToStore } from '../../utils/addFeedbackToStore.js'
   import Button from '$lib/user-input/Button.svelte'
   import { page } from '$app/stores'
+  import { DATATYPE_RIVER, DATATYPE_STATION } from '../../constants/dataTypes'
+  import { goto } from '$app/navigation'
+
+  let urlParamsLoaded = false // Whether URL parameters have been loaded
 
   let showSelectRiverAndStationModal = false
 
@@ -30,20 +34,20 @@
   let stations = new Map() // Stations with coordinates
   let selectableSpecies = [] // All unique species
 
-  let dataType = 'river' // "river" or "station", chosen by user
+  let dataType = DATATYPE_RIVER // 'river' or 'station', chosen by user
   let selectedRivers = new Map() // Rivers the user has chosen
   let selectedStations = new Map() // Stations the user has chosen
 
   // TODO: use selectedSpecies to filter download data
   // let selectedSpecies = []
 
-  let selectedFormat = ''
+  let selectedFormat = '' // Either 'xlsx' or 'csv'
 
   let chooseAll = true // If the user wants to choose all species
   let customSpecies = [] // Species the user has chosen
 
   // Species the user can choose
-  $: selectableSpecies = dataType === 'river' ? getSelectableSpecies(selectedRivers) : getSelectableSpecies(selectedStations)
+  $: selectableSpecies = dataType === DATATYPE_RIVER ? getSelectableSpecies(selectedRivers) : getSelectableSpecies(selectedStations)
 
   // Species the user has choosen; either all or the custom ones
   // $: selectedSpecies = chooseAll ? selectableSpecies : customSpecies
@@ -64,7 +68,7 @@
   $: stations = $stationStore
 
   // Update URL to reflect selected rivers or stations
-  $: if (dataType && (selectedRivers || selectedStations)) {
+  $: if (dataType && (selectedRivers || selectedStations) && urlParamsLoaded) {
     updateUrl(selectedRivers, selectedStations)
   }
 
@@ -72,7 +76,7 @@
    * Get the data needed for downloading the selected rivers or stations
    */
   function fetchRiverStationData () {
-    if (dataType === 'river') {
+    if (dataType === DATATYPE_RIVER) {
       // For each selected river, get the summary data and update the selected rivers
       selectedRivers.forEach((_, id) => {
         getRiverForDownload(id).then(_ => {
@@ -124,7 +128,7 @@
     }
 
     // Check if the user has chosen rivers but not selected any
-    if (dataType === 'river' && selectedRivers.size === 0) {
+    if (dataType === DATATYPE_RIVER && selectedRivers.size === 0) {
       addFeedbackToStore(
         FEEDBACK_TYPES.ERROR,
         FEEDBACK_CODES.NOT_FOUND,
@@ -134,7 +138,7 @@
     }
 
     // Check if the user has chosen stations but not selected any
-    if (dataType === 'station' && selectedStations.size === 0) {
+    if (dataType === DATATYPE_STATION && selectedStations.size === 0) {
       addFeedbackToStore(
         FEEDBACK_TYPES.ERROR,
         FEEDBACK_CODES.NOT_FOUND,
@@ -145,7 +149,7 @@
 
     // Create a file name and file extension
     const fileExtension = selectedFormat === 'xlsx' ? '.xlsx' : '.csv'
-    const fileName = dataType === 'river' ? 'elver' : 'stasjoner' + fileExtension
+    const fileName = dataType === DATATYPE_RIVER ? 'elver' : 'stasjoner' + fileExtension
 
     // Create a blob with the data
     const blob = selectedFormat === 'xlsx'
@@ -184,23 +188,23 @@
 
      // Get the current URL and remove any old river and station parameters
      const url = new URL(window.location.href)
-     url.searchParams.delete('rivers')
-     url.searchParams.delete('stations')
+     url.searchParams.delete(DATATYPE_RIVER)
+     url.searchParams.delete(DATATYPE_STATION)
 
      // Add the selected rivers to the URL
-     if (dataType === 'river') {
+     if (dataType === DATATYPE_RIVER) {
        selectedRivers.forEach((_, id) => {
-         url.searchParams.append('rivers', id)
+         url.searchParams.append(DATATYPE_RIVER, id)
        })
-     } else if (dataType === 'station') {
+     } else if (dataType === DATATYPE_STATION) {
        // Add the selected stations to the URL
        selectedStations.forEach((_, id) => {
-         url.searchParams.append('stations', id)
+         url.searchParams.append(DATATYPE_STATION, id)
        })
      }
 
      // Update the URL
-     history.pushState({}, '', url)
+     goto(url.toString(), { replaceState: true })
    }
 
   /**
@@ -209,34 +213,38 @@
    function getUrlParams () {
      // Get the river and station ids
      const searchParams = new URLSearchParams($page.url.search)
-     const riverIds = searchParams.getAll('rivers').map(Number)
-     const stationIds = searchParams.getAll('stations').map(Number)
+     const riverIds = searchParams.getAll(DATATYPE_RIVER).map(Number)
+     const stationIds = searchParams.getAll(DATATYPE_STATION).map(Number)
 
      const selectedRiversUrl = new Map()
      const selectedStationsUrl = new Map()
 
      // Select the rivers or stations and datatype based on the ids
      if (riverIds.length > 0) {
-       dataType = 'river'
+       dataType = DATATYPE_RIVER
        riverIds.forEach(id => {
          selectedRiversUrl.set(id, rivers.get(id))
        })
        selectedRivers = selectedRiversUrl
      } else if (stationIds.length > 0) {
-       dataType = 'station'
+       dataType = DATATYPE_STATION
        stationIds.forEach(id => {
          selectedStationsUrl.set(id, stations.get(id))
        })
        selectedStations = selectedStationsUrl
      }
+
+     urlParamsLoaded = true // Set that URL parameters have been loaded
    }
 </script>
 
+<!-- User feedback modal, invisible unless there is feedback to show to user -->
 <UserFeedbackMessage />
 
 {#if showSelectRiverAndStationModal}
+  <!-- Modal for selecting rivers and stations -->
   <Modal on:close={handleClose} large={true}>
-    <SelectRiverAndStation
+    <SelectRiverAndStation on:close={handleClose}
       {rivers}
       {stations}
       bind:dataType
@@ -246,47 +254,59 @@
   </Modal>
 {/if}
 
-<div class="downloadPage">
+<div class='downloadPage'>
 
   <div>
-    <div class="downloadHeader">Last ned data</div>
+    <div class='downloadHeader'>Last ned data</div>
   </div>
 
   <!-- Defines the area containing the options for dowloading -->
-  <div class="downloadMain">
+  <div class='downloadMain'>
 
     <!-- Input for opening selection of river or stations -->
-    <CollapsibleSection title="{dataType === 'river' ? 'Elver' : 'Stasjoner'} valgt">
-      <button on:click={handleSelectRiverStation}>Rediger {dataType === 'river' ? 'elver' : 'stasjoner'}</button>
-      <ul>
-        {#if dataType === 'river'}
-          <p>Elver valgt</p>
-          {#each Array.from(selectedRivers.entries()) as [_, river]}
-            <li>{river.name + ' ' + river.startDate}</li>
-          {/each}
-        {:else}
-          <p>Stasjoner valgt</p>
-          {#each Array.from(selectedStations.entries()) as [_, station]}
+    <CollapsibleSection title='Velg elver/stasjoner'>
+      <Button
+        on:buttonClick={handleSelectRiverStation}
+        type='blue'
+        size='small'>
+          Rediger
+          <img src='/editIcon.svg' alt='editIcon' height='30em' class='white-color'>
+      </Button>
+
+      {#if dataType === DATATYPE_RIVER && selectedRivers.size !== 0}
+        <!-- Rivers choosen -->
+        <h4>Elver valgt</h4>
+        <ul>
+        {#each Array.from(selectedRivers.entries()) as [_, river]}
+          <li>{river.name + ' ' + river.startDate}</li>
+        {/each}
+        </ul>
+      {:else if dataType === DATATYPE_STATION && selectedStations.size !== 0}
+        <!-- Stations choosen -->
+        <p>Stasjoner valgt</p>
+        <ul>
+        {#each Array.from(selectedStations.entries()) as [_, station]}
           <li>{station.name + ' ' + station.date}</li>
         {/each}
-        {/if}
-      </ul>
+        </ul>
+      {/if}
     </CollapsibleSection>
 
     <!-- Input for choosing species -->
-    <CollapsibleSection title="Art">
+    <CollapsibleSection title='Art'>
       <SpeciesInput {selectableSpecies} bind:chooseAll bind:customSpecies />
     </CollapsibleSection>
 
           <!-- Input for choosing file format -->
-    <CollapsibleSection title="Format">
-      <RadioInput name="format" options={formatOptions} bind:selected={selectedFormat} />
+    <CollapsibleSection title='Format'>
+      <RadioInput name='format' options={formatOptions} bind:selected={selectedFormat} />
     </CollapsibleSection>
 
   </div>
 
-  <div class="downloadButton">
-    <Button type="orange" size="medium" on:buttonClick={downloadFile}>Last ned <img src="/dowloadIcon.svg" alt="listIcon" height="38px" class="downloadIcon white-color"></Button>
+  <div class='downloadButton'>
+    <!-- Button for downloading the file -->
+    <Button type='orange' size='medium' on:buttonClick={downloadFile}>Last ned <img src='/dowloadIcon.svg' alt='listIcon' height='38px' class='downloadIcon white-color'></Button>
   </div>
 
 </div>
@@ -327,6 +347,10 @@
   /* Transformes the icon color to white */
   .white-color{
     filter: invert(100%);
+  }
+
+  h4 {
+    margin-bottom: 0;
   }
 
   @media screen and (max-width: 900px) {

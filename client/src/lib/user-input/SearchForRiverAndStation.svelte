@@ -6,6 +6,7 @@
     filterStationsByNameAndDateCombined
   }
     from '../../utils/filterData'
+  import { DATATYPE_RIVER, DATATYPE_STATION } from '../../constants/dataTypes'
 
   export let rivers
   export let stations
@@ -22,7 +23,7 @@
   let input = ''
   let dataTypeText
   let showError = ''
-  $: dataTypeText = dataType === 'river' ? 'Elv' : 'Stasjon'
+  $: dataTypeText = dataType === DATATYPE_RIVER ? 'Elv' : 'Stasjon'
 
   /**
    * Adds the river/station the user has written in the input field
@@ -35,7 +36,7 @@
        return
      }
 
-     const selectedData = dataType === 'river'
+     const selectedData = dataType === DATATYPE_RIVER
        ? filterRiversByNameAndDateCombined(rivers, lowercaseInput)
        : filterStationsByNameAndDateCombined(stations, lowercaseInput)
 
@@ -45,7 +46,7 @@
        return
      }
 
-     const overlapWithChoosen = dataType === 'river'
+     const overlapWithChoosen = dataType === DATATYPE_RIVER
        ? filterRiversByNameAndDateCombined(selectedRivers, lowercaseInput)
        : filterStationsByNameAndDateCombined(selectedStations, lowercaseInput)
 
@@ -60,7 +61,7 @@
      input = ''
 
      // Add the selected river/station to the selected rivers/stations
-     if (dataType === 'river') {
+     if (dataType === DATATYPE_RIVER) {
        selectedRivers = new Map([...selectedRivers, ...selectedData])
      } else {
        selectedStations = new Map([...selectedStations, ...selectedData])
@@ -80,7 +81,7 @@
    * @param {string} riverStationToRemove - The key of the river/station to remove
    */
    function removeRiverStation (riverStationToRemove) {
-     if (dataType === 'river') {
+     if (dataType === DATATYPE_RIVER) {
        selectedRivers = new Map([...selectedRivers].filter(([key, _]) => key !== riverStationToRemove))
      } else {
        selectedStations = new Map([...selectedStations].filter(([key, _]) => key !== riverStationToRemove))
@@ -149,19 +150,19 @@
   $: selectableRivers = filterRiverSuggestions(rivers, input, selectedStartDate, selectedEndDate)
   $: selectableStations = filterStationSuggestions(stations, input, selectedStartDate, selectedEndDate)
 
-  $: showRiverSuggestions = input.trim().length > 0 && dataType === 'river' && selectableRivers.size > 0
-  $: showStationSuggestions = input.trim().length > 0 && dataType === 'station' && selectableStations.size > 0
+  $: showRiverSuggestions = input.trim().length > 0 && dataType === DATATYPE_RIVER && selectableRivers.size > 0
+  $: showStationSuggestions = input.trim().length > 0 && dataType === DATATYPE_STATION && selectableStations.size > 0
 
 </script>
 
-<div class="inputContainer">
+<div class='inputContainer'>
   <!-- Input for adding a river/station to the selected rivers/stations -->
   <input
-    type="text"
+    type='text'
     bind:value={input}
     on:keydown={handleKeydown}
-    placeholder="Legg til {dataTypeText}"/>
-  <button on:click={addInput} class="smallButton">+</button>
+    placeholder='Legg til {dataTypeText}'/>
+  <button on:click={addInput} class='smallButton'>+</button>
 
   <!-- Error message to display to the user -->
   {#if showError}
@@ -170,7 +171,7 @@
 
   <!-- Suggestions for rivers -->
   {#if showRiverSuggestions}
-    <div class="suggestions">
+    <div class='suggestions'>
       {#each Array.from(selectableRivers.entries()) as [_, river]}
         <button on:click={() => { input = river.name + ' ' + river.startDate; addInput() }}>
           {capitalizeFirstLetter(river.name + ' ' + river.startDate)}
@@ -179,7 +180,7 @@
     </div>
   {:else if showStationSuggestions}
     <!-- Suggestions for stations -->
-    <div class="suggestions">
+    <div class='suggestions'>
       {#each Array.from(selectableStations.entries()) as [_, station]}
         <button on:click={() => { input = station.name + ' ' + station.date; addInput() }}>
           {capitalizeFirstLetter(station.name + ' ' + station.date)}
@@ -189,13 +190,13 @@
   {/if}
 </div>
 <!-- List of selected rivers -->
-{#if dataType === 'river'}
+{#if dataType === DATATYPE_RIVER}
   <p>Valgte elver</p>
   <ul>
     {#each Array.from(selectedRivers.entries()) as [key, river]}
       <li>
         {capitalizeFirstLetter(river.name + ' ' + river.startDate)}
-        <button on:click={() => removeRiverStation(key)} class="smallButton">x</button>
+        <button on:click={() => removeRiverStation(key)} class='smallButton'>x</button>
       </li>
     {/each}
   </ul>
@@ -206,14 +207,14 @@
     {#each Array.from(selectedStations.entries()) as [key, station]}
       <li>
         {capitalizeFirstLetter(station.name + ' ' + station.date)}
-        <button on:click={() => removeRiverStation(key)} class="smallButton">x</button>
+        <button on:click={() => removeRiverStation(key)} class='smallButton'>x</button>
       </li>
     {/each}
   </ul>
 {/if}
 
 <style>
-  input[type="text"] {
+  input[type='text'] {
     width: 60%;
     font-size: 16px;
     padding: 0.5em;

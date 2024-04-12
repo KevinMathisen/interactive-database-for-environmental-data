@@ -3,7 +3,7 @@
   const dispatch = createEventDispatcher()
 
   export let title = ''
-  export let typeClose = '' // which way to close the sidebar, "cross" or "sideButton"
+  export let typeClose = '' // which way to close the sidebar, 'cross' or 'sideButton'
   export let side = ''
   export let showSidebar = true
 
@@ -31,13 +31,13 @@
   }
 </script>
 
-<div class="sidebarContainer {side}" style="width: {!showSidebar ? '0' : ''};">
+<div class='sidebarContainer {side}' style='width: {!showSidebar ? '0' : ''};'>
   {#if showSidebar}
     <!-- Header with title and optional close button -->
-    <div class="header">
+    <div class='header'>
       <h1>{title}</h1>
       {#if typeClose === 'cross'}
-        <div class="crossButton" on:click={handleClick} on:keydown={handleKeyDown} role="button" tabindex="0"></div>
+        <div class='crossButton' on:click={handleClick} on:keydown={handleKeyDown} role='button' tabindex='0'></div>
       {/if}
     </div>
 
@@ -49,8 +49,8 @@
 
   <!-- Optional close button on side -->
   {#if typeClose === 'sideButton'}
-    <button class="sideButton" on:click={handleClick}>
-      <div class="arrow {showSidebar ? 'left' : 'right'}"></div>
+    <button class='sideButton' on:click={handleClick}>
+      <div class='arrow {showSidebar ? 'left' : 'right'}'></div>
     </button>
   {/if}
 </div>

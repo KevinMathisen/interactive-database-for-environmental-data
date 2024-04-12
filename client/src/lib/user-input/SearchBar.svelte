@@ -11,7 +11,7 @@
 
 <div class=container>
     <label>
-        <input type="search" id="listSearch" name="listSearch" placeholder={placeholder} bind:value={searchQuery}/>
+        <input type='search' id='listSearch' name='listSearch' placeholder={placeholder} bind:value={searchQuery}/>
     </label>
 
     <div class=helpText>{helpText}</div>

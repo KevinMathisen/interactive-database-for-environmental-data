@@ -52,4 +52,4 @@ To use the application simply visit the website on the following which applies:
 - Carl Petter Mørch-Reiersen
 - Martin Solevåg Glærum
 
-In collaboration with [NTNU](www.ntnu.no) and [NINA](www.nina.no).
+In collaboration with [NTNU](https://www.ntnu.no) and [NINA](https://www.nina.no).
