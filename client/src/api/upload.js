@@ -9,7 +9,7 @@ import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/
  * Upload file to server
  * 
  * @param {File} file - The file to upload
- * @returns {Promise<void>} - A promise which resolves to void
+ * @returns {Promise<boolean>} - A promise which resolves to if upload was successful or not
  */
 export async function uploadFileToServer(file) {
   // Create a new FormData object and add file to it
@@ -26,7 +26,7 @@ export async function uploadFileToServer(file) {
     // Check if the response is ok
     if (!response.ok) {
       addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.UPLOAD_REJECTED, FEEDBACK_MESSAGES.UPLOAD_REJECTED)
-      return
+      return false
     }
 
     // Give feedback to the user that the upload was successful
@@ -35,11 +35,13 @@ export async function uploadFileToServer(file) {
     // Check if the upload was successful
     if (result.success) {
       addFeedbackToStore(FEEDBACK_TYPES.SUCCESS, FEEDBACK_CODES.UPLOAD_SUCCESS, FEEDBACK_MESSAGES.UPLOAD_SUCCESS)
-    } else {
-      addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.UPLOAD_REJECTED, FEEDBACK_MESSAGES.UPLOAD_REJECTED)
+      return true
     }
+    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.UPLOAD_REJECTED, FEEDBACK_MESSAGES.UPLOAD_REJECTED)
+    return false
 
   } catch (error) { // Catch any possible network or fetch errors
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.UPLOAD_UNAVAILABLE, FEEDBACK_MESSAGES.UPLOAD_UNAVAILABLE)
+    return false
   }
 }

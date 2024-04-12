@@ -61,10 +61,12 @@
     reader.readAsArrayBuffer(uploadedFile)
     
     // Upload file to server
-    uploadFileToServer(uploadedFile)
-
-    // Reset the uploaded file
-    uploadedFile = null
+    uploadFileToServer(uploadedFile).then((success) => {
+      // Reset the uploaded file if the upload was successful
+      if (success) {
+        uploadedFile = null
+      }
+    })
   }
 
   /**
@@ -131,7 +133,10 @@
   <div class='uploadFileUploaded'>
     <p id='fileChosenText'>Valgt fil:</p>
     {#if uploadedFile}
-      <p>{uploadedFile.name}</p>
+      <p>{uploadedFile.name}
+        <button on:click={() => {uploadedFile = null}} class='smallButton'>x</button> 
+      </p>
+      
     {:else}
       <p>Ingen fil valgt</p>
     {/if}
@@ -191,6 +196,18 @@
   #fileChosenText {
     font-size: 2rem;
     margin: 0;
+  }
+
+  .smallButton {
+    padding: 0.5em;
+    margin: 0.5em 0;
+    border-radius: 0.5em;
+    cursor: pointer;
+  }
+
+  .smallButton:hover {
+    background-color: #435768;
+    color: white;
   }
 
   .uploadButtonPlacement {
