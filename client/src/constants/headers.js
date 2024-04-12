@@ -5,7 +5,7 @@ const STATION_SUMMARY_HEADERS_TABLE = ['Stasjon', 'Elvtype', 'Vær', 'Min fisket
 
 const STATION_CONDITIONS_HEADERS_TABLE = ['Elvtype', 'Vær', 'Vanntemp', 'Lufttemp', 'Min fisket']
 const STATION_SETTINGS_HEADERS_TABLE = ['Volt', 'Puls (DC)', 'Ledningsevne (us/cm)']
-const STATION_OBSERVATIONS_HEADERS_TABLE = ['Art', 'Antall', 'Ant/min', 'Gjennom-snitt (cm)', 'Median lengde (cm)', 'Min lengde (cm)', 'Max lengde (cm)']
+const STATION_OBSERVATIONS_HEADERS_TABLE = ['Art', 'Antall', 'Ant/ min', 'Gjennom-snitt (mm)', 'Median lengde (mm)', 'Min og max lengde (mm)']
 
 const RIVER_HEADERS_EXCEL = [
   'Start dato', 'Slutt dato', 'Elv', 'Båttype', 'Lat', 'Long',
@@ -17,7 +17,7 @@ const STATION_HEADERS_EXCEL = [
   'Lat stopp', 'Long stopp', 'Dominerende elvtype', 'Vær',
   'Vanntemperatur (Celsius)', 'Lufttemperatur (Celsius)',
   'Ledningsevne (µs/cm)', 'Transektlengde (m)', 'Sekunder fisket (s)', 'Volt',
-  'Puls (DC)', 'Oservasjoner', 'Display', 'Gpx File', 'Stasjonsbeskrivelse',
+  'Puls (DC)', 'Display', 'Gpx File', 'Stasjonsbeskrivelse',
   'Kommentar til fiske (observasjoner osv)'
 ]
 const OBSERVATION_HEADERS_EXCEL = [

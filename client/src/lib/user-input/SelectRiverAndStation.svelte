@@ -3,38 +3,50 @@
   import RadioInput from './RadioInput.svelte'
   import DateInput from './DateInput.svelte'
   import SearchForRiverAndStation from './SearchForRiverAndStation.svelte'
+  import Button from './Button.svelte'
+  import { createEventDispatcher } from 'svelte'
+  import { DATATYPE_RIVER, DATATYPE_STATION } from '../../constants/dataTypes'
 
   export let rivers
   export let stations
 
-  export let dataType = 'river'
+  export let dataType = DATATYPE_RIVER
   export let selectedRivers = new Map()
   export let selectedStations = new Map()
 
   let selectedStartDate
   let selectedEndDate
 
+  const dispatch = createEventDispatcher()
+
   const dataOptions = [
-    { value: 'river', label: 'Elvedata' },
-    { value: 'station', label: 'Stasjonsdata' }
+    { value: DATATYPE_RIVER, label: 'Elvedata' },
+    { value: DATATYPE_STATION, label: 'Stasjonsdata' }
   ]
+
+  /**
+   * Close the modal
+   */
+  function handleDone () {
+    dispatch('close')
+  }
 
 </script>
 
-<div class="container">
-  <h1 class="header">Velg elver eller stasjoner</h1>
-  <div class="main">
-    <div class="leftColumn">
-      <CollapsibleSection title="Type data" collapsable={false}>
-        <RadioInput name="dataType" options={dataOptions} bind:selected={dataType} />
+<div class='container'>
+  <h1 class='header'>Velg elver eller stasjoner</h1>
+  <div class='main'>
+    <div class='leftColumn'>
+      <CollapsibleSection title='Type data' collapsable={false}>
+        <RadioInput name='dataType' options={dataOptions} bind:selected={dataType} />
       </CollapsibleSection>
 
-      <CollapsibleSection title="Filtrer søk etter dato" collapsable={false}>
+      <CollapsibleSection title='Filtrer søk etter dato' collapsable={false}>
         <DateInput bind:selectedStartDate bind:selectedEndDate/>
       </CollapsibleSection>
     </div>
 
-    <div class="rightColumn">
+    <div class='rightColumn'>
       <SearchForRiverAndStation
         {rivers}
         {stations}
@@ -45,6 +57,9 @@
         {selectedEndDate} />
     </div>
   </div>
+  <Button type='green' size='medium' on:buttonClick={handleDone}>
+    Ferdig
+  </Button>
 </div>
 
 <style>
@@ -69,6 +84,8 @@
     height: 100%;
     width: 100%;
     margin: 2em;
+    margin-bottom: 0;
+    overflow: auto;
   }
 
   .leftColumn {
@@ -77,5 +94,6 @@
 
   .rightColumn {
     flex: 1;
+    overflow: auto;
   }
 </style>

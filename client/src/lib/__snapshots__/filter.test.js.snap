@@ -1,0 +1,178 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Filter > renders correctly 1`] = `
+<body>
+  <div>
+    <div
+      class="main s-_LI_r-dATrBW"
+    >
+      <form
+        class="s-_LI_r-dATrBW"
+      >
+        <div
+          class="collapsibleSection s-qco_XiUj5iHx"
+        >
+          <div
+            class="collapsibleSection-header s-qco_XiUj5iHx"
+            role="button"
+            tabindex="0"
+          >
+            <i
+              class="arrow s-qco_XiUj5iHx not-collapsed"
+            />
+             
+            <h3
+              class="s-qco_XiUj5iHx"
+            >
+              Type data
+            </h3>
+          </div>
+           
+          <div
+            class="content s-qco_XiUj5iHx"
+          >
+            <label
+              class="s-I5YWuR1l8gCU"
+              for="river"
+            >
+              <input
+                class="s-I5YWuR1l8gCU"
+                id="river"
+                name="dataType"
+                type="radio"
+                value="river"
+              />
+               
+              Elvedata
+               
+            </label>
+            <label
+              class="s-I5YWuR1l8gCU"
+              for="station"
+            >
+              <input
+                class="s-I5YWuR1l8gCU"
+                id="station"
+                name="dataType"
+                type="radio"
+                value="station"
+              />
+               
+              Stasjonsdata
+               
+            </label>
+            
+            <!--&lt;RadioInput&gt;-->
+          </div>
+        </div>
+        <!--&lt;CollapsibleSection&gt;-->
+         
+        <div
+          class="collapsibleSection s-qco_XiUj5iHx"
+        >
+          <div
+            class="collapsibleSection-header s-qco_XiUj5iHx"
+            role="button"
+            tabindex="0"
+          >
+            <i
+              class="arrow s-qco_XiUj5iHx not-collapsed"
+            />
+             
+            <h3
+              class="s-qco_XiUj5iHx"
+            >
+              Dato
+            </h3>
+          </div>
+           
+          <div
+            class="content s-qco_XiUj5iHx"
+          >
+            <label
+              class="s-JXk2os4N_waP"
+              for="startDate"
+            >
+              Fra
+  
+              <input
+                class="s-JXk2os4N_waP"
+                id="startDate"
+                name="startDate"
+                type="date"
+              />
+            </label>
+             
+            <label
+              class="s-JXk2os4N_waP"
+              for="endDate"
+            >
+              Til
+  
+              <input
+                class="s-JXk2os4N_waP"
+                id="endDate"
+                name="endDate"
+                type="date"
+              />
+            </label>
+            <!--&lt;DateInput&gt;-->
+          </div>
+        </div>
+        <!--&lt;CollapsibleSection&gt;-->
+         
+        <div
+          class="collapsibleSection s-qco_XiUj5iHx"
+        >
+          <div
+            class="collapsibleSection-header s-qco_XiUj5iHx"
+            role="button"
+            tabindex="0"
+          >
+            <i
+              class="arrow s-qco_XiUj5iHx not-collapsed"
+            />
+             
+            <h3
+              class="s-qco_XiUj5iHx"
+            >
+              Art
+            </h3>
+          </div>
+           
+          <div
+            class="content s-qco_XiUj5iHx"
+          >
+            <label
+              class="s-a2sscjfPS7lx"
+            >
+              <input
+                class="s-a2sscjfPS7lx"
+                type="radio"
+                value="true"
+              />
+               Velg alle
+            </label>
+             
+            <label
+              class="s-a2sscjfPS7lx"
+            >
+              <input
+                class="s-a2sscjfPS7lx"
+                type="radio"
+                value="false"
+              />
+               Egendefinert
+            </label>
+             
+            
+            <!--&lt;SpeciesInput&gt;-->
+          </div>
+        </div>
+        <!--&lt;CollapsibleSection&gt;-->
+      </form>
+    </div>
+    <!--&lt;Filter&gt;-->
+  </div>
+</body>
+`;

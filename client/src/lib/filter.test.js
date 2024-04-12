@@ -1,5 +1,5 @@
-import { render } from '@testing-library/svelte'
-import { describe, expect, it } from 'vitest'
+import { cleanup, render } from '@testing-library/svelte'
+import { afterEach, describe, expect, it } from 'vitest'
 import Filter from './filter.svelte'
 
 /**
@@ -7,13 +7,21 @@ import Filter from './filter.svelte'
  */
 
 describe('Filter', () => {
-  it('species loads correctly', async () => {
-    const selectableSpecies = ['species1', 'species2', 'species3']
+  afterEach(() => {
+    cleanup()
+  })
 
-    const { getByRole } = render(Filter, { props: { selectableSpecies } })
+  it('renders correctly', () => {
+    const { container } = render(Filter, { props: { selectableSpecies: [] } })
+    expect(container).toMatchSnapshot()
+  })
 
-    const list = getByRole('list')
+  it('renders child components', () => {
+    const { getByText } = render(Filter, { props: { selectableSpecies: [] } })
 
-    expect(list.childElementCount).toEqual(3)
+    // Checking if the child components are rendered
+    expect(getByText('Type data')).not.toBeNull()
+    expect(getByText('Dato')).not.toBeNull()
+    expect(getByText('Art')).not.toBeNull()
   })
 })

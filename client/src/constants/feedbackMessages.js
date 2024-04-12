@@ -24,6 +24,8 @@ export const FEEDBACK_MESSAGES = {
   NO_FILE_SELCETED: 'Velg en fil før du klikker last opp',
   NO_FILE_FORMAT_SELECTED: 'Ingen filformat valgt, velg enten .xslx eller .csv for å laste ned',
   NOT_FOUND: 'Kunne ikke finne den forespurte ressursen',
+  RIVER_NOT_SELECTABLE: 'Elven er ikke valgbar på grunn av filter, endre filter så prøv på nytt',
+  STATION_NOT_SELECTABLE: 'Stasjonen er ikke valgbar på grunn av filter, endre filter så prøv på nytt',
   NO_RIVERS_SELECTED: 'Ingen elver valgt, velg en eller flere elver før du klikker last ned',
   NO_STATIONS_SELECTED: 'Ingen stasjoner valgt, velg en eller flere stasjoner før du klikker last ned',
   ERROR_GENERATING_FILE: 'En feil oppstod under nedlasting av filen',

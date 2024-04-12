@@ -123,8 +123,7 @@ describe('test dataForAllSpeciesInStation function', () => {
         amountPerMinute: '3.00',
         averageLength: '1.33',
         medianLength: '1.00',
-        minimumLength: 1,
-        maximumLength: 2
+        minMaxLength: '1 - 2'
       },
       {
         species: 'b',
@@ -132,8 +131,7 @@ describe('test dataForAllSpeciesInStation function', () => {
         amountPerMinute: '1.00',
         averageLength: '2.00',
         medianLength: '2.00',
-        minimumLength: 2,
-        maximumLength: 2
+        minMaxLength: '2 - 2'
       },
       {
         species: 'sum',
@@ -141,8 +139,7 @@ describe('test dataForAllSpeciesInStation function', () => {
         amountPerMinute: '4.00',
         averageLength: '1.50',
         medianLength: '1.50',
-        minimumLength: 1,
-        maximumLength: 2
+        minMaxLength: '1 - 2'
       }
     ])
   })
@@ -167,8 +164,7 @@ describe('test dataForAllSpeciesInStation function', () => {
         amountPerMinute: '4.00',
         averageLength: '1.33',
         medianLength: '1.00',
-        minimumLength: 1,
-        maximumLength: 2
+        minMaxLength: '1 - 2'
       },
       {
         species: 'b',
@@ -176,8 +172,7 @@ describe('test dataForAllSpeciesInStation function', () => {
         amountPerMinute: '2.00',
         averageLength: '2.00',
         medianLength: '2.00',
-        minimumLength: 2,
-        maximumLength: 2
+        minMaxLength: '2 - 2'
       },
       {
         species: 'sum',
@@ -185,8 +180,7 @@ describe('test dataForAllSpeciesInStation function', () => {
         amountPerMinute: '6.00',
         averageLength: '1.50',
         medianLength: '1.50',
-        minimumLength: 1,
-        maximumLength: 2
+        minMaxLength: '1 - 2'
       }
     ])
   })
@@ -226,8 +220,7 @@ describe('test dataForAllSpeciesInStations function', () => {
         amountPerMinute: '2.00',
         averageLength: '1.50',
         medianLength: '1.50',
-        minimumLength: 1,
-        maximumLength: 2
+        minMaxLength: '1 - 2'
       },
       {
         species: 'b',
@@ -235,8 +228,7 @@ describe('test dataForAllSpeciesInStations function', () => {
         amountPerMinute: '0.50',
         averageLength: '2.00',
         medianLength: '2.00',
-        minimumLength: 2,
-        maximumLength: 2
+        minMaxLength: '2 - 2'
       },
       {
         species: 'c',
@@ -244,8 +236,7 @@ describe('test dataForAllSpeciesInStations function', () => {
         amountPerMinute: '1.50',
         averageLength: '1.33',
         medianLength: '1.00',
-        minimumLength: 1,
-        maximumLength: 2
+        minMaxLength: '1 - 2'
       },
       {
         species: 'sum',
@@ -253,8 +244,7 @@ describe('test dataForAllSpeciesInStations function', () => {
         amountPerMinute: '4.00',
         averageLength: '1.50',
         medianLength: '1.50',
-        minimumLength: 1,
-        maximumLength: 2
+        minMaxLength: '1 - 2'
       }
     ])
   })
@@ -289,8 +279,7 @@ describe('test dataForAllSpeciesInStations function', () => {
         amountPerMinute: '2.50',
         averageLength: '1.50',
         medianLength: '1.50',
-        minimumLength: 1,
-        maximumLength: 2
+        minMaxLength: '1 - 2'
       },
       {
         species: 'b',
@@ -298,8 +287,7 @@ describe('test dataForAllSpeciesInStations function', () => {
         amountPerMinute: '1.00',
         averageLength: '2.00',
         medianLength: '2.00',
-        minimumLength: 2,
-        maximumLength: 2
+        minMaxLength: '2 - 2'
       },
       {
         species: 'c',
@@ -307,8 +295,7 @@ describe('test dataForAllSpeciesInStations function', () => {
         amountPerMinute: '1.50',
         averageLength: '1.33',
         medianLength: '1.00',
-        minimumLength: 1,
-        maximumLength: 2
+        minMaxLength: '1 - 2'
       },
       {
         species: 'sum',
@@ -316,8 +303,7 @@ describe('test dataForAllSpeciesInStations function', () => {
         amountPerMinute: '5.00',
         averageLength: '1.50',
         medianLength: '1.50',
-        minimumLength: 1,
-        maximumLength: 2
+        minMaxLength: '1 - 2'
       }
     ])
   })

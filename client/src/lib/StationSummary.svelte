@@ -5,36 +5,64 @@
   import StationInfo from './StationSummarySections/StationInfo.svelte'
   import StationFishData from './StationSummarySections/StationFishData.svelte'
   import { Station } from '../models/Station'
+  import { DATATYPE_STATION } from '../constants/dataTypes'
 
   export let station = new Station() // Station to show
+  export let wide = false // Whether to show the station summary as wide
+
+  // Path to the map with the station selected as a query parameter
+  let mapRef = ''
+  $: mapRef = `/?${DATATYPE_STATION}=${station.id}`
+
+  // Path to the graph with the station selected as a query parameter
+  let graphRef = ''
+  $: graphRef = `/graph?${DATATYPE_STATION}=${station.id}`
+
+  // Path to the download page with the station selected as a query parameter
+  let downloadRef = ''
+  $: downloadRef = `/download?${DATATYPE_STATION}=${station.id}`
+
+  $: mainContentClass = wide ? 'maincontent wide' : 'maincontent'
 </script>
 
 <div class='container'>
-  <div class='maincontent'>
-    <!-- Station name, date, time, and button to go to river -->
-    <CollapsibleSection title={station.name} collapsable={false}>
-      <StationOverview {station} />
-    </CollapsibleSection>
+  <div class={mainContentClass}>
+    <div class='column'>
+      <!-- Station name, date, time, and button to go to river -->
+      <CollapsibleSection title={station.name} collapsable={false}>
+        <StationOverview {station} on:goToRiverData />
+      </CollapsibleSection>
 
-    <!-- General station info such as description, weather, power settings -->
-    <CollapsibleSection title='Info'>
-      <StationInfo {station} />
-    </CollapsibleSection>
+      <!-- General station info such as description, weather, power settings -->
+      <CollapsibleSection title='Info'>
+        <StationInfo {station} />
+      </CollapsibleSection>
+    </div>
 
-    <!-- Fish data for the station -->
-    <CollapsibleSection title='Fiskedata'>
-      <StationFishData {station} />
-    </CollapsibleSection>
+    <div class='column'>
+      <!-- Fish data for the station -->
+      <CollapsibleSection title='Fiskedata'>
+        <StationFishData {station} />
+      </CollapsibleSection>
+    </div>
   </div>
 
   <!-- Buttons to show diagram and download data -->
   <div class='footer'>
-    <Button type='blue' size='medium'>
+    <Button type='blue' size='medium' href={graphRef}>
       Diagram
       <img src='/graphIcon2.svg' alt='graphIcon' height='40px' class='headerIcon white-color'>
     </Button>
 
-    <Button type='orangeButton' size='medium'>
+    <!-- Show in map button if the summary is wide -->
+    {#if wide}
+      <Button type='blue' size='medium' href={mapRef}>
+        Se i kart
+        <img src='/mapIcon.svg' alt='mapIcon' height='50px' class='headerIcon'>
+      </Button>
+    {/if}
+
+    <Button type='orange' size='medium' href={downloadRef}>
       Last ned
       <img src='/dowloadIcon.svg' alt='dowloadIcon' height='50px' class='headerIcon white-color'>
     </Button>
@@ -57,6 +85,19 @@
     justify-content: flex-start;
     overflow: auto;
     width: 100%;
+    flex-direction: column;
+  }
+
+  .maincontent.wide {
+    flex-direction: row;
+    margin: 2em 0em;
+    padding: 0em 2em;
+    height: calc(100% - 4em);
+    width: calc(100% - 4em);
+  }
+
+  .column {
+    flex: 1;
   }
 
   .footer {
@@ -65,7 +106,7 @@
     justify-content: space-around;
     align-items: center;
     flex-wrap: wrap;
-    width: 100% - 2em;
+    width: calc(100% - 2em);
     height: fit-content;
     padding: 1em;
     margin-top: 0.5em;
@@ -73,7 +114,7 @@
   }
 
   .footer::before {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     left: 10%;

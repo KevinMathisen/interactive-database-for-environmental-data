@@ -1,64 +1,64 @@
 <script>
-    // Imports the onMount function from svelte.
-    import { onMount } from 'svelte'
+  // Imports the onMount function from svelte.
+  import { onMount } from 'svelte'
 
-    let Plotly
+  export let plotData = new Map()
+  let Plotly
 
-    // Initializes the Plotly library when the component is mounted.
-    onMount(async () => {
-      Plotly = await import('plotly.js-dist-min')
+  // Initializes the Plotly library when the component is mounted.
+  onMount(async () => {
+    Plotly = await import('plotly.js-dist-min')
+  })
 
-      // Data for the bar chart.
-      const stationData = [
-        { species: 'Ørret', count: 20 },
-        { species: 'Harr', count: 14 },
-        { species: 'Gjedde', count: 26 }
-      ]
+  $: if (Plotly && plotData.size > 0) {
+    drawPlot(plotData)
+  }
 
-      // Retreves the species names and the count of each species from the stationData array.
-      const speciesNames = stationData.map(function (item) { return item.species })
-      const speciesCounts = stationData.map(function (item) { return item.count })
-
-      // Label for each bar in the bar chart.
-      const textLabels = stationData.map(function (item) { return item.species + ' ' + item.count })
-
-      // Set the data, layout and color for the bar chart
-      const data = [{
-        x: speciesNames,
-        y: speciesCounts,
+  /**
+   * Creates and draws a grouped bar chart with the given data
+   * @param {Map<string, Map<string, number>>} plotData - The data to be displayed in the bar chart
+   */
+  function drawPlot (plotData) {
+    // Create bars for each species in each observation point
+    const traces = []
+    plotData.forEach((observationPoint, name) => {
+      traces.push({
+        x: Array.from(observationPoint.keys()),
+        y: Array.from(observationPoint.values()),
         type: 'bar',
-        text: textLabels,
-        textposition: 'auto',
-
-        // Color, border and transparency of the bars.
-        marker: {
-          color: 'rgb(158,202,225)',
-          opacity: 0.7,
-
-          line: {
-            color: 'rgb(8,48,107)',
-            width: 2
-          }
-        }
-      }]
-
-      // The displayed title, font size and cornerradius of the bars.
-      const layout = {
-        title: 'FORDELING AV ARTER',
-        font: { size: 15 },
-        barcornerradius: 10
-      }
-
-      // Adjust the size of the graphs according to the screen size.
-      const config = { responsive: true }
-
-      // Creates the bar chart.
-      Plotly.newPlot('barAloneOne', data, layout, config)
+        name,
+        text: Array.from(observationPoint.entries(), ([key, value]) => `${key}: ${value}`),
+        textposition: 'auto'
+      })
     })
+
+    // Set the barmode to 'group', add title, font size and the cornerradius og the displayed bars.
+    const layout = {
+      barmode: 'group',
+      title: 'Stolpediagram for antall arter observert i elv/stasjon',
+      font: { size: 15 },
+      barcornerradius: 10
+    }
+
+    // Make graph responsive, remove some buttons from the modebar, add edit link
+    const config = {
+      responsive: true,
+      modeBarButtonsToRemove: ['select2d', 'lasso2d', 'zoomIn2d', 'zoomOut2d'],
+      showLink: true,
+      plotlyServerURL: 'https://chart-studio.plotly.com'
+    }
+
+    // Creates the grouped bar chart.
+    Plotly.newPlot('barGroupOne', traces, layout, config)
+  }
 </script>
 
-<!--Displays the bar chart with id "barAloneOne"-->
-<div id='barAloneOne'></div>
+{#if plotData.size === 0}
+  <p>Velg elv/stasjon</p>
+{/if}
+
+<!--Displays the grouped bar chart with id='barGroupOne'-->
+<div id='barGroupOne'></div>
 
 <style>
 

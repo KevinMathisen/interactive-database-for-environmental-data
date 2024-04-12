@@ -77,7 +77,7 @@ function checkIfObjectHasProperty (store, key, prop) {
 
 /**
  * Check if the store contains information for a river summary with the given id
- * Assumes that a river that has the property "skipper" defined also has
+ * Assumes that a river that has the property 'skipper' defined also has
  * the rest of the data needed to display the river summary
  * @param {number} id - The id of the river to check for
  * @returns {boolean} - True if store contains river summary info, else false
@@ -88,7 +88,7 @@ export function checkIfRiverSummaryExists (id) {
 
 /**
  * Check if the store contains information for a station summary with the given id
- * Assumes that a station that has the property "sec_fished" defined also has
+ * Assumes that a station that has the property 'sec_fished' defined also has
  * the rest of the data needed to display the station summary
  * @param {number} id - The id of the station to check for
  * @returns {boolean} - True if store contains station summary info, else false
@@ -99,7 +99,7 @@ export function checkIfStationSummaryExists (id) {
 
 /**
  * Check if the store contains the data needed to download a station
- * Assumes that a station that has the property "display" defined also has
+ * Assumes that a station that has the property 'display' defined also has
  * the rest of the data needed to download a station
  * @param {number} id - The id of the station to check for
  * @returns {boolean} - True if store contains data needed to download station, else false

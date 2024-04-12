@@ -21,7 +21,7 @@
   }
 </script>
 
-<div class="container">
+<div class='container'>
   <h4>Observasjoner</h4>
   <p>Antall stasjoner: {amountOfStations}</p>
   <p>Fisk fanget: {fishInStations} stk</p>
@@ -44,3 +44,9 @@
   <h4>Kommentar</h4>
   <p>{river.comment}</p>
 </div>
+
+<style>
+  p {
+    margin-left: 0.5em;
+  }
+</style>
