@@ -155,8 +155,8 @@
 
     // Create a blob with the data
     const blob = selectedFormat === 'xlsx'
-      ? await generateExcelFile(selectedRivers, selectedStations, dataType)
-      : generateCSVFile(selectedRivers, selectedStations, dataType)
+      ? await generateExcelFile(selectedRivers, selectedStations, dataType, selectedSpecies)
+      : await generateCSVFile(selectedRivers, selectedStations, dataType, selectedSpecies)
 
     // If no file was created, return
     if (blob.size === 0) {

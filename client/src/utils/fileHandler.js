@@ -18,12 +18,13 @@ import {
  * @param {Map<number, River>} rivers - The rivers to generate the Excel file from
  * @param {Map<number, Station>} stations - The stations to generate the Excel file from
  * @param {string} type - - The type of data ('river' or 'station')
+ * @param {string[]} selectedSpecies - The species to include in the Excel file
  * @returns {Promise<Blob>} A promise that resolves with a Blob representing the Excel file.
  */
-export async function generateExcelFile (rivers, stations, type) {
+export async function generateExcelFile (rivers, stations, type, selectedSpecies) {
   try {
     // Format the data for Excel
-    const data = type === 'river' ? formatRiversForExcel(rivers) : formatStationsForExcel(stations)
+    const data = type === 'river' ? formatRiversForExcel(rivers, selectedSpecies) : formatStationsForExcel(stations, selectedSpecies)
 
     // Create a new workbook
     const workbook = new ExcelJS.Workbook()
@@ -69,17 +70,19 @@ export async function generateExcelFile (rivers, stations, type) {
  * @param {Map<number, River>} rivers - The rivers to generate the CSV file from
  * @param {Map<number, Station>} stations - The stations to generate the CSV file from
  * @param {string} type - The type of data to generate the CSV file from
+ * @param {string[]} selectedSpecies - The species to include in the CSV file
  * @returns {string} - A string containing the CSV file
  */
-export async function generateCSVFile (rivers, stations, type) {
+export async function generateCSVFile (rivers, stations, type, selectedSpecies) {
   try {
     // Format the data for CSV
-    const data = type === 'river' ? formatRiversForCsv(rivers) : formatStationsForCsv(stations)
+    const data = type === 'river' ? formatRiversForCsv(rivers, selectedSpecies) : formatStationsForCsv(stations, selectedSpecies)
 
     // Generate and return CSV content, where each row is separated by a newline, and each column by a comma
+    const rows = data.rows.map(row => row.join(','))
     const csvContent = [
       data.header.join(','),
-      ...data.rows.join(',')
+      ...rows
     ].join('\n')
 
     // Convert the CSV content to a blob

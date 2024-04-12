@@ -8,6 +8,7 @@ import {
   dataForAllSpeciesInStation,
   dataForAllSpeciesInStations
 } from './calculateData.js'
+import { filterObservationsBySpecies } from './filterData.js'
 
 /**
  * Converts river objects into arrays for display in a table
@@ -221,13 +222,14 @@ function createRowForObservation (observation, stationNumber = '') {
  * Converts Rivers into rows for insertion into an Excel file
  * Includes both rivers and its underlying station and observations
  * @param {Map<number, River>} rivers - The rivers to convert to rows
+ * @param {string[]} selectedSpecies - The species to include in the file
  * @returns {{
  * riverHeader: string[], riverRows: string[],
  * stationHeader: string[], stationRows: string[],
  * observationHeader: string[], observationRows: string[]
  * }} - Headers and rows for the table
  */
-export function formatRiversForExcel (rivers) {
+export function formatRiversForExcel (rivers, selectedSpecies = []) {
   // Import the headers for the Excel file
   const riverHeader = headersConstants.RIVER_HEADERS_EXCEL
   const stationHeader = headersConstants.STATION_HEADERS_EXCEL
@@ -252,7 +254,10 @@ export function formatRiversForExcel (rivers) {
       // Create new row for station
       stationRows.push(createRowForStation(station, river.boatType))
 
-      station.observations.forEach(observation => {
+      // Filter observations by selected species
+      const filteredObservations = filterObservationsBySpecies(station.observations, selectedSpecies)
+
+      filteredObservations.forEach(observation => {
         // Create new row for observation
         observationRows.push(createRowForObservation(observation, stationNumber))
       })
@@ -267,13 +272,14 @@ export function formatRiversForExcel (rivers) {
  * Converts Stations into rows for insertion into an Excel file
  * Includes stations, their river, and the stations underlying observations
  * @param {Map<number, Station>} stations - The stations to convert to rows
+ * @param {string[]} selectedSpecies - The species to include in the file
  * @returns {{
  * riverHeader: string[], riverRows: string[],
  * stationHeader: string[], stationRows: string[],
  * observationHeader: string[], observationRows: string[]
  * }} - Headers and rows for the table
  */
-export function formatStationsForExcel (stations) {
+export function formatStationsForExcel (stations, selectedSpecies = []) {
   // Import the headers for the Excel file
   const riverHeader = headersConstants.RIVER_HEADERS_EXCEL
   const stationHeader = headersConstants.STATION_HEADERS_EXCEL
@@ -306,7 +312,10 @@ export function formatStationsForExcel (stations) {
     // Create new row for station
     stationRows.push(createRowForStation(station, rivers.get(station.riverId).boatType))
 
-    station.observations.forEach(observation => {
+    // Filter observations by selected species
+    const filteredObservations = filterObservationsBySpecies(station.observations, selectedSpecies)
+
+    filteredObservations.forEach(observation => {
       // Create new row for observation
       observationRows.push(createRowForObservation(observation, stationNumber))
     })
@@ -322,7 +331,7 @@ export function formatStationsForExcel (stations) {
  * @param {Map<number, River>} rivers - The rivers to convert to rows
  * @returns {{header: string[], rows: string[][]}} - Headers and rows for the table
  */
-export function formatRiversForCsv (rivers) {
+export function formatRiversForCsv (rivers, selectedSpecies = []) {
   const header = [
     ...headersConstants.RIVER_HEADERS_EXCEL,
     ...headersConstants.STATION_HEADERS_EXCEL,
@@ -345,7 +354,10 @@ export function formatRiversForCsv (rivers) {
       // Create new row for station
       const stationRow = createRowForStation(station)
 
-      station.observations.forEach(observation => {
+      // Filter observations by selected species
+      const filteredObservations = filterObservationsBySpecies(station.observations, selectedSpecies)
+
+      filteredObservations.forEach(observation => {
         // Create new row for observation
         const observationRow = createRowForObservation(observation)
 
@@ -354,8 +366,8 @@ export function formatRiversForCsv (rivers) {
       })
     })
   })
-
   // Return the headers and and all the rows
+  console.log(header, rows)
   return { header, rows }
 }
 
@@ -365,7 +377,7 @@ export function formatRiversForCsv (rivers) {
  * @param {Map<number, Station>} stations - The stations to convert to rows
  * @returns {{header: string[], rows: string[][]}} - Headers and rows for the table
  */
-export function formatStationsForCsv (stations) {
+export function formatStationsForCsv (stations, selectedSpecies = []) {
   const header = [
     ...headersConstants.RIVER_HEADERS_EXCEL,
     ...headersConstants.STATION_HEADERS_EXCEL,
@@ -383,7 +395,10 @@ export function formatStationsForCsv (stations) {
     // Create new row for river
     const riverRow = createRowForRiver(rivers.get(station.riverId))
 
-    station.observations.forEach(observation => {
+    // Filter observations by selected species
+    const filteredObservations = filterObservationsBySpecies(station.observations, selectedSpecies)
+
+    filteredObservations.forEach(observation => {
       // Create new row for observation
       const observationRow = createRowForObservation(observation)
 
