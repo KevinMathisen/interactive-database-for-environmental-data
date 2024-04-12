@@ -41,7 +41,7 @@
   }
 
   .small {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     width: 140px;
     height: 50px;
     border-radius: 1rem;
