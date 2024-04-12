@@ -8,7 +8,8 @@
   import { addFeedbackToStore } from '../../utils/addFeedbackToStore.js'
   import UserFeedbackMessage from '$lib/UserFeedbackMessage.svelte'
   import Button from '$lib/user-input/Button.svelte'
-  import { validateFile, fileExistsInArray } from '../../utils/fileHandler.js'
+  import { validateFile } from '../../utils/fileHandler.js'
+  import { uploadFileToServer } from '../../api/upload.js'
 
   let uploadedFile = null
   let hover = false
@@ -38,7 +39,7 @@
    *
    */
   function uploadFile () {
-    // isUploading = true;
+
     if (!uploadedFile) {
       addFeedbackToStore(
         FEEDBACK_TYPES.ERROR,
@@ -47,11 +48,7 @@
       )
       return
     }
-    // need to validate that the files are actually csv or xls files. Do this by converting to json
-    // and checking if the json data follows the format we have specified
-    let allFilesValid = true
-    
-    // Parse XLSX file
+    // Parse and validate XLSX file
     const reader = new FileReader()
     reader.onload = async function (e) {
       const buffer = new Uint8Array(e.target.result)
@@ -59,24 +56,15 @@
       await workbook.xlsx.load(buffer)
       const worksheet = workbook.worksheets[0]
       const jsonData = worksheet.getRows(1, worksheet.rowCount).map((row) => row.values)
-      console.log(jsonData)
+      console.log(jsonData) // Should reject if not valid
     }
     reader.readAsArrayBuffer(uploadedFile)
     
+    // Upload file to server
+    uploadFileToServer(uploadedFile)
 
-    if (allFilesValid) {
-      addFeedbackToStore(
-        FEEDBACK_TYPES.SUCCESS,
-        FEEDBACK_CODES.CREATED,
-        FEEDBACK_MESSAGES.UPLOAD_SUCCESS
-      )
-    } else {
-      addFeedbackToStore(
-        FEEDBACK_TYPES.ERROR,
-        FEEDBACK_CODES.NOT_FOUND,
-        FEEDBACK_MESSAGES.NOT_FOUND
-      )
-    }
+    // Reset the uploaded file
+    uploadedFile = null
   }
 
   /**
