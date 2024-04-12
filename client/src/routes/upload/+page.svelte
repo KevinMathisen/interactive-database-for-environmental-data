@@ -25,7 +25,7 @@
     fileInput.click()
     fileInput.addEventListener('change', (e) => {
       const file = e.target.files[0]
-      
+
       if (!validateFile(file)) {
         return
       }
@@ -39,7 +39,6 @@
    *
    */
   function uploadFile () {
-
     if (!uploadedFile) {
       addFeedbackToStore(
         FEEDBACK_TYPES.ERROR,
@@ -59,7 +58,7 @@
       console.log(jsonData) // Should reject if not valid
     }
     reader.readAsArrayBuffer(uploadedFile)
-    
+
     // Upload file to server
     uploadFileToServer(uploadedFile).then((success) => {
       // Reset the uploaded file if the upload was successful
@@ -73,7 +72,7 @@
    * Handles the drop event when a file is dropped in the upload box
    * @param {Event} e - The event object
    */
-  function handleDrop (e) {    
+  function handleDrop (e) {
     console.log('Dropped')
     // Get the files and check if there is more than one file
     const files = e.dataTransfer.files
@@ -102,14 +101,14 @@
 
 <div class='uploadPage'>
   <!--Defines the box where you can drag and drop or choose files -->
-  <div 
+  <div
     class='uploadFilesBox'
     class:hover={hover}
     on:dragover|preventDefault
-    on:dragenter|preventDefault={() =>{hover = true}}
+    on:dragenter|preventDefault={() => { hover = true }}
     on:dragleave|preventDefault={(e) => {
       if (!e.currentTarget.contains(e.relatedTarget)) {
-        hover = false;
+        hover = false
       }
     }}
     on:drop|preventDefault={handleDrop}
@@ -134,9 +133,9 @@
     <p id='fileChosenText'>Valgt fil:</p>
     {#if uploadedFile}
       <p>{uploadedFile.name}
-        <button on:click={() => {uploadedFile = null}} class='smallButton'>x</button> 
+        <button on:click={() => { uploadedFile = null }} class='smallButton'>x</button>
       </p>
-      
+
     {:else}
       <p>Ingen fil valgt</p>
     {/if}

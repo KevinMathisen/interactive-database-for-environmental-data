@@ -7,11 +7,10 @@ import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/
 
 /**
  * Upload file to server
- * 
  * @param {File} file - The file to upload
  * @returns {Promise<boolean>} - A promise which resolves to if upload was successful or not
  */
-export async function uploadFileToServer(file) {
+export async function uploadFileToServer (file) {
   // Create a new FormData object and add file to it
   const formData = new FormData()
   formData.append('file', file)
@@ -39,7 +38,6 @@ export async function uploadFileToServer(file) {
     }
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.UPLOAD_REJECTED, FEEDBACK_MESSAGES.UPLOAD_REJECTED)
     return false
-
   } catch (error) { // Catch any possible network or fetch errors
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.UPLOAD_UNAVAILABLE, FEEDBACK_MESSAGES.UPLOAD_UNAVAILABLE)
     return false
