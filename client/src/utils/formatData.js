@@ -213,7 +213,7 @@ function createRowForObservation (observation, stationNumber = '') {
     observation.id, stationNumber, observation.round, // capitalize specices name
     observation.species.charAt(0).toUpperCase() + observation.species.slice(1),
     observation.length, observation.count, observation.gender, observation.age, 
-    observation.released ? 'Ja' : 'Nei',
+    observation.released === null ? '' : observation.released ? 'Ja' : 'Nei',
     observation.sampletype, observation.comment
   ].map(attribute => attribute === null ? '' : attribute)
 }
@@ -352,6 +352,8 @@ export function formatRiversForCsv (rivers, selectedSpecies = []) {
       // Get station from store
       station = stations.get(station)
 
+      const stationNumber = station.name.split(' ').pop()
+
       // Create new row for station
       const stationRow = createRowForStation(station)
 
@@ -360,7 +362,7 @@ export function formatRiversForCsv (rivers, selectedSpecies = []) {
 
       filteredObservations.forEach(observation => {
         // Create new row for observation
-        const observationRow = createRowForObservation(observation)
+        const observationRow = createRowForObservation(observation, stationNumber)
 
         // Create a row with river, station and observation data
         rows.push([...riverRow, ...stationRow, ...observationRow])
@@ -394,6 +396,8 @@ export function formatStationsForCsv (stations, selectedSpecies = []) {
     // Create new row for station
     const stationRow = createRowForStation(station)
 
+    const stationNumber = station.name.split(' ').pop()
+
     // Create new row for river
     const riverRow = createRowForRiver(rivers.get(station.riverId))
 
@@ -402,7 +406,7 @@ export function formatStationsForCsv (stations, selectedSpecies = []) {
 
     filteredObservations.forEach(observation => {
       // Create new row for observation
-      const observationRow = createRowForObservation(observation)
+      const observationRow = createRowForObservation(observation, stationNumber)
 
       // Create a row with river, station and observation data
       rows.push([...riverRow, ...stationRow, ...observationRow])
