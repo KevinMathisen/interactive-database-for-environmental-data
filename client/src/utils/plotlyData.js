@@ -77,6 +77,28 @@ function createDataForBarAndPieChart (
   getTimespentFishing
 ) {
   const speciesCountForPoints = new Map()
+  
+  // If the data should be aggregated, combine the data for all observationPoints
+  if (aggregateData) {
+    const allObservations = Array.from(observationPoints.values()).flatMap(getObservations)
+
+    const speciesCount = getObservationSpeciesCount(allObservations, allSpecies, includeOthers)
+
+    // If the data should be relative to time spent fishing
+    if (!absoluteValues) {
+      // Get the time spent fishing for all observationPoints
+      const secSpentFishing = Array.from(observationPoints.values()).reduce(
+        (acc, observationPoint) => acc + getTimespentFishing(observationPoint), 0)
+
+      // Convert the absolute values to relative values
+      convertAbsoluteToRelativeValues(speciesCount, secSpentFishing)
+    }
+
+    speciesCountForPoints.set('sum', speciesCount)
+
+    // Return the data for all observationPoints aggregated
+    return speciesCountForPoints
+  }
 
   // For each observationPoint, get the data for it and save it
   Array.from(observationPoints.values()).forEach(observationPoint => {
@@ -154,9 +176,19 @@ function getObservationSpeciesCount (observations, allSpecies, includeOthers) {
  * @param {number} interval - The interval in cm to group the data by
  * @param {boolean} includeOthers - Whether to include the 'others' category in the data
  * @param {boolean} combineSpecies - Whether to combine the data for all species in a river or station
+ * @param {boolean} aggregateData - Whether to aggregate the data for rivers or stations
  * @returns {Map<string, Map<string, number>>} - Map of rivers or stations with count of each species
  */
-export function dataForHistogramAndBoxplot (plotType, observationPoints, dataType, species, interval = 1, includeOthers = false, combineSpecies = false) {
+export function dataForHistogramAndBoxplot (
+  plotType, 
+  observationPoints, 
+  dataType, 
+  species, 
+  interval = 1, 
+  includeOthers = false, 
+  combineSpecies = false,
+  aggregateData = false
+) {
   try {
     if (dataType === 'river') {
       return createDataForHistogramAndBoxplot(
@@ -166,6 +198,7 @@ export function dataForHistogramAndBoxplot (plotType, observationPoints, dataTyp
         interval,
         includeOthers,
         combineSpecies,
+        aggregateData,
         river => getObservationsForRiver(river), // Use imported function to get observations from rivers
         river => `${river.name} ${river.startDate}`
       )
@@ -177,6 +210,7 @@ export function dataForHistogramAndBoxplot (plotType, observationPoints, dataTyp
         interval,
         includeOthers,
         combineSpecies,
+        aggregateData,
         station => station.observations, // Simply get observations directly from stations
         station => `${station.name} ${station.date}`
       )
@@ -195,14 +229,45 @@ export function dataForHistogramAndBoxplot (plotType, observationPoints, dataTyp
  * @param {number} interval - The interval in cm to group the data by
  * @param {boolean} includeOthers - Whether to include the 'others' category in the data
  * @param {boolean} combineSpecies - Whether to combine the data for all species in an observationPoint
+ * @param {boolean} aggregateData - Whether to aggregate the data for rivers or stations
  * @param {Function} getObservations - Function to get observations from an observationPoint
  * @param {Function} getDisplayName - Function to get display name from an observationPoint
  * @returns {
  * Map<string, { count: number[], intervals: number[], interval: number }>
  * } - Map of observationPoints with count of each species in intervals
  */
-function createDataForHistogramAndBoxplot (plotType, observationPoints, allSpecies, interval, includeOthers, combineSpecies, getObservations, getDisplayName) {
+function createDataForHistogramAndBoxplot (
+  plotType, 
+  observationPoints, 
+  allSpecies, 
+  interval, 
+  includeOthers, 
+  combineSpecies, 
+  aggregateData,
+  getObservations, 
+  getDisplayName
+) {
   const allSpeciesIntervals = new Map()
+
+  // If the data should be aggregated, combine the data for all observationPoints
+  if (aggregateData) {
+    const allObservations = Array.from(observationPoints.values()).flatMap(getObservations)
+
+    // Filter out observations which have no length
+    const observationsWithLength = allObservations.filter(
+      observation => observation.length && observation.length > 0)
+
+    // Get the data to plot for all observationPoints grouped by species
+    const speciesIntervals = createSpeciesDataForHistogramAndBoxplot(plotType, observationsWithLength, allSpecies, interval, includeOthers, combineSpecies)
+
+    // Add the observationPoint data to the total
+    speciesIntervals.forEach((value, key) => {
+      allSpeciesIntervals.set(`sum - ${key}`, value)
+    })
+
+    // Return the data for all observationPoints aggregated
+    return allSpeciesIntervals
+  }
 
   // For each observationPoint, create and save data for that point to plot
   Array.from(observationPoints.values()).forEach(observationPoint => {
