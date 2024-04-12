@@ -1,5 +1,4 @@
 <script>
-  import Papa from 'papaparse'
   import ExcelJS from 'exceljs'
   import {
     FEEDBACK_TYPES,
@@ -11,33 +10,26 @@
   import Button from '$lib/user-input/Button.svelte'
   import { validateFile, fileExistsInArray } from '../../utils/fileHandler.js'
 
-  const filesArray = []
-  // let isUploading = false;
+  let uploadedFile = null
 
   /**
-   * Selects files from the user's computer
+   * Selects file from the user's computer
    */
   function selectFile () {
     const fileInput = document.createElement('input')
     fileInput.type = 'file'
-    fileInput.multiple = true
-    fileInput.accept = '.csv, .xlsx'
+    fileInput.multiple = false
+    fileInput.accept = '.xlsx'
     fileInput.click()
     fileInput.addEventListener('change', (e) => {
-      const files = e.target.files
-      const uploadFilesUploaded = document.querySelector('#filesChosen')
-      for (let i = 0; i < files.length; i++) {
-        const file = files[i]
-        if (!validateFile(file) || fileExistsInArray(file, filesArray)) {
-          continue
-        }
-        const fileDiv = document.createElement('div')
-        fileDiv.innerHTML = file.name
-        uploadFilesUploaded.appendChild(fileDiv)
-
-        // Add file to array
-        filesArray.push(file)
+      const file = e.target.files[0]
+      
+      if (!validateFile(file)) {
+        return
       }
+
+      // Select the file
+      uploadedFile = file
     })
   }
 
@@ -46,7 +38,7 @@
    */
   function uploadFile () {
     // isUploading = true;
-    if (filesArray.length === 0) {
+    if (!uploadedFile) {
       addFeedbackToStore(
         FEEDBACK_TYPES.ERROR,
         FEEDBACK_CODES.NOT_FOUND,
@@ -57,31 +49,19 @@
     // need to validate that the files are actually csv or xls files. Do this by converting to json
     // and checking if the json data follows the format we have specified
     let allFilesValid = true
-    for (const file of filesArray) {
-      // Parse CSV file
-      if (file.name.endsWith('.csv')) {
-        Papa.parse(file, {
-          header: true,
-          complete: function (results) {
-            console.log(results.data)
-          }
-        })
-      } else if (file.name.endsWith('.xlsx')) { // Parse XLSX file
-        const reader = new FileReader()
-        reader.onload = async function (e) {
-          const buffer = new Uint8Array(e.target.result)
-          const workbook = new ExcelJS.Workbook()
-          await workbook.xlsx.load(buffer)
-          const worksheet = workbook.worksheets[0]
-          const jsonData = worksheet.getRows(1, worksheet.rowCount).map((row) => row.values)
-          console.log(jsonData)
-        }
-        reader.readAsArrayBuffer(file)
-      } else {
-        allFilesValid = false
-        break
-      }
+    
+    // Parse XLSX file
+    const reader = new FileReader()
+    reader.onload = async function (e) {
+      const buffer = new Uint8Array(e.target.result)
+      const workbook = new ExcelJS.Workbook()
+      await workbook.xlsx.load(buffer)
+      const worksheet = workbook.worksheets[0]
+      const jsonData = worksheet.getRows(1, worksheet.rowCount).map((row) => row.values)
+      console.log(jsonData)
     }
+    reader.readAsArrayBuffer(uploadedFile)
+    
 
     if (allFilesValid) {
       addFeedbackToStore(
@@ -113,13 +93,17 @@
   <!-- Defines the text under the upload files box -->
   <div class='uploadFilesBoxText'>
     <p>Maksimal fil størrelse: 10 MB</p>
-    <p>Kun tillatt å laste opp filer av typen: .csv and .xlsx</p>
+    <p>Kun tillatt å laste opp filer av typen: .xlsx</p>
   </div>
 
   <!-- Defines the overview over files selected -->
-  <div class='uploadFilesUploaded'>
-    <p id='filesChosenText'>Filer som er valgt:</p>
-    <div id='filesChosen'></div>
+  <div class='uploadFileUploaded'>
+    <p id='fileChosenText'>Valgt fil:</p>
+    {#if uploadedFile}
+      <p>{uploadedFile.name}</p>
+    {:else}
+      <p>Ingen fil valgt</p>
+    {/if}
   </div>
 
   <!-- The upload files button -->
@@ -162,20 +146,16 @@
     text-align: left;
   }
 
-  .uploadFilesUploaded {
+  .uploadFileUploaded {
     width: 80%;
     max-width: 900px;
     padding: 1rem;
     text-align: left;
   }
 
-  #filesChosenText {
+  #fileChosenText {
     font-size: 2rem;
     margin: 0;
-  }
-
-  #filesChosen {
-    padding: 1rem;
   }
 
   .uploadButtonPlacement {
