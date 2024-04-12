@@ -11,6 +11,7 @@
   import { validateFile, fileExistsInArray } from '../../utils/fileHandler.js'
 
   let uploadedFile = null
+  let hover = false
 
   /**
    * Selects file from the user's computer
@@ -77,15 +78,54 @@
       )
     }
   }
+
+  /**
+   * Handles the drop event when a file is dropped in the upload box
+   * @param {Event} e - The event object
+   */
+  function handleDrop (e) {    
+    // Get the files and check if there is more than one file
+    const files = e.dataTransfer.files
+    if (files.length > 1) {
+      addFeedbackToStore(
+        FEEDBACK_TYPES.ERROR,
+        FEEDBACK_CODES.FORBIDDEN,
+        FEEDBACK_MESSAGES.MULTIPLE_FILES
+      )
+      return
+    }
+
+    // Check if the file is valid
+    const file = files[0]
+    if (!validateFile(file)) {
+      return
+    }
+
+    // Select the file
+    uploadedFile = file
+  }
 </script>
 
 <UserFeedbackMessage />
 
 <div class='uploadPage'>
-  <!--Defines the box where you click to choose files -->
-  <div class='uploadFilesBox'>
+  <!--Defines the box where you can drag and drop or choose files -->
+  <div 
+    class='uploadFilesBox'
+    class:hover={hover}
+    on:dragenter|preventDefault={() =>{hover = true}}
+    on:dragleave|preventDefault={(e) => {
+      if (!e.currentTarget.contains(e.relatedTarget)) {
+        hover = false;
+      }
+    }}
+    on:drop|preventDefault={handleDrop}
+    role='button'
+    label='Drop files here to load'
+    tabindex='0'
+  >
     <img src='/uploadCloudIcon.svg' alt='listIcon' height='60px' id='uploadCloudIcon' />
-    <p>Dra og slipp filer eller</p>
+    <p>Dra og slipp fil eller</p>
     <br>
     <Button type='blue' size='large' on:buttonClick={selectFile}>Bla gjennom Filer <img src='/fileSearchIcon.svg' alt='listIcon' height='40px' class='white-color'></Button>
   </div>
@@ -135,6 +175,10 @@
     font-size: 1.5rem;
   }
 
+  .hover {
+    background: lightblue;
+  }
+
   #uploadCloudIcon {
     height: 100px;
   }
@@ -169,17 +213,4 @@
   .white-color{
     filter: invert(100%);
   }
-
-  /* @media screen and (max-width: 1000px) {
-    .uploadFilesBox {
-      width: 500px;
-    }
-    .uploadFilesBoxText {
-      margin-right: 10rem;
-    }
-    .uploadFilesUploaded {
-      width: 500px;
-    }
-
-  } */
 </style>
