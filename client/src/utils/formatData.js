@@ -194,11 +194,12 @@ function createRowForRiver (river) {
  * Converts a station object into a string array for insertion into an Excel file
  * Each string is an attribute of the object and a column in the Excel file
  * @param {Station} station - The station to create a row for
+ * @param {string} boatType - The boat type of the river the station belongs to
  * @returns {string[]} - A row in excel
  */
-function createRowForStation (station) {
+function createRowForStation (station, boatType = '') {
   return [
-    station.name.split(' ')[1], station.date, station.time, station.startPos.coordinates[1], station.startPos.coordinates[0],
+    station.name.split(' ').pop(), boatType, station.date, station.time, station.startPos.coordinates[1], station.startPos.coordinates[0],
     station.endPos.coordinates[1], station.endPos.coordinates[0], station.riverType, station.weather, station.waterTemp, station.airTemp,
     station.conductivity, station.transectLength, station.secFished, station.voltage, station.pulse, station.display, station.gpxFile,
     station.description, station.comment
@@ -209,12 +210,15 @@ function createRowForStation (station) {
  * Converts an observation object into a string array for insertion into an Excel file
  * Each string is an attribute of the object and a column in the Excel file
  * @param {Observation} observation - The observation to create a row for
+ * @param {string} stationNumber - The number of the station the observation belongs to
  * @returns {string[]} - A row in excel
  */
-function createRowForObservation (observation) {
+function createRowForObservation (observation, stationNumber = '') {
   return [
-    observation.id, observation.station, observation.round, observation.species,
-    observation.length, observation.count, observation.gender, observation.age, observation.released,
+    observation.id, stationNumber, observation.round, // capitalize specices name
+    observation.species.charAt(0).toUpperCase() + observation.species.slice(1),
+    observation.length, observation.count, observation.gender, observation.age, 
+    observation.released ? 'Ja' : 'Nei',
     observation.sampletype, observation.comment
   ].map(attribute => attribute === null ? '' : attribute)
 }
@@ -249,13 +253,14 @@ export function formatRiversForExcel (rivers) {
     river.stations.forEach(stationId => {
       // Get station from store
       const station = stations.get(stationId)
+      const stationNumber = station.name.split(' ').pop()
 
       // Create new row for station
-      stationRows.push(createRowForStation(station))
+      stationRows.push(createRowForStation(station, river.boatType))
 
       station.observations.forEach(observation => {
         // Create new row for observation
-        observationRows.push(createRowForObservation(observation))
+        observationRows.push(createRowForObservation(observation, stationNumber))
       })
     })
   })
@@ -302,12 +307,14 @@ export function formatStationsForExcel (stations) {
   })
 
   stations.forEach(station => {
+    const stationNumber = station.name.split(' ').pop()
+
     // Create new row for station
-    stationRows.push(createRowForStation(station))
+    stationRows.push(createRowForStation(station, rivers.get(station.riverId).boatType))
 
     station.observations.forEach(observation => {
       // Create new row for observation
-      observationRows.push(createRowForObservation(observation))
+      observationRows.push(createRowForObservation(observation, stationNumber))
     })
   })
 
