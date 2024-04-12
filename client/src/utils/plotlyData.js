@@ -11,9 +11,17 @@ import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/
  * @param {string[]} species - An array of species to include in the data
  * @param {boolean} includeOthers - Whether to include the 'others' category in the data
  * @param {boolean} absoluteValues - Whether to display the data as absolute values or in relation to time spent fishing
+ * @param {boolean} aggregateData - Whether to aggregate the data for rivers or stations
  * @returns {Map<string, Map<string, number>>} - Map of rivers or stations with count of each species
  */
-export function dataForBarAndPieChart (observationPoints, dataType, species, includeOthers, absoluteValues = true) {
+export function dataForBarAndPieChart (
+  observationPoints, 
+  dataType, 
+  species, 
+  includeOthers, 
+  absoluteValues = true,
+  aggregateData = false
+) {
   try {
     // Return the species count for rivers or stations based on datatType
     if (dataType === 'river') {
@@ -22,6 +30,7 @@ export function dataForBarAndPieChart (observationPoints, dataType, species, inc
         species,
         includeOthers,
         absoluteValues,
+        aggregateData,
         river => getObservationsForRiver(river), // Use imported function to get observations from rivers
         river => `${river.name} ${river.startDate}`,
         river => secondsSpentFishingInStations(getStationsForRiver(river)) // Use imported function to get time spent fishing from stations
@@ -32,6 +41,7 @@ export function dataForBarAndPieChart (observationPoints, dataType, species, inc
         species,
         includeOthers,
         absoluteValues,
+        aggregateData,
         station => station.observations, // Simply get observations directly from stations
         station => `${station.name} ${station.date}`,
         station => station.secFished // Simply get time spent fishing directly from stations
@@ -50,12 +60,22 @@ export function dataForBarAndPieChart (observationPoints, dataType, species, inc
  * @param {string[]} allSpecies - An array of species to include in the data
  * @param {boolean} includeOthers - Whether to include the 'others' category in the data
  * @param {boolean} absoluteValues - Whether to display the data as absolute values or in relation to time spent fishing
+ * @param {boolean} aggregateData - Whether to aggregate the data for rivers or stations
  * @param {Function} getObservations - Function to get observations from an observationPoint
  * @param {Function} getDisplayName - Function to get display name from an observationPoint
  * @param {Function} getTimespentFishing - Function to get time spent fishing from an observationPoint
  * @returns {Map<string, Map<string, number>>} - Map of observationPoints with count of each species
  */
-function createDataForBarAndPieChart (observationPoints, allSpecies, includeOthers, absoluteValues, getObservations, getDisplayName, getTimespentFishing) {
+function createDataForBarAndPieChart (
+  observationPoints, 
+  allSpecies, 
+  includeOthers, 
+  absoluteValues,
+  aggregateData, 
+  getObservations, 
+  getDisplayName, 
+  getTimespentFishing
+) {
   const speciesCountForPoints = new Map()
 
   // For each observationPoint, get the data for it and save it
@@ -66,15 +86,13 @@ function createDataForBarAndPieChart (observationPoints, allSpecies, includeOthe
     // Get the species count for the observations
     const speciesCount = getObservationSpeciesCount(observations, allSpecies, includeOthers)
 
-    // If the data should be relative to time spent fishing, divide the count by the time spent fishing
+    // If the data should be relative to time spent fishing
     if (!absoluteValues) {
       // Get the time spent fishing for the observationPoint
       const secSpentFishing = getTimespentFishing(observationPoint)
 
-      // Calculate the count of each species per minute and update the species count
-      speciesCount.forEach((count, species) => {
-        speciesCount.set(species, Number((count / secSpentFishing * 60).toFixed(2)))
-      })
+      // Convert the absolute values to relative values
+      convertAbsoluteToRelativeValues(speciesCount, secSpentFishing)
     }
 
     // Save the species count for the observationPoint
@@ -82,6 +100,18 @@ function createDataForBarAndPieChart (observationPoints, allSpecies, includeOthe
   })
 
   return speciesCountForPoints
+}
+
+/**
+ * Converts the absolute values to relative values based on the time spent fishing
+ * @param {Map<string, number>} speciesCount - Map of species with their count
+ * @param {number} secSpentFishing - The time spent fishing in seconds
+ */
+function convertAbsoluteToRelativeValues (speciesCount, secSpentFishing) {
+  // Calculate the count of each species per minute and update the species count
+  speciesCount.forEach((count, species) => {
+    speciesCount.set(species, Number((count / secSpentFishing * 60).toFixed(2)))
+  })
 }
 
 /**
