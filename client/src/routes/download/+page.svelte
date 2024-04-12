@@ -234,6 +234,9 @@
        selectedStations = selectedStationsUrl
      }
 
+     // Fetch the data needed for the rivers/stations choosen
+     fetchRiverStationData()
+
      urlParamsLoaded = true // Set that URL parameters have been loaded
    }
 </script>
