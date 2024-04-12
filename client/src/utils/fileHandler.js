@@ -95,7 +95,6 @@ export async function generateCSVFile (rivers, stations, type, selectedSpecies) 
   }
 }
 
-
 /**
  * Validated the file type and size
  * @param {File} file - The file to validate

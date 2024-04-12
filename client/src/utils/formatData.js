@@ -212,7 +212,7 @@ function createRowForObservation (observation, stationNumber = '') {
   return [
     observation.id, stationNumber, observation.round, // capitalize specices name
     observation.species.charAt(0).toUpperCase() + observation.species.slice(1),
-    observation.length, observation.count, observation.gender, observation.age, 
+    observation.length, observation.count, observation.gender, observation.age,
     observation.released === null ? '' : observation.released ? 'Ja' : 'Nei',
     observation.sampletype, observation.comment
   ].map(attribute => attribute === null ? '' : attribute)
