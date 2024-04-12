@@ -11,7 +11,7 @@ import { get } from 'svelte/store'
  */
 export function addFeedbackToStore (type, code, message) {
   // Dont add feedback if feedback with same code is already displayed
-  if (get(userFeedbackStore).some(f => f.code === code) ) {
+  if (get(userFeedbackStore).some(f => f.code === code)) {
     return
   }
 

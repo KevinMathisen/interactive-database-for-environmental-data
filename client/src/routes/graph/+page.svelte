@@ -62,7 +62,7 @@
     updatePlotData()
   }
 
-  // Trigger update of plot data when data type is changed, or if 
+  // Trigger update of plot data when data type is changed, or if
   $: if (dataType || (selectedRivers.size === 0 && dataType === DATATYPE_RIVER) || (selectedStations.size === 0 && dataType === DATATYPE_STATION)) {
     dataUpdated = true
   }
@@ -167,30 +167,30 @@
    * Gets the rivers or stations based on the URL parameters
    */
    function getUrlParams () {
-    // Get the river and station ids
-    const searchParams = new URLSearchParams($page.url.search)
-    const riverIds = searchParams.getAll(DATATYPE_RIVER).map(Number)
-    const stationIds = searchParams.getAll(DATATYPE_STATION).map(Number)
+     // Get the river and station ids
+     const searchParams = new URLSearchParams($page.url.search)
+     const riverIds = searchParams.getAll(DATATYPE_RIVER).map(Number)
+     const stationIds = searchParams.getAll(DATATYPE_STATION).map(Number)
 
-    const selectedRiversUrl = new Map()
-    const selectedStationsUrl = new Map()
+     const selectedRiversUrl = new Map()
+     const selectedStationsUrl = new Map()
 
-    // Select the rivers or stations and datatype based on the ids
-    if (riverIds.length > 0) {
-      dataType = DATATYPE_RIVER
-      riverIds.forEach(id => {
-        selectedRiversUrl.set(id, rivers.get(id))
-      })
-      selectedRivers = selectedRiversUrl
-    } else if (stationIds.length > 0) {
-      dataType = DATATYPE_STATION
-      stationIds.forEach(id => {
-        selectedStationsUrl.set(id, stations.get(id))
-      })
-      selectedStations = selectedStationsUrl
-    }
+     // Select the rivers or stations and datatype based on the ids
+     if (riverIds.length > 0) {
+       dataType = DATATYPE_RIVER
+       riverIds.forEach(id => {
+         selectedRiversUrl.set(id, rivers.get(id))
+       })
+       selectedRivers = selectedRiversUrl
+     } else if (stationIds.length > 0) {
+       dataType = DATATYPE_STATION
+       stationIds.forEach(id => {
+         selectedStationsUrl.set(id, stations.get(id))
+       })
+       selectedStations = selectedStationsUrl
+     }
 
-    urlParamsLoaded = true // Set that URL parameters have been loaded
+     urlParamsLoaded = true // Set that URL parameters have been loaded
    }
 
 </script>

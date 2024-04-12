@@ -20,7 +20,7 @@
    */
   function drawPlot (plotData) {
     // Width of boxplot given amount of observation points
-    const boxWidth = 0.6 - (1/plotData.size) 
+    const boxWidth = 0.6 - (1 / plotData.size)
 
     // Create boxplot with dots and mean with standard deviation for each species in each observation point
     const traces = []
