@@ -329,6 +329,7 @@ export function formatStationsForExcel (stations, selectedSpecies = []) {
  * Converts Rivers into rows for insertion into a CSV file
  * Each row is a string array with the river, station and observation data
  * @param {Map<number, River>} rivers - The rivers to convert to rows
+ * @param {string[]} selectedSpecies - The species to include in the file
  * @returns {{header: string[], rows: string[][]}} - Headers and rows for the table
  */
 export function formatRiversForCsv (rivers, selectedSpecies = []) {
@@ -375,6 +376,7 @@ export function formatRiversForCsv (rivers, selectedSpecies = []) {
  * Converts Stations into rows for insertion into a CSV file
  * Each row is a string array with the river, station and observation data
  * @param {Map<number, Station>} stations - The stations to convert to rows
+ * @param {string[]} selectedSpecies - The species to include in the file
  * @returns {{header: string[], rows: string[][]}} - Headers and rows for the table
  */
 export function formatStationsForCsv (stations, selectedSpecies = []) {

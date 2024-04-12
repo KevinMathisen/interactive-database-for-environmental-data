@@ -12,7 +12,6 @@ import {
   formatStationsForCsv
 } from './formatData.js'
 
-//  - - - - DOWNLOAD FUNCTIONALITY - - - -
 /**
  * Generates an Excel file from the given data
  * @param {Map<number, River>} rivers - The rivers to generate the Excel file from
@@ -96,7 +95,6 @@ export async function generateCSVFile (rivers, stations, type, selectedSpecies) 
   }
 }
 
-//  - - - - UPLOAD FUNCTIONALITY - - - -
 
 /**
  * Validated the file type and size
