@@ -143,7 +143,7 @@
 
   <!-- The upload files button -->
   <div class='uploadButtonPlacement'>
-    <Button type='orange' size='medium' on:buttonClick={uploadFile}>Last opp <img src='/uploadIcon2.svg' alt='listIcon' height='40px' class='uploadIcon white-color'></Button>
+    <Button type='orange' size='medium' on:buttonClick={uploadFile}>Last opp <img src='/uploadIcon.svg' alt='listIcon' height='40px' class='uploadIcon white-color'></Button>
   </div>
 
 </div>
