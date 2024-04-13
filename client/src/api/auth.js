@@ -6,6 +6,7 @@ import {
 } from '../constants/endpoints.js'
 import { addFeedbackToStore } from '../utils/addFeedbackToStore.js'
 import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/feedbackMessages'
+import { authStore } from '../stores/authStore.js'
 
 /**
  * Log in user to server
@@ -41,8 +42,9 @@ export async function authLogin(username, password) {
       return false
     }
 
-    // If login was successful, tell user
+    // If login was successful, tell user and update authStore
     addFeedbackToStore(FEEDBACK_TYPES.SUCCESS, FEEDBACK_CODES.AUTH_SUCCESS, FEEDBACK_MESSAGES.AUTH_SUCCESS)
+    authStore.set({ authenticated: true })
     return true
 
   } catch (error) { // Catch any possible network or fetch errors
@@ -69,8 +71,9 @@ export async function authLogout() {
       return false
     }
 
-    // If logout was successful, tell user
+    // If logout was successful, tell user and update authStore
     addFeedbackToStore(FEEDBACK_TYPES.SUCCESS, FEEDBACK_CODES.AUTH_SUCCESS, FEEDBACK_MESSAGES.LOGOUT_SUCCESS)
+    authStore.set({ authenticated: false })
     return true
 
   } catch (error) { // Catch any possible network or fetch errors
@@ -92,13 +95,15 @@ export async function authRefresh() {
 
     // Check if the response is ok
     if (!response.ok) {
-      // Tell user to log in 
+      // Tell user to log in and update authStore
       addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.UNAUTHORIZED, FEEDBACK_MESSAGES.UNAUTHORIZED)
+      authStore.set({ authenticated: false })
       return false
     }
 
-    // If refresh was successful tell user to refresh
+    // If refresh was successful tell user to refresh and update authStore
     addFeedbackToStore(FEEDBACK_TYPES.SUCCESS, FEEDBACK_CODES.AUTH_SUCCESS, FEEDBACK_MESSAGES.REFRESH_SUCCESS)
+    authStore.set({ authenticated: true })
     return true
 
   } catch (error) { // Catch any possible network or fetch errors
