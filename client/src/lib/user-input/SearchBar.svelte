@@ -9,12 +9,12 @@
     $: placeholder = `Søk etter ${dataType === 'river' ? 'Elv navn eller prosjektnummer' : 'Stasjon navn'}`
 </script>
 
-<div class=container>
-    <label>
+<div class='container' role='search'>
+    <label for='listSearch'>
         <input type='search' id='listSearch' name='listSearch' placeholder={placeholder} bind:value={searchQuery}/>
     </label>
 
-    <div class=helpText>{helpText}</div>
+    <h4 class='helpText'>{helpText}</h4>
 </div>
 
 <style>
@@ -26,7 +26,8 @@
     }
 
     .helpText {
-        padding: 0.5em;
+        padding-left: 0.5em;
+        /* padding: 0.5em; */
     }
 
     #listSearch {
