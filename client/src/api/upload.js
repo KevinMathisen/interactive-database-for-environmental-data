@@ -28,7 +28,7 @@ export async function uploadFileToServer (file) {
       return false
     }
 
-    // Give feedback to the user that the upload was successful
+    // Retrieve the result from the response
     const result = await response.json()
 
     // Check if the upload was successful
