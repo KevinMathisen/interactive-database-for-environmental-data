@@ -37,49 +37,59 @@
   <div class={mainContentClass}>
     <div class='column'>
       <!-- River name, project id, and date -->
-      <CollapsibleSection title={river.name} collapsable={false}>
-        <RiverOverview {river} />
-      </CollapsibleSection>
-
+      <div role='tooltip'>  
+        <CollapsibleSection title={river.name} collapsable={false}>
+          <RiverOverview {river} />
+        </CollapsibleSection>
+      </div>
       <!-- River info such as observation data, crew, and comments -->
-      <CollapsibleSection title='Info'>
-        <RiverInfo {river} {stations}/>
-      </CollapsibleSection>
+      <div role='tooltip'>
+        <CollapsibleSection title='Info'>
+          <RiverInfo {river} {stations}/>
+        </CollapsibleSection>
+      </div>
     </div>
 
     <div class='column'>
       <!-- Stations under the river -->
-      <CollapsibleSection title='Stasjoner'>
-        <RiverStations {stations} on:goToStationData/>
-      </CollapsibleSection>
-
+      <div role='table'>
+        <CollapsibleSection title='Stasjoner'>
+          <RiverStations {stations} on:goToStationData/>
+        </CollapsibleSection>
+      </div>
       <!-- Fish data for the river -->
-      <CollapsibleSection title='Fiskedata'>
-        <RiverFishData {stations} />
-      </CollapsibleSection>
+      <div role='table'>
+        <CollapsibleSection title='Fiskedata'>
+          <RiverFishData {stations} />
+        </CollapsibleSection>
+      </div>
     </div>
   </div>
 
   <!-- Buttons to show diagram and download data -->
   <div class='footer'>
-    <Button type='blue' size='medium' href={graphRef}>
-      Diagram
-      <img src='/graphIcon.svg' alt='graphIcon2' height='40px' class='white-color'>
-    </Button>
-
+    <div role='button'>
+      <Button type='blue' size='medium' href={graphRef}>
+        Diagram
+        <img src='/graphIcon.svg' alt='Graph' height='40px' class='white-color'>
+      </Button>
+    </div>
     <!-- Show in map button if the summary is wide -->
     {#if wide}
-      <Button type='blue' size='medium' href={mapRef}>
-        Se i kart
-        <img src='/mapIcon.svg' alt='mapIcon' height='50px' class='headerIcon'>
-      </Button>
+      <div role='button'>  
+        <Button type='blue' size='medium' href={mapRef}>
+          Se i kart
+          <img src='/mapIcon.svg' alt='Map' height='50px' class='white-color'>
+        </Button>
+      </div>
     {/if}
-
-    <Button type='orange' size='medium' href={downloadRef}>
-      Last ned
-      <img src='/dowloadIcon.svg' alt='dowloadIcon' height='50px' class='white-color'>
-    </Button>
-
+    
+    <div role='button'>
+      <Button type='orange' size='medium' href={downloadRef}>
+        Last ned
+        <img src='/dowloadIcon.svg' alt='Download' height='50px' class='white-color'>
+      </Button>
+    </div>
   </div>
 </div>
 
