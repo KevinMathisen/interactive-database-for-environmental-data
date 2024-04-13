@@ -61,8 +61,6 @@
 
   {#if authStatus && authStatus.authenticated}
     <div class='logInOut'>
-      <!-- Display username -->
-      <p style='padding: 0 0.5rem; display: table;'>Brukernavn: {authStatus.username}</p>
       <!-- Log out button -->
       <Button type='blue' size='small'>Logg ut<img src='/userIcon.svg' alt='listIcon' height='50em' class='headerIcon'></Button>
     </div>
