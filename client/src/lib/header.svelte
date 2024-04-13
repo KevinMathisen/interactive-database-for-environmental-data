@@ -27,10 +27,10 @@
       <Button type='header' href='/list' size='extended'>Liste<img src='/listIcon.svg' alt='List' height='40em' class='headerIcon'></Button>
     </div>
     <div class='navButton' role='button' class:active={$page.url.pathname === '/graph'}>
-      <Button type='header' href='/graph' size='extended'>Graf<img src='/graphIcon2.svg' alt='Graph' height='30em' class='headerIcon'></Button>
+      <Button type='header' href='/graph' size='extended'>Graf<img src='/graphIcon.svg' alt='Graph' height='30em' class='headerIcon'></Button>
     </div>
     <div class='navButton' role='button' class:active={$page.url.pathname === '/upload'}>
-      <Button type='header' href='/upload' size='extended'>Last opp<img src='/uploadIcon2.svg' alt='Upload' height='40em' class='headerIcon'></Button>
+      <Button type='header' href='/upload' size='extended'>Last opp<img src='/uploadIcon.svg' alt='Upload' height='40em' class='headerIcon'></Button>
     </div>
     <div class='navButton' role='button' class:active={$page.url.pathname === '/download'}>
       <Button type='header' href='/download' size='extended'>Last ned<img src='/dowloadIcon.svg' alt='Download' height='40em' class='headerIcon'></Button>
