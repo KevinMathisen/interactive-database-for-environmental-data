@@ -50,7 +50,7 @@
       size='small'
       >
       Rediger
-      <img src='/editIcon.svg' alt='editIcon' height='30em' class='white-color'>
+      <img src='/editIcon.svg' alt='Edit' height='30em' class='white-color'>
     </Button>
 
       {#if dataType === DATATYPE_RIVER && selectedRivers.size !== 0}
@@ -102,7 +102,6 @@
       bind:plotTypeB
       bind:combineSpecies />
   </CollapsibleSection>
-
 </div>
 
 <style>
