@@ -97,7 +97,8 @@ export async function authRefresh() {
       return false
     }
 
-    // If refresh was successful do nothing
+    // If refresh was successful tell user to refresh
+    addFeedbackToStore(FEEDBACK_TYPES.SUCCESS, FEEDBACK_CODES.AUTH_SUCCESS, FEEDBACK_MESSAGES.REFRESH_SUCCESS)
     return true
 
   } catch (error) { // Catch any possible network or fetch errors
