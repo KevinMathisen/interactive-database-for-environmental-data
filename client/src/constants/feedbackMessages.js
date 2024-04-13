@@ -36,7 +36,7 @@ export const FEEDBACK_MESSAGES = {
   ERROR_GENERATING_FILE: 'En feil oppstod under nedlasting av filen',
   FORBIDDEN: 'Handlingen du utførte ble ikke akseptert',
   MULTIPLE_SELECTION_NOT_ALLOWED: 'Kun en fil kan lastes opp om gangen',
-  UNAUTHORIZED: 'Du har ikke tillatelse til å utføre handlingen du forsøkte',
+  UNAUTHORIZED: 'Du er ikke logget inn, logg inn før du prøver igjen',
   CONTENT_TO_LARGE: 'Filen du forsøkte å laste opp er for stor',
   UNSUPPORTED_CONTENT_TYPE: 'Filtypen du forsøkte å laste opp støttes ikke',
   POSTGREST_UNAVAILABLE: 'Kunne ikke hente data fra serveren, prøv igjen senere',
@@ -44,5 +44,6 @@ export const FEEDBACK_MESSAGES = {
   UPLOAD_REJECTED: 'Filen ble ikke akseptert, sjekk innholdet og prøv igjen',
   AUTH_UNAVAILABLE: 'Kunne ikke autentisere brukeren, prøv igjen senere',
   AUTH_REJECTED: 'Brukernavn eller passord er feil, prøv igjen',
-  AUTH_SUCCESS: 'Innlogging vellykket'
+  AUTH_SUCCESS: 'Innlogging vellykket',
+  LOGOUT_SUCCESS: 'Utlogging vellykket'
 }
