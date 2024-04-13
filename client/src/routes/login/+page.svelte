@@ -6,6 +6,9 @@
   let username = '' // Username input
   let password = '' // Password input
 
+  /**
+   *
+   */
   function submitForm () {
     // Should validate input before sending
     // username and password should be at least 6 characters
@@ -46,7 +49,7 @@
     </div>
 
     <!-- Submit button -->
-    <Button 
+    <Button
       on:buttonClick={submitForm}
       type='orange'
       size='medium'>

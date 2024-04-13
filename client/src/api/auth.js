@@ -11,10 +11,10 @@ import { authStore } from '../stores/authStore.js'
 /**
  * Log in user to server
  * @param {string} username - The username to authenticate with
- * @param {string} password - The password to authenticate with 
+ * @param {string} password - The password to authenticate with
  * @returns {Promise<boolean>} - A promise which resolves to if login was successful or not
  */
-export async function authLogin(username, password) {
+export async function authLogin (username, password) {
   try {
     // Try to login
     const response = await fetch(`${AUTH_URL}${LOGIN_ENDPOINT}`, {
@@ -46,7 +46,6 @@ export async function authLogin(username, password) {
     addFeedbackToStore(FEEDBACK_TYPES.SUCCESS, FEEDBACK_CODES.AUTH_SUCCESS, FEEDBACK_MESSAGES.AUTH_SUCCESS)
     authStore.set({ authenticated: true })
     return true
-
   } catch (error) { // Catch any possible network or fetch errors
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.AUTH_UNAVAILABLE, FEEDBACK_MESSAGES.AUTH_UNAVAILABLE)
     return false
@@ -57,7 +56,7 @@ export async function authLogin(username, password) {
  * Log out user from server
  * @returns {Promise<boolean>} - A promise which resolves to if logout was successful or not
  */
-export async function authLogout() {
+export async function authLogout () {
   try {
     // Try to logout
     const response = await fetch(`${AUTH_URL}${LOGOUT_ENDPOINT}`, {
@@ -75,7 +74,6 @@ export async function authLogout() {
     addFeedbackToStore(FEEDBACK_TYPES.SUCCESS, FEEDBACK_CODES.AUTH_SUCCESS, FEEDBACK_MESSAGES.LOGOUT_SUCCESS)
     authStore.set({ authenticated: false })
     return true
-
   } catch (error) { // Catch any possible network or fetch errors
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.AUTH_UNAVAILABLE, FEEDBACK_MESSAGES.AUTH_UNAVAILABLE)
     return false
@@ -86,7 +84,7 @@ export async function authLogout() {
  * Refresh user token
  * @returns {Promise<boolean>} - A promise which resolves to if refresh was successful or not
  */
-export async function authRefresh() {
+export async function authRefresh () {
   try {
     // Try to refresh
     const response = await fetch(`${AUTH_URL}${REFRESH_ENDPOINT}`, {
@@ -105,7 +103,6 @@ export async function authRefresh() {
     addFeedbackToStore(FEEDBACK_TYPES.SUCCESS, FEEDBACK_CODES.AUTH_SUCCESS, FEEDBACK_MESSAGES.REFRESH_SUCCESS)
     authStore.set({ authenticated: true })
     return true
-
   } catch (error) { // Catch any possible network or fetch errors
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.AUTH_UNAVAILABLE, FEEDBACK_MESSAGES.AUTH_UNAVAILABLE)
     return false

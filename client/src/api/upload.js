@@ -4,6 +4,7 @@ import {
 } from '../constants/endpoints.js'
 import { addFeedbackToStore } from '../utils/addFeedbackToStore.js'
 import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/feedbackMessages'
+import { authRefresh } from './auth.js'
 
 /**
  * Upload file to server
