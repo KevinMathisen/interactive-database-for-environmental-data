@@ -1,8 +1,13 @@
 <script>
   import { page } from '$app/stores'
   import Button from './user-input/Button.svelte'
+  import { authStore } from '../stores/authStore.js'
 
   let showDropdown = false // Whether the dropdown menu is shown
+  let authStatus // Authentication status
+
+  // Get the authentication status
+  $: authStatus = $authStore
 
   /**
    * Toggles the dropdown menu
@@ -53,11 +58,18 @@
       </div>
     {/if}
     </button>
-  <!-- Log out button -->
-  <div class='logOut'>
-    <Button type='blue' size='medium'>Logg ut<img src='/userIcon.svg' alt='listIcon' height='50em' class='headerIcon'></Button>
-  </div>
 
+  {#if authStatus && authStatus.authenticated}
+    <div class='logInOut'>
+      <!-- Log out button -->
+      <Button type='blue' size='small'>Logg ut<img src='/userIcon.svg' alt='listIcon' height='50em' class='headerIcon'></Button>
+    </div>
+  {:else}
+    <div class='logInOut'>
+      <!-- Log in button -->
+      <Button type='blue' size='small' href='/login'>Logg inn<img src='/userIcon.svg' alt='listIcon' height='50em' class='headerIcon'></Button>
+    </div>
+  {/if}
 </header>
 
 <style>
@@ -102,8 +114,12 @@
     width: 100%;
   }
 
-  .logOut {
+  .logInOut {
     padding: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: fit-content;
   }
 
   .menu {

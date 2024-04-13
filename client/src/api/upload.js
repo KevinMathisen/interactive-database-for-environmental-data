@@ -4,6 +4,7 @@ import {
 } from '../constants/endpoints.js'
 import { addFeedbackToStore } from '../utils/addFeedbackToStore.js'
 import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/feedbackMessages'
+import { authRefresh } from './auth.js'
 
 /**
  * Upload file to server
@@ -22,13 +23,21 @@ export async function uploadFileToServer (file) {
       body: formData
     })
 
+    // If response has status 401 not authorized
+    if (response.status === 401) {
+      // Refresh token and give feedback to user based on the result
+      await authRefresh()
+
+      return false
+    }
+
     // Check if the response is ok
     if (!response.ok) {
       addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.UPLOAD_REJECTED, FEEDBACK_MESSAGES.UPLOAD_REJECTED)
       return false
     }
 
-    // Give feedback to the user that the upload was successful
+    // Retrieve the result from the response
     const result = await response.json()
 
     // Check if the upload was successful

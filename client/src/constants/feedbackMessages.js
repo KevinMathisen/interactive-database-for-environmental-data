@@ -17,7 +17,9 @@ export const FEEDBACK_CODES = {
   UPLOAD_UNAVAILABLE: 'UPLOAD_UNAVAILABLE',
   UPLOAD_REJECTED: 'UPLOAD_REJECTED',
   UPLOAD_SUCCESS: 'UPLOAD_SUCCESS',
-  AUTH_UNAVAILABLE: 'AUTH_UNAVAILABLE'
+  AUTH_UNAVAILABLE: 'AUTH_UNAVAILABLE',
+  AUTH_REJECTED: 'AUTH_REJECTED',
+  AUTH_SUCCESS: 'AUTH_SUCCESS'
 }
 
 export const FEEDBACK_MESSAGES = {
@@ -34,11 +36,15 @@ export const FEEDBACK_MESSAGES = {
   ERROR_GENERATING_FILE: 'En feil oppstod under nedlasting av filen',
   FORBIDDEN: 'Handlingen du utførte ble ikke akseptert',
   MULTIPLE_SELECTION_NOT_ALLOWED: 'Kun en fil kan lastes opp om gangen',
-  UNAUTHORIZED: 'Du har ikke tillatelse til å utføre handlingen du forsøkte',
+  UNAUTHORIZED: 'Du er ikke logget inn, logg inn før du prøver igjen',
   CONTENT_TO_LARGE: 'Filen du forsøkte å laste opp er for stor',
   UNSUPPORTED_CONTENT_TYPE: 'Filtypen du forsøkte å laste opp støttes ikke',
   POSTGREST_UNAVAILABLE: 'Kunne ikke hente data fra serveren, prøv igjen senere',
   UPLOAD_UNAVAILABLE: 'Kunne ikke laste opp filen, prøv igjen senere',
   UPLOAD_REJECTED: 'Filen ble ikke akseptert, sjekk innholdet og prøv igjen',
-  AUTH_UNAVAILABLE: 'Kunne ikke autentisere brukeren, prøv igjen senere'
+  AUTH_UNAVAILABLE: 'Kunne ikke autentisere brukeren, prøv igjen senere',
+  AUTH_REJECTED: 'Brukernavn eller passord er feil, prøv igjen',
+  AUTH_SUCCESS: 'Innlogging vellykket',
+  LOGOUT_SUCCESS: 'Utlogging vellykket',
+  REFRESH_SUCCESS: 'Du ble logget inn på nytt, last inn siden på nytt for å fortsette'
 }
