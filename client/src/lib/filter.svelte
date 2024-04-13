@@ -28,7 +28,7 @@
 </script>
 
 <div class=main>
-    <form >
+    <form>
         <!-- Input for choosing data type -->
         <CollapsibleSection title='Type data'>
             <RadioInput name='dataType' options={dataOptions} bind:selected={dataType} />
