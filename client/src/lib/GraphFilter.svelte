@@ -44,7 +44,7 @@
 <div class='main'>
   <!-- Input for opening selection of river or stations -->
   <CollapsibleSection title='Velg elver/stasjoner'>
-    <div class='editButton' role='button'>  
+    <div class='editButton' role='button'>
       <Button
         on:buttonClick={handleSelectRiverStation}
         type='blue'

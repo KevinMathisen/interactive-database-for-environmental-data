@@ -60,14 +60,14 @@
     </div>
     <!-- Show in map button if the summary is wide -->
     {#if wide}
-      <div role='button'>  
+      <div role='button'>
         <Button type='blue' size='medium' href={mapRef}>
           Se i kart
           <img src='/mapIcon.svg' alt='Map' height='50px' class='white-color'>
         </Button>
       </div>
     {/if}
-    
+
     <div role='button'>
       <Button type='orange' size='medium' href={downloadRef}>
         Last ned
