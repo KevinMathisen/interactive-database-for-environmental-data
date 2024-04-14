@@ -23,10 +23,11 @@
   </div>
 
   <!-- Button to go to river data -->
-  <Button type='blue' size='medium' on:buttonClick={goToRiverData}>
-    Til elvedata
-  </Button>
-
+  <div role='button'>
+    <Button type='blue' size='medium' on:buttonClick={goToRiverData}>
+      Til elvedata
+    </Button>
+  </div>
 </div>
 
 <style>
