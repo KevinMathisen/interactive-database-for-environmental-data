@@ -11,6 +11,13 @@ import {
   schemaStationSheet,
   schemaObservationSheet
 } from '../constants/schemas.js'
+import {
+  FEEDBACK_TYPES,
+  FEEDBACK_CODES,
+  FEEDBACK_MESSAGES
+} from '../constants/feedbackMessages.js'
+import { addFeedbackToStore } from './addFeedbackToStore.js'
+
 
 /**
  * Validate text using regex to whitelist specific characters
@@ -171,6 +178,31 @@ const excelSchemas = {
  */
 export async function parseAndValidateExcel (excelFile) {
   try {
+    // Check if the file is defined
+    if (!excelFile) {
+      addFeedbackToStore(
+        FEEDBACK_TYPES.ERROR,
+        FEEDBACK_CODES.NOT_FOUND,
+        FEEDBACK_MESSAGES.NO_FILE_SELCETED
+      )
+      return false
+    }
+
+    // Check if the file is an excel file
+    if (!['.xlsx'].includes(excelFile.name.slice(excelFile.name.lastIndexOf('.')))) {
+      return false
+    }
+
+    // Check if the file size exceeds 10 MB
+    if (excelFile.size > 10 * 1024 * 1024) {
+      addFeedbackToStore(
+        FEEDBACK_TYPES.ERROR,
+        FEEDBACK_CODES.CONTENT_TO_LARGE,
+        FEEDBACK_MESSAGES.CONTENT_TO_LARGE
+      )
+      return false
+    }
+
     // Read the file
     const fileContent = await readFile(excelFile)
     const workbook = XLSX.read(fileContent, { type: 'buffer' })
