@@ -57,41 +57,46 @@ export function validateInteger (input) {
 /**
  * Validate river with species data
  * @param {object} data - The river with species data to validate
+ * @returns {boolean} - If the river with species data is valid or not
  */
 export function validateRiverWithSpecies (data) {
-  validateJson(data, schemaRiverWithSpecies)
+  return validateJson(data, schemaRiverWithSpecies)
 }
 
 /**
  * Validate station with species data
  * @param {object} data - The station with species data to validate
+ * @returns {boolean} - If the station with species data is valid or not
  */
 export function validateStationWithSpecies (data) {
-  validateJson(data, schemaStationWithSpecies)
+  return validateJson(data, schemaStationWithSpecies)
 }
 
 /**
  * Validate river summary data
  * @param {object} data - The river summary data to validate
+ * @returns {boolean} - If the river summary data is valid or not
  */
 export function validateRiverSummary (data) {
-  validateJson(data, schemaRiverSummary)
+  return validateJson(data, schemaRiverSummary)
 }
 
 /**
  * Validate station summary data
  * @param {object} data - The station summary data to validate
+ * @returns {boolean} - If the station summary data is valid or not
  */
 export function validateStationSummary (data) {
-  validateJson(data, schemaStationSummary)
+  return validateJson(data, schemaStationSummary)
 }
 
 /**
  * Validate station download data
  * @param {object} data - The river with species data to validate
+ * @returns {boolean} - If the station download data is valid or not
  */
 export function validateStationDownload (data) {
-  validateJson(data, schemaStationDownload)
+  return validateJson(data, schemaStationDownload)
 }
 
 /**
