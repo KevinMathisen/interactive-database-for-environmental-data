@@ -165,11 +165,11 @@ const excelSchemas = {
 }
 
 /**
- * Parse and validate workbook data
+ * Parse and validate excel file content
  * @param {File} file - The file to parse and validate
- * @returns {Promise<boolean>} - A promise which resolves to if the workbook was parsed and validated successfully or not
+ * @returns {Promise<boolean>} - A promise which resolves to if the excel file was parsed and validated successfully or not
  */
-export async function parseAndValidateWorkbook (excelFile) {
+export async function parseAndValidateExcel (excelFile) {
   try {
     // Read the file
     const fileContent = await readFile(excelFile)
