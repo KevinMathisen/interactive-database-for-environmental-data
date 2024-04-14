@@ -42,24 +42,27 @@
 
   .small {
     font-size: 0.9rem;
-    width: 140px;
-    height: 50px;
+    width: 130px;
+    height: 40px;
+    padding: 5px;
     border-radius: 1rem;
     justify-content: space-evenly;
   }
 
   .medium {
     font-size: 1rem;
-    width: 180px;
-    height: 60px;
+    width: 170px;
+    height: 50px;
+    padding: 5px;
     border-radius: 1rem;
     justify-content: space-evenly;
   }
 
   .large {
     font-size: 1.2rem;
-    width: 250px;
-    height: 70px;
+    width: 240px;
+    height: 60px;
+    padding: 5px;
     border-radius: 1rem;
     justify-content: space-evenly;
   }
