@@ -116,10 +116,12 @@
     label='Drop files here to load'
     tabindex='0'
   >
-    <img src='/uploadCloudIcon.svg' alt='listIcon' height='60px' id='uploadCloudIcon' />
+    <img src='/uploadCloudIcon.svg' alt='' height='60px' id='uploadCloudIcon' />
     <p>Dra og slipp fil eller</p>
     <br>
-    <Button type='blue' size='large' on:buttonClick={selectFile}>Bla gjennom Filer <img src='/fileSearchIcon.svg' alt='listIcon' height='40px' class='white-color'></Button>
+    <div role='button'>
+      <Button type='blue' size='large' on:buttonClick={selectFile}>Bla gjennom Filer <img src='/fileSearchIcon.svg' alt='File search' height='40px' class='white-color'></Button>
+    </div>
   </div>
 
   <!-- Defines the text under the upload files box -->
@@ -143,7 +145,7 @@
 
   <!-- The upload files button -->
   <div class='uploadButtonPlacement' role='button'>
-    <Button type='orange' size='medium' on:buttonClick={uploadFile}>Last opp <img src='/uploadIcon.svg' alt='listIcon' height='40px' class='uploadIcon white-color'></Button>
+    <Button type='orange' size='medium' on:buttonClick={uploadFile}>Last opp <img src='/uploadIcon.svg' alt='Upload' height='40px' class='uploadIcon white-color'></Button>
   </div>
 
 </div>
