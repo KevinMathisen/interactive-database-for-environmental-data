@@ -19,7 +19,8 @@ const coordinatesSchema = {
       items: { type: 'number' }
     }
   },
-  required: ['coordinates']
+  required: ['coordinates'],
+  additionalProperties: false
 }
 
 const observationSchema = {
@@ -36,8 +37,8 @@ const observationSchema = {
     sampletype: { type: ['string', 'null'] },
     comment: { type: 'string' }
   },
-  required: ['id', 'species']
-
+  required: ['id', 'species'],
+  additionalProperties: false
 }
 
 const schemaSingleRiverWithSpecies = {
@@ -51,7 +52,8 @@ const schemaSingleRiverWithSpecies = {
     species: { type: 'array', items: { type: 'string' } },
     project_id: { type: ['string', 'null'] }
   },
-  required: ['id', 'name', 'pos', 'start_date', 'end_date', 'species']
+  required: ['id', 'name', 'pos', 'start_date', 'end_date', 'species'],
+  additionalProperties: false
 }
 
 const schemaSingleStationWithSpecies = {
@@ -66,7 +68,8 @@ const schemaSingleStationWithSpecies = {
     species: { type: 'array', items: { type: 'string' } },
     project_id: { type: ['string', 'null'] }
   },
-  required: ['id', 'name', 'start_pos', 'end_pos', 'date', 'time', 'species']
+  required: ['id', 'name', 'start_pos', 'end_pos', 'date', 'time', 'species'],
+  additionalProperties: false
 }
 
 const schemaSingleRiverSummary = {
@@ -84,7 +87,8 @@ const schemaSingleRiverSummary = {
     comment: { type: ['string', 'null'] },
     stations: { type: 'array', items: { type: 'integer' } }
   },
-  required: ['id', 'name', 'start_date', 'end_date', 'boattype', 'skipper', 'stations']
+  required: ['id', 'name', 'start_date', 'end_date', 'boattype', 'skipper', 'stations'],
+  additionalProperties: false
 }
 
 const schemaSingleStationSummary = {
@@ -108,7 +112,8 @@ const schemaSingleStationSummary = {
     conductivity: { type: ['integer', 'null'] },
     observations: { type: 'array', items: observationSchema },
   },
-  required: ['id', 'name', 'date', 'time', 'river_id', 'sec_fished']
+  required: ['id', 'name', 'date', 'time', 'river_id', 'sec_fished'],
+  additionalProperties: false
 }
 
 const schemaSingleStationDownload = {
@@ -120,7 +125,8 @@ const schemaSingleStationDownload = {
     gpx_file: { type: ['string', 'null']},
     observations: { type: 'array', items: observationSchema }
   },
-  required: ['id']
+  required: ['id'],
+  additionalProperties: false
 }
 
 export const schemaRiverWithSpecies = {
