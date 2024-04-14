@@ -136,12 +136,7 @@ function sanitizeInput (input) {
  * @param {object} data - The river with species data to validate
  */
 export function validateRiverWithSpecies (data) {
-  const ajv = new Ajv()
-  const validate = ajv.compile(schemaRiverWithSpecies)
-  const valid = validate(data)
-  if (!valid) {
-    throw new Error(validate.errors.map(error => error.message).join('\n'))
-  }
+  validateJson(data, schemaRiverWithSpecies)
 }
 
 /**
@@ -149,12 +144,7 @@ export function validateRiverWithSpecies (data) {
  * @param {object} data - The station with species data to validate
  */
 export function validateStationWithSpecies (data) {
-  const ajv = new Ajv()
-  const validate = ajv.compile(schemaStationWithSpecies)
-  const valid = validate(data)
-  if (!valid) {
-    throw new Error(validate.errors.map(error => error.message).join('\n'))
-  }
+  validateJson(data, schemaStationWithSpecies)
 }
 
 /**
@@ -162,12 +152,7 @@ export function validateStationWithSpecies (data) {
  * @param {object} data - The river summary data to validate
  */
 export function validateRiverSummary (data) {
-  const ajv = new Ajv()
-  const validate = ajv.compile(schemaRiverSummary)
-  const valid = validate(data)
-  if (!valid) {
-    throw new Error(validate.errors.map(error => error.message).join('\n'))
-  }
+  validateJson(data, schemaRiverSummary)
 }
 
 /**
@@ -175,12 +160,7 @@ export function validateRiverSummary (data) {
  * @param {object} data - The station summary data to validate
  */
 export function validateStationSummary (data) {
-  const ajv = new Ajv()
-  const validate = ajv.compile(schemaStationSummary)
-  const valid = validate(data)
-  if (!valid) {
-    throw new Error(validate.errors.map(error => error.message).join('\n'))
-  }
+  validateJson(data, schemaStationSummary)
 }
 
 /**
@@ -188,20 +168,15 @@ export function validateStationSummary (data) {
  * @param {object} data - The river with species data to validate
  */
 export function validateStationDownload (data) {
-  const ajv = new Ajv()
-  const validate = ajv.compile(schemaStationDownload)
-  const valid = validate(data)
-  if (!valid) {
-    throw new Error(validate.errors.map(error => error.message).join('\n'))
-  }
+  validateJson(data, schemaStationDownload)
 }
 
 /**
- * Validate river with species data
- * @param {object} data - The river with species data to validate
+ * Validate json data against a schema
+ * @param {object} data - The data to validate
  * @param {object} schema - The schema to validate the data against
  */
-export function validateData (data, schema) {
+export function validateJson (data, schema) {
   const ajv = new Ajv()
   const validate = ajv.compile(schema)
 
