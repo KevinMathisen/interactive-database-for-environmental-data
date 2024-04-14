@@ -13,20 +13,45 @@ import {
 } from '../constants/schemas.js'
 
 /**
- * Sanitizes input using regex to allow specific characters
- * @param {string} input - The input string to sanitize
- * @returns {string} - The sanitized input string
+ * Validate text using regex to whitelist specific characters
+ * @param {string} input - The input string to validate
+ * @returns {boolean} - If the input is allowed or not
  */
-function sanitizeInput (input) {
-  const allowedPattern = /^[a-zA-Z0-9 .,?!]+$/
+export function validateText (input) {
+  const allowedPattern = /^[a-zA-Z0-9 .,?!\/]+$/
 
-  // Handles invalid input
-  if (!allowedPattern.test(input)) {
-    return ''
-  }
+  // Return if invalid input
+  return allowedPattern.test(input)
+}
 
-  // Sanitize input
-  return validator.escape(input)
+/**
+ * Validate password using validator
+ * @param {string} input - The input string to validate
+ * @returns {boolean} - If the password is allowed or not
+ */
+export function validatePassword (input) {
+  const allowedPattern = /^[a-zA-Z0-9 .,?!@#$%^&*()_+-=\[\]{};':"\\|<>\/~`]+$/
+
+  // Return if invalid input
+  return allowedPattern.test(input)
+}
+
+/**
+ * Validate number
+ * @param {string} input - The input string to validate 
+ * @returns {boolean} - If the input is a number or not
+ */
+export function validateNumber (input) {
+  return validator.isNumeric(input)
+}
+
+/**
+ * Validate integer
+ * @param {string} input - The input string to validate 
+ * @returns {boolean} - If the input is an integer or not
+ */
+export function validateInteger (input) {
+  return validator.isInt(input)
 }
 
 /**
