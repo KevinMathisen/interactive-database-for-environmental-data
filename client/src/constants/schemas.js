@@ -154,7 +154,7 @@ export const schemaStationDownload = {
   items: schemaSingleStationDownload
 }
 
-const schemaRiverSheet = {
+export const schemaRiverSheet = {
   type: 'object',
   properties: {
     'Start dato': { type: 'string', format: 'date' },
@@ -175,7 +175,7 @@ const schemaRiverSheet = {
   required: ['Start dato', 'Slutt dato', 'Elv', 'Båttype', 'Lat', 'Long', 'Skipper']
 }
 
-const schemaStationSheet = {
+export const schemaStationSheet = {
   type: 'object',
   properties: {
     'Stasjon': { type: 'integer' },
@@ -203,7 +203,7 @@ const schemaStationSheet = {
   required: ['Stasjon', 'Båttype', 'Dato', 'Klokkeslett start', 'Lat start', 'Long start', 'Lat stopp', 'Long stopp', 'Sekunder fisket (s)', 'Volt', 'Puls (DC)']
 }
 
-const schemaFishSheet = {
+export const schemaObservationSheet = {
   type: 'object',
   properties: {
     'ID': { type: 'number' },

@@ -1,6 +1,16 @@
 import Ajv from 'ajv'
 import XLSX from 'xlsx'
 import validator from 'validator'
+import {
+  schemaRiverWithSpecies,
+  schemaStationWithSpecies,
+  schemaRiverSummary,
+  schemaStationSummary,
+  schemaStationDownload,
+  schemaRiverSheet,
+  schemaStationSheet,
+  schemaObservationSheet
+} from '../constants/schemas.js'
 
 /**
  * Sanitizes input using regex to allow specific characters
@@ -97,9 +107,9 @@ function readFile(file) {
 }
 
 const excelSchemas = {
-  'Elvedata': schemaRiverWithSpecies,
-  'Stasjonsdata': schemaStationWithSpecies,
-  'Individdata': schemaObservation
+  'Elvedata': schemaRiverSheet,
+  'Stasjonsdata': schemaStationSheet,
+  'Individdata': schemaObservationSheet
 }
 
 /**
