@@ -1,107 +1,149 @@
-export const schemaRiverWithSpecies = {
+const coordinatesSchema = {
   type: 'object',
   properties: {
-    id: { type: 'string' },
+    type: { type: ['string', 'null'] },
+    crs: {
+      type: ['object', 'null'],
+      properties: {
+        type: { type: 'string' },
+        properties: {
+          type: 'object',
+          properties: {
+            name: { type: 'string' }
+          }
+        }
+      }
+    },
+    coordinates: {
+      type: 'array',
+      items: { type: 'number' }
+    }
+  },
+  required: ['coordinates']
+}
+
+const observationSchema = {
+  type: 'object',
+  properties: {
+    id: { type: 'integer' },
+    species: { type: 'string' },
+    length: { type: ['integer', 'null'] },
+    count: { type: ['integer', 'null'] },
+    round: { type: ['integer', 'null'] },
+    gender: { type: ['string', 'null'] },
+    age: { type: ['integer', 'null'] },
+    released: { type: ['boolean', 'null'] },
+    sampletype: { type: ['string', 'null'] },
+    comment: { type: 'string' }
+  },
+  required: ['id', 'species']
+
+}
+
+const schemaSingleRiverWithSpecies = {
+  type: 'object',
+  properties: {
+    id: { type: 'integer' },
     name: { type: 'string' },
-    pos: { type: 'string' },
+    pos: coordinatesSchema,
     start_date: { type: 'string' },
     end_date: { type: 'string' },
-    species: { type: 'array', items: { type: 'string' } }
+    species: { type: 'array', items: { type: 'string' } },
+    project_id: { type: ['string', 'null'] }
   },
   required: ['id', 'name', 'pos', 'start_date', 'end_date', 'species']
 }
 
-export const schemaStationWithSpecies = {
+const schemaSingleStationWithSpecies = {
   type: 'object',
   properties: {
-    id: { type: 'string' },
+    id: { type: 'integer' },
     name: { type: 'string' },
-    start_pos: { type: 'string' },
-    end_pos: { type: 'string' },
+    start_pos: coordinatesSchema,
+    end_pos: coordinatesSchema,
     date: { type: 'string' },
-    species: { type: 'array', items: { type: 'string' } }
+    time: { type: 'string' },
+    species: { type: 'array', items: { type: 'string' } },
+    project_id: { type: ['string', 'null'] }
   },
-  required: ['id', 'name', 'start_pos', 'end_pos', 'date', 'species']
+  required: ['id', 'name', 'start_pos', 'end_pos', 'date', 'time', 'species']
 }
 
-export const schemaRiverSummary = {
+const schemaSingleRiverSummary = {
   type: 'object',
   properties: {
-    ID: { type: 'string' },
+    id: { type: 'integer' },
     name: { type: 'string' },
     start_date: { type: 'string' },
     end_date: { type: 'string' },
-    project_id: { type: 'string' },
-    waterflow: { type: 'string' },
+    project_id: { type: ['string', 'null'] },
+    waterflow: { type: ['integer', 'null'] },
     boattype: { type: 'string' },
     skipper: { type: 'string' },
-    crew: { type: 'string' },
-    comment: { type: 'string' },
-    stations: { type: 'array', items: { type: 'string' } }
+    crew: { type: ['array', 'null'], items: { type: 'string' } },
+    comment: { type: ['string', 'null'] },
+    stations: { type: 'array', items: { type: 'integer' } }
   },
-  required: ['ID', 'name', 'start_date', 'end_date', 'project_id', 'waterflow', 'boattype', 'skipper', 'crew', 'comment', 'stations']
+  required: ['id', 'name', 'start_date', 'end_date', 'boattype', 'skipper', 'stations']
 }
 
-export const schemaStationSummary = {
+const schemaSingleStationSummary = {
   type: 'object',
   properties: {
-    id: { type: 'string' },
+    id: { type: 'integer' },
     name: { type: 'string' },
     date: { type: 'string' },
     time: { type: 'string' },
-    river_id: { type: 'string' },
-    description: { type: 'string' },
-    rivertype: { type: 'string' },
-    weather: { type: 'string' },
-    water_temp: { type: 'string' },
-    air_temp: { type: 'string' },
-    sec_fished: { type: 'string' },
-    voltage: { type: 'string' },
-    pulse: { type: 'string' },
-    conductivity: { type: 'string' },
-    observations: {
-      type: 'array',
-      items: {
-        type: 'object',
-        properties: {
-          species: { type: 'string' },
-          size: { type: 'string' },
-          amount: { type: 'string' }
-        },
-        required: ['species', 'size', 'amount']
-      }
-    }
+    river_id: { type: 'integer' },
+    project_id: { type: ['string', 'null'] },
+    description: { type: ['string', 'null'] },
+    comment: { type: ['string', 'null'] },
+    river_type: { type: ['string', 'null'] },
+    weather: { type: ['string', 'null'] },
+    water_temp: { type: ['number', 'null'] },
+    air_temp: { type: ['integer', 'null'] },
+    sec_fished: { type: 'integer' },
+    voltage: { type: 'integer' },
+    pulse: { type: 'integer' },
+    conductivity: { type: ['integer', 'null'] },
+    observations: { type: 'array', items: observationSchema },
   },
-  required: ['id', 'name', 'date', 'time', 'river_id', 'description', 'rivertype', 'weather', 'water_temp', 'air_temp', 'sec_fished', 'voltage', 'pulse', 'conductivity', 'observations']
+  required: ['id', 'name', 'date', 'time', 'river_id', 'sec_fished']
+}
+
+const schemaSingleStationDownload = {
+  type: 'object',
+  properties: {
+    id: { type: 'integer' },
+    transect_length: { type: ['string', 'null'] },
+    display: { type: ['string', 'null'] },
+    gpx_file: { type: ['string', 'null']},
+    observations: { type: 'array', items: observationSchema }
+  },
+  required: ['id']
+}
+
+export const schemaRiverWithSpecies = {
+  type: 'array',
+  items: schemaSingleRiverWithSpecies
+}
+
+export const schemaStationWithSpecies = {
+  type: 'array',
+  items: schemaSingleStationWithSpecies
+}
+
+export const schemaRiverSummary = {
+  type: 'array',
+  items: schemaSingleRiverSummary
+}
+
+export const schemaStationSummary = {
+  type: 'array',
+  items: schemaSingleStationSummary
 }
 
 export const schemaStationDownload = {
-  type: 'object',
-  properties: {
-    id: { type: 'string' },
-    transect_length: { type: 'string' },
-    display: { type: 'string' },
-    gpx_file: { type: 'string' },
-    observations: {
-      type: 'array',
-      items: {
-        type: 'object',
-        properties: {
-          id: { type: 'string' },
-          station: { type: 'string' },
-          round: { type: 'string' },
-          species: { type: 'string' },
-          length: { type: 'string' },
-          count: { type: 'string' },
-          gender: { type: 'string' },
-          age: { type: 'string' },
-          released: { type: 'string' },
-          sampletype: { type: 'string' },
-          comment: { type: 'string' }
-        },
-        required: ['id', 'station', 'round', 'species', 'length', 'count', 'gender', 'age', 'released', 'sampletype', 'comment']
-      }
-    }
-  },
-  required: ['id', 'transect_length', 'display', 'gpx_file', 'observations']
+  type: 'array',
+  items: schemaSingleStationDownload
 }
