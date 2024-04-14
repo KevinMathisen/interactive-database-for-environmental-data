@@ -153,3 +153,70 @@ export const schemaStationDownload = {
   type: 'array',
   items: schemaSingleStationDownload
 }
+
+const schemaRiverSheet = {
+  type: 'object',
+  properties: {
+    'Start dato': { type: 'string', format: 'date' },
+    'Slutt dato': { type: 'string', format: 'date' },
+    'Elv': { type: 'string' },
+    'Båttype': { type: 'string' },
+    'Lat': { type: 'number' },
+    'Long': { type: 'number' },
+    'Vannføring (sildre.no)': { type: 'integer' },
+    'Skipper': { type: 'string' },
+    'Mannskap1': { type: 'string' },
+    'Mannskap2': { type: 'string' },
+    'Mannskap3': { type: 'string' },
+    'Prosjekt': { type: 'string' },
+    'Prosjektnummer': { type: 'string' },
+    'Kommentar': { type: 'string' },
+  },
+  required: ['Start dato', 'Slutt dato', 'Elv', 'Båttype', 'Lat', 'Long', 'Skipper']
+}
+
+const schemaStationSheet = {
+  type: 'object',
+  properties: {
+    'Stasjon': { type: 'integer' },
+    'Båttype': { type: 'string' },
+    'Dato': { type: 'string', format: 'date' },
+    'Klokkeslett start': { type: 'string' },
+    'Lat start': { type: 'number' },
+    'Long start': { type: 'number' },
+    'Lat stopp': { type: 'number' },
+    'Long stopp': { type: 'number' },
+    'Dominerende elvetype': { type: 'string' },
+    'Vær': { type: 'string' },
+    'Vanntemp (Celsius)': { type: 'number' },
+    'Lufttemperatur (Celsius)': { type: 'number' },
+    'Ledningsevne (µs/cm)': { type: 'number' },
+    'Transektlengde (m)': { type: 'number' },
+    'Sekunder fisket (s)': { type: 'number' },
+    'Volt': { type: 'number' },
+    'Puls (DC)': { type: 'number' },
+    'Display': { type: 'number' },
+    'Gpx file?': { type: 'string' },
+    'Stasjonsbeskrivelse': { type: 'string' },
+    'Kommentarer til fiske (observasjoner osv)': { type: 'string' },
+  },
+  required: ['Stasjon', 'Båttype', 'Dato', 'Klokkeslett start', 'Lat start', 'Long start', 'Lat stopp', 'Long stopp', 'Sekunder fisket (s)', 'Volt', 'Puls (DC)']
+}
+
+const schemaFishSheet = {
+  type: 'object',
+  properties: {
+    'ID': { type: 'number' },
+    'Stasjon': { type: 'number' },
+    'Omgang': { type: 'number' },
+    'Art': { type: 'string' },
+    'Lengde': { type: 'number' },
+    'Antall': { type: 'number' },
+    'Kjønn': { type: 'string' },
+    'Alder': { type: 'number' },
+    'Gjenutsatt (ja/nei)': { type: 'string' },
+    'Prøvetatt (ja/nei)': { type: 'string' },
+    'Kommentar': { type: 'string' },
+  },
+  required: ['ID', 'Stasjon', 'Art']
+}
