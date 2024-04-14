@@ -1,5 +1,11 @@
 # Authentication solution
-Endpoints for handling the authentication on the web page.  
+This document is an overview of the endpoints for handling the authentication on the web page, and how they are used.  
+
+## Program flow
+
+A diagram representing the flow of the program when managing authentication. As the authentication server does not send any tokens, but rather sets cookies with the token, the website only has to manage if the user is logged in our not, and give the user feedback based on this. 
+
+![Diagram of program authentication flow](diagrams/authentication_solution.png)
 
 ## Login
 Tries to log in a user with given username and password. Sends this to login endpoint, and if it succeds an authentication cookie is set. 

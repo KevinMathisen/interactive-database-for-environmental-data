@@ -312,7 +312,7 @@
 <style>
     @import 'leaflet/dist/leaflet.css';
     .leaflet {
-        height: calc(100vh - 80px);
+        height: calc(100vh - var(--header-height));
         width: 100%;
     }
 </style>

@@ -13,6 +13,7 @@ import {
 } from '../constants/endpoints.js'
 import { addFeedbackToStore } from '../utils/addFeedbackToStore.js'
 import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/feedbackMessages'
+import { authRefresh } from './auth.js'
 
 /**
  * Fetches data from the PostgREST API on the endpoint specified
@@ -44,6 +45,14 @@ async function fetchFromPostgrest (endpoint) {
  * @async
  */
 async function handleResponse (response) {
+  // If response has status 401 authorized
+  if (response.status === 401) {
+    // Refresh token
+    await authRefresh()
+
+    return null
+  }
+
   // If response status is not ok, throw an error
   if (!response.ok) {
     throw new Error(response.statusText)
