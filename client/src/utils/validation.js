@@ -95,26 +95,48 @@ export function validateStationDownload (data) {
 }
 
 /**
+ * Validate all strings in a json object
+ * @param {object} data - The data to validate
+ * @returns {boolean} - If all strings are valid or not
+ */
+function validateStringsInJson (data) {
+  if (typeof data === 'string') {
+    return validateText(data)
+  } else if (typeof data === 'object') {
+    // Call validateStringsInJson recursively on each key
+    return Object.keys(data).every(key => validateStringsInJson(data[key]))
+  } else if (Array.isArray(data)) {
+    // Call validateStringsInJson recursively on each element
+    return data.every(element => validateStringsInJson(element))
+  }
+}
+
+/**
  * Validate json data against a schema
  * @param {object} data - The data to validate
  * @param {object} schema - The schema to validate the data against
  */
 export function validateJson (data, schema) {
+  // Check if data is a json object
+  if (!validator.isJSON(data)) {
+    return false
+  }
+  
+  // Prepare ajv and schema
   const ajv = new Ajv()
   const validate = ajv.compile(schema)
 
-  // Sanitize strings in data before it validates
-  Object.keys(data).forEach(key => {
-    if (typeof data[key] === 'string') {
-      data[key] = sanitizeInput(data[key])
-    }
-  })
-  const valid = validate(data)
-
-  // Throws an error if the data is invalid
-  if (!valid) {
-    throw new Error(validate.errors.map(error => error.message).join('\n'))
+  // Validate all strings in the json
+  if (!validateStringsInJson(data)) {
+    return false
   }
+
+  // Validate data against schema
+  if (!validate(data)) {
+    return false
+  }
+
+  return true
 }
 
 /**
