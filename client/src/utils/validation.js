@@ -27,8 +27,15 @@ import { addFeedbackToStore } from './addFeedbackToStore.js'
 export function validateText (input) {
   const allowedPattern = /^[a-zA-Z0-9 .,?!\/]+$/
 
+  // Check if text is valid
+  const isTextValid = allowedPattern.test(input)
+
+  if (!isTextValid) {
+    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.FORBIDDEN, FEEDBACK_MESSAGES.INVALID_TEXT)
+  }
+
   // Return if invalid input
-  return allowedPattern.test(input)
+  return isTextValid
 }
 
 /**
@@ -39,8 +46,15 @@ export function validateText (input) {
 export function validatePassword (input) {
   const allowedPattern = /^[a-zA-Z0-9 .,?!@#$%^&*()_+-=\[\]{};':"\\|<>\/~`]+$/
 
+  // Check if password is valid
+  const isPasswordValid = allowedPattern.test(input)
+
+  if (!isPasswordValid) {
+    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.FORBIDDEN, FEEDBACK_MESSAGES.INVALID_PASSWORD)
+  }
+
   // Return if invalid input
-  return allowedPattern.test(input)
+  return isPasswordValid
 }
 
 /**
@@ -49,7 +63,13 @@ export function validatePassword (input) {
  * @returns {boolean} - If the input is a number or not
  */
 export function validateNumber (input) {
-  return validator.isNumeric(input)
+  const isNumberValid = validator.isNumeric(input)
+
+  if (!isNumberValid) {
+    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.FORBIDDEN, FEEDBACK_MESSAGES.INVALID_NUMBER)
+  }
+
+  return isNumberValid
 }
 
 /**
@@ -58,7 +78,13 @@ export function validateNumber (input) {
  * @returns {boolean} - If the input is an integer or not
  */
 export function validateInteger (input) {
-  return validator.isInt(input)
+  const isIntegerValid =  validator.isInt(input)
+
+  if (!isIntegerValid) {
+    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.FORBIDDEN, FEEDBACK_MESSAGES.INVALID_NUMBER)
+  }
+
+  return isIntegerValid
 }
 
 /**
@@ -67,7 +93,7 @@ export function validateInteger (input) {
  * @returns {boolean} - If the river with species data is valid or not
  */
 export function validateRiverWithSpecies (data) {
-  return validateJson(data, schemaRiverWithSpecies)
+  return validateJsonFromPostgrest(data, schemaRiverWithSpecies)
 }
 
 /**
@@ -76,7 +102,7 @@ export function validateRiverWithSpecies (data) {
  * @returns {boolean} - If the station with species data is valid or not
  */
 export function validateStationWithSpecies (data) {
-  return validateJson(data, schemaStationWithSpecies)
+  return validateJsonFromPostgrest(data, schemaStationWithSpecies)
 }
 
 /**
@@ -85,7 +111,7 @@ export function validateStationWithSpecies (data) {
  * @returns {boolean} - If the river summary data is valid or not
  */
 export function validateRiverSummary (data) {
-  return validateJson(data, schemaRiverSummary)
+  return validateJsonFromPostgrest(data, schemaRiverSummary)
 }
 
 /**
@@ -94,7 +120,7 @@ export function validateRiverSummary (data) {
  * @returns {boolean} - If the station summary data is valid or not
  */
 export function validateStationSummary (data) {
-  return validateJson(data, schemaStationSummary)
+  return validateJsonFromPostgrest(data, schemaStationSummary)
 }
 
 /**
@@ -103,7 +129,17 @@ export function validateStationSummary (data) {
  * @returns {boolean} - If the station download data is valid or not
  */
 export function validateStationDownload (data) {
-  return validateJson(data, schemaStationDownload)
+  return validateJsonFromPostgrest(data, schemaStationDownload)
+}
+
+function validateJsonFromPostgrest (data, schema) {
+  const isJsonValid = validateJson(data, schema)
+
+  if (!isJsonValid) {
+    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.POSTGREST_UNAVAILABLE, FEEDBACK_MESSAGES.POSTGREST_UNAVAILABLE)
+  }
+
+  return isJsonValid
 }
 
 /**
@@ -113,12 +149,13 @@ export function validateStationDownload (data) {
  */
 function validateStringsInJson (data) {
   if (typeof data === 'string') {
+    // If data is a string, validate it
     return validateText(data)
   } else if (typeof data === 'object') {
-    // Call validateStringsInJson recursively on each key
+    // If object, call validateStringsInJson for each property
     return Object.keys(data).every(key => validateStringsInJson(data[key]))
   } else if (Array.isArray(data)) {
-    // Call validateStringsInJson recursively on each element
+    // If array, call validateStringsInJson for each element
     return data.every(element => validateStringsInJson(element))
   }
 }
@@ -180,26 +217,19 @@ export async function parseAndValidateExcel (excelFile) {
   try {
     // Check if the file is defined
     if (!excelFile) {
-      addFeedbackToStore(
-        FEEDBACK_TYPES.ERROR,
-        FEEDBACK_CODES.NOT_FOUND,
-        FEEDBACK_MESSAGES.NO_FILE_SELCETED
-      )
+      addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.FORBIDDEN, FEEDBACK_MESSAGES.NO_FILE_SELCETED)
       return false
     }
 
     // Check if the file is an excel file
     if (!['.xlsx'].includes(excelFile.name.slice(excelFile.name.lastIndexOf('.')))) {
+      addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.FORBIDDEN, FEEDBACK_MESSAGES.UNSUPPORTED_CONTENT_TYPE)
       return false
     }
 
     // Check if the file size exceeds 10 MB
     if (excelFile.size > 10 * 1024 * 1024) {
-      addFeedbackToStore(
-        FEEDBACK_TYPES.ERROR,
-        FEEDBACK_CODES.CONTENT_TO_LARGE,
-        FEEDBACK_MESSAGES.CONTENT_TO_LARGE
-      )
+      addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.FORBIDDEN, FEEDBACK_MESSAGES.CONTENT_TO_LARGE)
       return false
     }
 
@@ -218,6 +248,7 @@ export async function parseAndValidateExcel (excelFile) {
 
       // Validate the json sheet against its schema
       if (!validateJson(jsonSheet, excelSchemas[sheetname])) {
+        addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.FORBIDDEN, FEEDBACK_MESSAGES.INVALID_EXCEL_FORMAT)
         return false
       }
     }
@@ -225,7 +256,7 @@ export async function parseAndValidateExcel (excelFile) {
     // If all sheets are validated, return true
     return true
   } catch (error) {
-    console.error('Failed to read or validate workbook', error);
+    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.FORBIDDEN, FEEDBACK_MESSAGES.GENERIC)
     return false
   }
 }
