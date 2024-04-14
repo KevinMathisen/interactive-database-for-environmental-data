@@ -1,9 +1,5 @@
 import Ajv from 'ajv'
-import Papa from 'papaparse'
-import ExcelJS from 'exceljs'
-import fs from 'fs'
-import path from 'path'
-import * as yup from 'yup'
+import XLSX from 'xlsx'
 import validator from 'validator'
 
 const schemaRiverWithSpecies = {
@@ -195,59 +191,55 @@ export function validateJson (data, schema) {
 }
 
 /**
- * Parse and validate workbook data
- * @param {string} filename - The name of the file to parse and validate
- * @param {string} dataType - The type of data to validate
+ * Read a file as an array buffer
+ * @param {File} file - The file to read
+ * @returns {Promise<ArrayBuffer>} - A promise which resolves to the file content as an array buffer
  */
-export async function parseAndValidateWorkbook (filename, dataType) {
-  const ext = path.extname(filename)
-  let workbook
-  let schema
+function readFile(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result); // directly pass the result
+    reader.onerror = reject;
+    reader.readAsArrayBuffer(file);
+  });
+}
 
-  // Determine schema based on data type
-  if (dataType === 'station') {
-    schema = schemaStationDownload
-  } else if (dataType === 'river') {
-    schema = schemaRiverSummary
-  } else {
-    throw new Error('Invalid data type')
-  }
+const excelSchemas = {
+  'Elvedata': schemaRiverWithSpecies,
+  'Stasjonsdata': schemaStationWithSpecies,
+  'Individdata': schemaObservation
+}
 
-  let sheetNames
+/**
+ * Parse and validate workbook data
+ * @param {File} file - The file to parse and validate
+ * @returns {Promise<boolean>} - A promise which resolves to if the workbook was parsed and validated successfully or not
+ */
+export async function parseAndValidateWorkbook (excelFile) {
+  try {
+    // Read the file
+    const fileContent = await readFile(excelFile)
+    const workbook = XLSX.read(fileContent, { type: 'buffer' })
 
-  if (ext === '.xlsx') {
-    workbook = new ExcelJS.Workbook()
-    await workbook.xlsx.readFile(filename)
-    sheetNames = workbook.worksheetNames
-  } else if (ext === '.csv') {
-    try {
-      const fileContent = await fs.promises.readFile(filename, 'utf8')
-      const results = Papa.parse(fileContent, { header: true })
-      workbook = new ExcelJS.Workbook()
-      const worksheet = workbook.addWorksheet('Sheet1')
-      worksheet.addRows(results.data)
-      sheetNames = ['Sheet1']
-    } catch (error) {
-      console.error(`Failed to process CSV file: ${error}`)
-    }
-  }
+    // River, station and observation sheets
+    const sheets = workbook.SheetNames.slice(0, 3)
 
-  await Promise.all(sheetNames.map(async (sheetName) => {
-    const worksheet = workbook.getWorksheet(sheetName)
-    let headers = []
-    worksheet.eachRow((row, rowIndex) => {
-      if (rowIndex === 1) {
-        // Capture header row to map column names to schema properties
-        headers = row.values
-      } else {
-        const rowData = {} // Prepare an object for sanitized row data
-        row.eachCell((cell, colNumber) => {
-          // Use header for key if available, falling back to `col${colNumber}` otherwise
-          const key = headers[colNumber] || `col${colNumber}`
-          rowData[key] = typeof cell.value === 'string' ? sanitizeInput(cell.value) : cell.value
-        })
-        validateData(rowData, schema) // Adjusted to ensure rowData structure matches schema
+    // Validate each sheet
+    for (const sheetname of sheets) {
+      // Retrieve the sheet and convert it to json
+      const worksheet = workbook.Sheets[sheetname]
+      const jsonSheet = XLSX.utils.sheet_to_json(worksheet, { header: 1 })
+
+      // Validate the json sheet against its schema
+      if (!validateJson(jsonSheet, excelSchemas[sheetname])) {
+        return false
       }
-    })
-  }))
+    }
+
+    // If all sheets are validated, return true
+    return true
+  } catch (error) {
+    console.error('Failed to read or validate workbook', error);
+    return false
+  }
 }
