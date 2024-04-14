@@ -38,29 +38,14 @@
   /**
    *
    */
-  function uploadFile () {
-    if (!uploadedFile) {
-      addFeedbackToStore(
-        FEEDBACK_TYPES.ERROR,
-        FEEDBACK_CODES.NOT_FOUND,
-        FEEDBACK_MESSAGES.NO_FILE_SELCETED
-      )
+  async function uploadFile () {
+    // validate XLSX file
+    if (!(await validateFile(uploadedFile))) {
       return
     }
-    // Parse and validate XLSX file
-    const reader = new FileReader()
-    reader.onload = async function (e) {
-      const buffer = new Uint8Array(e.target.result)
-      const workbook = new ExcelJS.Workbook()
-      await workbook.xlsx.load(buffer)
-      const worksheet = workbook.worksheets[0]
-      const jsonData = worksheet.getRows(1, worksheet.rowCount).map((row) => row.values)
-      console.log(jsonData) // Should reject if not valid
-    }
-    reader.readAsArrayBuffer(uploadedFile)
 
     // Upload file to server
-    uploadFileToServer(uploadedFile).then((success) => {
+    await uploadFileToServer(uploadedFile).then((success) => {
       // Reset the uploaded file if the upload was successful
       if (success) {
         uploadedFile = null
