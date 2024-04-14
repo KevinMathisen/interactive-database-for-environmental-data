@@ -36,7 +36,7 @@
 <div class='container'>
   <h1 class='header'>Velg elver eller stasjoner</h1>
   <div class='main'>
-    <div class='leftColumn'>
+    <form class='leftColumn'>
       <CollapsibleSection title='Type data' collapsable={false}>
         <RadioInput name='dataType' options={dataOptions} bind:selected={dataType} />
       </CollapsibleSection>
@@ -44,7 +44,7 @@
       <CollapsibleSection title='Filtrer søk etter dato' collapsable={false}>
         <DateInput bind:selectedStartDate bind:selectedEndDate/>
       </CollapsibleSection>
-    </div>
+    </form>
 
     <div class='rightColumn'>
       <SearchForRiverAndStation
@@ -57,9 +57,11 @@
         {selectedEndDate} />
     </div>
   </div>
-  <Button type='green' size='medium' on:buttonClick={handleDone}>
-    Ferdig
-  </Button>
+  <div role='button'>
+    <Button type='green' size='medium' on:buttonClick={handleDone}>
+      Ferdig
+    </Button>
+  </div>
 </div>
 
 <style>
