@@ -214,7 +214,7 @@
 
 <div class='graphPage'>
   <!-- Filter sidebar -->
-  <div class='filterContainer'>
+  <div class='filterContainer' role='form'>
     <Sidebar title='Filter for Grafer' typeClose='sideButton' side='left'>
       <GraphFilter
         {selectedRivers}
@@ -242,15 +242,17 @@
       <!-- Graph for distribution of species -->
       <div class='graphBox'>
         <h3>FORDELING AV ARTER</h3>
-        <PlotlyComponent
-          type={plotTypeA}
-          {plotData}
-          {dataType}
-          {aggregateData}
-          species={selectedSpecies}
-          absoluteValues={showValueA}
-          {includeOthers}
-          />
+        <div role='document' aria-label='Interaktiv diagram over fordelingen av arter'>
+          <PlotlyComponent
+            type={plotTypeA}
+            {plotData}
+            {dataType}
+            {aggregateData}
+            species={selectedSpecies}
+            absoluteValues={showValueA}
+            {includeOthers}
+            />
+        </div>
       </div>
     {/if}
 
@@ -258,16 +260,17 @@
       <!-- Graph for distribution of length -->
       <div class='graphBox'>
         <h3>FORDELING AV LENGDE</h3>
-        <PlotlyComponent
-          type={plotTypeB}
-          {plotData}
-          {dataType}
-          {aggregateData}
-          species={selectedSpecies}
-          interval={intervallPlotB}
-          {includeOthers}
-          {combineSpecies}
-          />
+        <div role='document' aria-label='Interaktiv diagram over lengde fordelingen av arter'></div>
+          <PlotlyComponent
+            type={plotTypeB}
+            {plotData}
+            {dataType}
+            {aggregateData}
+            species={selectedSpecies}
+            interval={intervallPlotB}
+            {includeOthers}
+            {combineSpecies}
+            />
       </div>
     {/if}
   </div>
