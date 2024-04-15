@@ -100,13 +100,13 @@ export async function generateCSVFile (rivers, stations, type, selectedSpecies) 
  * @param {File} file - The file to read
  * @returns {Promise<ArrayBuffer>} - A promise which resolves to the file content as an array buffer
  */
-export function readFile(file) {
+export function readFile (file) {
   return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result); // directly pass the result
-    reader.onerror = reject;
-    reader.readAsArrayBuffer(file);
-  });
+    const reader = new FileReader()
+    reader.onload = () => resolve(reader.result) // directly pass the result
+    reader.onerror = reject
+    reader.readAsArrayBuffer(file)
+  })
 }
 
 /**
@@ -114,7 +114,7 @@ export function readFile(file) {
  * @param {ExcelJS.Worksheet} worksheet - The worksheet to convert to json
  * @returns {object[]} - Worksheet as json
  */
-export function worksheetToJson(worksheet) {
+export function worksheetToJson (worksheet) {
   // Get the header and data rows
   const rows = worksheet.getSheetValues()
   const header = rows[1].map(cell => cell.trim())
@@ -132,7 +132,7 @@ export function worksheetToJson(worksheet) {
     // Go trough each column in the row
     header.forEach((key, index) => {
       // If the cell is not empty, add it to the json row
-      if (row[index] == undefined) {
+      if (row[index] === undefined) {
         return
       }
 

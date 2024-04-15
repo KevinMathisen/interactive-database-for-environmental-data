@@ -110,7 +110,7 @@ const schemaSingleStationSummary = {
     voltage: { type: 'integer' },
     pulse: { type: 'integer' },
     conductivity: { type: ['integer', 'null'] },
-    observations: { type: 'array', items: observationSchema },
+    observations: { type: 'array', items: observationSchema }
   },
   required: ['id', 'name', 'date', 'time', 'river_id', 'sec_fished'],
   additionalProperties: false
@@ -122,7 +122,7 @@ const schemaSingleStationDownload = {
     id: { type: 'integer' },
     transect_length: { type: ['string', 'null'] },
     display: { type: ['string', 'null'] },
-    gpx_file: { type: ['string', 'null']},
+    gpx_file: { type: ['string', 'null'] },
     observations: { type: 'array', items: observationSchema }
   },
   required: ['id'],
@@ -159,20 +159,20 @@ export const schemaRiverSheet = {
   items: {
     type: 'object',
     properties: {
-      'Start dato': { type: 'string'},
-      'Slutt dato': { type: 'string'},
-      'Elv': { type: 'string' },
-      'Båttype': { type: 'string' },
-      'Lat': { type: ['string', 'number'] },
-      'Long': { type: ['string', 'number'] },
+      'Start dato': { type: 'string' },
+      'Slutt dato': { type: 'string' },
+      Elv: { type: 'string' },
+      Båttype: { type: 'string' },
+      Lat: { type: ['string', 'number'] },
+      Long: { type: ['string', 'number'] },
       'Vannføring (sildre.no)': { type: ['string', 'number'] },
-      'Skipper': { type: 'string' },
-      'Mannskap1': { type: 'string' },
-      'Mannskap2': { type: 'string' },
-      'Mannskap3': { type: 'string' },
-      'Prosjekt': { type: ['string', 'number'] },
-      'Prosjektnummer': { type: ['string', 'number'] },
-      'Kommentar': { type: 'string' },
+      Skipper: { type: 'string' },
+      Mannskap1: { type: 'string' },
+      Mannskap2: { type: 'string' },
+      Mannskap3: { type: 'string' },
+      Prosjekt: { type: ['string', 'number'] },
+      Prosjektnummer: { type: ['string', 'number'] },
+      Kommentar: { type: 'string' }
     },
     required: ['Start dato', 'Slutt dato', 'Elv', 'Båttype', 'Lat', 'Long', 'Skipper']
   }
@@ -183,27 +183,27 @@ export const schemaStationSheet = {
   items: {
     type: 'object',
     properties: {
-      'Stasjon': { type: ['string', 'number'] },
-      'Båttype': { type: 'string' },
-      'Dato': { type: 'string' },
+      Stasjon: { type: ['string', 'number'] },
+      Båttype: { type: 'string' },
+      Dato: { type: 'string' },
       'Klokkeslett start': { type: 'string' },
       'Lat start': { type: ['string', 'number'] },
       'Long start': { type: ['string', 'number'] },
       'Lat stopp': { type: ['string', 'number'] },
       'Long stopp': { type: ['string', 'number'] },
       'Dominerende elvetype': { type: 'string' },
-      'Vær': { type: 'string' },
+      Vær: { type: 'string' },
       'Vanntemp (Celsius)': { type: ['string', 'number'] },
       'Lufttemperatur (Celsius)': { type: ['string', 'number'] },
       'Ledningsevne (µs/cm)': { type: ['string', 'number'] },
       'Transektlengde (m)': { type: ['string', 'number'] },
       'Sekunder fisket (s)': { type: ['string', 'number'] },
-      'Volt': { type: ['string', 'number'] },
+      Volt: { type: ['string', 'number'] },
       'Puls (DC)': { type: ['string', 'number'] },
-      'Display': { type: ['string', 'number'] },
+      Display: { type: ['string', 'number'] },
       'Gpx file?': { type: 'string' },
-      'Stasjonsbeskrivelse': { type: 'string' },
-      'Kommentarer til fiske (observasjoner osv)': { type: 'string' },
+      Stasjonsbeskrivelse: { type: 'string' },
+      'Kommentarer til fiske (observasjoner osv)': { type: 'string' }
     },
     required: ['Stasjon', 'Båttype', 'Dato', 'Klokkeslett start', 'Lat start', 'Long start', 'Lat stopp', 'Long stopp', 'Sekunder fisket (s)', 'Volt', 'Puls (DC)']
   }
@@ -214,17 +214,17 @@ export const schemaObservationSheet = {
   items: {
     type: 'object',
     properties: {
-      'ID': { type: ['string', 'number'] },
-      'Stasjon': { type: ['string', 'number'] },
-      'Omgang': { type: ['string', 'number'] },
-      'Art': { type: 'string' },
-      'Lengde': { type: ['string', 'number'] },
-      'Antall': { type: ['string', 'number'] },
-      'Kjønn': { type: 'string' },
-      'Alder': { type: ['string', 'number'] },
+      ID: { type: ['string', 'number'] },
+      Stasjon: { type: ['string', 'number'] },
+      Omgang: { type: ['string', 'number'] },
+      Art: { type: 'string' },
+      Lengde: { type: ['string', 'number'] },
+      Antall: { type: ['string', 'number'] },
+      Kjønn: { type: 'string' },
+      Alder: { type: ['string', 'number'] },
       'Gjenutsatt (ja/nei)': { type: 'string' },
       'Prøvetatt (ja/nei)': { type: 'string' },
-      'Kommentar': { type: 'string' },
+      Kommentar: { type: 'string' }
     },
     required: ['Stasjon', 'Art']
   }

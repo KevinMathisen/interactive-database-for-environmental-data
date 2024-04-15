@@ -1,5 +1,5 @@
 <script>
-    import { validateText } from "../../utils/validation"
+    import { validateText } from '../../utils/validation'
 
     export let searchQuery // search query
     export let dataType // type of data to search for
@@ -13,10 +13,10 @@
 
     // Update search query if user input is valid
     $: if (userSearchQuery && validateText(userSearchQuery)) {
-        searchQuery = userSearchQuery.toLowerCase()
+      searchQuery = userSearchQuery.toLowerCase()
     } else {
-        // Reset search query if user input is empty or invalid
-        searchQuery = ''
+      // Reset search query if user input is empty or invalid
+      searchQuery = ''
     }
 </script>
 

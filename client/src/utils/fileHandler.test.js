@@ -1,8 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import {
   generateExcelFile,
-  generateCSVFile,
-  fileExistsInArray
+  generateCSVFile
 } from './fileHandler.js'
 import * as formatData from './formatData.js'
 import * as addFeedbackToStore from './addFeedbackToStore'

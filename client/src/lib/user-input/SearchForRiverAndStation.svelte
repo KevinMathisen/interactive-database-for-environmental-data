@@ -37,11 +37,11 @@
        return
      }
 
-    // Check if the input is validated
-    if (!validateText(input)) {
-      input = ''
-      return
-    }
+     // Check if the input is validated
+     if (!validateText(input)) {
+       input = ''
+       return
+     }
 
      const selectedData = dataType === DATATYPE_RIVER
        ? filterRiversByNameAndDateCombined(rivers, lowercaseInput)

@@ -25,7 +25,7 @@ import { readFile, worksheetToJson } from './fileHandler.js'
  * @returns {boolean} - If the input is allowed or not
  */
 export function validateText (input) {
-  const allowedPattern = /^[a-zA-ZæøåÆØÅ0-9 .,?!\-():+"%\/]+$/
+  const allowedPattern = /^[a-zA-ZæøåÆØÅ0-9 .,?!\-():+"%/]+$/
 
   // Check if text is valid
   const isTextValid = allowedPattern.test(input)
@@ -44,7 +44,7 @@ export function validateText (input) {
  * @returns {boolean} - If the password is allowed or not
  */
 export function validatePassword (input) {
-  const allowedPattern = /^[a-zA-Z0-9 .,?!@#$%^&*()_+\-=\[\]{};':"\\|<>\/~`]+$/
+  const allowedPattern = /^[a-zA-Z0-9 .,?!@#$%^&*()_+\-=[\]{};':"\\|<>/~`]+$/
 
   // Check if password is valid
   const isPasswordValid = allowedPattern.test(input)
@@ -59,7 +59,7 @@ export function validatePassword (input) {
 
 /**
  * Validate number from string
- * @param {string} input - The input string to validate 
+ * @param {string} input - The input string to validate
  * @returns {boolean} - If the input is a number or not
  */
 export function validateNumber (input) {
@@ -74,11 +74,11 @@ export function validateNumber (input) {
 
 /**
  * Validate integer from string
- * @param {string} input - The input string to validate 
+ * @param {string} input - The input string to validate
  * @returns {boolean} - If the input is an integer or not
  */
 export function validateInteger (input) {
-  const isIntegerValid =  validator.isInt(input)
+  const isIntegerValid = validator.isInt(input)
 
   if (!isIntegerValid) {
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.FORBIDDEN, FEEDBACK_MESSAGES.INVALID_NUMBER)
@@ -132,6 +132,11 @@ export function validateStationDownload (data) {
   return validateJsonFromPostgrest(data, schemaStationDownload)
 }
 
+/**
+ *
+ * @param data
+ * @param schema
+ */
 function validateJsonFromPostgrest (data, schema) {
   const isJsonValid = validateJson(data, schema)
 
@@ -167,6 +172,7 @@ function validateStringsInJson (data) {
  * Validate json data against a schema
  * @param {[]object} data - The data to validate
  * @param {object} schema - The schema to validate the data against
+ * @param excel
  */
 export function validateJson (data, schema, excel = false) {
   // Prepare ajv and schema
@@ -181,9 +187,9 @@ export function validateJson (data, schema, excel = false) {
   // Validate data against schema
   if (!validate(data)) {
     // Let user know what is wrong with their data
-    const feedbackMessage = excel ? 
-      `${FEEDBACK_MESSAGES.INVALID_EXCEL_FORMAT} "${validate.errors[0].message}" at "${validate.errors[0].dataPath}"` :
-      FEEDBACK_MESSAGES.POSTGREST_UNAVAILABLE
+    const feedbackMessage = excel
+      ? `${FEEDBACK_MESSAGES.INVALID_EXCEL_FORMAT} "${validate.errors[0].message}" at "${validate.errors[0].dataPath}"`
+      : FEEDBACK_MESSAGES.POSTGREST_UNAVAILABLE
 
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.FORBIDDEN, feedbackMessage)
 
@@ -193,16 +199,16 @@ export function validateJson (data, schema, excel = false) {
   return true
 }
 
-
 const excelSchemas = {
-  'Elvedata': schemaRiverSheet,
-  'Stasjonsdata': schemaStationSheet,
-  'Individdata': schemaObservationSheet
+  Elvedata: schemaRiverSheet,
+  Stasjonsdata: schemaStationSheet,
+  Individdata: schemaObservationSheet
 }
 
 /**
  * Parse and validate excel file content
  * @param {File} file - The file to parse and validate
+ * @param excelFile
  * @returns {Promise<boolean>} - A promise which resolves to if the excel file was parsed and validated successfully or not
  */
 export async function parseAndValidateExcel (excelFile) {
