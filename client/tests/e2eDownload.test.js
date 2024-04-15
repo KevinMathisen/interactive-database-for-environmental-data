@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test'
-import {riverWithSpeciesJson, riverSummaryJson, stationDownloadJson, stationSummaryJson, stationWithSpeciesJson} from './test-data/postgrestTestData'
+import { riverWithSpeciesJson, riverSummaryJson, stationDownloadJson, stationSummaryJson, stationWithSpeciesJson } from './test-data/postgrestTestData'
 
 const RIVER_ENDPOINT = '/river_with_species'
 const STATION_ENDPOINT = '/station_with_species'
@@ -50,28 +50,24 @@ test.describe('Tests the download page', () => {
       })
     })
 
-    try {
-      await page.goto('/download')
-      await page.waitForTimeout(500)
-      await page.click('text=Rediger')
-      await page.waitForTimeout(2000)
-      await page.fill('input[placeholder="Legg til Elv"]', 'gaula')
-      await page.waitForTimeout(500)
-      await expect(page.locator('text=Gaula 2021-09-30')).toBeVisible()
-      await page.click('text=+')
-      await page.waitForTimeout(500)
-      await page.click('text=Ferdig')
-      await page.waitForTimeout(500)
-      await page.click('text=xlsx')
-      await page.waitForTimeout(500)
-      const [download] = await Promise.all([
-        page.waitForEvent('download'),
-        page.click('.downloadButton a')
-      ])
-      const filename = await download.suggestedFilename()
-      expect(filename).toBe('elver.xlsx')
-    } catch (error) {
-      throw error
-    }
+    await page.goto('/download')
+    await page.waitForTimeout(500)
+    await page.click('text=Rediger')
+    await page.waitForTimeout(2000)
+    await page.fill('input[placeholder="Legg til Elv"]', 'gaula')
+    await page.waitForTimeout(500)
+    await expect(page.locator('text=Gaula 2021-09-30')).toBeVisible()
+    await page.click('text=+')
+    await page.waitForTimeout(500)
+    await page.click('text=Ferdig')
+    await page.waitForTimeout(500)
+    await page.click('text=xlsx')
+    await page.waitForTimeout(500)
+    const [download] = await Promise.all([
+      page.waitForEvent('download'),
+      page.click('.downloadButton a')
+    ])
+    const filename = await download.suggestedFilename()
+    expect(filename).toBe('elver.xlsx')
   }, { timeout: 30000 })
 })

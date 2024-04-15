@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test'
-import {riverWithSpeciesJson, riverSummaryJson, stationDownloadJson, stationSummaryJson, stationWithSpeciesJson} from './test-data/postgrestTestData'
+import { riverWithSpeciesJson, riverSummaryJson, stationSummaryJson, stationWithSpeciesJson } from './test-data/postgrestTestData'
 
 const RIVER_ENDPOINT = '/river_with_species'
 const STATION_ENDPOINT = '/station_with_species'
@@ -25,7 +25,6 @@ test.describe('Tests the map page', () => {
       })
     })
 
-
     await page.route(`${POSTGREST_URL}${STATION_SUMMARY}`, route => {
       route.fulfill({
         status: 200,
@@ -41,21 +40,15 @@ test.describe('Tests the map page', () => {
         body: JSON.stringify([stationWithSpeciesJson])
       })
     })
-
-
-    try {
-      await page.goto('/')
-      await page.waitForTimeout(500)
-      await page.locator('.leaflet-marker-icon').first().click()
-      await page.waitForTimeout(500)
-      await page.click('text=Info')
-      await page.waitForTimeout(500)
-      await page.getByRole('cell', { name: '1', exact: true }).click()
-      await page.waitForTimeout(500)
-      expect(page.getByText('Gaula 1')).toBeVisible()
-      await page.waitForTimeout(500)
-    } catch (error) {
-      throw error
-    }
+    await page.goto('/')
+    await page.waitForTimeout(500)
+    await page.locator('.leaflet-marker-icon').first().click()
+    await page.waitForTimeout(500)
+    await page.click('text=Info')
+    await page.waitForTimeout(500)
+    await page.getByRole('cell', { name: '1', exact: true }).click()
+    await page.waitForTimeout(500)
+    expect(page.getByText('Gaula 1')).toBeVisible()
+    await page.waitForTimeout(500)
   }, { timeout: 30000 })
 })

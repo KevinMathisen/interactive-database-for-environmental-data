@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test'
-import {riverWithSpeciesJson, riverSummaryJson, stationDownloadJson, stationSummaryJson, stationWithSpeciesJson} from './test-data/postgrestTestData'
+import { riverWithSpeciesJson, riverSummaryJson, stationSummaryJson, stationWithSpeciesJson } from './test-data/postgrestTestData'
 
 const RIVER_ENDPOINT = '/river_with_species'
 const STATION_ENDPOINT = '/station_with_species'
@@ -25,7 +25,6 @@ test.describe('Tests the list page', () => {
       })
     })
 
-
     await page.route(`${POSTGREST_URL}${STATION_SUMMARY}`, route => {
       route.fulfill({
         status: 200,
@@ -41,22 +40,16 @@ test.describe('Tests the list page', () => {
         body: JSON.stringify([stationWithSpeciesJson])
       })
     })
-
-
-    try {
-      await page.goto('/list')
-      await page.getByLabel('Stasjonsdata').check()
-      await page.waitForTimeout(500)
-      await page.locator('#listSearch').fill('Gaula 1')
-      await page.waitForTimeout(500)
-      await page.click('text=gaula 1')
-      await page.waitForTimeout(500)
-      await page.click('text=Se i kart')
-      await page.waitForTimeout(500)
-      expect(page.getByText('Gaula 1')).toBeVisible()
-      await page.waitForTimeout(500)
-    } catch (error) {
-      throw error
-    }
+    await page.goto('/list')
+    await page.getByLabel('Stasjonsdata').check()
+    await page.waitForTimeout(500)
+    await page.locator('#listSearch').fill('Gaula 1')
+    await page.waitForTimeout(500)
+    await page.click('text=gaula 1')
+    await page.waitForTimeout(500)
+    await page.click('text=Se i kart')
+    await page.waitForTimeout(500)
+    expect(page.getByText('Gaula 1')).toBeVisible()
+    await page.waitForTimeout(500)
   }, { timeout: 30000 })
 })

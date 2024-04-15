@@ -25,9 +25,8 @@ import { readFile, worksheetToJson } from './fileHandler.js'
  * @returns {boolean} - If the input is allowed or not
  */
 export function validateText (input) {
-
   // Return if input is empty
-  if (!input){
+  if (!input) {
     return true
   }
 

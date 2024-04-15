@@ -10,6 +10,6 @@ export default defineConfig({
     include: ['src/**/*.{test,spec}.{js,ts}']
   },
   build: {
-    chunkSizeWarningLimit: 4000,
+    chunkSizeWarningLimit: 4000
   }
 })

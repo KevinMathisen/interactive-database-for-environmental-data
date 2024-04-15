@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test'
-import {riverWithSpeciesJson, riverSummaryJson, stationDownloadJson, stationSummaryJson, stationWithSpeciesJson} from './test-data/postgrestTestData'
+import { riverWithSpeciesJson, riverSummaryJson, stationSummaryJson, stationWithSpeciesJson } from './test-data/postgrestTestData'
 
 const RIVER_ENDPOINT = '/river_with_species'
 const STATION_ENDPOINT = '/station_with_species'
@@ -25,7 +25,6 @@ test.describe('Tests the graph page', () => {
       })
     })
 
-
     await page.route(`${POSTGREST_URL}${STATION_SUMMARY}`, route => {
       route.fulfill({
         status: 200,
@@ -41,35 +40,30 @@ test.describe('Tests the graph page', () => {
         body: JSON.stringify([stationWithSpeciesJson])
       })
     })
-
-    try {
-      await page.goto('/graph')
-      await page.click('text=Rediger')
-      await page.waitForTimeout(2000)
-      await page.fill('input[placeholder="Legg til Elv"]', 'Gaula')
-      await expect(page.locator('text=Gaula 2021-09-30')).toBeVisible()
-      await page.click('text=+')
-      await page.waitForTimeout(500)
-      await page.click('text=Ferdig')
-      await page.waitForTimeout(500)
-      await page.click('text=egendefinert')
-      await page.waitForTimeout(500)
-      await page.fill('input[placeholder="Legg til art"]', 'aure')
-      await page.waitForTimeout(500)
-      await page.click('text=+')
-      await page.waitForTimeout(500)
-      await page.click('text=Sektordiagram')
-      await page.waitForTimeout(500)
-      await page.getByRole('button', { name: 'Velg elver/stasjoner' }).click()
-      await page.locator('#showPlotA').uncheck()
-      await page.getByRole('button', { name: 'Art', exact: true }).click()
-      await page.getByRole('button', { name: 'Fordeling av arter' }).click()
-      await page.getByPlaceholder('mm').click()
-      await page.waitForTimeout(500)
-      await page.getByPlaceholder('mm').fill('15')
-      await page.waitForTimeout(500)
-    } catch (error) {
-      throw error
-    }
+    await page.goto('/graph')
+    await page.click('text=Rediger')
+    await page.waitForTimeout(2000)
+    await page.fill('input[placeholder="Legg til Elv"]', 'Gaula')
+    await expect(page.locator('text=Gaula 2021-09-30')).toBeVisible()
+    await page.click('text=+')
+    await page.waitForTimeout(500)
+    await page.click('text=Ferdig')
+    await page.waitForTimeout(500)
+    await page.click('text=egendefinert')
+    await page.waitForTimeout(500)
+    await page.fill('input[placeholder="Legg til art"]', 'aure')
+    await page.waitForTimeout(500)
+    await page.click('text=+')
+    await page.waitForTimeout(500)
+    await page.click('text=Sektordiagram')
+    await page.waitForTimeout(500)
+    await page.getByRole('button', { name: 'Velg elver/stasjoner' }).click()
+    await page.locator('#showPlotA').uncheck()
+    await page.getByRole('button', { name: 'Art', exact: true }).click()
+    await page.getByRole('button', { name: 'Fordeling av arter' }).click()
+    await page.getByPlaceholder('mm').click()
+    await page.waitForTimeout(500)
+    await page.getByPlaceholder('mm').fill('15')
+    await page.waitForTimeout(500)
   }, { timeout: 30000 })
 })

@@ -1,5 +1,3 @@
-
-
 export const riverWithSpeciesJson = {
   id: 3,
   name: 'Gaula',
@@ -744,5 +742,3 @@ export const stationWithSpeciesJson = {
   time: '08:00',
   species: ['aure', 'laks', '3-pigga stingsild', 'skrubbe']
 }
-
-
