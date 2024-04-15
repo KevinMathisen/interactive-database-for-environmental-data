@@ -1,8 +1,15 @@
 <script>
+    import { validateText } from "../../utils/validation";
+
     export let searchQuery
     export let dataType
 
-    $: searchQuery = searchQuery.toLowerCase()
+    let userSearchQuery = ''
+
+    $: if (userSearchQuery && validateText(userSearchQuery)) {
+        searchQuery = userSearchQuery.toLowerCase()
+    }
+
     let placeholder
     const helpText = 'Bruk filter for å filtrere resultat'
 
@@ -11,7 +18,7 @@
 
 <div class=container>
     <label>
-        <input type='search' id='listSearch' name='listSearch' placeholder={placeholder} bind:value={searchQuery}/>
+        <input type='search' id='listSearch' name='listSearch' placeholder={placeholder} bind:value={userSearchQuery}/>
     </label>
 
     <div class=helpText>{helpText}</div>
