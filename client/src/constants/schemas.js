@@ -27,6 +27,7 @@ const observationSchema = {
   type: 'object',
   properties: {
     id: { type: 'integer' },
+    station: { type: ['integer', 'null'] },
     species: { type: 'string' },
     length: { type: ['integer', 'null'] },
     count: { type: ['integer', 'null'] },
@@ -35,7 +36,7 @@ const observationSchema = {
     age: { type: ['integer', 'null'] },
     released: { type: ['boolean', 'null'] },
     sampletype: { type: ['string', 'null'] },
-    comment: { type: 'string' }
+    comment: { type: ['string', 'null'] }
   },
   required: ['id', 'species'],
   additionalProperties: false
@@ -121,7 +122,7 @@ const schemaSingleStationDownload = {
   properties: {
     id: { type: 'integer' },
     transect_length: { type: ['string', 'null'] },
-    display: { type: ['string', 'null'] },
+    display: { type: ['string', 'number', 'null'] },
     gpx_file: { type: ['string', 'null'] },
     observations: { type: 'array', items: observationSchema }
   },
