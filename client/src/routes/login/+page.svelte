@@ -2,17 +2,21 @@
   import UserFeedbackMessage from '$lib/UserFeedbackMessage.svelte'
   import Button from '$lib/user-input/Button.svelte'
   import { authLogin } from '../../api/auth.js'
+  import { validateText, validatePassword } from '../../utils/validation.js'
 
   let username = '' // Username input
   let password = '' // Password input
 
   /**
-   *
+   * Submits the login form
    */
   function submitForm () {
     // Should validate input before sending
-    // username and password should be at least 6 characters
-    // username should not contain special characters
+    if (!username || !validateText(username)) {
+      return
+    } else if (!password || !validatePassword(password)) {
+      return
+    }
 
     // Send login request
     authLogin(username, password).then((success) => {
@@ -38,13 +42,13 @@
       <div class='inputContainer'>
         <!-- Username input -->
         <label for='username'>Brukernavn</label>
-        <input type='text' name='username' id='username' placeholder='Skriv inn brukernavn' required/>
+        <input type='text' bind:value={username} name='username' id='username' placeholder='Skriv inn brukernavn' required/>
       </div>
 
       <div class='inputContainer'>
         <!-- Password input -->
         <label for='password'>Passord</label>
-        <input type='password' name='password' id='password' placeholder='Skriv inn passord' required/>
+        <input type='password' bind:value={password} name='password' id='password' placeholder='Skriv inn passord' required/>
       </div>
     </div>
 
