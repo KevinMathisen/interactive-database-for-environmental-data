@@ -20,7 +20,7 @@ import { Station } from '../models/Station.js'
 import { addFeedbackToStore } from './addFeedbackToStore.js'
 import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/feedbackMessages'
 import { filtersStationsByRiver } from './filterData.js'
-import { 
+import {
   validateRiverWithSpecies,
   validateStationWithSpecies,
   validateRiverSummary,
