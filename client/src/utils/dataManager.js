@@ -20,6 +20,13 @@ import { Station } from '../models/Station.js'
 import { addFeedbackToStore } from './addFeedbackToStore.js'
 import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/feedbackMessages'
 import { filtersStationsByRiver } from './filterData.js'
+import { 
+  validateRiverWithSpecies,
+  validateStationWithSpecies,
+  validateRiverSummary,
+  validateStationSummary,
+  validateStationDownload
+} from './validation.js'
 
 /**
  * Updates a store with given objects converted to a given class
@@ -122,6 +129,11 @@ export async function getRivers () {
     // Get rivers
     const fetchedRivers = await fetchRivers()
 
+    // Validate the fetched rivers
+    if (!validateRiverWithSpecies(fetchedRivers)) {
+      return
+    }
+
     // Update store
     updateStoreWithObjects(riverStore, fetchedRivers, River)
   } catch (error) {
@@ -144,6 +156,11 @@ export async function getStations () {
   try {
     // Get stations
     const fetchedStations = await fetchStations()
+
+    // Validate the fetched stations
+    if (!validateStationWithSpecies(fetchedStations)) {
+      return
+    }
 
     // Update store
     updateStoreWithObjects(stationStore, fetchedStations, Station)
@@ -169,11 +186,21 @@ export async function getRiverSummary (id) {
     // Get river summary data
     const fetchedRiversSummary = await fetchRiverSummary(id)
 
+    // Validate the fetched river summary
+    if (!validateRiverSummary(fetchedRiversSummary)) {
+      return
+    }
+
     // Update store with river
     updateStoreWithObject(riverStore, fetchedRiversSummary[0], River)
 
     // Get data for stations under river
     const fetchedStations = await fetchStationSummary(fetchedRiversSummary[0].stations)
+
+    // Validate the fetched stations
+    if (!validateStationSummary(fetchedStations)) {
+      return
+    }
 
     // Update store with the stations
     updateStoreWithObjects(stationStore, fetchedStations, Station)
@@ -197,6 +224,11 @@ export async function getStationSummary (id) {
   try {
     // Get station summary
     const fetchedStationsSummary = await fetchStationSummary([id])
+
+    // Validate the fetched station summary
+    if (!validateStationSummary(fetchedStationsSummary)) {
+      return
+    }
 
     // Update store
     updateStoreWithObject(stationStore, fetchedStationsSummary[0], Station)
@@ -230,7 +262,10 @@ export async function getRiverForDownload (id) {
     // Get all download data for all stations under river
     const fetchedStations = await fetchStationDownload(stationsNotFetchedForDownload)
 
-    console.log(fetchedStations)
+    // Validate the fetched stations
+    if (!validateStationDownload(fetchedStations)) {
+      return
+    }
 
     // Update store with the new station data
     updateStoreWithObjects(stationStore, fetchedStations, Station)
@@ -263,6 +298,11 @@ export async function getStationForDownload (id) {
   try {
     // Get station
     const fetchedStations = await fetchStationDownload([id])
+
+    // Validate the fetched station
+    if (!validateStationDownload(fetchedStations)) {
+      return
+    }
 
     // Update store
     updateStoreWithObject(stationStore, fetchedStations[0], Station)
