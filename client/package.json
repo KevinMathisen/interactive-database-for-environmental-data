@@ -38,7 +38,6 @@
 	"dependencies": {
 		"exceljs": "^4.4.0",
 		"leaflet": "^1.9.4",
-		"papaparse": "^5.4.1",
 		"plotly.js-dist-min": "^2.30.1"
 	}
 }
