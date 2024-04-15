@@ -138,7 +138,9 @@ export function validateStationDownload (data) {
  * @returns {boolean} - If all strings are valid or not
  */
 function validateStringsInJson (data) {
-  if (typeof data === 'string') {
+  if (data === null) {
+    return true
+  } else if (typeof data === 'string') {
     // If data is a string, validate it
     return validateText(data)
   } else if (typeof data === 'object') {
