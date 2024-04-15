@@ -17,6 +17,7 @@
   import { page } from '$app/stores'
   import { DATATYPE_RIVER, DATATYPE_STATION } from '../../constants/dataTypes'
   import { goto } from '$app/navigation'
+  import { validateInteger } from '../../utils/validation.js'
 
   let urlParamsLoaded = false // Whether URL parameters have been loaded
 
@@ -175,14 +176,14 @@
     const url = new URL(window.location.href)
 
     // Set the selected river in the url
-    if (selectedRiver.id) {
+    if (selectedRiver.id && !isNaN(selectedRiver.id)) {
       url.searchParams.set(DATATYPE_RIVER, selectedRiver.id)
     } else {
       url.searchParams.delete(DATATYPE_RIVER)
     }
 
     // Set the selected station in the url
-    if (selectedStation.id) {
+    if (selectedStation.id && !isNaN(selectedStation.id)) {
       url.searchParams.set(DATATYPE_STATION, selectedStation.id)
     } else {
       url.searchParams.delete(DATATYPE_STATION)
@@ -198,14 +199,14 @@
   function getUrlParams () {
     // Get the river and station id from the URL if they are defined
     const searchParams = new URLSearchParams($page.url.search)
-    const riverId = Number(searchParams.get(DATATYPE_RIVER))
-    const stationId = Number(searchParams.get(DATATYPE_STATION))
+    const riverId = searchParams.get(DATATYPE_RIVER)
+    const stationId = searchParams.get(DATATYPE_STATION)
 
     // Select the river or station based on the id in the URL
-    if (riverId) {
-      selectRiver(riverId)
-    } else if (stationId) {
-      selectStation(stationId)
+    if (riverId && validateInteger(riverId)) {
+      selectRiver(Number(riverId))
+    } else if (stationId && validateInteger(stationId)) {
+      selectStation(Number(stationId))
     }
 
     urlParamsLoaded = true // Set that URL parameters have been loaded

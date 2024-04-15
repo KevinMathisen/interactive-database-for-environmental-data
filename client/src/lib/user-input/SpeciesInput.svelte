@@ -1,4 +1,6 @@
 <script>
+  import { validateText } from '../../utils/validation'
+
   export let selectableSpecies = [] // Get species the user can choose from
 
   export let chooseAll = true // If the user wants to choose all species
@@ -19,6 +21,11 @@
 
     // If the input is empty, do nothing
     if (lowercaseInputSpecies.trim().length === 0) {
+      return
+    }
+
+    // Check if the input is validated
+    if (!validateText(inputSpecies)) {
       return
     }
 

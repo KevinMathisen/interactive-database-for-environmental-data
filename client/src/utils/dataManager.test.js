@@ -100,7 +100,14 @@ describe('test getRivers function', () => {
   it('should fetch and update river store if rivers do not exist in store', async () => {
     // set up test
     checkIfDataExists.doesAllRiversExistInStore.mockReturnValue(false)
-    const mockedRivers = [{ id: 1, name: 'River Test' }]
+    const mockedRivers = [{
+      id: 1,
+      name: 'River Test',
+      pos: { coordinates: [1, 2] },
+      start_date: '2024-01-01',
+      end_date: '2024-01-02',
+      species: ['Species 1']
+    }]
     postgrest.fetchRivers.mockResolvedValue(mockedRivers)
     vi.mocked(get).mockReturnValue(new Map())
 
@@ -109,14 +116,21 @@ describe('test getRivers function', () => {
 
     expect(postgrest.fetchRivers).toHaveBeenCalled()
     // expect the riverStore to have a river in its store
-    const expectedRiverMap = new Map(mockedRivers.map(river => [river.id, new River(river)]))
+    const expectedRiverMap = new Map(mockedRivers.map(river => [river.id, River.fromJson(river)]))
     expect(riverStore.set).toHaveBeenCalledWith(expectedRiverMap)
   })
 
   it('should update river store if there are only some rivers with no overlap', async () => {
     // set up test
     checkIfDataExists.doesAllRiversExistInStore.mockReturnValue(false)
-    const mockedRivers = [{ id: 1, name: 'River Test' }]
+    const mockedRivers = [{
+      id: 1,
+      name: 'River Test',
+      pos: { coordinates: [1, 2] },
+      start_date: '2024-01-01',
+      end_date: '2024-01-02',
+      species: ['Species 1']
+    }]
     postgrest.fetchRivers.mockResolvedValue(mockedRivers)
     const initialRiverMap = new Map([[2, new River({ id: 2, name: 'River Test 2' })]])
     vi.mocked(get).mockReturnValue(initialRiverMap)
@@ -146,7 +160,14 @@ describe('test getRivers function', () => {
   it('should update river store if there are only some rivers with overlap', async () => {
     // set up test
     checkIfDataExists.doesAllRiversExistInStore.mockReturnValue(false)
-    const mockedRivers = [{ id: 1, name: 'River Test', start_date: '2024-01-01' }]
+    const mockedRivers = [{
+      id: 1,
+      name: 'River Test',
+      pos: { coordinates: [1, 2] },
+      start_date: '2024-01-01',
+      end_date: '2024-01-02',
+      species: ['Species 1']
+    }]
     postgrest.fetchRivers.mockResolvedValue(mockedRivers)
     const initialRiverMap = new Map([[1, new River({ id: 1, name: 'River Test' })], [2, new River({ id: 2, name: 'River Test 2' })]])
     vi.mocked(get).mockReturnValue(initialRiverMap)
@@ -220,7 +241,15 @@ describe('test getStations function', () => {
   it('should fetch and update station store if stations do not exist in store', async () => {
     // set up test
     checkIfDataExists.doesAllStationsExistInStore.mockReturnValue(false)
-    const mockedStations = [{ id: 1, name: 'Station Test' }]
+    const mockedStations = [{
+      id: 1,
+      name: 'Station Test',
+      start_pos: { coordinates: [1, 2] },
+      end_pos: { coordinates: [3, 4] },
+      date: '2024-01-01',
+      time: '12:00',
+      species: ['Species 1']
+    }]
     postgrest.fetchStations.mockResolvedValue(mockedStations)
     vi.mocked(get).mockReturnValue(new Map())
 
@@ -229,14 +258,22 @@ describe('test getStations function', () => {
 
     expect(postgrest.fetchStations).toHaveBeenCalled()
     // expect the stationStore to have a station in its store
-    const expectedStationMap = new Map(mockedStations.map(station => [station.id, new Station(station)]))
+    const expectedStationMap = new Map(mockedStations.map(station => [station.id, Station.fromJson(station)]))
     expect(stationStore.set).toHaveBeenCalledWith(expectedStationMap)
   })
 
   it('should update station store if there are only some stations with no overlap', async () => {
     // set up test
     checkIfDataExists.doesAllStationsExistInStore.mockReturnValue(false)
-    const mockedStations = [{ id: 1, name: 'Station Test', observations: [{ species: 'Species 1', count: 1 }] }]
+    const mockedStations = [{
+      id: 1,
+      name: 'Station Test',
+      start_pos: { coordinates: [1, 2] },
+      end_pos: { coordinates: [3, 4] },
+      date: '2024-01-01',
+      time: '12:00',
+      species: ['Species 1']
+    }]
     postgrest.fetchStations.mockResolvedValue(mockedStations)
     const initialStationMap = new Map([[2, new Station({ id: 2, name: 'Station Test 2' })]])
     vi.mocked(get).mockReturnValue(initialStationMap)
@@ -258,7 +295,7 @@ describe('test getStations function', () => {
     const updatedStationMap = capturedUpdate(initialStationMap)
 
     expect(updatedStationMap.has(1)).toBe(true)
-    expect(updatedStationMap.get(1).observations[0].species).toEqual('species 1')
+    expect(updatedStationMap.get(1).time).toEqual('12:00')
     expect(updatedStationMap.has(2)).toBe(true)
     expect(updatedStationMap.get(2).name).toEqual('Station Test 2')
   })
@@ -266,7 +303,15 @@ describe('test getStations function', () => {
   it('should update station store if there are only some stations with overlap', async () => {
     // set up test
     checkIfDataExists.doesAllStationsExistInStore.mockReturnValue(false)
-    const mockedStations = [{ id: 1, name: 'Station Test', observations: [{ species: 'Species 1', count: 2 }] }]
+    const mockedStations = [{
+      id: 1,
+      name: 'Station Test',
+      start_pos: { coordinates: [1, 2] },
+      end_pos: { coordinates: [3, 4] },
+      date: '2024-01-01',
+      time: '12:00',
+      species: ['Species 1']
+    }]
     postgrest.fetchStations.mockResolvedValue(mockedStations)
     const initialStationMap = new Map([[1, new Station({ id: 1, name: 'Station Test', observations: [{ species: 'Species 1', count: 1 }] })], [2, new Station({ id: 2, name: 'Station Test 2' })]])
     vi.mocked(get).mockReturnValue(initialStationMap)
@@ -289,7 +334,7 @@ describe('test getStations function', () => {
 
     expect(updatedStationMap.has(1)).toBe(true)
     expect(updatedStationMap.get(1).name).toEqual('Station Test')
-    expect(updatedStationMap.get(1).observations[0].count).toEqual(2)
+    expect(updatedStationMap.get(1).observations[0].count).toEqual(1)
     expect(updatedStationMap.has(2)).toBe(true)
     expect(updatedStationMap.get(2).name).toEqual('Station Test 2')
   })
@@ -327,9 +372,20 @@ describe('test getRiverSummary function', () => {
   it('should fetch and add river summary to store if river summary does not exist', async () => {
     // set up test
     checkIfDataExists.checkIfRiverSummaryExists.mockReturnValue(false)
-    const mockedRiverSummary = [{ id: 1, name: 'River Test', stations: [1, 2] }]
+    const mockedRiverSummary = [{
+      id: 1,
+      name: 'River Test',
+      stations: [1, 2],
+      start_date: '2024-01-01',
+      end_date: '2024-01-02',
+      boattype: 'Boat Type 1',
+      skipper: 'Skipper 1'
+    }]
     postgrest.fetchRiverSummary.mockResolvedValue(mockedRiverSummary)
-    const mockedStationSummary = [{ id: 1, name: 'Station Test' }, { id: 2, name: 'Station Test 2' }]
+    const mockedStationSummary = [
+      { id: 1, name: 'Station Test', date: '2024-01-01', time: '12:00', river_id: 1, sec_fished: 1 },
+      { id: 2, name: 'Station Test 2', date: '2024-01-01', time: '12:00', river_id: 1, sec_fished: 2 }
+    ]
     postgrest.fetchStationSummary.mockResolvedValue(mockedStationSummary)
 
     vi.mocked(get).mockReturnValue(new Map())
@@ -357,18 +413,34 @@ describe('test getRiverSummary function', () => {
     expect(postgrest.fetchStationSummary).toHaveBeenCalledWith([1, 2])
     expect(stationStore.set).toHaveBeenCalled()
 
-    const expectedStationMap = new Map(mockedStationSummary.map(station => [station.id, new Station(station)]))
+    const expectedStationMap = new Map(mockedStationSummary.map(station => [station.id, Station.fromJson(station)]))
     expect(stationStore.set).toHaveBeenCalledWith(expectedStationMap)
   })
 
   it('should fetch and add river summary to store if river summary and stations summaries overlap', async () => {
     // set up test
     checkIfDataExists.checkIfRiverSummaryExists.mockReturnValue(false)
-    const mockedRiverSummary = [{ id: 1, name: 'River Test', stations: [1] }]
+    const mockedRiverSummary = [{
+      id: 1,
+      name: 'River Test',
+      stations: [1],
+      start_date: '2024-01-01',
+      end_date: '2024-01-02',
+      boattype: 'Boat Type 1',
+      skipper: 'Skipper 1'
+    }]
     postgrest.fetchRiverSummary.mockResolvedValue(mockedRiverSummary)
     const initialRiverMap = new Map([[1, new River({ id: 1, name: 'River Test' })], [2, new River({ id: 2, name: 'River Test 2' })]])
 
-    const mockedStationSummary = [{ id: 1, name: 'Station Test', observations: [{ species: 'Species 1', count: 1 }] }]
+    const mockedStationSummary = [{
+      id: 1,
+      name: 'Station Test',
+      date: '2024-01-01',
+      time: '12:00',
+      river_id: 1,
+      sec_fished: 1,
+      observations: [{ id: 1, species: 'Species 1', count: 1 }]
+    }]
     postgrest.fetchStationSummary.mockResolvedValue(mockedStationSummary)
     const initialStationMap = new Map([[1, new Station({ id: 1, name: 'Station Test' })], [2, new Station({ id: 2, name: 'Station Test 2' })]])
 
@@ -441,7 +513,10 @@ describe('test getStationSummary function', () => {
   it('should fetch and add station summary to store if station summary does not exist', async () => {
     // set up test
     checkIfDataExists.checkIfStationSummaryExists.mockReturnValue(false)
-    const mockedStationSummary = [{ id: 1, name: 'Station Test' }]
+    const mockedStationSummary = [
+      { id: 1, name: 'Station Test', date: '2024-01-01', time: '12:00', river_id: 1, sec_fished: 1 },
+      { id: 2, name: 'Station Test 2', date: '2024-01-01', time: '12:00', river_id: 1, sec_fished: 2 }
+    ]
     postgrest.fetchStationSummary.mockResolvedValue(mockedStationSummary)
     vi.mocked(get).mockReturnValue(new Map())
 
@@ -468,7 +543,15 @@ describe('test getStationSummary function', () => {
   it('should fetch and add station summary to store if station summary and stations overlap', async () => {
     // set up test
     checkIfDataExists.checkIfStationSummaryExists.mockReturnValue(false)
-    const mockedStationSummary = [{ id: 1, name: 'Station Test', observations: [{ species: 'Species 1', count: 1 }] }]
+    const mockedStationSummary = [{
+      id: 1,
+      name: 'Station Test',
+      date: '2024-01-01',
+      time: '12:00',
+      river_id: 1,
+      sec_fished: 1,
+      observations: [{ id: 1, species: 'Species 1', count: 1 }]
+    }]
     postgrest.fetchStationSummary.mockResolvedValue(mockedStationSummary)
     const initialStationMap = new Map([[1, new Station({ id: 1, name: 'Station Test' })], [2, new Station({ id: 2, name: 'Station Test 2' })]])
     vi.mocked(get).mockReturnValue(initialStationMap)
@@ -535,7 +618,7 @@ describe('test getRiverForDownload function', () => {
     const initialRiverMap = new Map([[1, new River({ id: 1, name: 'River Test', stations: [1, 2] })]])
     vi.mocked(get).mockReturnValue(initialRiverMap)
 
-    const mockedStationDownload = [{ id: 1, name: 'Station Test' }, { id: 2, name: 'Station Test 2' }]
+    const mockedStationDownload = [{ id: 1, transect_length: 2 }, { id: 2, transect_length: 3 }]
     postgrest.fetchStationDownload.mockResolvedValue(mockedStationDownload)
 
     // capture updates
@@ -555,7 +638,7 @@ describe('test getRiverForDownload function', () => {
     const updatedStationMap = capturedUpdate(new Map())
 
     expect(updatedStationMap.has(1)).toBe(true)
-    expect(updatedStationMap.get(1).name).toEqual('Station Test')
+    expect(updatedStationMap.get(1).transectLength).toEqual(2)
   })
 })
 
@@ -601,7 +684,7 @@ describe('test getStationForDownload function', () => {
     checkIfDataExists.checkIfStationSummaryExists.mockReturnValue(true)
     checkIfDataExists.checkIfRiverSummaryExists.mockReturnValue(true)
     checkIfDataExists.checkIfStationDownloadExists.mockReturnValue(false)
-    const mockedStationDownload = [{ id: 1, name: 'Station Test', observations: [{ species: 'Species 1', count: 1 }] }]
+    const mockedStationDownload = [{ id: 1, observations: [{ id: 1, species: 'Species 1', count: 1 }] }]
     postgrest.fetchStationDownload.mockResolvedValue(mockedStationDownload)
     const initialStationMap = new Map([[1, new Station({ id: 1, name: 'Station Test', riverId: 1 })]])
     vi.mocked(get).mockReturnValue(initialStationMap)
