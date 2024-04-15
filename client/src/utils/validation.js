@@ -25,7 +25,7 @@ import { addFeedbackToStore } from './addFeedbackToStore.js'
  * @returns {boolean} - If the input is allowed or not
  */
 export function validateText (input) {
-  const allowedPattern = /^[a-zA-ZæøåÆØÅ0-9 .,?!\-()\/]+$/
+  const allowedPattern = /^[a-zA-ZæøåÆØÅ0-9 .,?!\-():+"%\/]+$/
 
   // Check if text is valid
   const isTextValid = allowedPattern.test(input)
@@ -44,7 +44,7 @@ export function validateText (input) {
  * @returns {boolean} - If the password is allowed or not
  */
 export function validatePassword (input) {
-  const allowedPattern = /^[a-zA-Z0-9 .,?!@#$%^&*()_+-=\[\]{};':"\\|<>\/~`]+$/
+  const allowedPattern = /^[a-zA-Z0-9 .,?!@#$%^&*()_+\-=\[\]{};':"\\|<>\/~`]+$/
 
   // Check if password is valid
   const isPasswordValid = allowedPattern.test(input)
@@ -157,20 +157,22 @@ function validateStringsInJson (data) {
   } else if (Array.isArray(data)) {
     // If array, call validateStringsInJson for each element
     return data.every(element => validateStringsInJson(element))
+  } else {
+    // If not string, object or array, return true
+    return true
   }
 }
 
 /**
  * Validate json data against a schema
- * @param {object} data - The data to validate
+ * @param {[]object} data - The data to validate
  * @param {object} schema - The schema to validate the data against
  */
-export function validateJson (data, schema) {
-  // Check if data is a json object
-  if (!validator.isJSON(data)) {
-    return false
-  }
-  
+export function validateJson (data, schema, excel = false) {
+
+  console.log('data', data)
+  console.log('schema', schema)
+
   // Prepare ajv and schema
   const ajv = new Ajv()
   const validate = ajv.compile(schema)
@@ -182,6 +184,13 @@ export function validateJson (data, schema) {
 
   // Validate data against schema
   if (!validate(data)) {
+    // Let user know what is wrong with their data
+    const feedbackMessage = excel ? 
+      `${FEEDBACK_MESSAGES.INVALID_EXCEL_FORMAT} "${validate.errors[0].message}" at "${validate.errors[0].dataPath}"` :
+      FEEDBACK_MESSAGES.POSTGREST_UNAVAILABLE
+
+    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.FORBIDDEN, feedbackMessage)
+
     return false
   }
 
@@ -210,8 +219,14 @@ function readFile(file) {
 function worksheetToJson(worksheet) {
   // Get the header and data rows
   const rows = worksheet.getSheetValues()
-  const header = rows[0]
-  const data = rows.slice(1)
+  const header = rows[1].map(cell => cell.trim())
+  const data = rows.slice(2)
+
+  // if header or data is empty, return empty array
+  if (!header || !data) {
+    console.log('header or data is empty', header, data)
+    return []
+  }
 
   // Convert each row to json
   const jsonSheet = data.map(row => {
@@ -219,12 +234,18 @@ function worksheetToJson(worksheet) {
     // Go trough each column in the row
     header.forEach((key, index) => {
       // If the cell is not empty, add it to the json row
-      if (row[index] !== undefined) {
+      if (row[index] == undefined) {
+        return
+      }
+
+      if (row[index] instanceof Date) {
+        jsonRow[key] = row[index].toISOString()
+      } else {
         jsonRow[key] = row[index]
       }
     })
     return jsonRow
-  })
+  }).filter(row => Object.keys(row).length > 0) // Filter out empty objects
 
   // Return the json sheet
   return jsonSheet
@@ -274,9 +295,14 @@ export async function parseAndValidateExcel (excelFile) {
       // Convert the sheet to json
       const jsonSheet = worksheetToJson(worksheet)
 
-      // Validate the json sheet against its schema
-      if (!validateJson(jsonSheet, excelSchemas[sheetname])) {
+      // Check if the sheet name is valid
+      if (!excelSchemas[worksheet.name]) {
         addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.FORBIDDEN, FEEDBACK_MESSAGES.INVALID_EXCEL_FORMAT)
+        return false
+      }
+
+      // Validate the json sheet against its schema
+      if (!validateJson(jsonSheet, excelSchemas[worksheet.name], true)) {
         return false
       }
     }
@@ -284,6 +310,7 @@ export async function parseAndValidateExcel (excelFile) {
     // If all sheets are validated, return true
     return true
   } catch (error) {
+    console.log(error)
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.FORBIDDEN, FEEDBACK_MESSAGES.GENERIC)
     return false
   }
