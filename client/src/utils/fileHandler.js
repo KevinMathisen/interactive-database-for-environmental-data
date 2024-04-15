@@ -94,32 +94,3 @@ export async function generateCSVFile (rivers, stations, type, selectedSpecies) 
     return new Blob()
   }
 }
-
-/**
- * Validated the file type and size
- * @param {File} file - The file to validate
- * @returns {boolean} - True if the file is valid, else false
- */
-export function validateFile (file) {
-  // Check if the file type is valid
-  if (!['.csv', '.xlsx'].includes(file.name.slice(file.name.lastIndexOf('.')))) {
-    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.UNSUPPORTED_CONTENT_TYPE, FEEDBACK_MESSAGES.UNSUPPORTED_CONTENT_TYPE)
-    return false
-  }
-  // Check if the file size exceeds the limit
-  if (file.size > 10 * 1024 * 1024) {
-    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.CONTENT_TO_LARGE, FEEDBACK_MESSAGES.CONTENT_TO_LARGE)
-    return false
-  }
-  return true
-}
-
-/**
- * Reads the content of a CSV file
- * @param {File} file - The file to check
- * @param {Array<File>} filesArray - The array of files to check
- * @returns {boolean} - True if the file exists in the array, else false
- */
-export function fileExistsInArray (file, filesArray) {
-  return filesArray.some(existingFile => existingFile.name === file.name)
-}
