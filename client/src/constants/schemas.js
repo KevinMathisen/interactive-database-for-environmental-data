@@ -121,9 +121,9 @@ const schemaSingleStationDownload = {
   type: 'object',
   properties: {
     id: { type: 'integer' },
-    transect_length: { type: ['string', 'null'] },
+    transect_length: { type: ['string', 'number', 'null'] },
     display: { type: ['string', 'number', 'null'] },
-    gpx_file: { type: ['string', 'null'] },
+    gpx_file: { type: ['string', 'boolean', 'null'] },
     observations: { type: 'array', items: observationSchema }
   },
   required: ['id'],
