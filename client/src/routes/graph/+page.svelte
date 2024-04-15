@@ -13,6 +13,7 @@
   import { page } from '$app/stores'
   import { DATATYPE_RIVER, DATATYPE_STATION } from '../../constants/dataTypes'
   import { goto } from '$app/navigation'
+  import { validateInteger } from '../../utils/validation'
 
   let showSelectRiverAndStationModal = false // Show the modal to select rivers and stations
 
@@ -151,12 +152,16 @@
     // Add the selected rivers to the URL
     if (dataType === DATATYPE_RIVER) {
       selectedRivers.forEach((_, id) => {
-        url.searchParams.append(DATATYPE_RIVER, id)
+        if (!isNaN(id)) {
+          url.searchParams.append(DATATYPE_RIVER, id)
+        }
       })
     } else if (dataType === DATATYPE_STATION) {
       // Add the selected stations to the URL
       selectedStations.forEach((_, id) => {
-        url.searchParams.append(DATATYPE_STATION, id)
+        if (!isNaN(id)) {
+          url.searchParams.append(DATATYPE_STATION, id)
+        }
       })
     }
 
@@ -167,37 +172,44 @@
   /**
    * Gets the rivers or stations based on the URL parameters
    */
-   function getUrlParams () {
-     // Get the river and station ids
-     const searchParams = new URLSearchParams($page.url.search)
-     const riverIds = searchParams.getAll(DATATYPE_RIVER).map(Number)
-     const stationIds = searchParams.getAll(DATATYPE_STATION).map(Number)
+  function getUrlParams () {
+    // Get the river and station ids
+    const searchParams = new URLSearchParams($page.url.search)
+    const riverIdsIn = searchParams.getAll(DATATYPE_RIVER)
+    const stationIdsIn = searchParams.getAll(DATATYPE_STATION)
 
-     const selectedRiversUrl = new Map()
-     const selectedStationsUrl = new Map()
+    // Check if each river and station id is a valid integer
+    if (riverIdsIn.some(id => !validateInteger(id)) || stationIdsIn.some(id => !validateInteger(id))) {
+      urlParamsLoaded = true // Set that URL parameters have been loaded
+      return
+    }
 
-     // Select the rivers or stations and datatype based on the ids
-     if (riverIds.length > 0) {
-       dataType = DATATYPE_RIVER
-       riverIds.forEach(id => {
-         selectedRiversUrl.set(id, rivers.get(id))
-       })
-       selectedRivers = selectedRiversUrl
-     } else if (stationIds.length > 0) {
-       dataType = DATATYPE_STATION
-       stationIds.forEach(id => {
-         selectedStationsUrl.set(id, stations.get(id))
-       })
-       selectedStations = selectedStationsUrl
-     }
+    // Convert the ids to numbers
+    const riverIds = riverIdsIn.map(Number)
+    const stationIds = stationIdsIn.map(Number)
 
-     urlParamsLoaded = true // Set that URL parameters have been loaded
-   }
+    const selectedRiversUrl = new Map()
+    const selectedStationsUrl = new Map()
+
+    // Select the rivers or stations and datatype based on the ids
+    if (riverIds.length > 0) {
+      dataType = DATATYPE_RIVER
+      riverIds.forEach(id => {
+        selectedRiversUrl.set(id, rivers.get(id))
+      })
+      selectedRivers = selectedRiversUrl
+    } else if (stationIds.length > 0) {
+      dataType = DATATYPE_STATION
+      stationIds.forEach(id => {
+        selectedStationsUrl.set(id, stations.get(id))
+      })
+      selectedStations = selectedStationsUrl
+    }
+
+    urlParamsLoaded = true // Set that URL parameters have been loaded
+  }
 
 </script>
-
-<!-- User feedback modal, invisible unless there is feedback to show to user -->
-<UserFeedbackMessage />
 
 {#if showSelectRiverAndStationModal}
   <!-- Modal to select river and stations -->
@@ -211,6 +223,9 @@
         />
   </Modal>
 {/if}
+
+<!-- User feedback modal, invisible unless there is feedback to show to user -->
+<UserFeedbackMessage />
 
 <div class='graphPage'>
   <!-- Filter sidebar -->
