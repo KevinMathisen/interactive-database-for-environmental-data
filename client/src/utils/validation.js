@@ -134,7 +134,7 @@ export function validateStationDownload (data) {
 
 /**
  * Validate all strings in a json object
- * @param {object} data - The data to validate
+ * @param {(object|string[]|string|null)} data - The data to validate
  * @returns {boolean} - If all strings are valid or not
  */
 function validateStringsInJson (data) {
@@ -157,11 +157,12 @@ function validateStringsInJson (data) {
 
 /**
  * Validate json data against a schema
- * @param {[]object} data - The data to validate
+ * @param {object[]} data - The data to validate
  * @param {object} schema - The schema to validate the data against
- * @param excel
+ * @param {boolean} excel - If the data is from an excel file or not
+ * @returns {boolean} - If the data is valid or not
  */
-export function validateJson (data, schema, excel = false) {
+export function validateJson (data, schema, excel = true) {
   // Prepare ajv and schema
   const ajv = new Ajv()
   const validate = ajv.compile(schema)
@@ -186,6 +187,7 @@ export function validateJson (data, schema, excel = false) {
   return true
 }
 
+// Excel schemas
 const excelSchemas = {
   Elvedata: schemaRiverSheet,
   Stasjonsdata: schemaStationSheet,
@@ -193,9 +195,8 @@ const excelSchemas = {
 }
 
 /**
- * Parse and validate excel file content
- * @param {File} file - The file to parse and validate
- * @param excelFile
+ * Parse and validate if the content of an excel file has valid format and content
+ * @param {File} excelFile - The file to parse and validate
  * @returns {Promise<boolean>} - A promise which resolves to if the excel file was parsed and validated successfully or not
  */
 export async function parseAndValidateExcel (excelFile) {
@@ -246,7 +247,6 @@ export async function parseAndValidateExcel (excelFile) {
     // If all sheets are validated, return true
     return true
   } catch (error) {
-    console.log(error)
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.FORBIDDEN, FEEDBACK_MESSAGES.GENERIC)
     return false
   }
