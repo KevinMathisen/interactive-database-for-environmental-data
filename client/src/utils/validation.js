@@ -25,7 +25,7 @@ import { addFeedbackToStore } from './addFeedbackToStore.js'
  * @returns {boolean} - If the input is allowed or not
  */
 export function validateText (input) {
-  const allowedPattern = /^[a-zA-Z0-9 .,?!-()\/]+$/
+  const allowedPattern = /^[a-zA-ZæøåÆØÅ0-9 .,?!\-()\/]+$/
 
   // Check if text is valid
   const isTextValid = allowedPattern.test(input)
@@ -58,7 +58,7 @@ export function validatePassword (input) {
 }
 
 /**
- * Validate number
+ * Validate number from string
  * @param {string} input - The input string to validate 
  * @returns {boolean} - If the input is a number or not
  */
@@ -73,7 +73,7 @@ export function validateNumber (input) {
 }
 
 /**
- * Validate integer
+ * Validate integer from string
  * @param {string} input - The input string to validate 
  * @returns {boolean} - If the input is an integer or not
  */
