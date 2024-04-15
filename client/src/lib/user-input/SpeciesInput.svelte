@@ -1,5 +1,5 @@
 <script>
-  import { validateText } from "../../utils/validation";
+  import { validateText } from "../../utils/validation"
 
   export let selectableSpecies = [] // Get species the user can choose from
 
