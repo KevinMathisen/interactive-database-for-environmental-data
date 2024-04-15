@@ -8,7 +8,7 @@
   import { addFeedbackToStore } from '../../utils/addFeedbackToStore.js'
   import UserFeedbackMessage from '$lib/UserFeedbackMessage.svelte'
   import Button from '$lib/user-input/Button.svelte'
-  import { validateFile } from '../../utils/fileHandler.js'
+  import { parseAndValidateExcel } from '../../utils/validation.js'
   import { uploadFileToServer } from '../../api/upload.js'
 
   let uploadedFile = null
@@ -26,21 +26,17 @@
     fileInput.addEventListener('change', (e) => {
       const file = e.target.files[0]
 
-      if (!validateFile(file)) {
-        return
-      }
-
       // Select the file
       uploadedFile = file
     })
   }
 
   /**
-   *
+   * Uploads the file to the server if it is a valid XLSX file
    */
   async function uploadFile () {
     // validate XLSX file
-    if (!(await validateFile(uploadedFile))) {
+    if (!(await parseAndValidateExcel(uploadedFile))) {
       return
     }
 
@@ -70,14 +66,8 @@
       return
     }
 
-    // Check if the file is valid
-    const file = files[0]
-    if (!validateFile(file)) {
-      return
-    }
-
     // Select the file
-    uploadedFile = file
+    uploadedFile = files[0]
     hover = false
   }
 </script>
