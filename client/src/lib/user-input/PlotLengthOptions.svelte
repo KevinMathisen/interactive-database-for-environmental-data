@@ -19,6 +19,8 @@
   // Only allow intervall under 5 mm if allowSmallIntervall is true
   $: if (userInterval < 5 && !allowSmallIntervall) {
     errorMessage = 'Intervall må være minst 5 mm'
+  } else if (userInterval <= 0) {
+    errorMessage = 'Intervall må være større enn 0'
   } else {
     intervallPlotB = userInterval
     errorMessage = ''
