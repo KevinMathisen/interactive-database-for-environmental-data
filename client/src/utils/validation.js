@@ -1,5 +1,5 @@
 import Ajv from 'ajv'
-import XLSX from 'xlsx'
+import ExcelJS from 'exceljs'
 import validator from 'validator'
 import {
   schemaRiverWithSpecies,
@@ -202,6 +202,34 @@ function readFile(file) {
   });
 }
 
+/**
+ * Convert an excel worksheet to json
+ * @param {ExcelJS.Worksheet} worksheet - The worksheet to convert to json
+ * @returns {object[]} - Worksheet as json
+ */
+function worksheetToJson(worksheet) {
+  // Get the header and data rows
+  const rows = worksheet.getSheetValues()
+  const header = rows[0]
+  const data = rows.slice(1)
+
+  // Convert each row to json
+  const jsonSheet = data.map(row => {
+    const jsonRow = {}
+    // Go trough each column in the row
+    header.forEach((key, index) => {
+      // If the cell is not empty, add it to the json row
+      if (row[index] !== undefined) {
+        jsonRow[key] = row[index]
+      }
+    })
+    return jsonRow
+  })
+
+  // Return the json sheet
+  return jsonSheet
+}
+
 const excelSchemas = {
   'Elvedata': schemaRiverSheet,
   'Stasjonsdata': schemaStationSheet,
@@ -235,16 +263,16 @@ export async function parseAndValidateExcel (excelFile) {
 
     // Read the file
     const fileContent = await readFile(excelFile)
-    const workbook = XLSX.read(fileContent, { type: 'buffer' })
+    const workbook = new ExcelJS.Workbook()
+    await workbook.xlsx.load(fileContent)
 
     // River, station and observation sheets
-    const sheets = workbook.SheetNames.slice(0, 3)
+    const sheets = workbook.worksheets.slice(0, 3)
 
     // Validate each sheet
-    for (const sheetname of sheets) {
-      // Retrieve the sheet and convert it to json
-      const worksheet = workbook.Sheets[sheetname]
-      const jsonSheet = XLSX.utils.sheet_to_json(worksheet, { header: 1 })
+    for (const worksheet of sheets) {
+      // Convert the sheet to json
+      const jsonSheet = worksheetToJson(worksheet)
 
       // Validate the json sheet against its schema
       if (!validateJson(jsonSheet, excelSchemas[sheetname])) {
