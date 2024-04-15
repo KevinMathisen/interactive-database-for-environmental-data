@@ -218,5 +218,5 @@ export const schemaObservationSheet = {
     'Prøvetatt (ja/nei)': { type: 'string' },
     'Kommentar': { type: 'string' },
   },
-  required: ['ID', 'Stasjon', 'Art']
+  required: ['Stasjon', 'Art']
 }
