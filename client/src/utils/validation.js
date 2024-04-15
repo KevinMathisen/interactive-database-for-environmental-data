@@ -25,7 +25,7 @@ import { addFeedbackToStore } from './addFeedbackToStore.js'
  * @returns {boolean} - If the input is allowed or not
  */
 export function validateText (input) {
-  const allowedPattern = /^[a-zA-Z0-9 .,?!-\/]+$/
+  const allowedPattern = /^[a-zA-Z0-9 .,?!-()\/]+$/
 
   // Check if text is valid
   const isTextValid = allowedPattern.test(input)
