@@ -54,7 +54,7 @@
   <div class='footer'>
     <div role='button'>
       <Button type='blue' size='medium' href={graphRef}>
-        Diagram
+        Se graf
         <img src='/graphIcon2.svg' alt='Graph' height='40px' class='white-color'>
       </Button>
     </div>
