@@ -25,6 +25,12 @@ import { readFile, worksheetToJson } from './fileHandler.js'
  * @returns {boolean} - If the input is allowed or not
  */
 export function validateText (input) {
+
+  // Return if input is empty
+  if (!input){
+    return true
+  }
+
   const allowedPattern = /^[a-zA-ZæøåÆØÅ0-9 .,?!\-():+"%/]+$/
 
   // Check if text is valid
