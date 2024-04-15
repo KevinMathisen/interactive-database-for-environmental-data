@@ -196,9 +196,6 @@
 
 </script>
 
-<!-- User feedback modal, invisible unless there is feedback to show to user -->
-<UserFeedbackMessage />
-
 {#if showSelectRiverAndStationModal}
   <!-- Modal to select river and stations -->
   <Modal on:close={handleClose} large={true}>
@@ -211,6 +208,9 @@
         />
   </Modal>
 {/if}
+
+<!-- User feedback modal, invisible unless there is feedback to show to user -->
+<UserFeedbackMessage />
 
 <div class='graphPage'>
   <!-- Filter sidebar -->
