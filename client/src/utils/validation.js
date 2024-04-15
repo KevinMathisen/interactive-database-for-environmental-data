@@ -93,7 +93,7 @@ export function validateInteger (input) {
  * @returns {boolean} - If the river with species data is valid or not
  */
 export function validateRiverWithSpecies (data) {
-  return validateJsonFromPostgrest(data, schemaRiverWithSpecies)
+  return validateJson(data, schemaRiverWithSpecies)
 }
 
 /**
@@ -102,7 +102,7 @@ export function validateRiverWithSpecies (data) {
  * @returns {boolean} - If the station with species data is valid or not
  */
 export function validateStationWithSpecies (data) {
-  return validateJsonFromPostgrest(data, schemaStationWithSpecies)
+  return validateJson(data, schemaStationWithSpecies)
 }
 
 /**
@@ -111,7 +111,7 @@ export function validateStationWithSpecies (data) {
  * @returns {boolean} - If the river summary data is valid or not
  */
 export function validateRiverSummary (data) {
-  return validateJsonFromPostgrest(data, schemaRiverSummary)
+  return validateJson(data, schemaRiverSummary)
 }
 
 /**
@@ -120,7 +120,7 @@ export function validateRiverSummary (data) {
  * @returns {boolean} - If the station summary data is valid or not
  */
 export function validateStationSummary (data) {
-  return validateJsonFromPostgrest(data, schemaStationSummary)
+  return validateJson(data, schemaStationSummary)
 }
 
 /**
@@ -129,22 +129,7 @@ export function validateStationSummary (data) {
  * @returns {boolean} - If the station download data is valid or not
  */
 export function validateStationDownload (data) {
-  return validateJsonFromPostgrest(data, schemaStationDownload)
-}
-
-/**
- *
- * @param data
- * @param schema
- */
-function validateJsonFromPostgrest (data, schema) {
-  const isJsonValid = validateJson(data, schema)
-
-  if (!isJsonValid) {
-    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.POSTGREST_UNAVAILABLE, FEEDBACK_MESSAGES.POSTGREST_UNAVAILABLE)
-  }
-
-  return isJsonValid
+  return validateJson(data, schemaStationDownload)
 }
 
 /**
