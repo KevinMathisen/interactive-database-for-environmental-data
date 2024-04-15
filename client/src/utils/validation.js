@@ -17,7 +17,7 @@ import {
   FEEDBACK_MESSAGES
 } from '../constants/feedbackMessages.js'
 import { addFeedbackToStore } from './addFeedbackToStore.js'
-
+import { readFile, worksheetToJson } from './fileHandler.js'
 
 /**
  * Validate text using regex to whitelist specific characters
@@ -169,10 +169,6 @@ function validateStringsInJson (data) {
  * @param {object} schema - The schema to validate the data against
  */
 export function validateJson (data, schema, excel = false) {
-
-  console.log('data', data)
-  console.log('schema', schema)
-
   // Prepare ajv and schema
   const ajv = new Ajv()
   const validate = ajv.compile(schema)
@@ -197,59 +193,6 @@ export function validateJson (data, schema, excel = false) {
   return true
 }
 
-/**
- * Read a file as an array buffer
- * @param {File} file - The file to read
- * @returns {Promise<ArrayBuffer>} - A promise which resolves to the file content as an array buffer
- */
-function readFile(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result); // directly pass the result
-    reader.onerror = reject;
-    reader.readAsArrayBuffer(file);
-  });
-}
-
-/**
- * Convert an excel worksheet to json
- * @param {ExcelJS.Worksheet} worksheet - The worksheet to convert to json
- * @returns {object[]} - Worksheet as json
- */
-function worksheetToJson(worksheet) {
-  // Get the header and data rows
-  const rows = worksheet.getSheetValues()
-  const header = rows[1].map(cell => cell.trim())
-  const data = rows.slice(2)
-
-  // if header or data is empty, return empty array
-  if (!header || !data) {
-    console.log('header or data is empty', header, data)
-    return []
-  }
-
-  // Convert each row to json
-  const jsonSheet = data.map(row => {
-    const jsonRow = {}
-    // Go trough each column in the row
-    header.forEach((key, index) => {
-      // If the cell is not empty, add it to the json row
-      if (row[index] == undefined) {
-        return
-      }
-
-      if (row[index] instanceof Date) {
-        jsonRow[key] = row[index].toISOString()
-      } else {
-        jsonRow[key] = row[index]
-      }
-    })
-    return jsonRow
-  }).filter(row => Object.keys(row).length > 0) // Filter out empty objects
-
-  // Return the json sheet
-  return jsonSheet
-}
 
 const excelSchemas = {
   'Elvedata': schemaRiverSheet,
