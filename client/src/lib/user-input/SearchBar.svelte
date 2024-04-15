@@ -4,7 +4,7 @@
     export let searchQuery // search query
     export let dataType // type of data to search for
 
-    let userSearchQuery = '' // what user has entered in search field
+    const userSearchQuery = '' // what user has entered in search field
     let placeholder // placeholder text for search field
     const helpText = 'Bruk filter for å filtrere resultat'
 
