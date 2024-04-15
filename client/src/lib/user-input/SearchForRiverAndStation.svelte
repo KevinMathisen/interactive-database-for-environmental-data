@@ -7,6 +7,7 @@
   }
     from '../../utils/filterData'
   import { DATATYPE_RIVER, DATATYPE_STATION } from '../../constants/dataTypes'
+  import { validateText } from '../../utils/validation'
 
   export let rivers
   export let stations
@@ -35,6 +36,12 @@
      if (lowercaseInput.trim().length === 0) {
        return
      }
+
+    // Check if the input is validated
+    if (!validateText(input)) {
+      input = ''
+      return
+    }
 
      const selectedData = dataType === DATATYPE_RIVER
        ? filterRiversByNameAndDateCombined(rivers, lowercaseInput)
