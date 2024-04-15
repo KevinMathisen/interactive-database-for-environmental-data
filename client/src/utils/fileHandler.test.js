@@ -1,8 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import {
   generateExcelFile,
-  generateCSVFile,
-  fileExistsInArray
+  generateCSVFile
 } from './fileHandler.js'
 import * as formatData from './formatData.js'
 import * as addFeedbackToStore from './addFeedbackToStore'
@@ -134,21 +133,5 @@ describe('test generateCSVFile function', () => {
     expect(result).toBeInstanceOf(Blob)
     expect(result.size).toBeGreaterThan(0)
     expect(result.type).toBe('text/csv')
-  })
-})
-
-// TODO: write tests for validateFile
-
-describe('test fileExistsInArray function', () => {
-  it('should return true if file exists in array', () => {
-    const file = { name: 'existing.xlsx' }
-    const filesArray = [{ name: 'existing.xlsx' }]
-    expect(fileExistsInArray(file, filesArray)).toBe(true)
-  })
-
-  it('should return false if file does not exist in array', () => {
-    const file = { name: 'new.xlsx' }
-    const filesArray = [{ name: 'existing.xlsx' }]
-    expect(fileExistsInArray(file, filesArray)).toBe(false)
   })
 })

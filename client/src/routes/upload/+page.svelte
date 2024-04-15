@@ -1,5 +1,4 @@
 <script>
-  import ExcelJS from 'exceljs'
   import {
     FEEDBACK_TYPES,
     FEEDBACK_CODES,
@@ -8,7 +7,7 @@
   import { addFeedbackToStore } from '../../utils/addFeedbackToStore.js'
   import UserFeedbackMessage from '$lib/UserFeedbackMessage.svelte'
   import Button from '$lib/user-input/Button.svelte'
-  import { validateFile } from '../../utils/fileHandler.js'
+  import { parseAndValidateExcel } from '../../utils/validation.js'
   import { uploadFileToServer } from '../../api/upload.js'
 
   let uploadedFile = null
@@ -26,41 +25,22 @@
     fileInput.addEventListener('change', (e) => {
       const file = e.target.files[0]
 
-      if (!validateFile(file)) {
-        return
-      }
-
       // Select the file
       uploadedFile = file
     })
   }
 
   /**
-   *
+   * Uploads the file to the server if it is a valid XLSX file
    */
-  function uploadFile () {
-    if (!uploadedFile) {
-      addFeedbackToStore(
-        FEEDBACK_TYPES.ERROR,
-        FEEDBACK_CODES.NOT_FOUND,
-        FEEDBACK_MESSAGES.NO_FILE_SELCETED
-      )
+  async function uploadFile () {
+    // validate XLSX file
+    if (!(await parseAndValidateExcel(uploadedFile))) {
       return
     }
-    // Parse and validate XLSX file
-    const reader = new FileReader()
-    reader.onload = async function (e) {
-      const buffer = new Uint8Array(e.target.result)
-      const workbook = new ExcelJS.Workbook()
-      await workbook.xlsx.load(buffer)
-      const worksheet = workbook.worksheets[0]
-      const jsonData = worksheet.getRows(1, worksheet.rowCount).map((row) => row.values)
-      console.log(jsonData) // Should reject if not valid
-    }
-    reader.readAsArrayBuffer(uploadedFile)
 
     // Upload file to server
-    uploadFileToServer(uploadedFile).then((success) => {
+    await uploadFileToServer(uploadedFile).then((success) => {
       // Reset the uploaded file if the upload was successful
       if (success) {
         uploadedFile = null
@@ -85,14 +65,8 @@
       return
     }
 
-    // Check if the file is valid
-    const file = files[0]
-    if (!validateFile(file)) {
-      return
-    }
-
     // Select the file
-    uploadedFile = file
+    uploadedFile = files[0]
     hover = false
   }
 </script>
