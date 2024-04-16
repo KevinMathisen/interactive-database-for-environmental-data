@@ -33,9 +33,9 @@
 </script>
 
 <div class='backdrop' on:click|self={handleClose} on:keydown={handleKeyDown} role='presentation'>
-  <div class='modal' style='width: {width}px; height: {height}px;'>
+  <div class='modal' role='dialog' style='width: {width}px; height: {height}px;'>
     <slot></slot>
-    <button class='close' on:click={handleClose}>
+    <button class='close' tabindex="0" on:click={handleClose}>
       <img src={SVG_PATHS.CLOSE} alt='Close' />
     </button>
   </div>

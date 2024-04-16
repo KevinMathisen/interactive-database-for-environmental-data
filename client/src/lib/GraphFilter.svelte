@@ -44,15 +44,16 @@
 <div class='main'>
   <!-- Input for opening selection of river or stations -->
   <CollapsibleSection title='Velg elver/stasjoner'>
-    <Button
-      on:buttonClick={handleSelectRiverStation}
-      type='blue'
-      size='small'
-      >
-      Rediger
-      <img src='/editIcon.svg' alt='editIcon' height='30em' class='white-color'>
-    </Button>
-
+    <div class='editButton' role='button'>
+      <Button
+        on:buttonClick={handleSelectRiverStation}
+        type='blue'
+        size='small'
+        >
+        Rediger
+        <img src='/editIcon.svg' alt='Edit' height='30em' class='white-color'>
+      </Button>
+    </div>
       {#if dataType === DATATYPE_RIVER && selectedRivers.size !== 0}
         <!-- Rivers choosen -->
         <h4>Elver valgt</h4>
@@ -102,7 +103,6 @@
       bind:plotTypeB
       bind:combineSpecies />
   </CollapsibleSection>
-
 </div>
 
 <style>

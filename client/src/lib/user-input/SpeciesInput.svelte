@@ -95,11 +95,11 @@
 </script>
 
 <!-- Input for choosing all or custom species -->
-<label>
-  <input type='radio' bind:group={chooseAll} value={true}> Velg alle
+<label for='all'>
+  <input type='radio' id='all' name='all' bind:group={chooseAll} value={true}> Velg alle
 </label>
-<label>
-  <input type='radio' bind:group={chooseAll} value={false}> Egendefinert
+<label for='custom'>
+  <input type='radio' id='custom' name='custom' bind:group={chooseAll} value={false}> Egendefinert
 </label>
 
 <!-- Input for handling custom species -->

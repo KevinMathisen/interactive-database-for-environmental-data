@@ -276,9 +276,7 @@
 
 <div class='downloadPage'>
 
-  <div>
-    <div class='downloadHeader'>Last ned data</div>
-  </div>
+  <div class='downloadHeader' role='banner'>Last ned data</div>
 
   <!-- Defines the area containing the options for dowloading -->
   <div class='downloadMain'>
@@ -287,14 +285,15 @@
       <div class='rowItem'>
         <!-- Input for opening selection of river or stations -->
         <CollapsibleSection title='Velg elver/stasjoner'>
-          <Button
-            on:buttonClick={handleSelectRiverStation}
-            type='blue'
-            size='small'>
-              Rediger
-              <img src='/editIcon.svg' alt='editIcon' height='30em' class='white-color'>
-          </Button>
-
+          <div class='editButton' role='button'>
+            <Button
+              on:buttonClick={handleSelectRiverStation}
+              type='blue'
+              size='small'>
+                Rediger
+                <img src='/editIcon.svg' alt='Edit' height='30em' class='white-color'>
+            </Button>
+          </div>
           {#if dataType === DATATYPE_RIVER && selectedRivers.size !== 0}
             <!-- Rivers choosen -->
             <h4>Elver valgt</h4>
@@ -315,7 +314,7 @@
         </CollapsibleSection>
       </div>
 
-      <div class='rowItem'>
+      <div class='rowItem' role='radiogroup'>
         <!-- Input for choosing species -->
         <CollapsibleSection title='Art'>
           <SpeciesInput {selectableSpecies} bind:chooseAll bind:customSpecies />
@@ -323,7 +322,7 @@
       </div>
     </div>
 
-    <div class='rowItem2'>
+    <div class='rowItem2' role='radiogroup'>
       <!-- Input for choosing file format -->
       <CollapsibleSection title='Format'>
         <RadioInput name='format' options={formatOptions} bind:selected={selectedFormat} />
@@ -332,9 +331,9 @@
 
   </div>
 
-  <div class='downloadButton'>
+  <div class='downloadButton' role='button'>
     <!-- Button for downloading the file -->
-    <Button type='orange' size='medium' on:buttonClick={downloadFile}>Last ned <img src='/dowloadIcon.svg' alt='listIcon' height='38px' class='downloadIcon white-color'></Button>
+    <Button type='orange' size='medium' on:buttonClick={downloadFile}>Last ned <img src='/dowloadIcon.svg' alt='Download' height='38px' class='downloadIcon white-color'></Button>
   </div>
 
 </div>

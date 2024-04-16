@@ -194,14 +194,14 @@
 
 <div class='leftSidebar'>
   <!-- Filter sidebar -->
-  <Sidebar title='Filter' typeClose='sideButton' side='left'>
-    <Filter
-      {selectableSpecies}
-      bind:dataType
-      bind:selectedSpecies
-      bind:selectedStartDate
-      bind:selectedEndDate/>
-  </Sidebar>
+    <Sidebar title='Filter' typeClose='sideButton' side='left'>
+      <Filter
+        {selectableSpecies}
+        bind:dataType
+        bind:selectedSpecies
+        bind:selectedStartDate
+        bind:selectedEndDate/>
+    </Sidebar>
 </div>
 
 {#if selectedRiver.id}

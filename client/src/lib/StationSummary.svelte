@@ -29,17 +29,20 @@
   <div class={mainContentClass}>
     <div class='column'>
       <!-- Station name, date, time, and button to go to river -->
-      <CollapsibleSection title={station.name} collapsable={false}>
-        <StationOverview {station} on:goToRiverData />
-      </CollapsibleSection>
-
+      <div role='tooltip'>
+        <CollapsibleSection title={station.name} collapsable={false}>
+          <StationOverview {station} on:goToRiverData />
+        </CollapsibleSection>
+      </div>
       <!-- General station info such as description, weather, power settings -->
-      <CollapsibleSection title='Info'>
-        <StationInfo {station} />
-      </CollapsibleSection>
+      <div role='tooltip'>
+        <CollapsibleSection title='Info'>
+          <StationInfo {station} />
+        </CollapsibleSection>
+      </div>
     </div>
 
-    <div class='column'>
+    <div class='column' role='table'>
       <!-- Fish data for the station -->
       <CollapsibleSection title='Fiskedata'>
         <StationFishData {station} />
@@ -49,23 +52,28 @@
 
   <!-- Buttons to show diagram and download data -->
   <div class='footer'>
-    <Button type='blue' size='medium' href={graphRef}>
-      Diagram
-      <img src='/graphIcon2.svg' alt='graphIcon' height='40px' class='headerIcon white-color'>
-    </Button>
-
+    <div role='button'>
+      <Button type='blue' size='medium' href={graphRef}>
+        Se graf
+        <img src='/graphIcon2.svg' alt='Graph' height='40px' class='white-color'>
+      </Button>
+    </div>
     <!-- Show in map button if the summary is wide -->
     {#if wide}
-      <Button type='blue' size='medium' href={mapRef}>
-        Se i kart
-        <img src='/mapIcon.svg' alt='mapIcon' height='50px' class='headerIcon'>
-      </Button>
+      <div role='button'>
+        <Button type='blue' size='medium' href={mapRef}>
+          Se i kart
+          <img src='/mapIcon.svg' alt='Map' height='50px' class='white-color'>
+        </Button>
+      </div>
     {/if}
 
-    <Button type='orange' size='medium' href={downloadRef}>
-      Last ned
-      <img src='/dowloadIcon.svg' alt='dowloadIcon' height='50px' class='headerIcon white-color'>
-    </Button>
+    <div role='button'>
+      <Button type='orange' size='medium' href={downloadRef}>
+        Last ned
+        <img src='/dowloadIcon.svg' alt='Download' height='50px' class='white-color'>
+      </Button>
+    </div>
   </div>
 </div>
 

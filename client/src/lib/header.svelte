@@ -20,25 +20,25 @@
 <header>
   <!-- Logo  -->
   <div class='logoHeader'>
-    <img src='/NINA_logo_emblem.png' alt='Logo' height='60px'>
+    <img src='/NINA_logo_emblem.png' alt='NINA Logo' height='60px'>
     <p>Nina</p>
   </div>
   <!-- Navigation -->
-  <div class='navigation'>
-    <div class='navButton' class:active={$page.url.pathname === '/'}>
-      <Button type='header' href='/' size='extended'>Kart<img src='/mapIcon.svg' alt='listIcon' height='40em' class='headerIcon'></Button>
+  <div class='navigation' role='banner'>
+    <div class='navButton' role='button' class:active={$page.url.pathname === '/'}>
+      <Button type='header' href='/' size='extended'>Kart<img src='/mapIcon.svg' alt='Map' height='40em' class='headerIcon'></Button>
     </div>
-    <div class='navButton' class:active={$page.url.pathname === '/list'}>
-      <Button type='header' href='/list' size='extended'>Liste<img src='/listIcon.svg' alt='listIcon' height='40em' class='headerIcon'></Button>
+    <div class='navButton' role='button' class:active={$page.url.pathname === '/list'}>
+      <Button type='header' href='/list' size='extended'>Liste<img src='/listIcon.svg' alt='List' height='40em' class='headerIcon'></Button>
     </div>
-    <div class='navButton' class:active={$page.url.pathname === '/graph'}>
-      <Button type='header' href='/graph' size='extended'>Graf<img src='/graphIcon2.svg' alt='listIcon' height='30em' class='headerIcon'></Button>
+    <div class='navButton' role='button' class:active={$page.url.pathname === '/graph'}>
+      <Button type='header' href='/graph' size='extended'>Graf<img src='/graphIcon.svg' alt='Graph' height='30em' class='headerIcon'></Button>
     </div>
-    <div class='navButton' class:active={$page.url.pathname === '/upload'}>
-      <Button type='header' href='/upload' size='extended'>Last opp<img src='/uploadIcon2.svg' alt='listIcon' height='40em' class='headerIcon'></Button>
+    <div class='navButton' role='button' class:active={$page.url.pathname === '/upload'}>
+      <Button type='header' href='/upload' size='extended'>Last opp<img src='/uploadIcon.svg' alt='Upload' height='40em' class='headerIcon'></Button>
     </div>
-    <div class='navButton' class:active={$page.url.pathname === '/download'}>
-      <Button type='header' href='/download' size='extended'>Last ned<img src='/dowloadIcon.svg' alt='listIcon' height='40em' class='headerIcon'></Button>
+    <div class='navButton' role='button' class:active={$page.url.pathname === '/download'}>
+      <Button type='header' href='/download' size='extended'>Last ned<img src='/dowloadIcon.svg' alt='Download' height='40em' class='headerIcon'></Button>
     </div>
   </div>
   <!-- Dropdown menu  for navigation -->
@@ -47,7 +47,7 @@
     <div class='menuIcon::before' class:translate-before={showDropdown}></div>
     <div class='menuIcon::after' class:translate-after={showDropdown}></div>
     {#if showDropdown}
-      <div class='Dropdown'>
+      <div class='Dropdown' role='menu'>
         <ul>
           <li><a href='/'>Kart</a></li>
           <li><a href='/list'>Liste</a></li>
@@ -60,12 +60,12 @@
     </button>
 
   {#if authStatus && authStatus.authenticated}
-    <div class='logInOut'>
+    <div class='logInOut' role='button'>
       <!-- Log out button -->
       <Button type='blue' size='small'>Logg ut<img src='/userIcon.svg' alt='listIcon' height='50em' class='headerIcon'></Button>
     </div>
   {:else}
-    <div class='logInOut'>
+    <div class='logInOut' role='button'>
       <!-- Log in button -->
       <Button type='blue' size='small' href='/login'>Logg inn<img src='/userIcon.svg' alt='listIcon' height='50em' class='headerIcon'></Button>
     </div>
