@@ -23,7 +23,7 @@ test.describe('Tests the upload page', () => {
     await page.waitForTimeout(500)
     const fileChooserPromise = page.waitForEvent('filechooser')
     await page.getByRole('link', { name: 'Bla gjennom Filer listIcon' }).click()
-    await page.waitForTimeout(1000)
+    await page.waitForTimeout(3000)
     const fileChooser = await fileChooserPromise
     await fileChooser.setFiles(filePath)
     await page.getByRole('main').getByRole('link', { name: 'Last opp listIcon' }).click()
