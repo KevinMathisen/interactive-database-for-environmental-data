@@ -370,7 +370,6 @@ export function formatRiversForCsv (rivers, selectedSpecies = []) {
     })
   })
   // Return the headers and and all the rows
-  console.log(header, rows)
   return { header, rows }
 }
 

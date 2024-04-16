@@ -9,14 +9,14 @@
 		"dev": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
-		"test": "npm run test:integration && npm run test:unit",
-		"test:integration": "playwright test",
+		"test": "npm run test:e2e && npm run test:unit",
+		"test:e2e": "playwright test",
 		"test:unit": "vitest",
 		"lint": "eslint **/*.{js,svelte}",
 		"lint:fix": "eslint **/*.{js,svelte} --fix"
 	},
 	"devDependencies": {
-		"@playwright/test": "^1.28.1",
+		"@playwright/test": "^1.43.0",
 		"@sveltejs/adapter-auto": "^3.0.0",
 		"@sveltejs/adapter-static": "^3.0.1",
 		"@sveltejs/kit": "^2.0.0",

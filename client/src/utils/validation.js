@@ -25,6 +25,11 @@ import { readFile, worksheetToJson } from './fileHandler.js'
  * @returns {boolean} - If the input is allowed or not
  */
 export function validateText (input) {
+  // Return if input is empty
+  if (!input) {
+    return true
+  }
+
   const allowedPattern = /^[a-zA-ZæøåÆØÅ0-9 .,?!\-():+"%/]+$/
 
   // Check if text is valid
@@ -162,7 +167,7 @@ function validateStringsInJson (data) {
  * @param {boolean} excel - If the data is from an excel file or not
  * @returns {boolean} - If the data is valid or not
  */
-export function validateJson (data, schema, excel = true) {
+export function validateJson (data, schema, excel = false) {
   // Prepare ajv and schema
   const ajv = new Ajv()
   const validate = ajv.compile(schema)

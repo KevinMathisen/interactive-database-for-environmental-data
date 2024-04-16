@@ -137,7 +137,6 @@ export async function getRivers () {
     // Update store
     updateStoreWithObjects(riverStore, fetchedRivers, River)
   } catch (error) {
-    console.log('Error fetching rivers:', error)
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.POSTGREST_UNAVAILABLE, FEEDBACK_MESSAGES.POSTGREST_UNAVAILABLE)
   }
 }
@@ -165,7 +164,6 @@ export async function getStations () {
     // Update store
     updateStoreWithObjects(stationStore, fetchedStations, Station)
   } catch (error) {
-    console.log('Error fetching stations:', error)
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.POSTGREST_UNAVAILABLE, FEEDBACK_MESSAGES.POSTGREST_UNAVAILABLE)
   }
 }
@@ -205,7 +203,6 @@ export async function getRiverSummary (id) {
     // Update store with the stations
     updateStoreWithObjects(stationStore, fetchedStations, Station)
   } catch (error) {
-    console.log('Error fetching river summary:', error)
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.POSTGREST_UNAVAILABLE, FEEDBACK_MESSAGES.POSTGREST_UNAVAILABLE)
   }
 }
@@ -233,7 +230,6 @@ export async function getStationSummary (id) {
     // Update store
     updateStoreWithObject(stationStore, fetchedStationsSummary[0], Station)
   } catch (error) {
-    console.log('Error fetching station summary:', error)
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.POSTGREST_UNAVAILABLE, FEEDBACK_MESSAGES.POSTGREST_UNAVAILABLE)
   }
 }
@@ -270,7 +266,6 @@ export async function getRiverForDownload (id) {
     // Update store with the new station data
     updateStoreWithObjects(stationStore, fetchedStations, Station)
   } catch (error) {
-    console.log('Error fetching river for download:', error)
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.POSTGREST_UNAVAILABLE, FEEDBACK_MESSAGES.POSTGREST_UNAVAILABLE)
   }
 }
@@ -307,7 +302,6 @@ export async function getStationForDownload (id) {
     // Update store
     updateStoreWithObject(stationStore, fetchedStations[0], Station)
   } catch (error) {
-    console.log('Error fetching station for download:', error)
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.POSTGREST_UNAVAILABLE, FEEDBACK_MESSAGES.POSTGREST_UNAVAILABLE)
   }
 }
@@ -333,6 +327,5 @@ export function getObservationsForRiver (river) {
     observations = [...observations, ...station.observations]
   })
 
-  console.log('observations for river: ', observations)
   return observations
 }
