@@ -1,12 +1,15 @@
 import { test, expect } from '@playwright/test'
-import path from 'path'
+import path, { dirname } from 'path'
 import { config } from 'dotenv'
+import { fileURLToPath } from 'url'
 
 config({ path: '.env.test' })
 
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 const UPLOAD_URL = 'http://localhost:8000'
 const UPLOAD_ENDPOINT = '/api/upload/'
-const filePath = path.join('tests', 'test-data', 'elver.xlsx')
+const filePath = path.join(__dirname, 'test-data', 'elver.xlsx')
 
 test.describe('Tests the upload page', () => {
   test('Testing upload functioality and checking the format', async ({ page }) => {
