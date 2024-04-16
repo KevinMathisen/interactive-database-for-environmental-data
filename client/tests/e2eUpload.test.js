@@ -1,10 +1,12 @@
 import { test, expect } from '@playwright/test'
+import path from 'path'
 import { config } from 'dotenv'
 
 config({ path: '.env.test' })
 
 const UPLOAD_URL = 'http://localhost:8000'
 const UPLOAD_ENDPOINT = '/api/upload/'
+const filePath = path.join('tests', 'test-data', 'elver.xlsx')
 
 test.describe('Tests the upload page', () => {
   test('Testing upload functioality and checking the format', async ({ page }) => {
@@ -23,7 +25,7 @@ test.describe('Tests the upload page', () => {
     await page.getByRole('link', { name: 'Bla gjennom Filer listIcon' }).click()
     await page.waitForTimeout(1000)
     const fileChooser = await fileChooserPromise
-    await fileChooser.setFiles('tests/test-data/elver.xlsx')
+    await fileChooser.setFiles(filePath)
     await page.getByRole('main').getByRole('link', { name: 'Last opp listIcon' }).click()
     await page.waitForTimeout(1000)
     expect(await page.locator('//h3')).toHaveText('Opplasting vellykket')
