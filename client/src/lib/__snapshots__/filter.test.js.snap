@@ -145,9 +145,12 @@ exports[`Filter > renders correctly 1`] = `
           >
             <label
               class="s-a2sscjfPS7lx"
+              for="all"
             >
               <input
                 class="s-a2sscjfPS7lx"
+                id="all"
+                name="all"
                 type="radio"
                 value="true"
               />
@@ -156,9 +159,12 @@ exports[`Filter > renders correctly 1`] = `
              
             <label
               class="s-a2sscjfPS7lx"
+              for="custom"
             >
               <input
                 class="s-a2sscjfPS7lx"
+                id="custom"
+                name="custom"
                 type="radio"
                 value="false"
               />
