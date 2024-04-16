@@ -194,7 +194,6 @@
 
 <div class='leftSidebar'>
   <!-- Filter sidebar -->
-  <div role='form'></div>
     <Sidebar title='Filter' typeClose='sideButton' side='left'>
       <Filter
         {selectableSpecies}
