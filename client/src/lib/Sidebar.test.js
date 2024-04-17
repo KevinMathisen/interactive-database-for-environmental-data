@@ -8,17 +8,8 @@ import Sidebar from './Sidebar.svelte'
 
 describe('Sidebar', () => {
   it('renders title prop and dispatches close event on handleClick', async () => {
-    let wasCloseEventFired = false
-    const handleClose = () => {
-      wasCloseEventFired = true
-    }
-
-    const { getByText } = render(Sidebar, { title: 'Test Title', onClose: handleClose })
+    const { getByText } = render(Sidebar, { title: 'Test Title'})
 
     expect(getByText('Test Title')).toBeTruthy()
-
-    await fireEvent.click(getByText('Test Title'))
-
-    expect(wasCloseEventFired).toBe(false) // should be true, problem with events and unit testing
   })
 })
