@@ -20,7 +20,7 @@ describe('SearchForRiverAndStation', () => {
     const stations = new Map()
 
     const { getByText } = render(SearchForRiverAndStation, {
-      props: { rivers, stations, dataType: 'river', selectedRivers, selectedStations, selectedStartDate: '2024-01-01', selectedEndDate: '2024-01-01'}
+      props: { rivers, stations, dataType: 'river', selectedRivers, selectedStations, selectedStartDate: '2024-01-01', selectedEndDate: '2024-01-01' }
     })
 
     // Check if the choosen rivers is rendered
