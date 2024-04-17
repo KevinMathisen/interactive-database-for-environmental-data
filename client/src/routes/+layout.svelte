@@ -21,6 +21,13 @@
 <script>
   import Header from '$lib/Header.svelte'
   import '../global.css'
+  import { authRefresh } from '../api/auth.js'
+  import { onMount } from 'svelte'
+
+  // Refresh the authentication token and find out if user is authenticated on website load
+  onMount(() => {
+    authRefresh()
+  })
 </script>
 
 <Header />
