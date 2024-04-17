@@ -41,6 +41,8 @@ test.describe('Tests the list page', () => {
       })
     })
     await page.goto('/list')
+    await page.waitForTimeout(1000)
+    await page.click('.close')
     await page.getByLabel('Stasjonsdata').check()
     await page.waitForTimeout(500)
     await page.locator('#listSearch').fill('Gaula 1')

@@ -41,6 +41,8 @@ test.describe('Tests the map page', () => {
       })
     })
     await page.goto('/')
+    await page.waitForTimeout(1000)
+    await page.click('.close')
     await page.waitForTimeout(500)
     await page.locator('.leaflet-marker-icon').first().click()
     await page.waitForTimeout(500)
