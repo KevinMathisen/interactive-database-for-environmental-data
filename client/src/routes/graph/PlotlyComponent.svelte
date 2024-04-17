@@ -35,7 +35,7 @@
     {#if type === 'barchart'}
     <BarChartComponent plotData={formattedData} {absoluteValues}/>
     {:else if type === 'piechart'}
-    <PieChartComponent plotData={formattedData} {absoluteValues}/>
+    <PieChartComponent plotData={formattedData}/>
     {:else if type === 'boxplot'}
     <BoxPlotComponent plotData={formattedData}/>
     {:else}
