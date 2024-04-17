@@ -63,12 +63,12 @@
   {#if authStatus && authStatus.authenticated}
     <div class='logInOut' role='button'>
       <!-- Log out button -->
-      <Button type='blue' size='small' on:buttonClick={authLogout}>Logg ut<img src='/userIcon.svg' alt='listIcon' height='50em' class='headerIcon'></Button>
+      <Button type='blue' size='small' on:buttonClick={authLogout}>Logg ut<img src='/logoutIcon.svg' alt='listIcon' height='30em' class='headerIcon white-color'></Button>
     </div>
   {:else}
     <div class='logInOut' role='button'>
       <!-- Log in button -->
-      <Button type='blue' size='small' href='/login'>Logg inn<img src='/userIcon.svg' alt='listIcon' height='50em' class='headerIcon'></Button>
+      <Button type='blue' size='small' href='/login'>Logg inn<img src='/loginIcon.svg' alt='listIcon' height='30em' class='headerIcon white-color'></Button>
     </div>
   {/if}
 </header>
@@ -231,5 +231,10 @@
 
   .menuIcon.active::after {
     transform: translateX(-20px) rotate(-45deg);
+  }
+
+  /* Transformes the icon color to white */
+  .white-color{
+    filter: invert(100%);
   }
 </style>
