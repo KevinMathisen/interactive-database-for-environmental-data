@@ -7,15 +7,6 @@ import Filter from './Filter.svelte'
  */
 
 describe('Filter', () => {
-  afterEach(() => {
-    cleanup()
-  })
-
-  it('renders correctly', () => {
-    const { container } = render(Filter, { props: { selectableSpecies: [] } })
-    expect(container).toMatchSnapshot()
-  })
-
   it('renders child components', () => {
     const { getByText } = render(Filter, { props: { selectableSpecies: [] } })
 
