@@ -1,6 +1,6 @@
 <script>
-  export let selectedStartDate // Start date
-  export let selectedEndDate // End date
+  export let selectedStartDate
+  export let selectedEndDate
 </script>
 
 <!-- Input for choosing start date -->

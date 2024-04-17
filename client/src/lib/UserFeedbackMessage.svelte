@@ -17,6 +17,7 @@
   }
 </script>
 
+<!-- Shows each user feedback messages as modals, overlaying each other -->
 {#each userFeedback as feedback}
   {#if feedback.message}
     <Modal on:close={handleClose}>

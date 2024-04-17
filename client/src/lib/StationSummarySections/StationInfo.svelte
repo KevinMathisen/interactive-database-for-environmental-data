@@ -5,7 +5,7 @@
     formatStationSettingsForTable
   } from '../../utils/formatData.js'
 
-  export let station // Station to show
+  export let station 
 
   let conditions = {
     headers: [],
@@ -17,7 +17,6 @@
     rows: []
   }
 
-  // Format the station conditions and settings for displaying in table
   $: conditions = formatStationConditionsForTable(station)
   $: settings = formatStationSettingsForTable(station)
 </script>

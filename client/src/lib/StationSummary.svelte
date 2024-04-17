@@ -10,15 +10,13 @@
   export let station = new Station() // Station to show
   export let wide = false // Whether to show the station summary as wide
 
-  // Path to the map with the station selected as a query parameter
+  // Path to the map, graph, and download page with the station selected as a query parameter
   let mapRef = ''
   $: mapRef = `/?${DATATYPE_STATION}=${station.id}`
 
-  // Path to the graph with the station selected as a query parameter
   let graphRef = ''
   $: graphRef = `/graph?${DATATYPE_STATION}=${station.id}`
 
-  // Path to the download page with the station selected as a query parameter
   let downloadRef = ''
   $: downloadRef = `/download?${DATATYPE_STATION}=${station.id}`
 

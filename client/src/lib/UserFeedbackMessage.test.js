@@ -23,8 +23,5 @@ describe('UserFeedbackMessage', () => {
 
     // Simulate the close event
     await fireEvent.click(getByAltText('info'))
-
-    // Check if the feedback message is removed from the store
-    // expect(get(userFeedbackStore)).toEqual([]);
   })
 })

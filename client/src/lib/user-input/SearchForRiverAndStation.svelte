@@ -43,6 +43,7 @@
        return
      }
 
+     // Get the possible selected rivers or stations based on the data type
      const selectedData = dataType === DATATYPE_RIVER
        ? filterRiversByNameAndDateCombined(rivers, lowercaseInput)
        : filterStationsByNameAndDateCombined(stations, lowercaseInput)
@@ -176,8 +177,8 @@
   <p>{showError}</p>
   {/if}
 
-  <!-- Suggestions for rivers -->
   {#if showRiverSuggestions}
+    <!-- Suggestions for rivers -->
     <div class='suggestions'>
       {#each Array.from(selectableRivers.entries()) as [_, river]}
         <button on:click={() => { input = river.name + ' ' + river.startDate; addInput() }}>
@@ -196,8 +197,9 @@
     </div>
   {/if}
 </div>
-<!-- List of selected rivers -->
+
 {#if dataType === DATATYPE_RIVER}
+  <!-- List of selected rivers -->
   <p>Valgte elver</p>
   <ul>
     {#each Array.from(selectedRivers.entries()) as [key, river]}
@@ -235,7 +237,6 @@
     cursor: pointer;
   }
 
-  /* Show when a user hovers over the button */
   .smallButton:hover {
     background-color: #435768;
     color: white;

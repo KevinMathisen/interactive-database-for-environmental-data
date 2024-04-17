@@ -12,10 +12,10 @@
   let timeSpentFishing
   let fishPerMin
 
+  // Dynamically get the river data to display
   $: {
     amountOfStations = stations.size
     fishInStations = amountOfFishInStations(stations)
-    // Find the minutes and second spent fishing
     timeSpentFishing = secondsAndMinutesSpentFishingInStations(stations)
     fishPerMin = fishPerMinuteInStations(stations)
   }

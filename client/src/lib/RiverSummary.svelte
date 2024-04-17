@@ -14,15 +14,13 @@
 
   let stations = new Map() // Stations under river
 
-  // Path to the map with the river selected as a query parameter
+  // Path to the map, graph, and download page with the river selected as a query parameter
   let mapRef = ''
   $: mapRef = `/?${DATATYPE_RIVER}=${river.id}`
 
-  // Path to the graph with the river selected as a query parameter
   let graphRef = ''
   $: graphRef = `/graph?${DATATYPE_RIVER}=${river.id}`
 
-  // Path to the download page with the river selected as a query parameter
   let downloadRef = ''
   $: downloadRef = `/download?${DATATYPE_RIVER}=${river.id}`
 
