@@ -4,7 +4,7 @@
     export let searchQuery // search query
     export let dataType // type of data to search for
 
-    const userSearchQuery = '' // what user has entered in search field
+    let userSearchQuery = '' // what user has entered in search field
     let placeholder // placeholder text for search field
     const helpText = 'Bruk filter for å filtrere resultat'
 
@@ -22,7 +22,7 @@
 
 <div class='container' role='search'>
     <label for='listSearch'>
-        <input type='search' id='listSearch' name='listSearch' placeholder={placeholder} bind:value={searchQuery}/>
+        <input type='search' id='listSearch' name='listSearch' placeholder={placeholder} bind:value={userSearchQuery}/>
     </label>
 
     <h4 class='helpText'>{helpText}</h4>
