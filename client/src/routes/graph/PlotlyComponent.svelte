@@ -42,3 +42,11 @@
     <HistogramComponent plotData={formattedData}/>
     {/if}
 {/if}
+
+<style>
+  p {
+    padding-left: 15%;
+    padding-right: auto;
+    padding-bottom: 2em;
+  }
+</style>
