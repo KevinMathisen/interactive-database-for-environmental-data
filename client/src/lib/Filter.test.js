@@ -1,5 +1,5 @@
-import { cleanup, render } from '@testing-library/svelte'
-import { afterEach, describe, expect, it } from 'vitest'
+import { render } from '@testing-library/svelte'
+import { describe, expect, it } from 'vitest'
 import Filter from './Filter.svelte'
 
 /**
