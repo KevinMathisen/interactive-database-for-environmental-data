@@ -52,7 +52,8 @@ export async function authLogout () {
   try {
     // Try to logout
     const response = await fetch(`${AUTH_URL}${LOGOUT_ENDPOINT}`, {
-      method: 'POST'
+      method: 'POST',
+      credentials: 'same-origin'
     })
 
     // Check if the response is ok
@@ -80,7 +81,8 @@ export async function authRefresh () {
   try {
     // Try to refresh
     const response = await fetch(`${AUTH_URL}${REFRESH_ENDPOINT}`, {
-      method: 'POST'
+      method: 'POST',
+      credentials: 'same-origin'
     })
 
     // Check if the response is ok
