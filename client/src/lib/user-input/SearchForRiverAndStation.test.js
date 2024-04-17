@@ -1,6 +1,7 @@
-// import { render, fireEvent } from '@testing-library/svelte'
+import { render, fireEvent } from '@testing-library/svelte'
 import { describe, it, expect } from 'vitest'
-// import SearchForRiverAndStation from './SearchForRiverAndStation.svelte'
+import SearchForRiverAndStation from './SearchForRiverAndStation.svelte'
+import { River } from '../../models/River'
 
 /**
  * @vitest-environment jsdom
@@ -8,30 +9,24 @@ import { describe, it, expect } from 'vitest'
 
 describe('SearchForRiverAndStation', () => {
   it('SearchForRiverAndStation renders correctly with given rivers and stations', async () => {
-    // const rivers = new Map([
-    // [1, { id: 1, name: 'River 1' }],
-    // [2, { id: 2, name: 'River 2' }],
-    // ]);
+    const rivers = new Map([
+    [1, new River({ id: 1, name: 'River 1', startDate: '2024-01-01' })],
+    [2, new River({ id: 2, name: 'River 2', startDate: '2024-01-01' })],
+    ])
 
-    // const stations = new Map([
-    // [1, { id: 1, name: 'Station 1' }],
-    // [2, { id: 2, name: 'Station 2' }],
-    // ]);
+    const selectedRivers = rivers
+    const selectedStations = new Map()
 
-    // const { getByLabelText, getByText } = render(SearchForRiverAndStation, {
-    // props: { rivers, stations, dataType: 'river' },
-    // });
+    const stations = new Map()
 
-    // Check if the input field is rendered
-    // expect(getByLabelText('Søk etter elv')).toBeInTheDocument();
+    const { getByLabelText, getByText } = render(SearchForRiverAndStation, {
+    props: { rivers, stations, dataType: 'river', selectedRivers, selectedStations }
+    })
 
-    // Type into the input field
-    // await fireEvent.input(getByLabelText('Søk etter elv'), {
-    // target: { value: 'River 1' },
-    // });
+    // Check if the choosen rivers is rendered
+    expect(getByText('Valgte elver')).toBeTruthy()
 
-    // Check if the correct river is shown in the results
-    // expect(getByText('River 1')).toBeInTheDocument();
-    expect(true).toBe(true)
+    // Check if the correct river is shown
+    expect(getByText('River 1 2024-01-01')).toBeTruthy()
   })
 })
