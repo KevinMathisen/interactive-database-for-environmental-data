@@ -2,7 +2,7 @@
   import { createEventDispatcher } from 'svelte'
   import Button from '../user-input/Button.svelte'
 
-  export let station // Station to show
+  export let station
 
   const dispatch = createEventDispatcher()
 

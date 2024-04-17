@@ -67,7 +67,7 @@
     // Displays the title, names of the axes and removes gaps between bars
     const layout = {
       title: 'Histogram for lengde på fisk observert i elv/stasjon',
-      xaxis: { title: 'Length (mm)', dtick: plotData.entries().next().value[1].interval }, // Set the interval between text on the x-axis the same as the interval between bars
+      xaxis: { title: 'Lengde (mm)', dtick: plotData.entries().next().value[1].interval }, // Set the interval between text on the x-axis the same as the interval between bars
       yaxis: { title: 'Antall' },
       barmode: 'overlay',
       hovermode: 'closest',

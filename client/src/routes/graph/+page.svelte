@@ -315,7 +315,8 @@
   }
 
   .graphBox h3 {
-    padding: 1rem 0 0 8rem;
+    padding-left: 10%;
+    padding-right: auto;
   }
 
 </style>

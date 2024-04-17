@@ -35,10 +35,18 @@
     {#if type === 'barchart'}
     <BarChartComponent plotData={formattedData} {absoluteValues}/>
     {:else if type === 'piechart'}
-    <PieChartComponent plotData={formattedData} {absoluteValues}/>
+    <PieChartComponent plotData={formattedData}/>
     {:else if type === 'boxplot'}
     <BoxPlotComponent plotData={formattedData}/>
     {:else}
     <HistogramComponent plotData={formattedData}/>
     {/if}
 {/if}
+
+<style>
+  p {
+    padding-left: 15%;
+    padding-right: auto;
+    padding-bottom: 2em;
+  }
+</style>

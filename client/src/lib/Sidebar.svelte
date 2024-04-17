@@ -4,11 +4,11 @@
 
   export let title = ''
   export let typeClose = '' // which way to close the sidebar, 'cross' or 'sideButton'
-  export let side = ''
+  export let side = '' // which side the sidebar is on, 'left' or 'right'
   export let showSidebar = true
 
   /**
-   *
+   * Handles the click event of the close button
    */
   function handleClick () {
     dispatch('close')
@@ -20,10 +20,10 @@
     }
   }
 
-    /**
-     * Handles the keydown event of Enter and Escape keys
-     * @param {KeyboardEvent} event - The keydown event
-     */
+  /**
+   * Handles the keydown event of Enter and Escape keys
+   * @param {KeyboardEvent} event - The keydown event
+   */
   function handleKeyDown (event) {
     if (event.key === 'Enter') {
       handleClick()
@@ -84,7 +84,7 @@
     align-items: center;
     width: 100%;
     height: 60px;
-    background-color: #435768;
+    background-color: var(--PCOLOR);
     color: white;
     position: relative;
     margin-top: 0px;

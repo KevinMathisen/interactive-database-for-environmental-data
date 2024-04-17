@@ -8,7 +8,7 @@ import PlotLengthOptions from './PlotLengthOptions.svelte'
 
 describe('PlotLengthOptions', () => {
   const { getByLabelText, getByPlaceholderText } =
-  render(PlotLengthOptions, { showPlotB: false, intervallPlotB: 0, plotTypeB: 'histogram' })
+  render(PlotLengthOptions, { showPlotB: false, intervallPlotB: 0, plotTypeB: 'histogram', combineSpecies: false })
   it('binds showPlotB prop to checkbox', async () => {
     const checkbox = getByLabelText('Vis')
 

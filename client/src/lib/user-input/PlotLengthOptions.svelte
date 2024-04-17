@@ -39,7 +39,6 @@
 
   {#if plotTypeB === 'histogram'}
     <h4>Intervall i mm</h4>
-    <!-- Input intervall for plotting-->
     <input type='number' id='intervallPlotB' name='intervallPlotB' bind:value={userInterval} placeholder='mm'/>
     {#if errorMessage}
       <p class='errorMessage'>{errorMessage}</p>
@@ -95,7 +94,7 @@
   }
 
   label:hover {
-    background-color: #435768;
+    background-color: var(--PCOLOR);
     color: white;
   }
 

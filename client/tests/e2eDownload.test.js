@@ -51,6 +51,8 @@ test.describe('Tests the download page', () => {
     })
 
     await page.goto('/download')
+    await page.waitForTimeout(1000)
+    await page.click('.close')
     await page.waitForTimeout(500)
     await page.click('text=Rediger')
     await page.waitForTimeout(2000)

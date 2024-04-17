@@ -258,9 +258,6 @@
   }
 </script>
 
-<!-- User feedback modal, invisible unless there is feedback to show to user -->
-<UserFeedbackMessage />
-
 {#if showSelectRiverAndStationModal}
   <!-- Modal for selecting rivers and stations -->
   <Modal on:close={handleClose} large={true}>
@@ -273,6 +270,9 @@
       />
   </Modal>
 {/if}
+
+<!-- User feedback modal, invisible unless there is feedback to show to user -->
+<UserFeedbackMessage />
 
 <div class='downloadPage'>
 
@@ -333,7 +333,7 @@
 
   <div class='downloadButton' role='button'>
     <!-- Button for downloading the file -->
-    <Button type='orange' size='medium' on:buttonClick={downloadFile}>Last ned <img src='/dowloadIcon.svg' alt='Download' height='38px' class='downloadIcon white-color'></Button>
+    <Button type='orange' size='medium' on:buttonClick={downloadFile}>Last ned <img src='/downloadIcon.svg' alt='Download' height='38px' class='downloadIcon white-color'></Button>
   </div>
 
 </div>
@@ -349,7 +349,7 @@
   .downloadHeader {
     height: 100px;
     font-size:3rem;
-    background-color: #435768;
+    background-color: var(--PCOLOR);
     color: white;
     display: flex;
     justify-content: center;

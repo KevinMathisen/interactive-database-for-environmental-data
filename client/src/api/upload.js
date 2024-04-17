@@ -20,7 +20,8 @@ export async function uploadFileToServer (file) {
     // Try to upload the file
     const response = await fetch(`${UPLOAD_URL}${UPLOAD_ENDPOINT}`, {
       method: 'POST',
-      body: formData
+      body: formData,
+      credentials: 'same-origin'
     })
 
     // If response has status 401 not authorized

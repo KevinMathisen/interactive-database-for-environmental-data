@@ -10,15 +10,13 @@
   export let station = new Station() // Station to show
   export let wide = false // Whether to show the station summary as wide
 
-  // Path to the map with the station selected as a query parameter
+  // Path to the map, graph, and download page with the station selected as a query parameter
   let mapRef = ''
   $: mapRef = `/?${DATATYPE_STATION}=${station.id}`
 
-  // Path to the graph with the station selected as a query parameter
   let graphRef = ''
   $: graphRef = `/graph?${DATATYPE_STATION}=${station.id}`
 
-  // Path to the download page with the station selected as a query parameter
   let downloadRef = ''
   $: downloadRef = `/download?${DATATYPE_STATION}=${station.id}`
 
@@ -52,14 +50,8 @@
 
   <!-- Buttons to show diagram and download data -->
   <div class='footer'>
-    <div role='button'>
-      <Button type='blue' size='medium' href={graphRef}>
-        Se graf
-        <img src='/graphIcon2.svg' alt='Graph' height='40px' class='white-color'>
-      </Button>
-    </div>
-    <!-- Show in map button if the summary is wide -->
     {#if wide}
+      <!-- Show in map button if the summary is wide -->
       <div role='button'>
         <Button type='blue' size='medium' href={mapRef}>
           Se i kart
@@ -69,9 +61,16 @@
     {/if}
 
     <div role='button'>
+      <Button type='blue' size='medium' href={graphRef}>
+        Se graf
+        <img src='/graphIcon.svg' alt='Graph' height='40px' class='white-color'>
+      </Button>
+    </div>
+
+    <div role='button'>
       <Button type='orange' size='medium' href={downloadRef}>
         Last ned
-        <img src='/dowloadIcon.svg' alt='Download' height='50px' class='white-color'>
+        <img src='/downloadIcon.svg' alt='Download' height='50px' class='white-color'>
       </Button>
     </div>
   </div>
@@ -127,7 +126,7 @@
     top: 0;
     left: 10%;
     width: 80%;
-    border-top: 2px solid #435768;
+    border-top: 2px solid var(--PCOLOR);
   }
 
   /* Transformes the icon color to white */

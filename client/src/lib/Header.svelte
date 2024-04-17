@@ -2,6 +2,7 @@
   import { page } from '$app/stores'
   import Button from './user-input/Button.svelte'
   import { authStore } from '../stores/authStore.js'
+  import { authLogout } from '../api/auth.js'
 
   let showDropdown = false // Whether the dropdown menu is shown
   let authStatus // Authentication status
@@ -24,7 +25,7 @@
     <p>Nina</p>
   </div>
   <!-- Navigation -->
-  <div class='navigation' role='banner'>
+  <nav class='navigation' role='banner'>
     <div class='navButton' role='button' class:active={$page.url.pathname === '/'}>
       <Button type='header' href='/' size='extended'>Kart<img src='/mapIcon.svg' alt='Map' height='40em' class='headerIcon'></Button>
     </div>
@@ -38,9 +39,9 @@
       <Button type='header' href='/upload' size='extended'>Last opp<img src='/uploadIcon.svg' alt='Upload' height='40em' class='headerIcon'></Button>
     </div>
     <div class='navButton' role='button' class:active={$page.url.pathname === '/download'}>
-      <Button type='header' href='/download' size='extended'>Last ned<img src='/dowloadIcon.svg' alt='Download' height='40em' class='headerIcon'></Button>
+      <Button type='header' href='/download' size='extended'>Last ned<img src='/downloadIcon.svg' alt='Download' height='40em' class='headerIcon'></Button>
     </div>
-  </div>
+  </nav>
   <!-- Dropdown menu  for navigation -->
   <button class='menu' on:click={toggleDropdown}>
     <div class='menuIcon' class:active={showDropdown}></div>
@@ -62,12 +63,12 @@
   {#if authStatus && authStatus.authenticated}
     <div class='logInOut' role='button'>
       <!-- Log out button -->
-      <Button type='blue' size='small'>Logg ut<img src='/userIcon.svg' alt='listIcon' height='50em' class='headerIcon'></Button>
+      <Button type='blue' size='small' on:buttonClick={authLogout}>Logg ut<img src='/logoutIcon.svg' alt='listIcon' height='30em' class='headerIcon white-color'></Button>
     </div>
   {:else}
     <div class='logInOut' role='button'>
       <!-- Log in button -->
-      <Button type='blue' size='small' href='/login'>Logg inn<img src='/userIcon.svg' alt='listIcon' height='50em' class='headerIcon'></Button>
+      <Button type='blue' size='small' href='/login'>Logg inn<img src='/loginIcon.svg' alt='listIcon' height='30em' class='headerIcon white-color'></Button>
     </div>
   {/if}
 </header>
@@ -230,5 +231,10 @@
 
   .menuIcon.active::after {
     transform: translateX(-20px) rotate(-45deg);
+  }
+
+  /* Transformes the icon color to white */
+  .white-color{
+    filter: invert(100%);
   }
 </style>

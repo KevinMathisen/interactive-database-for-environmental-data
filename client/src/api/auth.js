@@ -31,17 +31,6 @@ export async function authLogin (username, password) {
       return false
     }
 
-    // Retrieve the result from the response
-    const result = await response.json()
-
-    // TODO: Update success check based on API response
-    // Check if the upload was successful
-    if (!result.success) {
-      // If login was not successful, tell user
-      addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.AUTH_REJECTED, FEEDBACK_MESSAGES.AUTH_REJECTED)
-      return false
-    }
-
     // If login was successful, tell user and update authStore
     addFeedbackToStore(FEEDBACK_TYPES.SUCCESS, FEEDBACK_CODES.AUTH_SUCCESS, FEEDBACK_MESSAGES.AUTH_SUCCESS)
     authStore.set({ authenticated: true })
@@ -60,7 +49,8 @@ export async function authLogout () {
   try {
     // Try to logout
     const response = await fetch(`${AUTH_URL}${LOGOUT_ENDPOINT}`, {
-      method: 'POST'
+      method: 'POST',
+      credentials: 'same-origin'
     })
 
     // Check if the response is ok
@@ -88,7 +78,8 @@ export async function authRefresh () {
   try {
     // Try to refresh
     const response = await fetch(`${AUTH_URL}${REFRESH_ENDPOINT}`, {
-      method: 'POST'
+      method: 'POST',
+      credentials: 'same-origin'
     })
 
     // Check if the response is ok

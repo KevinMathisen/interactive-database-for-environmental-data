@@ -10,18 +10,18 @@
 
   export let selectedRivers // Rivers user has chosen to plot
   export let selectedStations // Stations user has chosen to plot
-  export let selectableSpecies = [] // Species user can choose
+  export let selectableSpecies = []
   export let dataType = DATATYPE_RIVER // DATATYPE_RIVER or DATATYPE_STATION
-  export let aggregateData = false // If to aggregate data for rivers/stations
+  export let aggregateData = false
 
   export let selectedSpecies = [] // Species user has chosen
   export let includeOthers = false // If to include 'others' category in graphs
 
-  export let showPlotA = true // Show the first plot
+  export let showPlotA = true
   export let showValueA = 'absolute' // 'absolute' or 'relative'
   export let plotTypeA = 'barchart' // 'barchart' or 'piechart'
 
-  export let showPlotB = true // Show the second plot
+  export let showPlotB = true
   export let intervallPlotB = 20 // Interval for the histogram
   export let plotTypeB = 'histogram' // 'histogram' or 'boxplot'
   export let combineSpecies = false // Whether to combine species for each river/station in plot B
@@ -45,11 +45,7 @@
   <!-- Input for opening selection of river or stations -->
   <CollapsibleSection title='Velg elver/stasjoner'>
     <div class='editButton' role='button'>
-      <Button
-        on:buttonClick={handleSelectRiverStation}
-        type='blue'
-        size='small'
-        >
+      <Button on:buttonClick={handleSelectRiverStation} type='blue' size='small'>
         Rediger
         <img src='/editIcon.svg' alt='Edit' height='30em' class='white-color'>
       </Button>
@@ -133,7 +129,7 @@
   }
 
   label:hover {
-    background-color: #435768;
+    background-color: var(--PCOLOR);
     color: white;
   }
 

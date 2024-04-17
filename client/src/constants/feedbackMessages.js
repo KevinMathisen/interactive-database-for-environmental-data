@@ -43,7 +43,7 @@ export const FEEDBACK_MESSAGES = {
   ERROR_PLOTTING_DATA: 'En feil oppstod under plotting av data',
 
   AUTH_UNAVAILABLE: 'Kunne ikke autentisere brukeren, prøv igjen senere',
-  UNAUTHORIZED: 'Du er ikke logget inn, logg inn før du prøver igjen',
+  UNAUTHORIZED: 'Du er ikke logget inn',
   AUTH_REJECTED: 'Brukernavn eller passord er feil, prøv igjen',
   AUTH_SUCCESS: 'Innlogging vellykket',
   LOGOUT_SUCCESS: 'Utlogging vellykket',

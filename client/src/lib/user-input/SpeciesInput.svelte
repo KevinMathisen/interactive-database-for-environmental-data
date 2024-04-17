@@ -8,9 +8,9 @@
   export let includeOthers = false // If the user wants to include 'others' species as its own category
   export let showIncludeOthers = false // If the 'others' category option should be displayed
 
-  let inputSpecies = '' // Input in add species field
-  let showSuggestions = false // If suggestions should be displayed
-  let showError = '' // Error message to display to the user
+  let inputSpecies = ''
+  let showSuggestions = false
+  let showError = ''
   let suggestSpecies = [] // Species to suggest to the user
 
   /**
@@ -159,7 +159,7 @@
 
   /* Show when a user hovers over the label */
   label:hover {
-    background-color: #435768;
+    background-color: var(--PCOLOR);
     color: white;
   }
 
@@ -184,7 +184,7 @@
   }
 
   .smallButton:hover {
-    background-color: #435768;
+    background-color: var(--PCOLOR);
     color: white;
   }
 

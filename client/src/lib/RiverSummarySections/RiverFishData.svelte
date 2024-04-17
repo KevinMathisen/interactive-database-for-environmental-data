@@ -9,7 +9,7 @@
     rows: []
   }
 
-  // Format the river observations for displaying in table
+  // Get the table content
   $: tableContent = formatRiverObservationsForTable(stations)
 
 </script>

@@ -15,14 +15,14 @@ const RIVER_HEADERS_EXCEL = [
 const STATION_HEADERS_EXCEL = [
   'Stasjon', 'Båttype', 'Dato', 'Klokkeslett start', 'Lat start', 'Long start',
   'Lat stopp', 'Long stopp', 'Dominerende elvtype', 'Vær',
-  'Vanntemperatur (Celsius)', 'Lufttemperatur (Celsius)',
+  'Vanntemp (Celsius)', 'Lufttemperatur (Celsius)',
   'Ledningsevne (µs/cm)', 'Transektlengde (m)', 'Sekunder fisket (s)', 'Volt',
-  'Puls (DC)', 'Display', 'Gpx File', 'Stasjonsbeskrivelse',
+  'Puls (DC)', 'Display', 'Gpx File?', 'Stasjonsbeskrivelse',
   'Kommentar til fiske (observasjoner osv)'
 ]
 const OBSERVATION_HEADERS_EXCEL = [
   'ID', 'Stasjon', 'Omgang', 'Art', 'Lengde', 'Antall', 'Kjønn', 'Alder',
-  'Gjenutsatt(ja/nei)', 'Prøvetatt(ja/nei)', 'Kommentar'
+  'Gjenutsatt (ja/nei)', 'Prøvetatt (ja/nei)', 'Kommentar'
 ]
 
 export default {

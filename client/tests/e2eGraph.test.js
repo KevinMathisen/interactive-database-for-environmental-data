@@ -41,6 +41,8 @@ test.describe('Tests the graph page', () => {
       })
     })
     await page.goto('/graph')
+    await page.waitForTimeout(1000)
+    await page.click('.close')
     await page.click('text=Rediger')
     await page.waitForTimeout(2000)
     await page.fill('input[placeholder="Legg til Elv"]', 'Gaula')

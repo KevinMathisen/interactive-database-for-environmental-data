@@ -54,7 +54,7 @@
 
     // called when this component is mounted
     onMount(async () => {
-      // Wait until the DOM is rendered before creating the map
+      // Wait 250ms after DOM is rendered before creating the map to ensure all css is loaded and applied
       setTimeout(() => {
         // defines the map and sets the view to Norway
         map = leaflet.map(mapElement, {
@@ -76,7 +76,7 @@
         // Add river and station layer groups to the map
         riverLayerGroup.addTo(map)
         stationLayerGroup.addTo(map)
-      }, 0)
+      }, 250)
     })
 
     // called when this component is unmounted

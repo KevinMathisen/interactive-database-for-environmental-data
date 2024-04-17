@@ -87,12 +87,12 @@
   }
 
   .header.active{
-    border-bottom: 5px solid #435768;
+    border-bottom: 5px solid var(--PCOLOR);
   }
 
   .blue {
     border-radius: 15px;
-    background-color: #435768;
+    background-color: var(--PCOLOR);
     color: white;
   }
 
@@ -126,7 +126,7 @@
 
   .orange {
     display: flex;
-    background-color: #FF5B37;
+    background-color: var(--SCOLOR);
     color: white;
   }
 

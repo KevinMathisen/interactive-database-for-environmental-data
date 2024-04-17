@@ -1,15 +1,15 @@
 <script>
     import { validateText } from '../../utils/validation'
 
-    export let searchQuery // search query
-    export let dataType // type of data to search for
+    export let searchQuery
+    export let dataType
 
-    const userSearchQuery = '' // what user has entered in search field
+    let userSearchQuery = '' // what user has entered in search field
     let placeholder // placeholder text for search field
     const helpText = 'Bruk filter for å filtrere resultat'
 
     // Set placeholder text based on data type
-    $: placeholder = `Søk etter ${dataType === 'river' ? 'Elv navn eller prosjektnummer' : 'Stasjon navn'}`
+    $: placeholder = `Søk etter ${dataType === 'river' ? 'Elv navn' : 'Stasjon navn'}`
 
     // Update search query if user input is valid
     $: if (userSearchQuery && validateText(userSearchQuery)) {
@@ -22,10 +22,10 @@
 
 <div class='container' role='search'>
     <label for='listSearch'>
-        <input type='search' id='listSearch' name='listSearch' placeholder={placeholder} bind:value={searchQuery}/>
+        <input type='search' id='listSearch' name='listSearch' placeholder={placeholder} bind:value={userSearchQuery}/>
     </label>
 
-    <h4 class='helpText'>{helpText}</h4>
+    <p class='helpText'>{helpText}</p>
 </div>
 
 <style>
@@ -36,8 +36,8 @@
     }
 
     .helpText {
-        padding-left: 0.5em;
-        /* padding: 0.5em; */
+        padding-left: 1em;
+        font-size: 0.9rem;
     }
 
     #listSearch {
