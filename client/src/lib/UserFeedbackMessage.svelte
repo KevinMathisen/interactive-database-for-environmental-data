@@ -17,13 +17,14 @@
   }
 </script>
 
+<!-- Shows each user feedback messages as modals, overlaying each other -->
 {#each userFeedback as feedback}
   {#if feedback.message}
     <Modal on:close={handleClose}>
       <img
         src={feedback.type ? SVG_PATHS[feedback.type] : SVG_PATHS.CLOSE}
         alt={feedback.type}
-        class="icon"
+        class='icon'
       />
       <h3>{feedback.message}</h3>
     </Modal>

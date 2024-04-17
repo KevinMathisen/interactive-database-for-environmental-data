@@ -12,18 +12,18 @@ import {
   formatStationsForCsv
 } from './formatData.js'
 
-//  - - - - DOWNLOAD FUNCTIONALITY - - - -
 /**
  * Generates an Excel file from the given data
  * @param {Map<number, River>} rivers - The rivers to generate the Excel file from
  * @param {Map<number, Station>} stations - The stations to generate the Excel file from
  * @param {string} type - - The type of data ('river' or 'station')
+ * @param {string[]} selectedSpecies - The species to include in the Excel file
  * @returns {Promise<Blob>} A promise that resolves with a Blob representing the Excel file.
  */
-export async function generateExcelFile (rivers, stations, type) {
+export async function generateExcelFile (rivers, stations, type, selectedSpecies) {
   try {
     // Format the data for Excel
-    const data = type === 'river' ? formatRiversForExcel(rivers) : formatStationsForExcel(stations)
+    const data = type === 'river' ? formatRiversForExcel(rivers, selectedSpecies) : formatStationsForExcel(stations, selectedSpecies)
 
     // Create a new workbook
     const workbook = new ExcelJS.Workbook()
@@ -69,17 +69,19 @@ export async function generateExcelFile (rivers, stations, type) {
  * @param {Map<number, River>} rivers - The rivers to generate the CSV file from
  * @param {Map<number, Station>} stations - The stations to generate the CSV file from
  * @param {string} type - The type of data to generate the CSV file from
+ * @param {string[]} selectedSpecies - The species to include in the CSV file
  * @returns {string} - A string containing the CSV file
  */
-export async function generateCSVFile (rivers, stations, type) {
+export async function generateCSVFile (rivers, stations, type, selectedSpecies) {
   try {
     // Format the data for CSV
-    const data = type === 'river' ? formatRiversForCsv(rivers) : formatStationsForCsv(stations)
+    const data = type === 'river' ? formatRiversForCsv(rivers, selectedSpecies) : formatStationsForCsv(stations, selectedSpecies)
 
     // Generate and return CSV content, where each row is separated by a newline, and each column by a comma
+    const rows = data.rows.map(row => row.join(','))
     const csvContent = [
       data.header.join(','),
-      ...data.rows.join(',')
+      ...rows
     ].join('\n')
 
     // Convert the CSV content to a blob
@@ -93,33 +95,56 @@ export async function generateCSVFile (rivers, stations, type) {
   }
 }
 
-//  - - - - UPLOAD FUNCTIONALITY - - - -
-
 /**
- * Validated the file type and size
- * @param {File} file - The file to validate
- * @returns {boolean} - True if the file is valid, else false
+ * Read a file as an array buffer
+ * @param {File} file - The file to read
+ * @returns {Promise<ArrayBuffer>} - A promise which resolves to the file content as an array buffer
  */
-export function validateFile (file) {
-  // Check if the file type is valid
-  if (!['.csv', '.xlsx'].includes(file.name.slice(file.name.lastIndexOf('.')))) {
-    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.UNSUPPORTED_CONTENT_TYPE, FEEDBACK_MESSAGES.UNSUPPORTED_CONTENT_TYPE)
-    return false
-  }
-  // Check if the file size exceeds the limit
-  if (file.size > 10 * 1024 * 1024) {
-    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.CONTENT_TO_LARGE, FEEDBACK_MESSAGES.CONTENT_TO_LARGE)
-    return false
-  }
-  return true
+export function readFile (file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onload = () => resolve(reader.result) // directly pass the result
+    reader.onerror = reject
+    reader.readAsArrayBuffer(file)
+  })
 }
 
 /**
- * Reads the content of a CSV file
- * @param {File} file - The file to check
- * @param {Array<File>} filesArray - The array of files to check
- * @returns {boolean} - True if the file exists in the array, else false
+ * Convert an excel worksheet to json
+ * @param {ExcelJS.Worksheet} worksheet - The worksheet to convert to json
+ * @returns {object[]} - Worksheet as json
  */
-export function fileExistsInArray (file, filesArray) {
-  return filesArray.some(existingFile => existingFile.name === file.name)
+export function worksheetToJson (worksheet) {
+  // Get the header and data rows
+  const rows = worksheet.getSheetValues()
+  const header = rows[1].map(cell => cell.trim())
+  const data = rows.slice(2)
+
+  // if header or data is empty, return empty array
+  if (!header || !data) {
+    console.log('header or data is empty', header, data)
+    return []
+  }
+
+  // Convert each row to json
+  const jsonSheet = data.map(row => {
+    const jsonRow = {}
+    // Go trough each column in the row
+    header.forEach((key, index) => {
+      // If the cell is not empty, add it to the json row
+      if (row[index] === undefined) {
+        return
+      }
+
+      if (row[index] instanceof Date) {
+        jsonRow[key] = row[index].toISOString()
+      } else {
+        jsonRow[key] = row[index]
+      }
+    })
+    return jsonRow
+  }).filter(row => Object.keys(row).length > 0) // Filter out empty objects
+
+  // Return the json sheet
+  return jsonSheet
 }

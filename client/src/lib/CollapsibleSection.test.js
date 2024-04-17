@@ -20,12 +20,11 @@ describe('CollapseblaSection', () => {
     expect(divs.length).toBe(4)
 
     fireEvent.click(header)
-    console.log(header)
 
-    await new Promise(resolve => setTimeout(resolve, 500))
+    await new Promise(resolve => setTimeout(resolve, 100))
     await waitFor(() => {
       divs = container.querySelectorAll('div')
-      expect(divs.length).toBe(4) // should be 3
+      expect(divs.length).toBe(4)
     })
   })
 })

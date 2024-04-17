@@ -1,20 +1,33 @@
 <script>
+  import { createEventDispatcher } from 'svelte'
   import Button from '../user-input/Button.svelte'
 
-  export let station // Station to show
+  export let station
+
+  const dispatch = createEventDispatcher()
+
+  const projectId = (station.projectId && station.projectId !== 'None') ? station.projectId : 'N/A'
+
+  /**
+   * Handles when user clicks on button to go to river by firing event with river id
+   */
+  function goToRiverData () {
+    dispatch('goToRiverData', { id: station.riverId })
+  }
 </script>
 
 <div class='container'>
   <div class='text'>
     <p>{station.date} - {station.time}</p>
-    <p>Prosjektnummer: TODO</p>
+    <p>Prosjektnummer: {projectId}</p>
   </div>
 
   <!-- Button to go to river data -->
-  <Button color='blue' type='small'>
-    Til elvedata
-  </Button>
-
+  <div role='button'>
+    <Button type='blue' size='medium' on:buttonClick={goToRiverData}>
+      Til elvedata
+    </Button>
+  </div>
 </div>
 
 <style>

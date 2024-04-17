@@ -56,7 +56,7 @@ export class River {
       endDate: object.end_date,
       projectId: object.project_id,
       waterflow: object.waterflow,
-      boatType: object.boat_type,
+      boatType: object.boattype,
       skipper: object.skipper,
       crew: object.crew,
       position: object.pos,

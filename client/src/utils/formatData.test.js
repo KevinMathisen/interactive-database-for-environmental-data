@@ -88,14 +88,14 @@ describe('test formatStationsForSummaryTable function', () => {
         name: 'Name 1',
         riverType: 'Type1',
         weather: 'Weather1',
-        secFished: 1
+        secFished: 60
       })],
       [1, new Station({
         id: '2',
         name: 'Name 2',
         riverType: 'Type2',
         weather: 'Weather2',
-        secFished: 2
+        secFished: 120
       })]
     ])
     calculateData.amountOfFishInStation.mockReturnValue(1)
@@ -104,8 +104,8 @@ describe('test formatStationsForSummaryTable function', () => {
     const formatted = formatStationsForSummaryTable(stations)
     expect(formatted.headers).toEqual(headersConstants.STATION_SUMMARY_HEADERS_TABLE)
     expect(formatted.rows).toEqual([
-      ['1', '1', 'Type1', 'Weather1', 1, 1, 2],
-      ['2', '2', 'Type2', 'Weather2', 2, 1, 2]
+      ['1', '1', 'Type1', 'Weather1', '1.0', 1, 2],
+      ['2', '2', 'Type2', 'Weather2', '2.0', 1, 2]
     ])
   })
 })
@@ -285,13 +285,13 @@ describe('test formatRiversForExcel function', () => {
     ])
     expect(formatted.stationHeader).toEqual(headersConstants.STATION_HEADERS_EXCEL)
     expect(formatted.stationRows).toEqual([
-      ['1', '2024-01-01', '12:00', 60.5, 9, 60.51, 9.01, '', '', 4, '', '', '', '', '', '', '', '', '', 'Comment1'],
-      ['2', '2024-01-15', '13:00', 60.6, 9.1, 60.61, 9.11, '', '', 6, '', '', '', '', '', '', '', '', '', 'Comment2']
+      ['1', '', '2024-01-01', '12:00', 60.5, 9, 60.51, 9.01, '', '', 4, '', '', '', '', '', '', '', '', '', 'Comment1'],
+      ['2', '', '2024-01-15', '13:00', 60.6, 9.1, 60.61, 9.11, '', '', 6, '', '', '', '', '', '', '', '', '', 'Comment2']
     ])
     expect(formatted.observationHeader).toEqual(headersConstants.OBSERVATION_HEADERS_EXCEL)
     expect(formatted.observationRows).toEqual([
-      [1, 1, '', 'species1', 2, 1, '', '', '', '', 'Comment1'],
-      [2, 2, '', 'species2', 3, 1, '', '', '', '', 'Comment2']
+      [1, '1', '', 'Species1', 2, 1, '', '', '', '', 'Comment1'],
+      [2, '2', '', 'Species2', 3, 1, '', '', '', '', 'Comment2']
     ])
   })
 })
@@ -376,13 +376,13 @@ describe('test formatStationsForExcel function', () => {
     ])
     expect(formatted.stationHeader).toEqual(headersConstants.STATION_HEADERS_EXCEL)
     expect(formatted.stationRows).toEqual([
-      ['1', '2024-01-01', '12:00', 60.5, 9, 60.51, 9.01, '', '', 4, '', '', '', '', '', '', '', '', '', 'Comment1'],
-      ['2', '2024-01-15', '13:00', 60.6, 9.1, 60.61, 9.11, '', '', 6, '', '', '', '', '', '', '', '', '', 'Comment2']
+      ['1', '', '2024-01-01', '12:00', 60.5, 9, 60.51, 9.01, '', '', 4, '', '', '', '', '', '', '', '', '', 'Comment1'],
+      ['2', '', '2024-01-15', '13:00', 60.6, 9.1, 60.61, 9.11, '', '', 6, '', '', '', '', '', '', '', '', '', 'Comment2']
     ])
     expect(formatted.observationHeader).toEqual(headersConstants.OBSERVATION_HEADERS_EXCEL)
     expect(formatted.observationRows).toEqual([
-      [1, 1, '', 'species1', 2, 1, '', '', '', '', 'Comment1'],
-      [2, 2, '', 'species2', 3, 1, '', '', '', '', 'Comment2']
+      [1, '1', '', 'Species1', 2, 1, '', '', '', '', 'Comment1'],
+      [2, '2', '', 'Species2', 3, 1, '', '', '', '', 'Comment2']
     ])
   })
 })
@@ -465,11 +465,11 @@ describe('test formatRiversForCsv function', () => {
     ])
     expect(formatted.rows).toEqual([
       ['2024-01-01', '', 'Name1', '', 60.5, 9.0, '', '', 'Crew1', '', '', 'prosjekt1', '',
-        '1', '2024-01-01', '12:00', 60.5, 9, 60.51, 9.01, '', '', 4, '', '', '', '', '', '', '', '', '', 'Comment1',
-        1, 1, '', 'species1', 2, 1, '', '', '', '', 'Comment1'],
+        '1', '', '2024-01-01', '12:00', 60.5, 9, 60.51, 9.01, '', '', 4, '', '', '', '', '', '', '', '', '', 'Comment1',
+        1, '1', '', 'Species1', 2, 1, '', '', '', '', 'Comment1'],
       ['2024-01-15', '', 'Name2', '', 60.6, 9.1, '', '', 'Crew2', '', '', 'prosjekt2', '',
-        '2', '2024-01-15', '13:00', 60.6, 9.1, 60.61, 9.11, '', '', 6, '', '', '', '', '', '', '', '', '', 'Comment2',
-        2, 2, '', 'species2', 3, 1, '', '', '', '', 'Comment2']
+        '2', '', '2024-01-15', '13:00', 60.6, 9.1, 60.61, 9.11, '', '', 6, '', '', '', '', '', '', '', '', '', 'Comment2',
+        2, '2', '', 'Species2', 3, 1, '', '', '', '', 'Comment2']
     ])
   })
 })
@@ -554,11 +554,11 @@ describe('test formatStationsForCsv function', () => {
     ])
     expect(formatted.rows).toEqual([
       ['2024-01-01', '', 'Name1', '', 60.5, 9.0, '', '', 'Crew1', '', '', 'prosjekt1', '',
-        '1', '2024-01-01', '12:00', 60.5, 9, 60.51, 9.01, '', '', 4, '', '', '', '', '', '', '', '', '', 'Comment1',
-        1, 1, '', 'species1', 2, 1, '', '', '', '', 'Comment1'],
+        '1', '', '2024-01-01', '12:00', 60.5, 9, 60.51, 9.01, '', '', 4, '', '', '', '', '', '', '', '', '', 'Comment1',
+        1, '1', '', 'Species1', 2, 1, '', '', '', '', 'Comment1'],
       ['2024-01-15', '', 'Name2', '', 60.6, 9.1, '', '', 'Crew2', '', '', 'prosjekt2', '',
-        '2', '2024-01-15', '13:00', 60.6, 9.1, 60.61, 9.11, '', '', 6, '', '', '', '', '', '', '', '', '', 'Comment2',
-        2, 2, '', 'species2', 3, 1, '', '', '', '', 'Comment2']
+        '2', '', '2024-01-15', '13:00', 60.6, 9.1, 60.61, 9.11, '', '', 6, '', '', '', '', '', '', '', '', '', 'Comment2',
+        2, '2', '', 'Species2', 3, 1, '', '', '', '', 'Comment2']
     ])
   })
 })

@@ -1,17 +1,17 @@
 <script>
-  export let selectedStartDate // Start date
-  export let selectedEndDate // End date
+  export let selectedStartDate
+  export let selectedEndDate
 </script>
 
 <!-- Input for choosing start date -->
-<label for="startDate">
+<label for='startDate'>
   Fra
-  <input id="startDate" type="date" name="startDate" bind:value={selectedStartDate}/>
+  <input id='startDate' type='date' name='startDate' bind:value={selectedStartDate}/>
 </label>
 <!-- Input for choosing end date -->
-<label for="endDate">
+<label for='endDate'>
   Til
-  <input id="endDate" type="date" name="endDate" bind:value={selectedEndDate}/>
+  <input id='endDate' type='date' name='endDate' bind:value={selectedEndDate}/>
 </label>
 
 <style>

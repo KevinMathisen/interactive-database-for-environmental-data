@@ -6,7 +6,7 @@
 
 {#each options as option}
   <label for={option.value}>
-    <input id={option.value} type="radio" name={name} value={option.value} bind:group={selected} />
+    <input id={option.value} type='radio' name={name} value={option.value} bind:group={selected} />
     {option.label}
   </label>
 {/each}
@@ -22,7 +22,7 @@
 
   /* Show when a user hovers over the label */
   label:hover {
-    background-color: #435768;
+    background-color: var(--PCOLOR);
     color: white;
   }
 

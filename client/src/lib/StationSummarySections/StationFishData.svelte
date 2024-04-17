@@ -2,14 +2,13 @@
   import SortableTable from '../SortableTable.svelte'
   import { formatStationObservationsForTable } from '../../utils/formatData.js'
 
-  export let station // Station to show
+  export let station
 
   let tableContent = {
     headers: [],
     rows: []
   }
 
-  // Format the station observations for displaying in table
   $: tableContent = formatStationObservationsForTable(station)
 
 </script>
@@ -19,7 +18,7 @@
   headers={tableContent.headers}
   rows={tableContent.rows}
   clickable=false
-  datatype="observation"
+  datatype='observation'
   markRow='sum'
   on:rowClick
 />

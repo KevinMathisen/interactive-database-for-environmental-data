@@ -4,31 +4,24 @@
 
   const dispatch = createEventDispatcher()
 
-  // Should only take in type of button and derive other properties from that
-
-  // export let color = 'blue' // Can be either 'none', 'blue', 'orange' or 'green'
-  // export let center = true // The default center for the button
-  export let href = '#' // The default link for the button
-  export let type = '' // Can be either 'download' or any optioneble color 'blue', 'uploadButton'
-  export let size = 'medium' // can be either 'small', 'medium', 'large' or 'extende', as big ass the header.
-  // export let ifNotPicture = false // Contains an svg icon
+  export let href = '' // The default link for the button
+  export let type = '' // Can be either 'header', 'blue', 'orange', 'green'.
+  export let size = 'medium' // Button sizes 'small', 'medium', 'large' or 'extende'.
 
   /**
    * Handles the appropriate function when the user clicks on the button.
+   * @param {Event} event - The event object
    */
-  function handleClick () {
-    // Should only dispatch one event based on type of button
-    dispatch('downloadFile')
-    dispatch('uploadFile')
-    dispatch('selectFile')
+  function handleClick (event) {
+    if (href === '') {
+      event.preventDefault()
+    }
+    dispatch('buttonClick')
   }
 </script>
-<!-- class:ifNotPicture={ifNotPicture} -->
-<!-- class:center={center} -->
-<!-- size={size} -->
 
-<!-- What the button does and the variables it takes inn.  -->
-<a class="{type} {size}"
+<!-- The variables needed for the button. -->
+<a class='{type} {size}'
   href={href}
   class:active={$page.url.pathname === href}
   on:click={handleClick}>
@@ -38,41 +31,44 @@
 <style>
   a {
     display: flex;
-    align-items: center;  /*Centers the content vertically*/
-    /* Centers the content in the buttons horizontally */
-    /* justify-content: space-evenly; */
-    justify-content: center;
-    white-space: nowrap;  /*Does not lett the text in the buttons wrap*/
+    align-items: center;      /*Centers the content vertically*/
+    justify-content: center;  /* Centers the content in the buttons horizontally */
+    white-space: nowrap;      /*Does not lett the text in the buttons wrap*/
     vertical-align: baseline; /*Aligns the icons and the text on the same level.*/
-    cursor: pointer;  /*Pointer for the mouse*/
-    text-decoration: none;  /*Deletes the underline on the link*/
-    font-weight: bold;  /*Bold text*/
+    cursor: pointer;          /*Pointer for the mouse*/
+    text-decoration: none;    /*Deletes the underline on the link*/
+    font-weight: bold;        /*Bold text*/
   }
 
   .small {
-    font-size: 1rem;
-    width: 120px;
+    font-size: 0.9rem;
+    width: 130px;
     height: 40px;
+    padding: 5px;
     border-radius: 1rem;
+    justify-content: space-evenly;
   }
 
   .medium {
-    font-size: 1.2rem;
-    width: 180px;
-    height: 60px;
+    font-size: 1rem;
+    width: 170px;
+    height: 50px;
+    padding: 5px;
     border-radius: 1rem;
     justify-content: space-evenly;
   }
 
   .large {
-    font-size: 1.5rem;
-    width: 250px;
-    height: 70px;
+    font-size: 1.2rem;
+    width: 240px;
+    height: 60px;
+    padding: 5px;
     border-radius: 1rem;
+    justify-content: space-evenly;
   }
 
   .extended{
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     width: 100%;
     height: calc(100% - 10px);
     margin: 5px 0px;
@@ -91,38 +87,21 @@
   }
 
   .header.active{
-    border-bottom: 5px solid #435768;
-  }
-
-  .logOut{
-    display: flex;
-    background-color: #435768;
-    color: white;
-  }
-
-  .fileSearch{
-    display: flex;
-    background-color: #435768;
-    color: white;
-    width: 240px;
+    border-bottom: 5px solid var(--PCOLOR);
   }
 
   .blue {
     border-radius: 15px;
-    background-color: #435768;
+    background-color: var(--PCOLOR);
     color: white;
   }
 
-  .blue:hover,
-  .logOut:hover,
-  .fileSearch:hover{
+  .blue:hover {
     box-shadow: 0px 5px 5px #36526e;
     transform: translateY(-3px);
   }
 
-  .blue:active,
-  .logOut:active,
-  .fileSearch:active{
+  .blue:active {
     background-color: #253544;
     box-shadow: 0px 0px 0px #36526e;
     transform: translateY(-0px);
@@ -134,31 +113,30 @@
   }
 
   .green:hover {
-    background-color: #00ac06;
-    box-shadow: 0px 5px 5px #00ff08;
+    background-color: #48c24c;
+    box-shadow: 0px 5px 5px #24b129;
     transform: translateY(-3px);
   }
 
   .green:active {
     background-color: #005e03;
-    box-shadow: 0px 0px 0px #00ff08;
+    box-shadow: 0px 0px 0px #24b129;
     transform: translateY(-0px);
   }
 
-  .orangeButton {
+  .orange {
     display: flex;
-    position: absolute;
-    background-color: #FF5B37;
+    background-color: var(--SCOLOR);
     color: white;
   }
 
-  .orangeButton:hover {
+  .orange:hover {
     background-color: #ff3c11;
     box-shadow: 0px 5px 5px #ff6c47;
     transform: translateY(-3px);
   }
 
-  .orangeButton:active {
+  .orange:active {
     background-color: #aa1f00;
     box-shadow: 0px 0px 0px #ff6c47;
     transform: translateY(-0px);

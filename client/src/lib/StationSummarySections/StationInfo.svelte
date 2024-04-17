@@ -5,7 +5,7 @@
     formatStationSettingsForTable
   } from '../../utils/formatData.js'
 
-  export let station // Station to show
+  export let station
 
   let conditions = {
     headers: [],
@@ -17,14 +17,20 @@
     rows: []
   }
 
-  // Format the station conditions and settings for displaying in table
   $: conditions = formatStationConditionsForTable(station)
   $: settings = formatStationSettingsForTable(station)
 </script>
 
 <div class='container'>
-  <h4>Stasjonsbeskrivelse</h4>
-  <p>{station.description}</p>
+  {#if station.description}
+    <h4>Stasjonsbeskrivelse</h4>
+    <p>{station.description}</p>
+  {/if}
+
+  {#if station.comment}
+    <h4>Kommentar</h4>
+    <p>{station.comment}</p>
+  {/if}
 
   <h4>Forhold</h4>
   <!-- Table with station conditions -->
@@ -34,3 +40,9 @@
   <h4>Strøminstillinger</h4>
   <Table headers={settings.headers} rows={settings.rows}/>
 </div>
+
+<style>
+  p {
+    margin-left: 0.5em;
+  }
+</style>

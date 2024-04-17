@@ -28,14 +28,14 @@
 </script>
 
 <div class=collapsibleSection>
-  <div class=collapsibleSection-header on:click={toggleCollapse} on:keydown={handleKeyDown} role="button" tabindex="0">
+  <div class=collapsibleSection-header on:click={toggleCollapse} on:keydown={handleKeyDown} role='button' tabindex='0'>
     {#if collapsable}
-      <i class="arrow" class:collapsed={isCollapsed} class:not-collapsed={!isCollapsed}></i>
+      <i class='arrow' class:collapsed={isCollapsed} class:not-collapsed={!isCollapsed}></i>
     {/if}
     <h3>{title}</h3>
   </div>
   {#if !isCollapsed}
-    <div class="content" transition:fly={{ y: -30, duration: 100 }}>
+    <div class='content' transition:fly={{ y: -30, duration: 100 }}>
       <slot></slot>
     </div>
   {/if}
@@ -51,13 +51,13 @@
     align-items: center;
     justify-content: flex-start;
     background-color: #ffffff;
-    border-bottom: 3px solid #435768;
+    border-bottom: 3px solid var(--PCOLOR);
     padding-bottom: 0.5em;
     cursor: pointer;
   }
 
   .collapsibleSection-header h3 {
-    color: #435768;
+    color: var(--PCOLOR);
     font-size: 1.5rem;
     padding-left: 1rem;
     margin: 0%;
@@ -68,7 +68,7 @@
   }
 
   .arrow {
-    border: solid #435768;
+    border: solid var(--PCOLOR);
     border-width: 0px 3px 3px 0px;
     display: inline-block;
     padding: 5px;

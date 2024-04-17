@@ -11,7 +11,6 @@
   })
 
   $: if (Plotly && plotData.size > 0) {
-    console.log('drawing plot with plotData: ', plotData)
     drawPlot(plotData)
   }
 
@@ -20,29 +19,46 @@
    * @param {Map<string, {lengths}>} plotData - The data to be displayed in the box plot
    */
   function drawPlot (plotData) {
+    // Width of boxplot given amount of observation points
+    const boxWidth = 0.6 - (1 / plotData.size)
+
     // Create boxplot with dots and mean with standard deviation for each species in each observation point
     const traces = []
     plotData.forEach((observationPoint, name) => {
+      const nameWithEnter = name.replace(' ', '<br>')
       traces.push({
         y: observationPoint.lengths,
         type: 'box',
-        name,
-        boxpoints: 'all',
-        marker: {
-          color: observationPoint.color
-        },
-        boxmean: 'sd'
+        name: nameWithEnter,
+        boxpoints: 'none',
+        boxmean: 'sd',
+        width: boxWidth
       })
     })
 
     // The title, font size and the title of the y-axis.
     const layout = {
-      title: 'Box Plot Styling Mean and Standard Deviation',
+      title: 'Boksplott for lengde på fisk observert i elv/stasjon',
       font: { size: 15 },
-      yaxis: { title: 'Size (cm)' }
+      yaxis: { title: 'Lengde (mm)' },
+      boxmode: 'overlay'
     }
 
-    const config = { responsive: true }
+    // Make graph responsive, remove some buttons from the modebar, add edit link
+    const config = {
+      responsive: true,
+      modeBarButtonsToRemove: ['select2d', 'lasso2d', 'zoomIn2d', 'zoomOut2d'],
+      showLink: true,
+      plotlyServerURL: 'https://chart-studio.plotly.com',
+      modeBarButtonsToAdd: [{
+        name: 'Vis punkter',
+        icon: Plotly.Icons.pencil,
+        click: function (gd) {
+          const showPoints = gd.data[0].boxpoints === 'all' ? false : 'all'
+          Plotly.restyle(gd, 'boxpoints', showPoints)
+        }
+      }]
+    }
 
     // Creates the boxplot.
     Plotly.newPlot('boxPlot', traces, layout, config)
