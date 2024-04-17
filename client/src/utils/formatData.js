@@ -68,7 +68,7 @@ export function formatStationsForSummaryTable (stations) {
       station.name.split(' ').pop(), // Get the station number from the name
       station.riverType || '',
       station.weather || '',
-      station.secFished,
+      (station.secFished / 60).toFixed(1),
       amountOfFishInStation(station),
       fishPerMinuteInStation(station)
     ])
