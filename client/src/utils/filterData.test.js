@@ -1,7 +1,5 @@
 import { describe, it, expect } from 'vitest'
 import {
-  filterRiversBySearch,
-  filterStationsBySearch,
   filterRiversByDateAndSpecies,
   filterStationsByDateAndSpecies,
   filterObservationsBySpecies,

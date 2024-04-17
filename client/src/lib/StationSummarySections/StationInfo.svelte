@@ -5,7 +5,7 @@
     formatStationSettingsForTable
   } from '../../utils/formatData.js'
 
-  export let station 
+  export let station
 
   let conditions = {
     headers: [],

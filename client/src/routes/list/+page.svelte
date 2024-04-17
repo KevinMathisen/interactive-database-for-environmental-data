@@ -6,12 +6,12 @@
   import RiverSummary from '$lib/RiverSummary.svelte'
   import StationSummary from '$lib/StationSummary.svelte'
   import { getRivers, getStations, getRiverSummary, getStationSummary } from '../../utils/dataManager.js'
-  import { 
-    getSelectableSpecies, 
-    filterRiversByDateAndSpecies, 
-    filterStationsByDateAndSpecies, 
-    filterRiversByNameAndDateCombined, 
-    filterStationsByNameAndDateCombined 
+  import {
+    getSelectableSpecies,
+    filterRiversByDateAndSpecies,
+    filterStationsByDateAndSpecies,
+    filterRiversByNameAndDateCombined,
+    filterStationsByNameAndDateCombined
   } from '../../utils/filterData.js'
   import { formatRiversForTable, formatStationsForTable } from '../../utils/formatData.js'
   import { riverStore } from '../../stores/riverStore.js'

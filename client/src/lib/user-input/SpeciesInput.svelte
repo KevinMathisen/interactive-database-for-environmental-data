@@ -8,9 +8,9 @@
   export let includeOthers = false // If the user wants to include 'others' species as its own category
   export let showIncludeOthers = false // If the 'others' category option should be displayed
 
-  let inputSpecies = '' 
-  let showSuggestions = false 
-  let showError = '' 
+  let inputSpecies = ''
+  let showSuggestions = false
+  let showError = ''
   let suggestSpecies = [] // Species to suggest to the user
 
   /**

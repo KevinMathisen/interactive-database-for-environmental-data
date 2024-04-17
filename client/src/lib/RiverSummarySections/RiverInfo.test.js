@@ -9,12 +9,15 @@ import RiverInfo from './RiverInfo.svelte'
 
 describe('RiverInfo', () => {
   it('renders correctly with given stations', () => {
-
     const stations = new Map([
-      [1, new Station({ id: '1', secFished: 60, observations: [
+      [1, new Station({
+        id: '1',
+        secFished: 60,
+        observations: [
           { species: 'laks', count: 10 },
-          { species: 'ørret', count: 20 },
-      ] })]
+          { species: 'ørret', count: 20 }
+        ]
+      })]
     ])
     const river = {
       waterFlow: 1,

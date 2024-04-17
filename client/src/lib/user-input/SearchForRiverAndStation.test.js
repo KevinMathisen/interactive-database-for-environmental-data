@@ -1,4 +1,4 @@
-import { render, fireEvent } from '@testing-library/svelte'
+import { render } from '@testing-library/svelte'
 import { describe, it, expect } from 'vitest'
 import SearchForRiverAndStation from './SearchForRiverAndStation.svelte'
 import { River } from '../../models/River'
@@ -10,8 +10,8 @@ import { River } from '../../models/River'
 describe('SearchForRiverAndStation', () => {
   it('SearchForRiverAndStation renders correctly with given rivers and stations', async () => {
     const rivers = new Map([
-    [1, new River({ id: 1, name: 'River 1', startDate: '2024-01-01' })],
-    [2, new River({ id: 2, name: 'River 2', startDate: '2024-01-01' })],
+      [1, new River({ id: 1, name: 'River 1', startDate: '2024-01-01' })],
+      [2, new River({ id: 2, name: 'River 2', startDate: '2024-01-01' })]
     ])
 
     const selectedRivers = rivers
@@ -19,8 +19,8 @@ describe('SearchForRiverAndStation', () => {
 
     const stations = new Map()
 
-    const { getByLabelText, getByText } = render(SearchForRiverAndStation, {
-    props: { rivers, stations, dataType: 'river', selectedRivers, selectedStations }
+    const { getByText } = render(SearchForRiverAndStation, {
+      props: { rivers, stations, dataType: 'river', selectedRivers, selectedStations, selectedStartDate: '2024-01-01', selectedEndDate: '2024-01-01'}
     })
 
     // Check if the choosen rivers is rendered

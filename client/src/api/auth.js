@@ -31,9 +31,6 @@ export async function authLogin (username, password) {
       return false
     }
 
-    // Retrieve the result from the response
-    const result = await response.json()
-
     // If login was successful, tell user and update authStore
     addFeedbackToStore(FEEDBACK_TYPES.SUCCESS, FEEDBACK_CODES.AUTH_SUCCESS, FEEDBACK_MESSAGES.AUTH_SUCCESS)
     authStore.set({ authenticated: true })

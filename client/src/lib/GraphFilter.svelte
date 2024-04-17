@@ -10,18 +10,18 @@
 
   export let selectedRivers // Rivers user has chosen to plot
   export let selectedStations // Stations user has chosen to plot
-  export let selectableSpecies = [] 
+  export let selectableSpecies = []
   export let dataType = DATATYPE_RIVER // DATATYPE_RIVER or DATATYPE_STATION
-  export let aggregateData = false 
+  export let aggregateData = false
 
   export let selectedSpecies = [] // Species user has chosen
   export let includeOthers = false // If to include 'others' category in graphs
 
-  export let showPlotA = true 
+  export let showPlotA = true
   export let showValueA = 'absolute' // 'absolute' or 'relative'
   export let plotTypeA = 'barchart' // 'barchart' or 'piechart'
 
-  export let showPlotB = true 
+  export let showPlotB = true
   export let intervallPlotB = 20 // Interval for the histogram
   export let plotTypeB = 'histogram' // 'histogram' or 'boxplot'
   export let combineSpecies = false // Whether to combine species for each river/station in plot B

@@ -8,7 +8,7 @@ import PlotSpeciesOptions from './PlotSpeciesOptions.svelte'
 
 describe('PlotSpeciesOptions', () => {
   it('binds showPlotA prop to checkbox', async () => {
-    const { getByLabelText } = render(PlotSpeciesOptions, { showPlotA: false })
+    const { getByLabelText } = render(PlotSpeciesOptions, { showPlotA: false, showValueA: 'absolute', plotTypeA: 'barchart' })
     const checkbox = getByLabelText('Vis')
 
     await fireEvent.click(checkbox)
