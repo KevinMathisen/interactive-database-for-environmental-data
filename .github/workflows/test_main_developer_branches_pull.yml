@@ -13,6 +13,9 @@ jobs:
   test-web-application:
     name: 'Run unit tests for web-application'
     runs-on: ubuntu-latest
+    env:
+      VITE_POSTGREST_URL: ${{ secrets.POSTGREST_URL }}
+      VITE_UPLOAD_URL: ${{ secrets.UPLOAD_URL }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4

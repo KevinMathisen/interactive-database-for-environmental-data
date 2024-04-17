@@ -23,7 +23,7 @@
       <img
         src={feedback.type ? SVG_PATHS[feedback.type] : SVG_PATHS.CLOSE}
         alt={feedback.type}
-        class="icon"
+        class='icon'
       />
       <h3>{feedback.message}</h3>
     </Modal>

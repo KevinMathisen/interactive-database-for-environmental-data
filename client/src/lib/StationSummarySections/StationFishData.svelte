@@ -19,7 +19,7 @@
   headers={tableContent.headers}
   rows={tableContent.rows}
   clickable=false
-  datatype="observation"
+  datatype='observation'
   markRow='sum'
   on:rowClick
 />

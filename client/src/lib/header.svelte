@@ -1,11 +1,17 @@
 <script>
   import { page } from '$app/stores'
   import Button from './user-input/Button.svelte'
+  import { authStore } from '../stores/authStore.js'
+  import { authLogout } from '../api/auth.js'
 
-  let showDropdown = false
+  let showDropdown = false // Whether the dropdown menu is shown
+  let authStatus // Authentication status
+
+  // Get the authentication status
+  $: authStatus = $authStore
 
   /**
-   *
+   * Toggles the dropdown menu
    */
   function toggleDropdown () {
     showDropdown = !showDropdown
@@ -13,45 +19,58 @@
 </script>
 
 <header>
-  <div class="logoHeader">
-    <img src="/NINA_logo_emblem.png" alt="Logo" height="60px">
+  <!-- Logo  -->
+  <div class='logoHeader'>
+    <img src='/NINA_logo_emblem.png' alt='NINA Logo' height='60px'>
     <p>Nina</p>
   </div>
-  <div class="centerItem" class:active={$page.url.pathname === '/'}>
-    <Button type="header" href="/" size='extended'>Kart<img src="/mapIcon.svg" alt="listIcon" height="40em" class="headerIcon"></Button>
+  <!-- Navigation -->
+  <div class='navigation' role='banner'>
+    <div class='navButton' role='button' class:active={$page.url.pathname === '/'}>
+      <Button type='header' href='/' size='extended'>Kart<img src='/mapIcon.svg' alt='Map' height='40em' class='headerIcon'></Button>
+    </div>
+    <div class='navButton' role='button' class:active={$page.url.pathname === '/list'}>
+      <Button type='header' href='/list' size='extended'>Liste<img src='/listIcon.svg' alt='List' height='40em' class='headerIcon'></Button>
+    </div>
+    <div class='navButton' role='button' class:active={$page.url.pathname === '/graph'}>
+      <Button type='header' href='/graph' size='extended'>Graf<img src='/graphIcon.svg' alt='Graph' height='30em' class='headerIcon'></Button>
+    </div>
+    <div class='navButton' role='button' class:active={$page.url.pathname === '/upload'}>
+      <Button type='header' href='/upload' size='extended'>Last opp<img src='/uploadIcon.svg' alt='Upload' height='40em' class='headerIcon'></Button>
+    </div>
+    <div class='navButton' role='button' class:active={$page.url.pathname === '/download'}>
+      <Button type='header' href='/download' size='extended'>Last ned<img src='/dowloadIcon.svg' alt='Download' height='40em' class='headerIcon'></Button>
+    </div>
   </div>
-  <div class="centerItem" class:active={$page.url.pathname === '/list'}>
-    <Button type="header" href="/list" size='extended'>Liste<img src="/listIcon.svg" alt="listIcon" height="40em" class="headerIcon"></Button>
-  </div>
-  <div class="centerItem" class:active={$page.url.pathname === '/graph'}>
-    <Button type="header" href="/graph" size='extended'>Graf<img src="/graphIcon2.svg" alt="listIcon" height="30em" class="headerIcon"></Button>
-  </div>
-  <div class="centerItem" class:active={$page.url.pathname === '/upload'}>
-    <Button type="header" href="/upload" size='extended'>Last opp<img src="/uploadIcon2.svg" alt="listIcon" height="40em" class="headerIcon"></Button>
-  </div>
-  <div class="centerItem" class:active={$page.url.pathname === '/download'}>
-    <Button type="header" href="/download" size='extended'>Last ned<img src="/dowloadIcon.svg" alt="listIcon" height="40em" class="headerIcon"></Button>
-  </div>
-  <button class="Menu centerItem" on:click={toggleDropdown}>
-    <div class="MenuIcon" class:active={showDropdown}></div>
-    <div class="MenuIcon::before" class:translate-before={showDropdown}></div>
-    <div class="MenuIcon::after" class:translate-after={showDropdown}></div>
+  <!-- Dropdown menu  for navigation -->
+  <button class='menu' on:click={toggleDropdown}>
+    <div class='menuIcon' class:active={showDropdown}></div>
+    <div class='menuIcon::before' class:translate-before={showDropdown}></div>
+    <div class='menuIcon::after' class:translate-after={showDropdown}></div>
     {#if showDropdown}
-      <div class="Dropdown">
+      <div class='Dropdown' role='menu'>
         <ul>
-          <li><a href="/">Kart</a></li>
-          <li><a href="/list">Liste</a></li>
-          <li><a href="/graph">Graf</a></li>
-          <li><a href="/upload">Last opp</a></li>
-          <li><a href="/download">Last ned</a></li>
+          <li><a href='/'>Kart</a></li>
+          <li><a href='/list'>Liste</a></li>
+          <li><a href='/graph'>Graf</a></li>
+          <li><a href='/upload'>Last opp</a></li>
+          <li><a href='/download'>Last ned</a></li>
         </ul>
       </div>
     {/if}
     </button>
-  <div class="LogOut centerItem">
-    <Button type="logOut" size='large'>Logg ut<img src="/userIcon.svg" alt="listIcon" height="50em" class="headerIcon"></Button>
-  </div>
 
+  {#if authStatus && authStatus.authenticated}
+    <div class='logInOut' role='button'>
+      <!-- Log out button -->
+      <Button type='blue' size='small' on:buttonClick={authLogout}>Logg ut<img src='/logoutIcon.svg' alt='listIcon' height='30em' class='headerIcon white-color'></Button>
+    </div>
+  {:else}
+    <div class='logInOut' role='button'>
+      <!-- Log in button -->
+      <Button type='blue' size='small' href='/login'>Logg inn<img src='/loginIcon.svg' alt='listIcon' height='30em' class='headerIcon white-color'></Button>
+    </div>
+  {/if}
 </header>
 
 <style>
@@ -62,7 +81,17 @@
     justify-content: space-between;
     background-color: white;
     align-items: center;
-    height: var(--header-height);
+    height: calc(var(--header-height) - 2px);
+    border-bottom: 2px solid white;
+  }
+
+  .navigation {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    width: 60%;
   }
 
   .logoHeader{
@@ -71,7 +100,7 @@
     padding-right: 1rem;
     padding-left: 1rem;
     font-size: 2rem;
-    font-family: "Inter", sans-serif;
+    font-family: 'Inter', sans-serif;
     font-weight: 540;
   }
 
@@ -80,19 +109,22 @@
     font-size:2rem;
   }
 
-  header > :nth-child(2), header > :nth-child(3), header > :nth-child(4), header > :nth-child(5), header > :nth-child(6)  {
+  .navButton {
     position: relative;
     height: 100%;
     width: 100%;
   }
 
-  header > :nth-child(8) {
+  .logInOut {
     padding: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: fit-content;
   }
 
-  .Menu {
+  .menu {
     display: none;
-    margin-right: 3rem;
     background-color: #ffffff;
     width: 150px;
     height: 60px;
@@ -100,16 +132,16 @@
     border-radius: 5px;
   }
 
-  .MenuIcon {
+  .menuIcon {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
   }
 
-  .MenuIcon,
-  .MenuIcon::before,
-  .MenuIcon::after {
+  .menuIcon,
+  .menuIcon::before,
+  .menuIcon::after {
       background-color: black;
       width: 40px;
       height: 5px;
@@ -118,29 +150,31 @@
       transition: all 0.2s;
   }
 
-  .MenuIcon::before,
-  .MenuIcon::after {
-    content: "";
+  .menuIcon::before,
+  .menuIcon::after {
+    content: '';
   }
 
-  .MenuIcon::before {
+  .menuIcon::before {
       transform: translate(-20px, -12px);
   }
 
-  .MenuIcon::after {
+  .menuIcon::after {
       transform: translate(-20px, 12px);
   }
 
-  @media screen and (max-width: 1350px) {
-    header > :nth-child(2),
-    header > :nth-child(3),
-    header > :nth-child(4),
-    header > :nth-child(5),
-    header > :nth-child(6) {
+  @media screen and (max-width: 900px) {
+    .navigation {
       display: none;
     }
-    header > :nth-child(7) {
+    .menu {
       display: block;
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    .logoHeader p {
+      display: none;
     }
   }
 
@@ -186,26 +220,21 @@
     transform: translateX(-20px) rotate(-45deg);
   }
 
-  .MenuIcon.active {
+  .menuIcon.active {
     transform: translateX(-20px);
     background-color: transparent;
   }
 
-  .MenuIcon.active::before {
+  .menuIcon.active::before {
     transform: translateX(-20px) rotate(45deg);
   }
 
-  .MenuIcon.active::after {
+  .menuIcon.active::after {
     transform: translateX(-20px) rotate(-45deg);
   }
 
-  /* .centerItem {
-    margin: 10px;
-    height: calc(100% - 20px);
-  } */
-
-  /* class = white */
-  /* .white {
-  filter: invert(100%);
-  } */
+  /* Transformes the icon color to white */
+  .white-color{
+    filter: invert(100%);
+  }
 </style>

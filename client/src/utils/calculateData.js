@@ -140,8 +140,7 @@ function dataForSpeciesObservations (observations, secSpentFishing) {
       amountPerMinute: (amountOfFish / (secSpentFishing / 60)).toFixed(2),
       averageLength: 0,
       medianLength: 0,
-      minimumLength: 0,
-      maximumLength: 0
+      minMaxLength: '0-0'
     }
   }
 
@@ -151,8 +150,7 @@ function dataForSpeciesObservations (observations, secSpentFishing) {
     amountPerMinute: (amountOfFish / (secSpentFishing / 60)).toFixed(2),
     averageLength: averageLengthObservation(observationsWithLength).toFixed(2),
     medianLength: medianLengthObservation(observationsWithLength).toFixed(2),
-    minimumLength: minimumLengthObservation(observationsWithLength),
-    maximumLength: maximumLengthObservation(observationsWithLength)
+    minMaxLength: `${minimumLengthObservation(observationsWithLength)} - ${maximumLengthObservation(observationsWithLength)}`
   }
 }
 

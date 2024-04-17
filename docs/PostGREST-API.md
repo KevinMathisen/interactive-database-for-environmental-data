@@ -160,6 +160,7 @@ CREATE VIEW station_summary AS
     (stasjonsdata.klokkeslett_start) :: time AS time,
     stasjonsdata.elvedata AS river_id, 
     stasjonsdata.stasjonsbeskrivelse AS description, 
+    stasjonsdata.kommentar AS comment,
     stasjonsdata.dominerende_elvetype AS river_type, 
     stasjonsdata.vaer AS weather, 
     stasjonsdata.vanntemp AS water_temp, 
