@@ -70,7 +70,7 @@
     <div role='button'>
       <Button type='orange' size='medium' href={downloadRef}>
         Last ned
-        <img src='/dowloadIcon.svg' alt='Download' height='50px' class='white-color'>
+        <img src='/downloadIcon.svg' alt='Download' height='50px' class='white-color'>
       </Button>
     </div>
   </div>

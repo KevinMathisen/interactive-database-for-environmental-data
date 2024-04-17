@@ -333,7 +333,7 @@
 
   <div class='downloadButton' role='button'>
     <!-- Button for downloading the file -->
-    <Button type='orange' size='medium' on:buttonClick={downloadFile}>Last ned <img src='/dowloadIcon.svg' alt='Download' height='38px' class='downloadIcon white-color'></Button>
+    <Button type='orange' size='medium' on:buttonClick={downloadFile}>Last ned <img src='/downloadIcon.svg' alt='Download' height='38px' class='downloadIcon white-color'></Button>
   </div>
 
 </div>

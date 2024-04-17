@@ -39,7 +39,7 @@
       <Button type='header' href='/upload' size='extended'>Last opp<img src='/uploadIcon.svg' alt='Upload' height='40em' class='headerIcon'></Button>
     </div>
     <div class='navButton' role='button' class:active={$page.url.pathname === '/download'}>
-      <Button type='header' href='/download' size='extended'>Last ned<img src='/dowloadIcon.svg' alt='Download' height='40em' class='headerIcon'></Button>
+      <Button type='header' href='/download' size='extended'>Last ned<img src='/downloadIcon.svg' alt='Download' height='40em' class='headerIcon'></Button>
     </div>
   </nav>
   <!-- Dropdown menu  for navigation -->
