@@ -25,7 +25,7 @@
     <p>Nina</p>
   </div>
   <!-- Navigation -->
-  <div class='navigation' role='banner'>
+  <nav class='navigation' role='banner'>
     <div class='navButton' role='button' class:active={$page.url.pathname === '/'}>
       <Button type='header' href='/' size='extended'>Kart<img src='/mapIcon.svg' alt='Map' height='40em' class='headerIcon'></Button>
     </div>
@@ -41,7 +41,7 @@
     <div class='navButton' role='button' class:active={$page.url.pathname === '/download'}>
       <Button type='header' href='/download' size='extended'>Last ned<img src='/dowloadIcon.svg' alt='Download' height='40em' class='headerIcon'></Button>
     </div>
-  </div>
+  </nav>
   <!-- Dropdown menu  for navigation -->
   <button class='menu' on:click={toggleDropdown}>
     <div class='menuIcon' class:active={showDropdown}></div>
