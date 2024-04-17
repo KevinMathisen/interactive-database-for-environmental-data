@@ -68,14 +68,8 @@
 
   <!-- Buttons to show diagram and download data -->
   <div class='footer'>
-    <div role='button'>
-      <Button type='blue' size='medium' href={graphRef}>
-        Se graf
-        <img src='/graphIcon.svg' alt='Graph' height='40px' class='white-color'>
-      </Button>
-    </div>
-    <!-- Show in map button if the summary is wide -->
     {#if wide}
+      <!-- Show in map button if the summary is wide -->
       <div role='button'>
         <Button type='blue' size='medium' href={mapRef}>
           Se i kart
@@ -83,6 +77,13 @@
         </Button>
       </div>
     {/if}
+
+    <div role='button'>
+      <Button type='blue' size='medium' href={graphRef}>
+        Se graf
+        <img src='/graphIcon.svg' alt='Graph' height='40px' class='white-color'>
+      </Button>
+    </div>
 
     <div role='button'>
       <Button type='orange' size='medium' href={downloadRef}>
