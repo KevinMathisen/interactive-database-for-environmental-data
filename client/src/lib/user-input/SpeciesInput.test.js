@@ -15,7 +15,7 @@ describe('SpeciesInput', () => {
     await fireEvent.input(input, { target: { value: 'test species' } });
     await fireEvent.keyDown(input, { key: 'Enter', code: 'Enter' });
 
-    expect(getByText('test species')).toBeTruthy()
+    expect(getByText('Test species')).toBeTruthy()
 
     await fireEvent.input(input, { target: { value: 'invalid species' } });
     await fireEvent.keyDown(input, { key: 'Enter', code: 'Enter' });
