@@ -3,23 +3,6 @@ import { addFeedbackToStore } from './addFeedbackToStore.js'
 import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../constants/feedbackMessages'
 
 /**
- * Filters a map of objects based on if a value given exists as a substring for given attributes
- * @param {Map<number, object>} objects - The map of objects to filter
- * @param {string[]} attributes - The attributes to filter on
- * @param {string} value - The value which should exist in the attribute value
- * @returns {Map<number, object>} - A filtered map of objects
- */
-function filterDataBasedOnAttributeSubstring (objects, attributes, value) {
-  // Checks for each object if the value is a subtext of the attributes, ignoring case
-  return new Map([...objects].filter(([_, object]) =>
-    attributes.some(attribute =>
-      object[attribute] &&
-      object[attribute].toLowerCase().includes(value.toLowerCase())
-    )
-  ))
-}
-
-/**
  * Filters a map of objects based on if a value given exists as a substring for two given attributes
  * @param {Map<number, object>} objects - The map of objects to filter
  * @param {string[]} attributes - The two attributes to filter on
@@ -130,38 +113,6 @@ function filterObjectsBasedOnSpecies (objects, speciesToFilterOn) {
     object[attributesToFilterOn.SPECIES] &&
     object[attributesToFilterOn.SPECIES].some(objectSpecies => speciesToFilterOnSet.has(objectSpecies))
   ))
-}
-
-/**
- * Filters rivers based on a searchQuery
- * @param {Map<number, object>} rivers - The map of rivers to filter, keyed by a unique identifier
- * @param {string} searchQuery - The search query
- * @returns {Map<number, object>} - A filtered map of rivers
- */
-export function filterRiversBySearch (rivers, searchQuery) {
-  try {
-    // Filters rivers based on if the searchQuery is a substring of their name or projectId
-    return filterDataBasedOnAttributeSubstring(rivers, attributesToFilterOn.RIVER_SEARCH, searchQuery)
-  } catch (error) {
-    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
-    return new Map()
-  }
-}
-
-/**
- * Filters stations based on a searchQuery
- * @param {Map<number, object>} stations - The map of stations to filter, keyed by a unique identifier
- * @param {string} searchQuery - The search query
- * @returns {Map<number, object>} - A filtered map of stations
- */
-export function filterStationsBySearch (stations, searchQuery) {
-  try {
-    // Filters stations based on if the searchQuery is a substring of their name or projectId
-    return filterDataBasedOnAttributeSubstring(stations, attributesToFilterOn.STATION_SEARCH, searchQuery)
-  } catch (error) {
-    addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.GENERIC, FEEDBACK_MESSAGES.GENERIC)
-    return new Map()
-  }
 }
 
 /**
