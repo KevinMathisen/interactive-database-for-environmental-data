@@ -3,6 +3,7 @@
   import { onMount } from 'svelte'
 
   export let plotData = new Map()
+  export let absoluteValues = 'absolute'
   let Plotly
 
   // Initializes the Plotly library when the component is mounted.
@@ -37,7 +38,8 @@
       barmode: 'group',
       title: 'Stolpediagram for antall arter observert i elv/stasjon',
       font: { size: 15 },
-      barcornerradius: 10
+      barcornerradius: 10,
+      yaxis: { title: `Antall fisk${absoluteValues === 'absolute' ? '' : '/min'}` }
     }
 
     // Make graph responsive, remove some buttons from the modebar, add edit link
