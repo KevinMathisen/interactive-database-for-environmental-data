@@ -1,6 +1,6 @@
 import { cleanup, render } from '@testing-library/svelte'
 import { afterEach, describe, expect, it } from 'vitest'
-import Filter from './filter.svelte'
+import Filter from './Filter.svelte'
 
 /**
  * @vitest-environment jsdom

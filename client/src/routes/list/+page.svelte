@@ -1,5 +1,5 @@
-<script> // List page logic here
-  import Filter from '$lib/filter.svelte'
+<script>
+  import Filter from '$lib/Filter.svelte'
   import SortableTable from '$lib/SortableTable.svelte'
   import SearchBar from '$lib/user-input/SearchBar.svelte'
   import Sidebar from '$lib/Sidebar.svelte'

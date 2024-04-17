@@ -1,6 +1,6 @@
 <script>
   import LeafletMap from './LeafletMap.svelte'
-  import Filter from '$lib/filter.svelte'
+  import Filter from '$lib/Filter.svelte'
   import { getRivers, getStations, getRiverSummary, getStationSummary } from '../utils/dataManager.js'
   import { getSelectableSpecies, filterRiversByDateAndSpecies, filterStationsByDateAndSpecies } from '../utils/filterData.js'
   import { riverStore } from '../stores/riverStore.js'
