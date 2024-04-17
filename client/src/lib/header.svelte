@@ -2,6 +2,7 @@
   import { page } from '$app/stores'
   import Button from './user-input/Button.svelte'
   import { authStore } from '../stores/authStore.js'
+  import { authLogout } from '../api/auth.js'
 
   let showDropdown = false // Whether the dropdown menu is shown
   let authStatus // Authentication status
@@ -62,7 +63,7 @@
   {#if authStatus && authStatus.authenticated}
     <div class='logInOut' role='button'>
       <!-- Log out button -->
-      <Button type='blue' size='small'>Logg ut<img src='/userIcon.svg' alt='listIcon' height='50em' class='headerIcon'></Button>
+      <Button type='blue' size='small' on:buttonClick={authLogout}>Logg ut<img src='/userIcon.svg' alt='listIcon' height='50em' class='headerIcon'></Button>
     </div>
   {:else}
     <div class='logInOut' role='button'>
