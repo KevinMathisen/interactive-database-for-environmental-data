@@ -129,7 +129,7 @@
   }
 
   label:hover {
-    background-color: #435768;
+    background-color: var(--PCOLOR);
     color: white;
   }
 

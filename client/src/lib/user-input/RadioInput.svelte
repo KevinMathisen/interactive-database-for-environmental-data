@@ -22,7 +22,7 @@
 
   /* Show when a user hovers over the label */
   label:hover {
-    background-color: #435768;
+    background-color: var(--PCOLOR);
     color: white;
   }
 

@@ -349,7 +349,7 @@
   .downloadHeader {
     height: 100px;
     font-size:3rem;
-    background-color: #435768;
+    background-color: var(--PCOLOR);
     color: white;
     display: flex;
     justify-content: center;

@@ -238,7 +238,7 @@
   }
 
   .smallButton:hover {
-    background-color: #435768;
+    background-color: var(--PCOLOR);
     color: white;
   }
 
@@ -277,7 +277,7 @@
   }
 
   .suggestions button:hover {
-    background-color: #435768;
+    background-color: var(--PCOLOR);
     color: white;
   }
 </style>

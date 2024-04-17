@@ -23,9 +23,6 @@ body {
     /* ----------------- COLORS -----------------*/
     --PCOLOR: #435768;                  /* Primary color */
     --SCOLOR: #FF5B37;                  /* Secondary color */
-    --BCOLOR: #000000;                  /* Black color */
-    --WCOLOR: #FFFFFF;                  /* White color */
-    --FCOLOR: #F5F5F5;                  /* Font color */
 
     /* ----------------- SIZES -----------------*/
     --header-height: 82px;              /* Height of the header */

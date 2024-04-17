@@ -84,7 +84,7 @@
     align-items: center;
     width: 100%;
     height: 60px;
-    background-color: #435768;
+    background-color: var(--PCOLOR);
     color: white;
     position: relative;
     margin-top: 0px;
