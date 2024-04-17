@@ -6,7 +6,13 @@
   import RiverSummary from '$lib/RiverSummary.svelte'
   import StationSummary from '$lib/StationSummary.svelte'
   import { getRivers, getStations, getRiverSummary, getStationSummary } from '../../utils/dataManager.js'
-  import { getSelectableSpecies, filterRiversByDateAndSpecies, filterStationsByDateAndSpecies, filterRiversBySearch, filterStationsBySearch } from '../../utils/filterData.js'
+  import { 
+    getSelectableSpecies, 
+    filterRiversByDateAndSpecies, 
+    filterStationsByDateAndSpecies, 
+    filterRiversByNameAndDateCombined, 
+    filterStationsByNameAndDateCombined 
+  } from '../../utils/filterData.js'
   import { formatRiversForTable, formatStationsForTable } from '../../utils/formatData.js'
   import { riverStore } from '../../stores/riverStore.js'
   import { stationStore } from '../../stores/stationStore.js'
@@ -55,8 +61,8 @@
   $: filteredStations = filterStationsByDateAndSpecies(stations, selectedSpecies, selectedStartDate, selectedEndDate)
 
   // Filter rivers and stations to display based on search query
-  $: filteredBySearchRivers = filterRiversBySearch(filteredRivers, searchQuery)
-  $: filteredBySearchStations = filterStationsBySearch(filteredStations, searchQuery)
+  $: filteredBySearchRivers = filterRiversByNameAndDateCombined(filteredRivers, searchQuery)
+  $: filteredBySearchStations = filterStationsByNameAndDateCombined(filteredStations, searchQuery)
 
   // Remove selected river or station when the user switches between data types
   $: if (dataType === DATATYPE_STATION) {
