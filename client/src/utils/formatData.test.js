@@ -88,14 +88,14 @@ describe('test formatStationsForSummaryTable function', () => {
         name: 'Name 1',
         riverType: 'Type1',
         weather: 'Weather1',
-        secFished: 1
+        secFished: 60
       })],
       [1, new Station({
         id: '2',
         name: 'Name 2',
         riverType: 'Type2',
         weather: 'Weather2',
-        secFished: 2
+        secFished: 120
       })]
     ])
     calculateData.amountOfFishInStation.mockReturnValue(1)
@@ -104,8 +104,8 @@ describe('test formatStationsForSummaryTable function', () => {
     const formatted = formatStationsForSummaryTable(stations)
     expect(formatted.headers).toEqual(headersConstants.STATION_SUMMARY_HEADERS_TABLE)
     expect(formatted.rows).toEqual([
-      ['1', '1', 'Type1', 'Weather1', 1, 1, 2],
-      ['2', '2', 'Type2', 'Weather2', 2, 1, 2]
+      ['1', '1', 'Type1', 'Weather1', '1.0', 1, 2],
+      ['2', '2', 'Type2', 'Weather2', '2.0', 1, 2]
     ])
   })
 })
