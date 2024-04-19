@@ -39,7 +39,6 @@ http {
 
 	server {
 		listen 80;
-		server_name ${SERVER_NAME}; # Set server name to environment variable
 
 		# root directory
 		root /usr/share/nginx/html;
