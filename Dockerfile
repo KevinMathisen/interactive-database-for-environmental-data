@@ -5,9 +5,10 @@ WORKDIR /app
 COPY client/package*.json ./
 RUN npm install
 COPY client/. .
-# Inject environment variable into .env
-ARG VITE_POSTGREST_URL
-RUN if [ -n "$VITE_POSTGREST_URL" ]; then echo "VITE_POSTGREST_URL=${VITE_POSTGREST_URL}" > ./.env; fi
+# Use default environment variables
+ARG VITE_POSTGREST_URL="/postgrest"
+ARG VITE_AUTH_URL="/api"
+ARG VITE_UPLOAD_URL="/api"
 # Build the app
 RUN npm run build
 
