@@ -3,7 +3,7 @@ FROM node:20 as build-stage
 WORKDIR /app
 # Copy and install files into the container
 COPY client/package*.json ./
-RUN npm install
+RUN npm install --production
 COPY client/. .
 # Use default environment variables
 ARG VITE_POSTGREST_URL="/postgrest"
