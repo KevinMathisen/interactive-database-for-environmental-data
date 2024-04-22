@@ -10,6 +10,6 @@
 		"skipper": "Jon Museth", 
 		"crew": ["Tobias Holter", "Erik Lie"],
 		"comment": "Testdatasett",
-		"stations": [11]
+		"stations": [11, 12]
 	}
 ]
