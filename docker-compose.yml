@@ -1,10 +1,18 @@
 version: '3.8'
 services:
-  nginx:
+  frontend:
     build:
       context: .
       dockerfile: Dockerfile
-      args:
-        - VITE_POSTGREST_URL=${VITE_POSTGREST_URL}
-        - SERVER_NAME=${SERVER_NAME}
-    network_mode: "host"
+
+  mock-server:
+    build:
+      context: ./mock-server
+      dockerfile: Dockerfile
+
+  proxy:
+    build:
+      context: ./proxy
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
