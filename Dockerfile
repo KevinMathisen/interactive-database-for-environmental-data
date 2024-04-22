@@ -15,10 +15,8 @@ RUN npm run build
 FROM nginx:stable-alpine as production-stage
 # Copy the build files to the nginx server
 COPY --from=build-stage /app/build /usr/share/nginx/html
-# Inject environment variable into nginx.conf
-ARG SERVER_NAME=localhost
-COPY server/nginx.conf.template /etc/nginx/nginx.conf.template
-RUN envsubst '${SERVER_NAME}' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf
+# Copy nginx.conf
+COPY server/nginx.conf /etc/nginx/nginx.conf
 # Copy error pages
 COPY server/404.html /usr/share/nginx/html
 COPY server/500.html /usr/share/nginx/html
