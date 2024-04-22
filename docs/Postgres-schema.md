@@ -1,5 +1,5 @@
 # Database Schema
-This is the assumed database schema the [postgrest api documentation](Postgrest-api.md) assumes. The schema does not have to be identical as long as the sql views defiend in the postgrest api documentation is compatible. 
+This is the database schema the [postgrest api documentation](Postgrest-api.md) assumes. The schema does not have to be identical as long as the sql views defined in the postgrest api documentation is compatible. 
 
 ## Table: elvedata
 
