@@ -47,7 +47,7 @@ export const FEEDBACK_MESSAGES = {
   AUTH_REJECTED: 'Brukernavn eller passord er feil, prøv igjen',
   AUTH_SUCCESS: 'Innlogging vellykket',
   LOGOUT_SUCCESS: 'Utlogging vellykket',
-  REFRESH_SUCCESS: 'Du ble logget inn på nytt, last inn siden på nytt for å fortsette',
+  REFRESH_SUCCESS: 'Du ble automatisk logget inn, last inn siden på nytt hvis data ikke vises',
 
   INVALID_TEXT: 'Teksten du skrev inneholder ugyldige tegn',
   INVALID_PASSWORD: 'Passordet du skrev inneholder ugyldige tegn',
