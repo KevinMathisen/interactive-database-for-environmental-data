@@ -1,0 +1,32 @@
+[
+	{
+		"id": 11,
+		"name": "Gaula 1",
+		"start_pos": {
+			"type": "Point",
+			"coordinates": [10.25962, 63.25848]
+		},
+		"end_pos": {
+			"type": "Point",
+			"coordinates": [10.26344, 63.25887]
+		},
+		"date": "2021-09-30",
+		"time": "08:00:00",
+		"species": ["Aure", "Laks", "3-pigga stingsild", "Skrubbe"]
+	},
+	{
+		"id": 12,
+		"name": "Gaula 2",
+		"start_pos": {
+			"type": "Point",
+			"coordinates": [10.25584, 63.25626]
+		},
+		"end_pos": {
+			"type": "Point",
+			"coordinates": [10.26170, 63.25789]
+		},
+		"date": "2021-09-30",
+		"time": "09:00:00",
+		"species": ["Aure", "Laks"]
+	}
+]

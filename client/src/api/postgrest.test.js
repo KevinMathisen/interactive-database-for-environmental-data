@@ -32,7 +32,7 @@ describe('test fetchRivers function', {}, () => {
     await fetchRivers()
 
     // Assert
-    expect(global.fetch).toHaveBeenCalledWith(expectedUrl, { method: 'GET' })
+    expect(global.fetch).toHaveBeenCalledWith(expectedUrl, { method: 'GET', credentials: 'same-origin' })
   })
 
   it('fetchRivers should return the correct response as JSON', async () => {
@@ -104,7 +104,7 @@ describe('test fetchStations function', {}, () => {
     await fetchStations()
 
     // Assert
-    expect(global.fetch).toHaveBeenCalledWith(expectedUrl, { method: 'GET' })
+    expect(global.fetch).toHaveBeenCalledWith(expectedUrl, { method: 'GET', credentials: 'same-origin' })
   })
 
   it('fetchStations should return the correct response as JSON', async () => {
@@ -176,7 +176,7 @@ describe('test fetchRiverSummary function', {}, () => {
     await fetchRiverSummary(id)
 
     // Assert
-    expect(global.fetch).toHaveBeenCalledWith(expectedUrl, { method: 'GET' })
+    expect(global.fetch).toHaveBeenCalledWith(expectedUrl, { method: 'GET', credentials: 'same-origin' })
   })
 
   it('fetchRiverSummary should return the correct response as JSON', async () => {
@@ -248,7 +248,7 @@ describe('test fetchStationSummary function', {}, () => {
     await fetchStationSummary(id)
 
     // Assert
-    expect(global.fetch).toHaveBeenCalledWith(expectedUrl, { method: 'GET' })
+    expect(global.fetch).toHaveBeenCalledWith(expectedUrl, { method: 'GET', credentials: 'same-origin' })
   })
 
   it('fetchStationSummary should call fetch with the correct URL when multiple ids', async () => {
@@ -266,7 +266,7 @@ describe('test fetchStationSummary function', {}, () => {
     await fetchStationSummary(id)
 
     // Assert
-    expect(global.fetch).toHaveBeenCalledWith(expectedUrl, { method: 'GET' })
+    expect(global.fetch).toHaveBeenCalledWith(expectedUrl, { method: 'GET', credentials: 'same-origin' })
   })
 
   it('fetchStationSummary should return the correct response as JSON', async () => {
@@ -338,7 +338,7 @@ describe('test fetchStationDownload function', {}, () => {
     await fetchStationDownload(id)
 
     // Assert
-    expect(global.fetch).toHaveBeenCalledWith(expectedUrl, { method: 'GET' })
+    expect(global.fetch).toHaveBeenCalledWith(expectedUrl, { method: 'GET', credentials: 'same-origin' })
   })
 
   it('fetchStationDownload should call fetch with the correct URL when multiple ids', async () => {
@@ -356,7 +356,7 @@ describe('test fetchStationDownload function', {}, () => {
     await fetchStationDownload(id)
 
     // Assert
-    expect(global.fetch).toHaveBeenCalledWith(expectedUrl, { method: 'GET' })
+    expect(global.fetch).toHaveBeenCalledWith(expectedUrl, { method: 'GET', credentials: 'same-origin' })
   })
 
   it('fetchStationDownload should return the correct response as JSON', async () => {

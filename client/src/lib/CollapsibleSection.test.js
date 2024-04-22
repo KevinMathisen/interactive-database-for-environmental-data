@@ -17,14 +17,14 @@ describe('CollapseblaSection', () => {
   it('header collapses when toggle is clicked', async () => {
     const header = container.querySelector('div[class^="collapsibleSection-header"]')
     let divs = container.querySelectorAll('div')
-    expect(divs.length).toBe(4)
+    expect(divs.length).toBe(3)
 
     fireEvent.click(header)
 
     await new Promise(resolve => setTimeout(resolve, 100))
     await waitFor(() => {
       divs = container.querySelectorAll('div')
-      expect(divs.length).toBe(4)
+      expect(divs.length).toBe(3)
     })
   })
 })

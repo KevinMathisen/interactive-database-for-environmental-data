@@ -1,7 +1,12 @@
 {
 	"name": "environment-data-visualizer",
-	"version": "0.9.0",
+	"version": "1.0.0",
 	"private": true,
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/KevinMathisen/interactive-database-for-environmental-data.git"
+	},
 	"directories": {
 		"test": "test"
 	},
@@ -19,7 +24,7 @@
 		"@playwright/test": "^1.43.0",
 		"@sveltejs/adapter-auto": "^3.0.0",
 		"@sveltejs/adapter-static": "^3.0.1",
-		"@sveltejs/kit": "^2.0.0",
+		"@sveltejs/kit": "^2.5.7",
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
 		"@testing-library/svelte": "^4.1.0",
 		"@testing-library/user-event": "^14.5.2",
@@ -36,9 +41,9 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"exceljs": "^4.4.0",
-		"leaflet": "^1.9.4",
-		"plotly.js-dist-min": "^2.30.1",
-		"validator": "^13.11.0"
+		"exceljs": "4.4.0",
+		"leaflet": "1.9.4",
+		"plotly.js-dist-min": "2.30.1",
+		"validator": "13.11.0"
 	}
 }

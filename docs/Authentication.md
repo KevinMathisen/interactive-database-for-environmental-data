@@ -51,7 +51,7 @@ Should be called when a user clicks on log out.
 
 ### Request
 ```http
-/api/auth/logout/ HTTP/1.1
+POST /api/auth/logout/ HTTP/1.1
 Host: localhost
 ```
 ### Response

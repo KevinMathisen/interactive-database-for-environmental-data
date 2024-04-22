@@ -5,20 +5,21 @@ WORKDIR /app
 COPY client/package*.json ./
 RUN npm install
 COPY client/. .
-# Inject environment variable into .env
-ARG VITE_POSTGREST_URL
-RUN if [ -n "$VITE_POSTGREST_URL" ]; then echo "VITE_POSTGREST_URL=${VITE_POSTGREST_URL}" > ./.env; fi
+# Use default environment variables
+ARG VITE_POSTGREST_URL="/postgrest"
+ARG VITE_AUTH_URL="/api"
+ARG VITE_UPLOAD_URL="/api"
 # Build the app
 RUN npm run build
+# Prune dev dependencies
+RUN npm prune --production
 
 # Production stage
 FROM nginx:stable-alpine as production-stage
 # Copy the build files to the nginx server
 COPY --from=build-stage /app/build /usr/share/nginx/html
-# Inject environment variable into nginx.conf
-ARG SERVER_NAME=localhost
-COPY server/nginx.conf.template /etc/nginx/nginx.conf.template
-RUN envsubst '${SERVER_NAME}' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf
+# Copy nginx.conf
+COPY server/nginx.conf /etc/nginx/nginx.conf
 # Copy error pages
 COPY server/404.html /usr/share/nginx/html
 COPY server/500.html /usr/share/nginx/html

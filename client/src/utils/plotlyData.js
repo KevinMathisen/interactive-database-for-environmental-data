@@ -86,11 +86,9 @@ function createDataForBarAndPieChart (
 
     // If the data should be relative to time spent fishing
     if (!absoluteValues) {
-      // Get the time spent fishing for all observationPoints
       const secSpentFishing = Array.from(observationPoints.values()).reduce(
         (acc, observationPoint) => acc + getTimespentFishing(observationPoint), 0)
 
-      // Convert the absolute values to relative values
       convertAbsoluteToRelativeValues(speciesCount, secSpentFishing)
     }
 
@@ -102,18 +100,14 @@ function createDataForBarAndPieChart (
 
   // For each observationPoint, get the data for it and save it
   Array.from(observationPoints.values()).forEach(observationPoint => {
-    // Get the observations from the observationPoint
     const observations = getObservations(observationPoint)
 
-    // Get the species count for the observations
     const speciesCount = getObservationSpeciesCount(observations, allSpecies, includeOthers)
 
     // If the data should be relative to time spent fishing
     if (!absoluteValues) {
-      // Get the time spent fishing for the observationPoint
       const secSpentFishing = getTimespentFishing(observationPoint)
 
-      // Convert the absolute values to relative values
       convertAbsoluteToRelativeValues(speciesCount, secSpentFishing)
     }
 
@@ -162,7 +156,6 @@ function getObservationSpeciesCount (observations, allSpecies, includeOthers) {
     speciesCount.set('others', count)
   }
 
-  // Return the map with the species and their count
   return speciesCount
 }
 
@@ -271,7 +264,6 @@ function createDataForHistogramAndBoxplot (
 
   // For each observationPoint, create and save data for that point to plot
   Array.from(observationPoints.values()).forEach(observationPoint => {
-    // Get the observations from the observationPoint
     const observations = getObservations(observationPoint)
 
     // Filter out observations which have no length
