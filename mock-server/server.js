@@ -3,7 +3,7 @@ const app = express();
 const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
-const port = 3000; 
+const port = 8000; 
 
 // Middleware to enable CORS (Cross-Origin Resource Sharing) for development purposes
 // Without this the CORS policy: No 'Access-Control-Allow-Origin' header will block requests from the client
