@@ -15,8 +15,8 @@ app.use(express.json());
 // Handle favicon requests
 app.get('/favicon.ico', (req, res) => res.status(204).end());
 
-// Handle requests for json data
-app.get('/:endpoint', (req, res) => {
+// Handle requests for postgrest endpoint
+app.get('/postgrest/:endpoint', (req, res) => {
 
 	// log the request
 	console.log(`GET request for ${req.params.endpoint}`);
@@ -36,6 +36,46 @@ app.get('/:endpoint', (req, res) => {
 	});
 });
 
+// Handle requests for log in endpoint
+app.post('/auth/login/', (req, res) => {
+
+	// log the request
+	const { username, password } = req.body;
+	console.log(`POST request for /auth with username: ${username}, password: ${password}`);
+	
+	if (username === 'admin' && password === 'admin') {
+		// Set the Content-Type header
+    res.setHeader('Content-Type', 'application/json');
+    // Set the cookie
+    res.cookie('test', 'token_value', { httpOnly: true, sameSite: 'Strict' });
+		// Send JSON response
+		res.json({ user: { username: "admin" } });
+	} else {
+		res.sendStatus(401);
+	}
+});
+
+// Handle requests for log out endpoint
+app.post('/auth/logout/', (req, res) => {
+
+	// log the request
+	console.log(`POST request for /auth/logout`);
+
+	// Send JSON response
+	res.json({ detail: 'success' });
+});
+
+// Handle requests for refresh token endpoint
+app.post('/auth/token/refresh/', (req, res) => {
+
+	// log the request
+	console.log(`POST request for /auth/refresh`);
+
+	// Send JSON response
+	res.json({ detail: 'success' });
+});
+
+
 app.listen(port, () => {
-  console.log(`Postgrest mock server listening at http://localhost:${port}`);
+  console.log(`Mock server listening at http://localhost:${port}`);
 });
