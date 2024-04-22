@@ -37,7 +37,7 @@ app.get('/postgrest/:endpoint', (req, res) => {
 });
 
 // Handle requests for log in endpoint
-app.post('/auth/login/', (req, res) => {
+app.post('/api/auth/login/', (req, res) => {
 
 	// log the request
 	const { username, password } = req.body;
@@ -56,7 +56,7 @@ app.post('/auth/login/', (req, res) => {
 });
 
 // Handle requests for log out endpoint
-app.post('/auth/logout/', (req, res) => {
+app.post('/api/auth/logout/', (req, res) => {
 
 	// log the request
 	console.log(`POST request for /auth/logout`);
@@ -66,7 +66,7 @@ app.post('/auth/logout/', (req, res) => {
 });
 
 // Handle requests for refresh token endpoint
-app.post('/auth/token/refresh/', (req, res) => {
+app.post('/api/auth/token/refresh/', (req, res) => {
 
 	// log the request
 	console.log(`POST request for /auth/refresh`);
@@ -76,7 +76,7 @@ app.post('/auth/token/refresh/', (req, res) => {
 });
 
 // Handle requests for upload endpoint
-app.post('/upload/', (req, res) => {
+app.post('/api/upload/', (req, res) => {
 
 	// log the request
 	console.log(`POST request for /upload`);
