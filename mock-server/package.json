@@ -4,14 +4,13 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
   "author": "KevinNM",
   "license": "MIT",
   "dependencies": {
-    "cookie-parser": "^1.4.6",
-    "cors": "^2.8.5",
-    "express": "^4.19.2"
+    "cookie-parser": "1.4.6",
+    "cors": "2.8.5",
+    "express": "4.19.2"
   }
 }
