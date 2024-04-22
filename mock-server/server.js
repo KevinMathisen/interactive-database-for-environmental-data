@@ -75,6 +75,16 @@ app.post('/auth/token/refresh/', (req, res) => {
 	res.json({ detail: 'success' });
 });
 
+// Handle requests for upload endpoint
+app.post('/upload/', (req, res) => {
+
+	// log the request
+	console.log(`POST request for /upload`);
+
+	// Send JSON response
+	res.json({ success: true });
+});
+
 
 app.listen(port, () => {
   console.log(`Mock server listening at http://localhost:${port}`);
