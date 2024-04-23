@@ -70,7 +70,7 @@
       </Button>
     </div>
 
-    {#if selectedRivers.size !== 0 || selectedStations.size !== 0} 
+    {#if (selectedRivers.size !== 0 && dataType === DATATYPE_RIVER) || (selectedStations.size !== 0 && dataType === DATATYPE_STATION)} 
       <!-- Button for downloading selected rivers or stations -->
       <div role='button'>
         <Button type='orange' size='small' href={downloadRef}>
@@ -98,7 +98,7 @@
       </ul>
     {/if}
 
-    {#if selectedRivers.size !== 0 || selectedStations.size !== 0 }      
+    {#if (selectedRivers.size !== 0 && dataType === DATATYPE_RIVER) || (selectedStations.size !== 0 && dataType === DATATYPE_STATION) }      
       <!-- Input for aggregating choosen rivers/stations -->
       <label for='aggregateData'>
         Aggreger data
