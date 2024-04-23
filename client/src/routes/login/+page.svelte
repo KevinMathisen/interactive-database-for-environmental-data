@@ -2,6 +2,8 @@
   import UserFeedbackMessage from '$lib/UserFeedbackMessage.svelte'
   import Button from '$lib/user-input/Button.svelte'
   import { authLogin } from '../../api/auth.js'
+  import { FEEDBACK_CODES, FEEDBACK_MESSAGES, FEEDBACK_TYPES } from '../../constants/feedbackMessages.js'
+  import { addFeedbackToStore } from '../../utils/addFeedbackToStore.js'
   import { validateText, validatePassword } from '../../utils/validation.js'
 
   let username = '' // Username input
@@ -27,6 +29,16 @@
       }
     })
   }
+
+  /**
+   * Handles the keydown event of Enter key
+   * @param {KeyboardEvent} event - The keydown event
+   */
+  function handleKeyDown (event) {
+    if (event.key === 'Enter') {
+      submitForm()
+    }
+  }
 </script>
 
 <UserFeedbackMessage />
@@ -42,13 +54,13 @@
       <div class='inputContainer'>
         <!-- Username input -->
         <label for='username'>Brukernavn</label>
-        <input type='text' bind:value={username} name='username' id='username' placeholder='Skriv inn brukernavn' required/>
+        <input type='text' bind:value={username} name='username' id='username' placeholder='Skriv inn brukernavn' required on:keydown={handleKeyDown}/>
       </div>
 
       <div class='inputContainer'>
         <!-- Password input -->
         <label for='password'>Passord</label>
-        <input type='password' bind:value={password} name='password' id='password' placeholder='Skriv inn passord' required/>
+        <input type='password' bind:value={password} name='password' id='password' placeholder='Skriv inn passord' required on:keydown={handleKeyDown}/>
       </div>
     </div>
 
