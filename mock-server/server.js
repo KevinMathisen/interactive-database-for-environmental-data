@@ -35,7 +35,16 @@ app.get('/postgrest/:endpoint', (req, res) => {
 
 	// Extract the json file name from the request
 	const { endpoint } = req.params;
-	const filePath = path.join(__dirname, 'data', `${endpoint}.json`);
+	let fileEnding = '';
+
+	// if request specifies a specific id, use correct json files
+  if (req.query.id === 'eq.11') {
+    fileEnding = '_11';
+  } else if (req.query.id === 'eq.12') {
+		fileEnding = '_12';
+	}
+
+	const filePath = path.join(__dirname, 'data', `${endpoint}${fileEnding}.json`);
 
 	// Read the json file specified in the request, send it as a response if it exists
 	fs.readFile(filePath, (err, data) => {
