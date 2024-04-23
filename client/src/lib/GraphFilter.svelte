@@ -40,6 +40,7 @@
 
   /**
    * Creates a download link based on the selected rivers or stations
+   * @returns {string} Link to download page with selected rivers or stations
    */
   function createDownloadLink () {
     let url = '/download?'
@@ -70,7 +71,7 @@
       </Button>
     </div>
 
-    {#if (selectedRivers.size !== 0 && dataType === DATATYPE_RIVER) || (selectedStations.size !== 0 && dataType === DATATYPE_STATION)} 
+    {#if (selectedRivers.size !== 0 && dataType === DATATYPE_RIVER) || (selectedStations.size !== 0 && dataType === DATATYPE_STATION)}
       <!-- Button for downloading selected rivers or stations -->
       <div role='button'>
         <Button type='orange' size='small' href={downloadRef}>
@@ -98,7 +99,7 @@
       </ul>
     {/if}
 
-    {#if (selectedRivers.size !== 0 && dataType === DATATYPE_RIVER) || (selectedStations.size !== 0 && dataType === DATATYPE_STATION) }      
+    {#if (selectedRivers.size !== 0 && dataType === DATATYPE_RIVER) || (selectedStations.size !== 0 && dataType === DATATYPE_STATION) }
       <!-- Input for aggregating choosen rivers/stations -->
       <label for='aggregateData'>
         Aggreger data
