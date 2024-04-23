@@ -14,7 +14,10 @@
    */
   function submitForm () {
     // Should validate input before sending
-    if (!username || !validateText(username)) {
+    if (!username || !password) {
+      addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.FORBIDDEN, FEEDBACK_MESSAGES.LOGIN_FIELD_EMPTY)
+      return
+    } else if (!username || !validateText(username)) {
       return
     } else if (!password || !validatePassword(password)) {
       return
