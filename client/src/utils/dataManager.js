@@ -130,7 +130,7 @@ export async function getRivers () {
     const fetchedRivers = await fetchRivers()
 
     // Validate the fetched rivers
-    if (!validateRiverWithSpecies(fetchedRivers)) {
+    if (!fetchedRivers || !validateRiverWithSpecies(fetchedRivers)) {
       return
     }
 
@@ -157,7 +157,7 @@ export async function getStations () {
     const fetchedStations = await fetchStations()
 
     // Validate the fetched stations
-    if (!validateStationWithSpecies(fetchedStations)) {
+    if (!fetchedStations || !validateStationWithSpecies(fetchedStations)) {
       return
     }
 
@@ -185,7 +185,7 @@ export async function getRiverSummary (id) {
     const fetchedRiversSummary = await fetchRiverSummary(id)
 
     // Validate the fetched river summary
-    if (!validateRiverSummary(fetchedRiversSummary)) {
+    if (!fetchedRiversSummary || !validateRiverSummary(fetchedRiversSummary)) {
       return
     }
 
@@ -196,7 +196,7 @@ export async function getRiverSummary (id) {
     const fetchedStations = await fetchStationSummary(fetchedRiversSummary[0].stations)
 
     // Validate the fetched stations
-    if (!validateStationSummary(fetchedStations)) {
+    if (!fetchedStations || !validateStationSummary(fetchedStations)) {
       return
     }
 
@@ -223,7 +223,7 @@ export async function getStationSummary (id) {
     const fetchedStationsSummary = await fetchStationSummary([id])
 
     // Validate the fetched station summary
-    if (!validateStationSummary(fetchedStationsSummary)) {
+    if (!fetchedStationsSummary || !validateStationSummary(fetchedStationsSummary)) {
       return
     }
 
@@ -259,7 +259,7 @@ export async function getRiverForDownload (id) {
     const fetchedStations = await fetchStationDownload(stationsNotFetchedForDownload)
 
     // Validate the fetched stations
-    if (!validateStationDownload(fetchedStations)) {
+    if (!fetchedStations || !validateStationDownload(fetchedStations)) {
       return
     }
 
@@ -295,7 +295,7 @@ export async function getStationForDownload (id) {
     const fetchedStations = await fetchStationDownload([id])
 
     // Validate the fetched station
-    if (!validateStationDownload(fetchedStations)) {
+    if (!fetchedStations || !validateStationDownload(fetchedStations)) {
       return
     }
 
