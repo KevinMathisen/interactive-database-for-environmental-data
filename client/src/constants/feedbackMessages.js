@@ -49,6 +49,8 @@ export const FEEDBACK_MESSAGES = {
   LOGOUT_SUCCESS: 'Utlogging vellykket',
   REFRESH_SUCCESS: 'Du ble automatisk logget inn, last inn siden på nytt hvis data ikke vises',
 
+  LOGIN_FIELD_EMPTY: 'Fyll inn brukernavn og passord',
+
   INVALID_TEXT: 'Teksten du skrev inneholder ugyldige tegn',
   INVALID_PASSWORD: 'Passordet du skrev inneholder ugyldige tegn',
   INVALID_NUMBER: 'Tallet du skrev inn er ugyldig'
