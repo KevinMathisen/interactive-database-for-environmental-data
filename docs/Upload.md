@@ -71,7 +71,6 @@ The website has to make the following request to upload a file:
 
 ```http
 POST /api/upload/ HTTP/1.1
-Host: localhost
 Content-Type: multipart/form-data
 
 file 

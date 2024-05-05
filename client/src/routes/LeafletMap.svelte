@@ -76,7 +76,7 @@
         // Add river and station layer groups to the map
         riverLayerGroup.addTo(map)
         stationLayerGroup.addTo(map)
-      }, 250)
+      }, 400)
     })
 
     // called when this component is unmounted
