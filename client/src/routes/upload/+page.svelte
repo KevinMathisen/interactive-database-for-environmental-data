@@ -10,7 +10,7 @@
   import { parseAndValidateExcel } from '../../utils/validation.js'
   import { uploadFileToServer } from '../../api/upload.js'
 
-  let uploadedFile = null
+  let selectedFile = null
   let hover = false
 
   /**
@@ -23,10 +23,7 @@
     fileInput.accept = '.xlsx'
     fileInput.click()
     fileInput.addEventListener('change', (e) => {
-      const file = e.target.files[0]
-
-      // Select the file
-      uploadedFile = file
+      selectedFile = e.target.files[0]
     })
   }
 
@@ -35,15 +32,15 @@
    */
   async function uploadFile () {
     // validate XLSX file
-    if (!(await parseAndValidateExcel(uploadedFile))) {
+    if (!(await parseAndValidateExcel(selectedFile))) {
       return
     }
 
     // Upload file to server
-    await uploadFileToServer(uploadedFile).then((success) => {
+    await uploadFileToServer(selectedFile).then((success) => {
       // Reset the uploaded file if the upload was successful
       if (success) {
-        uploadedFile = null
+        selectedFile = null
       }
     })
   }
@@ -66,7 +63,7 @@
     }
 
     // Select the file
-    uploadedFile = files[0]
+    selectedFile = files[0]
     hover = false
   }
 </script>
@@ -107,9 +104,9 @@
   <!-- Defines the overview over files selected -->
   <div class='uploadFileUploaded'>
     <p id='fileChosenText'>Valgt fil:</p>
-    {#if uploadedFile}
-      <p>{uploadedFile.name}
-        <button on:click={() => { uploadedFile = null }} class='smallButton'>x</button>
+    {#if selectedFile}
+      <p>{selectedFile.name}
+        <button on:click={() => { selectedFile = null }} class='smallButton'>x</button>
       </p>
 
     {:else}
