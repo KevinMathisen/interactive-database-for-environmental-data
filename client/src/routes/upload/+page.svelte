@@ -50,15 +50,19 @@
    * @param {Event} e - The event object
    */
   function handleDrop (e) {
-    console.log('Dropped')
+
     // Get the files and check if there is more than one file
     const files = e.dataTransfer.files
     if (files.length > 1) {
-      addFeedbackToStore(
-        FEEDBACK_TYPES.ERROR,
-        FEEDBACK_CODES.FORBIDDEN,
-        FEEDBACK_MESSAGES.MULTIPLE_FILES
-      )
+      addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.FORBIDDEN, FEEDBACK_MESSAGES.MULTIPLE_FILES)
+      hover = false
+      return
+    }
+
+    // Check if the file is an XLSX file
+    if (!files[0].name.endsWith('.xlsx')) {
+      addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.FORBIDDEN, FEEDBACK_MESSAGES.UNSUPPORTED_CONTENT_TYPE)
+      hover = false
       return
     }
 
