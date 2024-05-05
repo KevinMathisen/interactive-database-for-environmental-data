@@ -50,7 +50,6 @@
    * @param {Event} e - The event object
    */
   function handleDrop (e) {
-
     // Get the files and check if there is more than one file
     const files = e.dataTransfer.files
     if (files.length > 1) {
