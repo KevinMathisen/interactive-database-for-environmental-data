@@ -240,13 +240,21 @@
     if (riverIds.length > 0) {
       dataType = DATATYPE_RIVER
       riverIds.forEach(id => {
-        selectedRiversUrl.set(id, rivers.get(id))
+        // Check if river is selectable, if not ignore
+        const river = rivers.get(id)
+        if (river) {
+          selectedRiversUrl.set(id, river)
+        }
       })
       selectedRivers = selectedRiversUrl
     } else if (stationIds.length > 0) {
       dataType = DATATYPE_STATION
       stationIds.forEach(id => {
-        selectedStationsUrl.set(id, stations.get(id))
+        // Check if station is selectable, if not ignore
+        const station = stations.get(id)
+        if (station) {
+          selectedStationsUrl.set(id, station)
+        }
       })
       selectedStations = selectedStationsUrl
     }

@@ -13,7 +13,6 @@ Tries to log in a user with given username and password. Sends this to login end
 ### Request
 ```http
 POST /api/auth/login/ HTTP/1.1
-Host: localhost
 Content-Type: application/json
 
 {
@@ -26,7 +25,7 @@ Content-Type: application/json
 ### Response success
 ```http
 HTTP/1.1 200 OK
-Set-Cookie: test=token_value; HttpOnly; SameSite=Strict
+Set-Cookie: test=token_value; HttpOnly; SameSite=Strict; Secure;
 Content-Type: application/json
 
 {
@@ -51,8 +50,7 @@ Should be called when a user clicks on log out.
 
 ### Request
 ```http
-/api/auth/logout/ HTTP/1.1
-Host: localhost
+POST /api/auth/logout/ HTTP/1.1
 ```
 ### Response
 ```http
@@ -69,7 +67,6 @@ Should be called when a request was not authenticated to try to get a new token 
 ### Request
 ```http
 POST /api/auth/token/refresh/ HTTP/1.1
-Host: localhost
 Content-Type: application/json
 
 {
@@ -80,7 +77,7 @@ Content-Type: application/json
 ### Response success
 ```http
 HTTP/1.1 200 OK
-Set-Cookie: test=token_value; HttpOnly; SameSite=Strict
+Set-Cookie: test=token_value; HttpOnly; SameSite=Strict; Secure;
 
 {
   "access": "string"
@@ -98,7 +95,6 @@ Should be called when the website loads to check if the user is authenticated.
 ### Request
 ```http
 POST /api/auth/token/verify/ HTTP/1.1
-Host: localhost
 Content-Type: application/json
 
 {

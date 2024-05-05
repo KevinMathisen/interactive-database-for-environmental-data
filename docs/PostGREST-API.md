@@ -1,9 +1,13 @@
 # Postgrest API usage
+This document contains 
+- [Queries](#queries)
+- [SQL Views](#sql-views)
+- [Application Data structure](#application-data-structure)
 
-burde specifye i request hvilke attributes som mangler
- - nyttig hvis allerede hvert på kart side og skal laste inn liste siden
 
 ## Queries
+This is an overview of the queries the webpage will have to fetch on the different pages. 
+
 ### Map page
 For all rivers and station, we want to get the following attributes: `ID`, `Coordinates`, `Species`, `Date`
 
@@ -83,11 +87,9 @@ Then for each station, we need to finds its observations. Or, if one station is 
 ### Download page
 If river and station are not already queries from other pages, these will be queried the same way as the map and list page, with the following attributes: `ID`, `Name`, `Date`, and `Species`. The stations will in addition require `Station number`. 
 
-For the download of the data ...
- -----------------------------------------
-
 
 ## SQL Views
+This is an overview of the sql views which needs to be defined in the database
 
 ### All rivers with underlying species
 ```sql
@@ -109,7 +111,6 @@ CREATE VIEW "river_with_species" AS
 ```
 
 ### All stations with underlying species 
-Stasjonsdata.nummer and .dato is not yet included in the SQL schema.
 ```sql
 CREATE VIEW "station_with_species" AS
   SELECT
@@ -227,55 +228,75 @@ When using the data for downloading csv and xlsx files, all the properties of ob
 
 
 
-## Data structure
-There will be a map of River objects, and a map of station objects. Both will use the river and station IDs as keys.
+## Application Data structure
+This is an overview of the data structure which the data from postgrest will be stored in. There will be a map of River objects and a map of station objects. The Station objects will contain observation objects. Both maps will use the river and station IDs as keys.
 
-River object:
-- ID (Non-nullable)
-- Name
-- Start Date
-- End Date
-- Project ID
-- Water Flow
-- Boat Type
-- Crew (List of crew members)
-- Position
-- Comment
-- Species (List)
-- Stations (List of their IDs):
+River object, which is placed in a map:
+```javascript
+/**
+ * Represents a river
+ * @class
+ * @property {number} id - Unique id of river
+ * @property {string} name - Name of river
+ * @property {string} startDate - Start date
+ * @property {string} endDate - End date
+ * @property {string} projectId - Project id
+ * @property {number} waterflow - Waterflow
+ * @property {string} boatType - Type of boat
+ * @property {string} skipper - Skipper/boat driver
+ * @property {string[]} crew - Crew members
+ * @property {{coordinates: [number, number]}} position - Position of river observation
+ * @property {string} comment - Comment
+ * @property {string[]} species  - Unique species in river
+ * @property {number[]} stations - Id of stations under river
+ */
+```
 
-Station object:
-- ID (Non-nullable)
-- Name
-- Date
-- Start Position
-- End Position
-- Time of day
-- River ID
-- Description
-- Comment
-- River Type
-- Weather
-- Water Temperature
-- Air Temperature
-- Time spent fishing
-- Power setting
-  - Voltage
-  - Pulse (DC)
-  - Conductivity
-- Species (List)
-- Observations (List)
-  - ID
-  - Station
-  - Round
-  - Species
-  - Length
-  - Count
-  - Gender
-  - Age
-  - Released
-  - Sample Type
-  - Comment
-- Transect Length
-- Display
-- GPX File
+Station object, which is placed in a map:
+```javascript
+/**
+ * Represents a station
+ * @class
+ * @property {number} id - Unique id of station
+ * @property {string} name - Name of station
+ * @property {string} date - Date of station
+ * @property {{coordinates: [number, number]}} startPos - Start position of station observation
+ * @property {{coordinates: [number, number]}} endPos - End position of station observation
+ * @property {string} time - Time of day
+ * @property {number} riverId - Id of river the station is under
+ * @property {string} description - Description
+ * @property {string} comment - Comment
+ * @property {string} riverType - Type of river
+ * @property {string} weather - Weather
+ * @property {number} waterTemp - Water temperature
+ * @property {number} airTemp - Air temperature
+ * @property {number} secFished - Seconds fished
+ * @property {number} voltage - Voltage of boat
+ * @property {number} pulse - Pulse of boat
+ * @property {number} conductivity - Conductivity of water
+ * @property {string[]} species - Unique species in station
+ * @property {Observation[]} observations - Individual observations
+ * @property {number} transectLength - Length of transect
+ * @property {boolean} display - Display
+ * @property {string} gpxFile - Gpx file
+ */
+```
+
+Observation object, which exists under the stations they belong to:
+```javascript
+/**
+ * Represents an observation
+ * @class
+ * @property {number} id - Unique id of observation
+ * @property {number} station - Number of station
+ * @property {number} round - Round
+ * @property {string} species - Species of fish
+ * @property {number} length - Length of fish
+ * @property {number} count - Amount of fish
+ * @property {string} gender - Gender
+ * @property {number} age - Age
+ * @property {boolean} released - If the fish was released
+ * @property {string} sampletype - Sample type
+ * @property {string} comment - Comment
+ */
+```

@@ -15,24 +15,24 @@ Dependencies used for production, which the final svelte application will use.
   - Installation: `npm install leaflet`
   - Official Documentation: [https://leafletjs.com/](https://leafletjs.com/)
 
-- **Papaparse**
-  - An open-source JavaScript library used for parsing CSV files.
-  - Version: `5.4.1`
-  - Installation: `npm install papaparse`
-  - Official Documentation: [https://www.papaparse.com/](https://www.papaparse.com/)
-
 - **Plotly**
   - An open-source JavaScript graphing library used for creating interactive plots.
-  - Version: `2.30.0`
+  - Version: `2.30.1`
   - Installation: `npm install plotly.js-dist-min`
   - Official Documentation: [https://plotly.com/javascript/](https://plotly.com/javascript/)
+
+- **Validator**
+  - An open-source JavaScript library for data validation.
+  - Version: `13.11.0`
+  - Installation: `npm install validator`
+  - Official Documentation: [https://github.com/mikeerickson/validatorjs](https://github.com/mikeerickson/validatorjs#readme)
 
 ## Development dependencies
 Dependencies used for development, which are tools used to facilitate and support development of the svelte application.
 
 - **Playwright**
   - An open-source Node.js library used for browser automation testing.
-  - Version: `1.28.1`
+  - Version: `1.43.0`
   - Installation: `npm install playwright`
   - Official Documentation: [https://playwright.dev/](https://playwright.dev/)
 
@@ -62,7 +62,7 @@ Dependencies used for development, which are tools used to facilitate and suppor
 
 - **Vite**
   - Build tool used for building the Svelte application.
-  - Version: `5.0.3`
+  - Version: `5.1.17`
   - Installation: `npm install vite`
   - Official Documentation: [https://vitejs.dev/](https://vitejs.dev/)
 
@@ -86,3 +86,9 @@ Dependencies used for running the mock postgrest server.
   - Version: `2.8.5`
   - Installation: `npm install cors`
   - Official Documentation: [https://www.npmjs.com/package/cors](https://www.npmjs.com/package/cors)
+
+- **Cookie parser**
+  - Node.js library used for parsing and setting cookies
+  - Version: `1.4.6`
+  - Installation: `npm install cookie-parser`
+  - Official Documentation: [https://github.com/expressjs/cookie-parser](https://github.com/expressjs/cookie-parser#readme)

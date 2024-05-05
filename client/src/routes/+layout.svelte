@@ -6,6 +6,7 @@
   <link rel="preload" href="/errorIcon.svg" as="image">
   <link rel="preload" href="/fileSearchIcon.svg" as="image">
   <link rel="preload" href="/graphIcon.svg" as="image">
+  <link rel="preload" href="/infoIcon.svg" as="image">
   <link rel="preload" href="/listIcon.svg" as="image">
   <link rel="preload" href="/loginIcon.svg" as="image">
   <link rel="preload" href="/logoutIcon.svg" as="image">

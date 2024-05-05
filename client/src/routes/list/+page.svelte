@@ -21,6 +21,8 @@
   import { River } from '../../models/River.js'
   import { Station } from '../../models/Station.js'
   import { page } from '$app/stores'
+  import { addFeedbackToStore } from '../../utils/addFeedbackToStore'
+  import { FEEDBACK_TYPES, FEEDBACK_CODES, FEEDBACK_MESSAGES } from '../../constants/feedbackMessages'
   import { DATATYPE_RIVER, DATATYPE_STATION } from '../../constants/dataTypes'
   import { goto } from '$app/navigation'
   import { validateInteger } from '../../utils/validation.js'
@@ -110,6 +112,12 @@
    * @param {number} stationId - The id of the station to select
    */
   function selectStation (stationId) {
+    // Check if the station is selectable
+    if (!stations.has(stationId)) {
+      addFeedbackToStore(FEEDBACK_TYPES.INFO, FEEDBACK_CODES.NOT_FOUND, FEEDBACK_MESSAGES.STATION_NOT_SELECTABLE)
+      return
+    }
+
     // Set the data type to station
     dataType = DATATYPE_STATION
 
@@ -134,6 +142,12 @@
    * @param {number} riverId - The id of the river to select
    */
   function selectRiver (riverId) {
+    // Check if the river is selectable
+    if (!rivers.has(riverId)) {
+      addFeedbackToStore(FEEDBACK_TYPES.INFO, FEEDBACK_CODES.NOT_FOUND, FEEDBACK_MESSAGES.RIVER_NOT_SELECTABLE)
+      return
+    }
+
     // Set the data type to river
     dataType = DATATYPE_RIVER
 

@@ -28,9 +28,29 @@
 
   let chooseAll = true // If the user wants to choose all species
   let customSpecies = [] // Species the user has chosen
+  let downloadRef = '' // Link to download page with selected rivers or stations
 
   // Species the user has choosen; either all or the custom ones
   $: selectedSpecies = (chooseAll || customSpecies.length === 0) ? selectableSpecies : customSpecies
+
+  // Update download link when the user has selected rivers or stations
+  $: if (selectedRivers || selectedStations) {
+    downloadRef = createDownloadLink()
+  }
+
+  /**
+   * Creates a download link based on the selected rivers or stations
+   * @returns {string} Link to download page with selected rivers or stations
+   */
+  function createDownloadLink () {
+    let url = '/download?'
+    if (dataType === DATATYPE_RIVER) {
+      url += Array.from(selectedRivers.values()).map(river => `&river=${river.id}`).join('')
+    } else if (dataType === DATATYPE_STATION) {
+      url += Array.from(selectedStations.values()).map(station => `&station=${station.id}`).join('')
+    }
+    return url
+  }
 
   /**
    * Handles when user wants to select rivers or stations
@@ -50,31 +70,42 @@
         <img src='/editIcon.svg' alt='Edit' height='30em' class='white-color'>
       </Button>
     </div>
-      {#if dataType === DATATYPE_RIVER && selectedRivers.size !== 0}
-        <!-- Rivers choosen -->
-        <h4>Elver valgt</h4>
-        <ul>
-        {#each Array.from(selectedRivers.entries()) as [_, river]}
-          <li>{river.name + ' ' + river.startDate}</li>
-        {/each}
-        </ul>
-      {:else if dataType === DATATYPE_STATION && selectedStations.size !== 0}
-        <!-- Stations choosen -->
-        <p>Stasjoner valgt</p>
-        <ul>
-        {#each Array.from(selectedStations.entries()) as [_, station]}
-          <li>{station.name + ' ' + station.date}</li>
-        {/each}
-        </ul>
-      {/if}
 
-      {#if selectedRivers.size !== 0 || selectedStations.size !== 0 }
-        <!-- Input for aggregating choosen rivers/stations -->
-        <label for='aggregateData'>
-          Aggreger data
-          <input type='checkbox' id='aggregateData' name='aggregateData' bind:checked={aggregateData}>
-        </label>
-      {/if}
+    {#if (selectedRivers.size !== 0 && dataType === DATATYPE_RIVER) || (selectedStations.size !== 0 && dataType === DATATYPE_STATION)}
+      <!-- Button for downloading selected rivers or stations -->
+      <div role='button'>
+        <Button type='orange' size='small' href={downloadRef}>
+          Last ned<br>valgt data
+          <img src='/downloadIcon.svg' alt='Download' height='30em' class='white-color'>
+        </Button>
+      </div>
+    {/if}
+
+    {#if dataType === DATATYPE_RIVER && selectedRivers.size !== 0}
+      <!-- Rivers choosen -->
+      <h4>Elver valgt</h4>
+      <ul>
+      {#each Array.from(selectedRivers.entries()) as [_, river]}
+        <li>{river.name + ' ' + river.startDate}</li>
+      {/each}
+      </ul>
+    {:else if dataType === DATATYPE_STATION && selectedStations.size !== 0}
+      <!-- Stations choosen -->
+      <p>Stasjoner valgt</p>
+      <ul>
+      {#each Array.from(selectedStations.entries()) as [_, station]}
+        <li>{station.name + ' ' + station.date}</li>
+      {/each}
+      </ul>
+    {/if}
+
+    {#if (selectedRivers.size !== 0 && dataType === DATATYPE_RIVER) || (selectedStations.size !== 0 && dataType === DATATYPE_STATION) }
+      <!-- Input for aggregating choosen rivers/stations -->
+      <label for='aggregateData'>
+        Aggreger data
+        <input type='checkbox' id='aggregateData' name='aggregateData' bind:checked={aggregateData}>
+      </label>
+    {/if}
 
   </CollapsibleSection>
 
@@ -109,6 +140,10 @@
     flex-direction: column;
     justify-content: flex-start;
     overflow: auto;
+  }
+
+  .editButton {
+    margin-bottom: 1em;
   }
 
   /* Transformes icon color to white */

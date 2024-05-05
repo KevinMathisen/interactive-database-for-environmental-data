@@ -1,0 +1,14 @@
+[
+	{
+		"id": 3,
+		"name": "Gaula",
+		"pos": {
+			"type": "Point",
+			"coordinates": [10.25962, 63.25848]
+		},
+		"start_date": "2021-09-30",
+		"end_date": "2021-09-30",
+		"species": ["Aure", "Laks", "3-pigga stingsild", "Skrubbe"],
+		"project_id": "Restaureringsprosjektet"
+	}
+]

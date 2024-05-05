@@ -25,21 +25,18 @@ import { readFile, worksheetToJson } from './fileHandler.js'
  * @returns {boolean} - If the input is allowed or not
  */
 export function validateText (input) {
-  // Return if input is empty
   if (!input) {
     return true
   }
 
   const allowedPattern = /^[a-zA-ZæøåÆØÅ0-9 .,?!\-():+"%/]+$/
 
-  // Check if text is valid
   const isTextValid = allowedPattern.test(input)
 
   if (!isTextValid) {
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.FORBIDDEN, FEEDBACK_MESSAGES.INVALID_TEXT)
   }
 
-  // Return if invalid input
   return isTextValid
 }
 
@@ -51,14 +48,12 @@ export function validateText (input) {
 export function validatePassword (input) {
   const allowedPattern = /^[a-zA-Z0-9 .,?!@#$%^&*()_+\-=[\]{};':"\\|<>/~`]+$/
 
-  // Check if password is valid
   const isPasswordValid = allowedPattern.test(input)
 
   if (!isPasswordValid) {
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.FORBIDDEN, FEEDBACK_MESSAGES.INVALID_PASSWORD)
   }
 
-  // Return if invalid input
   return isPasswordValid
 }
 
@@ -179,7 +174,7 @@ export function validateJson (data, schema, excel = false) {
 
   // Validate data against schema
   if (!validate(data)) {
-    // Let user know what is wrong with their data
+    // Let user know what is wrong with their data, give format information if excel
     const feedbackMessage = excel
       ? `${FEEDBACK_MESSAGES.INVALID_EXCEL_FORMAT} "${validate.errors[0].message}" at "${validate.errors[0].dataPath}"`
       : FEEDBACK_MESSAGES.POSTGREST_UNAVAILABLE
