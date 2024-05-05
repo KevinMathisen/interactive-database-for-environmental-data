@@ -55,11 +55,9 @@ function updateStoreWithObjects (store, objects, Class) {
         return
       }
 
-      // Get the existing object from the store
       const existingObject = currentMap.get(newObject.id)
-      // Convert the new object from json to the class
+      // Get the new object from json and remove any null values to avoid overwriting existing values
       const newClassObject = Class.fromJson(newObject)
-      // Remove any null values from the new object
       const newObjectFiltered = Object.fromEntries(Object.entries(newClassObject).filter(([_, value]) => value !== null))
 
       // Merge the new object with the existing object
@@ -94,11 +92,9 @@ function updateStoreWithObject (store, object, Class) {
       return currentMap
     }
 
-    // Get the existing object from the store
     const existingObject = currentMap.get(object.id)
-    // Convert the new object from json to the class
+    // Get the new object from json and remove any null values to avoid overwriting existing values
     const newObject = Class.fromJson(object)
-    // Remove any null values from the new object
     const newObjectFiltered = Object.fromEntries(Object.entries(newObject).filter(([_, value]) => value !== null))
 
     // Merge the new object with the existing object
@@ -120,13 +116,11 @@ function updateStoreWithObject (store, object, Class) {
  * @returns {void}
  */
 export async function getRivers () {
-  // Check if rivers exists, if they do, return
   if (doesAllRiversExistInStore()) {
     return
   }
 
   try {
-    // Get rivers
     const fetchedRivers = await fetchRivers()
 
     // Validate the fetched rivers
@@ -134,7 +128,6 @@ export async function getRivers () {
       return
     }
 
-    // Update store
     updateStoreWithObjects(riverStore, fetchedRivers, River)
   } catch (error) {
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.POSTGREST_UNAVAILABLE, FEEDBACK_MESSAGES.POSTGREST_UNAVAILABLE)
@@ -147,13 +140,11 @@ export async function getRivers () {
  * @returns {void}
  */
 export async function getStations () {
-  // Check if stations exists, if they do, return
   if (doesAllStationsExistInStore()) {
     return
   }
 
   try {
-    // Get stations
     const fetchedStations = await fetchStations()
 
     // Validate the fetched stations
@@ -161,7 +152,6 @@ export async function getStations () {
       return
     }
 
-    // Update store
     updateStoreWithObjects(stationStore, fetchedStations, Station)
   } catch (error) {
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.POSTGREST_UNAVAILABLE, FEEDBACK_MESSAGES.POSTGREST_UNAVAILABLE)
@@ -175,13 +165,11 @@ export async function getStations () {
  * @returns {void}
  */
 export async function getRiverSummary (id) {
-  // Check if river summary exists, if it does, return
   if (checkIfRiverSummaryExists(id)) {
     return
   }
 
   try {
-    // Get river summary data
     const fetchedRiversSummary = await fetchRiverSummary(id)
 
     // Validate the fetched river summary
@@ -189,7 +177,6 @@ export async function getRiverSummary (id) {
       return
     }
 
-    // Update store with river
     updateStoreWithObject(riverStore, fetchedRiversSummary[0], River)
 
     // Get data for stations under river
@@ -200,7 +187,6 @@ export async function getRiverSummary (id) {
       return
     }
 
-    // Update store with the stations
     updateStoreWithObjects(stationStore, fetchedStations, Station)
   } catch (error) {
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.POSTGREST_UNAVAILABLE, FEEDBACK_MESSAGES.POSTGREST_UNAVAILABLE)
@@ -213,13 +199,11 @@ export async function getRiverSummary (id) {
  * @param {number} id - The id of the station to get the summary for
  */
 export async function getStationSummary (id) {
-  // Check if station summary exists, if it does, return
   if (checkIfStationSummaryExists(id)) {
     return
   }
 
   try {
-    // Get station summary
     const fetchedStationsSummary = await fetchStationSummary([id])
 
     // Validate the fetched station summary
@@ -227,7 +211,6 @@ export async function getStationSummary (id) {
       return
     }
 
-    // Update store
     updateStoreWithObject(stationStore, fetchedStationsSummary[0], Station)
   } catch (error) {
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.POSTGREST_UNAVAILABLE, FEEDBACK_MESSAGES.POSTGREST_UNAVAILABLE)
@@ -241,12 +224,12 @@ export async function getStationSummary (id) {
  * @returns {void}
  */
 export async function getRiverForDownload (id) {
-  // Ensure that river summary is stored
+  // Ensure that river summary is already stored
   await getRiverSummary(id)
 
   const river = get(riverStore).get(id)
 
-  // Get which stations does not have all of their data ready for download
+  // Get stations which does not have all of their data ready for download
   const stationsNotFetchedForDownload = river.stations.filter(stationId => !checkIfStationDownloadExists(stationId))
 
   // Exit the function of all stations are ready for download
@@ -263,7 +246,6 @@ export async function getRiverForDownload (id) {
       return
     }
 
-    // Update store with the new station data
     updateStoreWithObjects(stationStore, fetchedStations, Station)
   } catch (error) {
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.POSTGREST_UNAVAILABLE, FEEDBACK_MESSAGES.POSTGREST_UNAVAILABLE)
@@ -277,7 +259,7 @@ export async function getRiverForDownload (id) {
  * @returns {void}
  */
 export async function getStationForDownload (id) {
-  // Ensure that station summary is stored
+  // Ensure that station summary is already stored
   await getStationSummary(id)
 
   const station = get(stationStore).get(id)
@@ -285,13 +267,11 @@ export async function getStationForDownload (id) {
   // Ensure that river summary for station is stored
   await getRiverSummary(station.riverId)
 
-  // Check if station download exists, if it does, return
   if (checkIfStationDownloadExists(id)) {
     return
   }
 
   try {
-    // Get station
     const fetchedStations = await fetchStationDownload([id])
 
     // Validate the fetched station
@@ -299,7 +279,6 @@ export async function getStationForDownload (id) {
       return
     }
 
-    // Update store
     updateStoreWithObject(stationStore, fetchedStations[0], Station)
   } catch (error) {
     addFeedbackToStore(FEEDBACK_TYPES.ERROR, FEEDBACK_CODES.POSTGREST_UNAVAILABLE, FEEDBACK_MESSAGES.POSTGREST_UNAVAILABLE)
