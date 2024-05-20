@@ -38,8 +38,14 @@
     sorted.sort((a, b) => {
       // Index of elements to sort by is +1 because the first element is the id
       const indexKey = headers.indexOf(sortKey) + 1
-      const aVal = a[indexKey]
-      const bVal = b[indexKey]
+      let aVal = a[indexKey]
+      let bVal = b[indexKey]
+
+      // convert values to numbers if possible to sort correctly
+      if (!isNaN(aVal) && !isNaN(bVal)) {
+        aVal = parseFloat(aVal)
+        bVal = parseFloat(bVal)
+      }
 
       if (sortDirection === 'asc') return aVal > bVal ? 1 : -1
       if (sortDirection === 'desc') return aVal < bVal ? 1 : -1

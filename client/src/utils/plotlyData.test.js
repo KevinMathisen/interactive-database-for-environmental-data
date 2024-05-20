@@ -188,11 +188,11 @@ describe('test dataForBarAndPieChart function', () => {
     const expectedData = new Map([
       ['Test river 2021-01-01', new Map([
         ['species1', 1],
-        ['others', 3]
+        ['andre', 3]
       ])],
       ['Test river 2 2021-01-02', new Map([
         ['species1', 2],
-        ['others', 1]
+        ['andre', 1]
       ])]
     ])
 
@@ -406,11 +406,11 @@ describe('test dataForBarAndPieChart function', () => {
     const expectedData = new Map([
       ['Test station 2021-01-01', new Map([
         ['species1', 1],
-        ['others', 3]
+        ['andre', 3]
       ])],
       ['Test station 2 2021-01-02', new Map([
         ['species1', 2],
-        ['others', 1]
+        ['andre', 1]
       ])]
     ])
 
@@ -678,7 +678,7 @@ describe('test dataForHistogramAndBoxplot function for histogram', () => {
         intervals: [7.5],
         interval
       }],
-      ['Test river 2021-01-01 - others', {
+      ['Test river 2021-01-01 - andre', {
         count: [1, 2],
         intervals: [12.5, 17.5],
         interval
@@ -688,7 +688,7 @@ describe('test dataForHistogramAndBoxplot function for histogram', () => {
         intervals: [12.5, 17.5, 22.5],
         interval
       }],
-      ['Test river 2 2021-01-02 - others', {
+      ['Test river 2 2021-01-02 - andre', {
         count: [1],
         intervals: [7.5],
         interval
@@ -940,7 +940,7 @@ describe('test dataForHistogramAndBoxplot function for histogram', () => {
         intervals: [7.5],
         interval
       }],
-      ['Test station 2021-01-01 - others', {
+      ['Test station 2021-01-01 - andre', {
         count: [1, 2],
         intervals: [12.5, 17.5],
         interval
@@ -950,7 +950,7 @@ describe('test dataForHistogramAndBoxplot function for histogram', () => {
         intervals: [12.5, 17.5, 22.5],
         interval
       }],
-      ['Test station 2 2021-01-02 - others', {
+      ['Test station 2 2021-01-02 - andre', {
         count: [1],
         intervals: [7.5],
         interval
@@ -1199,13 +1199,13 @@ describe('test dataForHistogramAndBoxplot function for boxplot', () => {
       ['Test river 2021-01-01 - species1', {
         lengths: [5]
       }],
-      ['Test river 2021-01-01 - others', {
+      ['Test river 2021-01-01 - andre', {
         lengths: [18, 18, 10]
       }],
       ['Test river 2 2021-01-02 - species1', {
         lengths: [20, 20, 10]
       }],
-      ['Test river 2 2021-01-02 - others', {
+      ['Test river 2 2021-01-02 - andre', {
         lengths: [5]
       }]
     ])
@@ -1429,13 +1429,13 @@ describe('test dataForHistogramAndBoxplot function for boxplot', () => {
       ['Test station 2021-01-01 - species1', {
         lengths: [5]
       }],
-      ['Test station 2021-01-01 - others', {
+      ['Test station 2021-01-01 - andre', {
         lengths: [18, 18, 10]
       }],
       ['Test station 2 2021-01-02 - species1', {
         lengths: [20, 20, 10]
       }],
-      ['Test station 2 2021-01-02 - others', {
+      ['Test station 2 2021-01-02 - andre', {
         lengths: [5]
       }]
     ])
