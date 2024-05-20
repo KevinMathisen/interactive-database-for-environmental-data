@@ -1,9 +1,11 @@
 const express = require('express');
 const app = express();
-const fs = require('fs');
+const fsp = require('fs').promises;
 const path = require('path');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+
+
 const port = 8000; 
 
 const sessionid = 'token_value';
@@ -16,13 +18,27 @@ app.use(express.json());
 // Middleware to parse cookies
 app.use(cookieParser());
 
+// initialize json data to be used in the mock server
+let jsonData = {};
+
+async function loadJsonFiles() {
+  jsonData['river_with_species'] = JSON.parse(await fsp.readFile(path.join(__dirname, 'data', 'river_with_species.json'), 'utf8'));
+  jsonData['station_with_species'] = JSON.parse(await fsp.readFile(path.join(__dirname, 'data', 'station_with_species.json'), 'utf8'));
+  jsonData['river_summary'] = JSON.parse(await fsp.readFile(path.join(__dirname, 'data', 'river_summary.json'), 'utf8'));
+  jsonData['station_summary'] = JSON.parse(await fsp.readFile(path.join(__dirname, 'data', 'station_summary.json'), 'utf8'));
+  jsonData['station_download'] = JSON.parse(await fsp.readFile(path.join(__dirname, 'data', 'station_download.json'), 'utf8'));
+}
+
+	
 app.get('/favicon.ico', (req, res) => res.status(204).end());
 
 // Handle requests for postgrest endpoint
 app.get('/postgrest/:endpoint', (req, res) => {
+	// get endpoint from request
+	const { endpoint } = req.params;
 
 	// log the request
-	console.log(`GET request for ${req.params.endpoint}`);
+	console.log(`GET request for ${endpoint}`);
 
 	// Read cookie
 	const sessionCookie = req.cookies.sessionid;
@@ -33,28 +49,41 @@ app.get('/postgrest/:endpoint', (req, res) => {
 		return;
 	}
 
-	// Extract the json file name from the request
-	const { endpoint } = req.params;
-	let fileEnding = '';
+	// select json data based on endpoint
+	let data = jsonData[endpoint];
 
-	// if request specifies a specific id, use correct json files
-  if (req.query.id === 'eq.11') {
-    fileEnding = '_11';
-  } else if (req.query.id === 'eq.12') {
-		fileEnding = '_12';
+	if (!data) {
+		res.sendStatus(404).send('Not found');
+		return;
 	}
 
-	const filePath = path.join(__dirname, 'data', `${endpoint}${fileEnding}.json`);
+	// if endpoint is 'river_with_species' or 'station_with_species', simply return the data
+	if (endpoint === 'river_with_species' || endpoint === 'station_with_species') {
+		// Send JSON response
+		res.json(data);
+		return;
+	}
 
-	// Read the json file specified in the request, send it as a response if it exists
-	fs.readFile(filePath, (err, data) => {
-		if (err) {
-			console.error(err);
-			res.status(500).send('Could not read json file');
-			return;
-		}
-		res.json(JSON.parse(data));
-	});
+	// get id from query
+	const { id } = req.query;
+
+	// check if id is defined as eq.<id> or in.(<id1>,<id2>,...)
+	const eqMatch = id.match(/^eq\.(\d+)$/);
+	const inMatch = id.match(/^in\.\((\d+(,\d+)*)\)$/);
+
+	if (eqMatch) {
+		// if eq, select data with specified id
+		data = data.filter(item => item.id === Number(eqMatch[1]));
+	} else if (inMatch) {
+		// if in, select all data with specified ids
+		const ids = inMatch[1].split(',').map(Number);
+		data = data.filter(item => ids.includes(item.id));
+	} else {
+		data = [];
+	}
+
+	// Send JSON response
+	res.json(data);
 });
 
 // Handle requests for log in endpoint
@@ -128,6 +157,8 @@ app.post('/api/upload/', (req, res) => {
 });
 
 
-app.listen(port, () => {
-  console.log(`Mock server listening at http://localhost:${port}`);
+loadJsonFiles().then(() => {
+  app.listen(port, () => {
+    console.log(`Mock server listening at http://localhost:${port}`);
+  });
 });
