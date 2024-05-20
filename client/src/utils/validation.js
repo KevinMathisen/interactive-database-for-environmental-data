@@ -29,7 +29,7 @@ export function validateText (input) {
     return true
   }
 
-  const allowedPattern = /^[a-zA-ZæøåÆØÅ0-9 .,?!\-():+"%/]+$/
+  const allowedPattern = /^[a-zA-ZæøåÆØÅ0-9 .,?!\-_():+"%/*]+$/
 
   const isTextValid = allowedPattern.test(input)
 
@@ -46,7 +46,7 @@ export function validateText (input) {
  * @returns {boolean} - If the password is allowed or not
  */
 export function validatePassword (input) {
-  const allowedPattern = /^[a-zA-Z0-9 .,?!@#$%^&*()_+\-=[\]{};':"\\|<>/~`]+$/
+  const allowedPattern = /^[a-zA-Z0-9  !"#$%&'()*+,-./:;<=>?@[\]^\\_`{|}~]+$/
 
   const isPasswordValid = allowedPattern.test(input)
 
