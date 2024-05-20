@@ -1,14 +1,173 @@
 [
-	{
-		"id": 3,
-		"name": "Gaula",
-		"pos": {
-			"type": "Point",
-			"coordinates": [10.25962, 63.25848]
-		},
-		"start_date": "2021-09-30",
-		"end_date": "2021-09-30",
-		"species": ["Aure", "Laks", "3-pigga stingsild", "Skrubbe"],
-		"project_id": "Restaureringsprosjektet"
-	}
+    {
+        "id": 2,
+        "name": "Hallingdalselva",
+        "pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.08298,
+                60.59684
+            ]
+        },
+        "start_date": "2014-09-16",
+        "end_date": "2014-09-16",
+        "species": [
+            "Abbor",
+            "Gjedde",
+            "Ørekyt",
+            "Ørret",
+            "Sik"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 3,
+        "name": "Gaula",
+        "pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.25962,
+                63.25848
+            ]
+        },
+        "start_date": "2021-09-30",
+        "end_date": "2021-09-30",
+        "species": [
+            "3-pigga stingsild",
+            "Aure",
+            "Laks",
+            "Skrubbe"
+        ],
+        "project_id": "Restaureringsprosjektet"
+    },
+    {
+        "id": 4,
+        "name": "Hallingdalselva ",
+        "pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.2295,
+                60.47652
+            ]
+        },
+        "start_date": "2021-09-21",
+        "end_date": "2021-09-21",
+        "species": [
+            "Abbor",
+            "Gjedde",
+            "Ørekyt",
+            "Ørret"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 5,
+        "name": "Gudbrandsdalslågen",
+        "pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.431,
+                61.2405
+            ]
+        },
+        "start_date": "2023-09-20",
+        "end_date": "2023-09-20",
+        "species": [
+            "Harr",
+            "Ørekyte",
+            "Ørret",
+            "Steinsmett"
+        ],
+        "project_id": "1234567689"
+    },
+    {
+        "id": 6,
+        "name": "Gudbrandsdalslågen",
+        "pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.17408,
+                61.4956
+            ]
+        },
+        "start_date": "2022-06-15",
+        "end_date": "2022-06-15",
+        "species": [
+            "Abbor",
+            "Gullbust",
+            "Lake",
+            "Mort",
+            "Niøye",
+            "Ørekyt",
+            "Ørekyte",
+            "Ørret",
+            "Sik",
+            "Steinsmett"
+        ],
+        "project_id": "17653950"
+    },
+    {
+        "id": 8,
+        "name": "Mjøsa",
+        "pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.69287,
+                60.91701
+            ]
+        },
+        "start_date": "2021-06-16",
+        "end_date": "2021-06-16",
+        "species": [
+            "9 pigget stingsild",
+            "Abbor",
+            "Gjedde",
+            "Harr",
+            "Hork",
+            "Karpefisk",
+            "Lake",
+            "Mort",
+            "Ørekyte",
+            "Ørret",
+            "Steinsmett",
+            "Vederbuk"
+        ],
+        "project_id": "None"
+    }
 ]

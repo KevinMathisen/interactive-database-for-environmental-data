@@ -1,15 +1,186 @@
 [
-	{
-		"id": 3,
-		"name": "Gaula",
-		"start_date": "2021-09-30",
-		"end_date": "2021-09-30",
-		"project_id": "Restaureringsprosjektet",
-		"waterflow": 320,
-		"boattype": "Volt Maria",
-		"skipper": "Jon Museth", 
-		"crew": ["Tobias Holter", "Erik Lie"],
-		"comment": "Testdatasett",
-		"stations": [11, 12]
-	}
+    {
+        "id": 2,
+        "name": "Hallingdalselva",
+        "start_date": "2014-09-16",
+        "end_date": "2014-09-16",
+        "project_id": "None",
+        "waterflow": null,
+        "boattype": "CataRaft",
+        "skipper": "Jon Museth",
+        "crew": [
+            "Ukjent",
+            "Ukjent"
+        ],
+        "comment": null,
+        "stations": [
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51
+        ]
+    },
+    {
+        "id": 3,
+        "name": "Gaula",
+        "start_date": "2021-09-30",
+        "end_date": "2021-09-30",
+        "project_id": "Restaureringsprosjektet",
+        "waterflow": 320,
+        "boattype": "Volt Maria",
+        "skipper": "Jon Museth",
+        "crew": [
+            "Tobias Holter",
+            "Erik Lie"
+        ],
+        "comment": "Testdatasett",
+        "stations": [
+            52,
+            53,
+            54,
+            55,
+            56
+        ]
+    },
+    {
+        "id": 4,
+        "name": "Hallingdalselva ",
+        "start_date": "2021-09-21",
+        "end_date": "2021-09-21",
+        "project_id": "None",
+        "waterflow": null,
+        "boattype": "CataRaft",
+        "skipper": "Tobias Holter",
+        "crew": [
+            "Frode Næstad"
+        ],
+        "comment": "Ingen flere hovere. To dager fiske. ",
+        "stations": [
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67,
+            68,
+            69,
+            70,
+            71,
+            72,
+            73,
+            74,
+            75,
+            76
+        ]
+    },
+    {
+        "id": 5,
+        "name": "Gudbrandsdalslågen",
+        "start_date": "2023-09-20",
+        "end_date": "2023-09-20",
+        "project_id": "1234567689",
+        "waterflow": 410,
+        "boattype": "Cataraft",
+        "skipper": "Tobias Holter",
+        "crew": [
+            "Frode Næstad",
+            "Thor Bjørn (statsforvalteren Innlandet)"
+        ],
+        "comment": "Kartlegging i g.lågen .",
+        "stations": [
+            77,
+            78,
+            79
+        ]
+    },
+    {
+        "id": 6,
+        "name": "Gudbrandsdalslågen",
+        "start_date": "2022-06-15",
+        "end_date": "2022-06-15",
+        "project_id": "17653950",
+        "waterflow": 650,
+        "boattype": "Cataraft",
+        "skipper": "John Gunnar Dokk",
+        "crew": [
+            "Tobias Holter",
+            "Frode Næstad "
+        ],
+        "comment": "Fiske fra like sør for Ringebu og ned til sør i Losna ",
+        "stations": [
+            80,
+            81,
+            82,
+            83,
+            84,
+            86,
+            87,
+            88,
+            89,
+            90,
+            91,
+            92,
+            93
+        ]
+    },
+    {
+        "id": 8,
+        "name": "Mjøsa",
+        "start_date": "2021-06-16",
+        "end_date": "2021-06-16",
+        "project_id": "None",
+        "waterflow": 123,
+        "boattype": "Cataraft",
+        "skipper": "Tobias Holter",
+        "crew": [
+            "Sigurd Knudsen",
+            "Sondre Ski"
+        ],
+        "comment": "Kartlegging for nye veier / multiconsult i området rundt Mjøsbrua. Vær: Overskyet, 24 grader, regnbyger innimellom. 0-5 ms fra sør. 16grader i vannet ved Moelv.  Generelt sett fine forhold. Vannstand lokalhøyde 123,09moh. Ganske normal vannstand for årstiden. Ikke mye kantvegetasjon som var neddykket. Mer fisk enn forrige runde men fremdeles ikke horder. En del fisk som slipper unna og ligger i forkant av båten. ",
+        "stations": [
+            114,
+            115,
+            116,
+            117,
+            118,
+            119,
+            120,
+            121,
+            122,
+            123,
+            124,
+            125,
+            126
+        ]
+    }
 ]

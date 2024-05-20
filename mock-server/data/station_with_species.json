@@ -1,32 +1,3112 @@
 [
-	{
-		"id": 11,
-		"name": "Gaula 1",
-		"start_pos": {
-			"type": "Point",
-			"coordinates": [10.25962, 63.25848]
-		},
-		"end_pos": {
-			"type": "Point",
-			"coordinates": [10.26344, 63.25887]
-		},
-		"date": "2021-09-30",
-		"time": "08:00:00",
-		"species": ["Aure", "Laks", "3-pigga stingsild", "Skrubbe"]
-	},
-	{
-		"id": 12,
-		"name": "Gaula 2",
-		"start_pos": {
-			"type": "Point",
-			"coordinates": [10.25584, 63.25626]
-		},
-		"end_pos": {
-			"type": "Point",
-			"coordinates": [10.26170, 63.25789]
-		},
-		"date": "2021-09-30",
-		"time": "09:00:00",
-		"species": ["Aure", "Laks"]
-	}
+    {
+        "id": 23,
+        "name": "Hallingdalselva 1",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.08298,
+                60.59684
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.09239,
+                60.58357
+            ]
+        },
+        "date": "2014-09-16",
+        "time": "00:00:00",
+        "species": [
+            "Ørret"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 24,
+        "name": "Hallingdalselva 2",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.10351,
+                60.58054
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.10339,
+                60.57863
+            ]
+        },
+        "date": "2014-09-16",
+        "time": "00:00:00",
+        "species": [
+            "Gjedde",
+            "Ørekyt"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 25,
+        "name": "Hallingdalselva 3",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.10554,
+                60.57728
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.10979,
+                60.5753
+            ]
+        },
+        "date": "2014-09-16",
+        "time": "00:00:00",
+        "species": [],
+        "project_id": "None"
+    },
+    {
+        "id": 26,
+        "name": "Hallingdalselva 4",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.11068,
+                60.57569
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.11481,
+                60.57314
+            ]
+        },
+        "date": "2014-09-16",
+        "time": "00:00:00",
+        "species": [
+            "Gjedde",
+            "Ørret"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 27,
+        "name": "Hallingdalselva 5",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.11578,
+                60.57138
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.11962,
+                60.56557
+            ]
+        },
+        "date": "2014-09-16",
+        "time": "00:00:00",
+        "species": [
+            "Gjedde",
+            "Ørret"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 28,
+        "name": "Hallingdalselva 6",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.13122,
+                60.56062
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.13413,
+                60.558
+            ]
+        },
+        "date": "2014-09-16",
+        "time": "00:00:00",
+        "species": [
+            "Gjedde"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 29,
+        "name": "Hallingdalselva 7",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.13578,
+                60.55547
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.13747,
+                60.55371
+            ]
+        },
+        "date": "2014-09-16",
+        "time": "00:00:00",
+        "species": [
+            "Gjedde",
+            "Ørret"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 30,
+        "name": "Hallingdalselva 8",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.14855,
+                60.5497
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.15048,
+                60.54919
+            ]
+        },
+        "date": "2014-09-16",
+        "time": "00:00:00",
+        "species": [
+            "Gjedde"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 31,
+        "name": "Hallingdalselva 9",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.15076,
+                60.54182
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.15,
+                60.53886
+            ]
+        },
+        "date": "2014-09-16",
+        "time": "00:00:00",
+        "species": [
+            "Gjedde"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 32,
+        "name": "Hallingdalselva 10",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.16481,
+                60.53554
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.16696,
+                60.53163
+            ]
+        },
+        "date": "2014-09-16",
+        "time": "00:00:00",
+        "species": [
+            "Abbor",
+            "Gjedde"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 33,
+        "name": "Hallingdalselva 11",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.15901,
+                60.53033
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.15971,
+                60.52838
+            ]
+        },
+        "date": "2014-09-16",
+        "time": "00:00:00",
+        "species": [
+            "Abbor",
+            "Gjedde"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 34,
+        "name": "Hallingdalselva 12",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.16277,
+                60.52703
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.16582,
+                60.52557
+            ]
+        },
+        "date": "2014-09-16",
+        "time": "00:00:00",
+        "species": [
+            "Gjedde",
+            "Ørret"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 35,
+        "name": "Hallingdalselva 13",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.1662,
+                60.52205
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.16605,
+                60.52133
+            ]
+        },
+        "date": "2014-09-16",
+        "time": "00:00:00",
+        "species": [],
+        "project_id": "None"
+    },
+    {
+        "id": 36,
+        "name": "Hallingdalselva 14",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.16633,
+                60.51735
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.16495,
+                60.51259
+            ]
+        },
+        "date": "2014-09-16",
+        "time": "00:00:00",
+        "species": [
+            "Gjedde"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 37,
+        "name": "Hallingdalselva 15",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.22592,
+                60.47358
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.25715,
+                60.46555
+            ]
+        },
+        "date": "2014-09-17",
+        "time": "00:00:00",
+        "species": [
+            "Ørret"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 38,
+        "name": "Hallingdalselva 16",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.25594,
+                60.4643
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.25866,
+                60.46201
+            ]
+        },
+        "date": "2014-09-17",
+        "time": "00:00:00",
+        "species": [
+            "Gjedde"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 39,
+        "name": "Hallingdalselva 17",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.25888,
+                60.46158
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.2611,
+                60.45995
+            ]
+        },
+        "date": "2014-09-17",
+        "time": "00:00:00",
+        "species": [
+            "Gjedde"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 40,
+        "name": "Hallingdalselva 18",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.26571,
+                60.45816
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.317,
+                60.44629
+            ]
+        },
+        "date": "2014-09-17",
+        "time": "00:00:00",
+        "species": [
+            "Gjedde",
+            "Ørret",
+            "Sik"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 41,
+        "name": "Hallingdalselva 19",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.32017,
+                60.44449
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.32471,
+                60.43932
+            ]
+        },
+        "date": "2014-09-17",
+        "time": "00:00:00",
+        "species": [
+            "Gjedde",
+            "Ørret"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 42,
+        "name": "Hallingdalselva 20",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.31681,
+                60.43213
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.31957,
+                60.42966
+            ]
+        },
+        "date": "2014-09-17",
+        "time": "00:00:00",
+        "species": [
+            "Abbor",
+            "Gjedde",
+            "Sik"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 43,
+        "name": "Hallingdalselva 21",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.3324,
+                60.4272
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.34904,
+                60.42898
+            ]
+        },
+        "date": "2014-09-17",
+        "time": "00:00:00",
+        "species": [
+            "Ørret"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 44,
+        "name": "Hallingdalselva 22",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.37656,
+                60.42584
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.40004,
+                60.43162
+            ]
+        },
+        "date": "2014-09-17",
+        "time": "00:00:00",
+        "species": [
+            "Ørret"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 45,
+        "name": "Hallingdalselva 23",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.4478,
+                60.4406
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.45384,
+                60.43882
+            ]
+        },
+        "date": "2014-09-17",
+        "time": "00:00:00",
+        "species": [
+            "Gjedde"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 46,
+        "name": "Hallingdalselva 24",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.47723,
+                60.42066
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.4883,
+                60.4163
+            ]
+        },
+        "date": "2014-09-17",
+        "time": "00:00:00",
+        "species": [
+            "Abbor",
+            "Gjedde",
+            "Sik"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 47,
+        "name": "Hallingdalselva 25",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.49936,
+                60.41176
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.50181,
+                60.40831
+            ]
+        },
+        "date": "2014-09-17",
+        "time": "00:00:00",
+        "species": [
+            "Gjedde"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 48,
+        "name": "Hallingdalselva 26",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.51806,
+                60.39257
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.52082,
+                60.39239
+            ]
+        },
+        "date": "2014-09-17",
+        "time": "00:00:00",
+        "species": [
+            "Gjedde"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 49,
+        "name": "Hallingdalselva 27",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.52144,
+                60.39263
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.52268,
+                60.39324
+            ]
+        },
+        "date": "2014-09-17",
+        "time": "00:00:00",
+        "species": [],
+        "project_id": "None"
+    },
+    {
+        "id": 50,
+        "name": "Hallingdalselva 28",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.52991,
+                60.39267
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.55167,
+                60.38782
+            ]
+        },
+        "date": "2014-09-17",
+        "time": "00:00:00",
+        "species": [
+            "Gjedde",
+            "Ørret"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 51,
+        "name": "Hallingdalselva 29",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.56332,
+                60.39401
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.57891,
+                60.39026
+            ]
+        },
+        "date": "2014-09-17",
+        "time": "00:00:00",
+        "species": [
+            "Abbor",
+            "Gjedde"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 52,
+        "name": "Gaula 1",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.25962,
+                63.25848
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.26344,
+                63.25887
+            ]
+        },
+        "date": "2021-09-30",
+        "time": "08:00:00",
+        "species": [
+            "3-pigga stingsild",
+            "Aure",
+            "Laks",
+            "Skrubbe"
+        ],
+        "project_id": "Restaureringsprosjektet"
+    },
+    {
+        "id": 53,
+        "name": "Gaula 2",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.25584,
+                63.25626
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.2617,
+                63.25789
+            ]
+        },
+        "date": "2021-09-30",
+        "time": "09:00:00",
+        "species": [
+            "Aure",
+            "Laks"
+        ],
+        "project_id": "Restaureringsprosjektet"
+    },
+    {
+        "id": 54,
+        "name": "Gaula 3",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.26769,
+                63.25856
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.27621,
+                63.25894
+            ]
+        },
+        "date": "2021-09-30",
+        "time": "10:00:00",
+        "species": [
+            "Aure",
+            "Laks"
+        ],
+        "project_id": "Restaureringsprosjektet"
+    },
+    {
+        "id": 55,
+        "name": "Gaula 4",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.26851,
+                63.25922
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.27604,
+                63.25911
+            ]
+        },
+        "date": "2021-09-30",
+        "time": "11:00:00",
+        "species": [
+            "Laks"
+        ],
+        "project_id": "Restaureringsprosjektet"
+    },
+    {
+        "id": 56,
+        "name": "Gaula 5",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.27703,
+                63.25896
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.28131,
+                63.25936
+            ]
+        },
+        "date": "2021-09-30",
+        "time": "12:00:00",
+        "species": [
+            "Aure",
+            "Laks"
+        ],
+        "project_id": "Restaureringsprosjektet"
+    },
+    {
+        "id": 57,
+        "name": "Hallingdalselva  1",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.2295,
+                60.47652
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.22725,
+                60.47488
+            ]
+        },
+        "date": "2020-09-21",
+        "time": "15:00:00",
+        "species": [
+            "Ørret"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 58,
+        "name": "Hallingdalselva  2",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.22883,
+                60.47348
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.23723,
+                60.4706
+            ]
+        },
+        "date": "2020-09-21",
+        "time": "16:11:00",
+        "species": [
+            "Ørekyt",
+            "Ørret"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 59,
+        "name": "Hallingdalselva  3",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.2436,
+                60.46973
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.25783,
+                60.46632
+            ]
+        },
+        "date": "2020-09-21",
+        "time": "16:53:00",
+        "species": [
+            "Ørret"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 60,
+        "name": "Hallingdalselva  4",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.25637,
+                60.46592
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.25627,
+                60.46438
+            ]
+        },
+        "date": "2020-09-21",
+        "time": "17:06:00",
+        "species": [
+            "Gjedde"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 61,
+        "name": "Hallingdalselva  5",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.27808,
+                60.45262
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.29768,
+                60.44892
+            ]
+        },
+        "date": "2020-09-21",
+        "time": "17:30:00",
+        "species": [
+            "Ørekyt",
+            "Ørret"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 62,
+        "name": "Hallingdalselva  6",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.3083,
+                60.44787
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.31727,
+                60.44622
+            ]
+        },
+        "date": "2020-09-21",
+        "time": "17:58:00",
+        "species": [
+            "Ørekyt",
+            "Ørret"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 63,
+        "name": "Hallingdalselva  7",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.32593,
+                60.43962
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.32518,
+                60.43717
+            ]
+        },
+        "date": "2020-09-21",
+        "time": "18:41:00",
+        "species": [
+            "Gjedde",
+            "Ørekyt",
+            "Ørret"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 64,
+        "name": "Hallingdalselva  8",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.31898,
+                60.433
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.31863,
+                60.4324
+            ]
+        },
+        "date": "2020-09-21",
+        "time": "18:52:00",
+        "species": [],
+        "project_id": "None"
+    },
+    {
+        "id": 65,
+        "name": "Hallingdalselva  9",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.34347,
+                60.42893
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.34928,
+                60.42932
+            ]
+        },
+        "date": "2020-09-21",
+        "time": "19:30:00",
+        "species": [
+            "Ørret"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 66,
+        "name": "Hallingdalselva  10",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.38865,
+                60.4295
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.4115,
+                60.43328
+            ]
+        },
+        "date": "2020-09-21",
+        "time": "20:00:00",
+        "species": [
+            "Gjedde",
+            "Ørekyt",
+            "Ørret"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 67,
+        "name": "Hallingdalselva  11",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.42088,
+                60.43748
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.4258,
+                60.44163
+            ]
+        },
+        "date": "2020-09-21",
+        "time": "20:46:00",
+        "species": [],
+        "project_id": "None"
+    },
+    {
+        "id": 68,
+        "name": "Hallingdalselva  12",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.44355,
+                60.44103
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.45137,
+                60.43955
+            ]
+        },
+        "date": "2020-09-21",
+        "time": "20:10:00",
+        "species": [
+            "Gjedde"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 69,
+        "name": "Hallingdalselva  13",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.46282,
+                60.43138
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.46903,
+                60.43015
+            ]
+        },
+        "date": "2020-09-22",
+        "time": "08:00:00",
+        "species": [
+            "Abbor",
+            "Gjedde",
+            "Ørekyt",
+            "Ørret"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 70,
+        "name": "Hallingdalselva  14",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.47317,
+                60.42142
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.47493,
+                60.42165
+            ]
+        },
+        "date": "2020-09-22",
+        "time": "09:01:00",
+        "species": [],
+        "project_id": "None"
+    },
+    {
+        "id": 71,
+        "name": "Hallingdalselva  15",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.48032,
+                60.41935
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.48708,
+                60.4134
+            ]
+        },
+        "date": "2020-09-22",
+        "time": "09:08:00",
+        "species": [
+            "Gjedde",
+            "Ørret"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 72,
+        "name": "Hallingdalselva  16",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.49857,
+                60.40648
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.49995,
+                60.40348
+            ]
+        },
+        "date": "2020-09-22",
+        "time": "09:49:00",
+        "species": [
+            "Gjedde"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 73,
+        "name": "Hallingdalselva  17",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.53063,
+                60.39265
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.53437,
+                60.38897
+            ]
+        },
+        "date": "2020-09-22",
+        "time": "10:40:00",
+        "species": [
+            "Abbor",
+            "Gjedde",
+            "Ørekyt",
+            "Ørret"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 74,
+        "name": "Hallingdalselva  18",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.56307,
+                60.39372
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.5706,
+                60.3927
+            ]
+        },
+        "date": "2020-09-22",
+        "time": "11:15:00",
+        "species": [
+            "Gjedde"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 75,
+        "name": "Hallingdalselva  19",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.57707,
+                60.3925
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.57922,
+                60.38992
+            ]
+        },
+        "date": "2020-09-22",
+        "time": "11:50:00",
+        "species": [],
+        "project_id": "None"
+    },
+    {
+        "id": 76,
+        "name": "Hallingdalselva  20",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.58265,
+                60.38588
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                9.58623,
+                60.38713
+            ]
+        },
+        "date": "2020-09-22",
+        "time": "12:00:00",
+        "species": [
+            "Abbor"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 77,
+        "name": "Gudbrandsdalslågen 1",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.4024889,
+                61.2702611
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.4024667,
+                61.2702611
+            ]
+        },
+        "date": "2023-09-20",
+        "time": "11:12:00",
+        "species": [
+            "Ørekyte",
+            "Ørret",
+            "Steinsmett"
+        ],
+        "project_id": "1234567689"
+    },
+    {
+        "id": 78,
+        "name": "Gudbrandsdalslågen 2",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.3985417,
+                61.2683667
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.4000361,
+                61.2678139
+            ]
+        },
+        "date": "2023-09-20",
+        "time": "11:52:00",
+        "species": [
+            "Harr",
+            "Ørekyte",
+            "Steinsmett"
+        ],
+        "project_id": "1234567689"
+    },
+    {
+        "id": 79,
+        "name": "Gudbrandsdalslågen 3",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.4059806,
+                61.2655
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.4079382,
+                61.2642747
+            ]
+        },
+        "date": "2023-09-20",
+        "time": "12:12:00",
+        "species": [
+            "Harr",
+            "Ørekyte",
+            "Ørret",
+            "Steinsmett"
+        ],
+        "project_id": "1234567689"
+    },
+    {
+        "id": 80,
+        "name": "Gudbrandsdalslågen 1",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.17408,
+                61.4956
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.17301,
+                61.49592
+            ]
+        },
+        "date": "2022-06-15",
+        "time": "11:37:00",
+        "species": [
+            "Abbor",
+            "Gullbust",
+            "Mort",
+            "Ørekyt"
+        ],
+        "project_id": "17653950"
+    },
+    {
+        "id": 81,
+        "name": "Gudbrandsdalslågen 2",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.17352,
+                61.46838
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.17546,
+                61.4637
+            ]
+        },
+        "date": "2022-06-15",
+        "time": "13:03:00",
+        "species": [
+            "Abbor",
+            "Gullbust",
+            "Mort"
+        ],
+        "project_id": "17653950"
+    },
+    {
+        "id": 82,
+        "name": "Gudbrandsdalslågen 3",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.22349,
+                61.41381
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.22574,
+                61.41159
+            ]
+        },
+        "date": "2022-06-15",
+        "time": "14:03:00",
+        "species": [
+            "Abbor",
+            "Gullbust",
+            "Mort",
+            "Sik"
+        ],
+        "project_id": "17653950"
+    },
+    {
+        "id": 83,
+        "name": "Gudbrandsdalslågen 30",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.22633,
+                61.40962
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.22554,
+                61.40618
+            ]
+        },
+        "date": "2022-06-15",
+        "time": "14:23:00",
+        "species": [
+            "Abbor",
+            "Gullbust",
+            "Mort"
+        ],
+        "project_id": "17653950"
+    },
+    {
+        "id": 84,
+        "name": "Gudbrandsdalslågen 4",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.23122,
+                61.39798
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.23591,
+                61.3933
+            ]
+        },
+        "date": "2022-06-15",
+        "time": "14:50:00",
+        "species": [
+            "Abbor",
+            "Mort",
+            "Sik",
+            "Steinsmett"
+        ],
+        "project_id": "17653950"
+    },
+    {
+        "id": 85,
+        "name": "Gudbrandsdalslågen 5",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.24002,
+                61.38893
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.24221,
+                61.38837
+            ]
+        },
+        "date": "2022-06-15",
+        "time": "15:18:00",
+        "species": [
+            "Abbor"
+        ],
+        "project_id": "17653950"
+    },
+    {
+        "id": 86,
+        "name": "Gudbrandsdalslågen 6",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.25059,
+                61.38654
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.25636,
+                61.38621
+            ]
+        },
+        "date": "2022-06-15",
+        "time": "15:29:00",
+        "species": [
+            "Abbor",
+            "Mort"
+        ],
+        "project_id": "17653950"
+    },
+    {
+        "id": 87,
+        "name": "Gudbrandsdalslågen 7",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.25742,
+                61.38588
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.2582,
+                61.38506
+            ]
+        },
+        "date": "2022-06-15",
+        "time": "15:45:00",
+        "species": [
+            "Gullbust",
+            "Mort"
+        ],
+        "project_id": "17653950"
+    },
+    {
+        "id": 88,
+        "name": "Gudbrandsdalslågen 8",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.26527,
+                61.38356
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.26738,
+                61.38138
+            ]
+        },
+        "date": "2022-06-15",
+        "time": "15:55:00",
+        "species": [
+            "Abbor",
+            "Mort"
+        ],
+        "project_id": "17653950"
+    },
+    {
+        "id": 89,
+        "name": "Gudbrandsdalslågen 9",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.2686,
+                61.38017
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.27402,
+                61.37774
+            ]
+        },
+        "date": "2022-06-15",
+        "time": "16:10:00",
+        "species": [
+            "Abbor",
+            "Gullbust",
+            "Niøye",
+            "Ørret"
+        ],
+        "project_id": "17653950"
+    },
+    {
+        "id": 90,
+        "name": "Gudbrandsdalslågen 10",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.28675,
+                61.36534
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.28751,
+                61.36209
+            ]
+        },
+        "date": "2022-06-15",
+        "time": "16:35:00",
+        "species": [
+            "Abbor"
+        ],
+        "project_id": "17653950"
+    },
+    {
+        "id": 91,
+        "name": "Gudbrandsdalslågen 11",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.28567,
+                61.35415
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.28615,
+                61.35074
+            ]
+        },
+        "date": "2022-06-15",
+        "time": "16:54:00",
+        "species": [
+            "Abbor",
+            "Gullbust",
+            "Sik",
+            "Steinsmett"
+        ],
+        "project_id": "17653950"
+    },
+    {
+        "id": 92,
+        "name": "Gudbrandsdalslågen 12",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.28732,
+                61.34305
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.28962,
+                61.34144
+            ]
+        },
+        "date": "2022-06-15",
+        "time": "17:17:00",
+        "species": [
+            "Abbor",
+            "Gullbust",
+            "Lake",
+            "Mort"
+        ],
+        "project_id": "17653950"
+    },
+    {
+        "id": 93,
+        "name": "Gudbrandsdalslågen 13",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.28739,
+                61.32725
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.28863,
+                61.3238
+            ]
+        },
+        "date": "2022-06-15",
+        "time": "17:41:00",
+        "species": [
+            "Abbor",
+            "Gullbust",
+            "Lake",
+            "Mort",
+            "Ørekyte",
+            "Ørret"
+        ],
+        "project_id": "17653950"
+    },
+    {
+        "id": 114,
+        "name": "Mjøsa 1",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.69287,
+                60.91701
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.68955,
+                60.92036
+            ]
+        },
+        "date": "2021-06-16",
+        "time": "12:30:00",
+        "species": [
+            "Abbor",
+            "Hork"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 115,
+        "name": "Mjøsa 2",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.68787,
+                60.92221
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.68326,
+                60.92683
+            ]
+        },
+        "date": "2021-06-16",
+        "time": "13:00:00",
+        "species": [
+            "Abbor",
+            "Gjedde",
+            "Hork"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 116,
+        "name": "Mjøsa 3",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.66504,
+                60.9168
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.66519,
+                60.91863
+            ]
+        },
+        "date": "2021-06-16",
+        "time": "14:00:00",
+        "species": [],
+        "project_id": "None"
+    },
+    {
+        "id": 117,
+        "name": "Mjøsa 4",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.65921,
+                60.92403
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.65644,
+                60.92747
+            ]
+        },
+        "date": "2021-06-16",
+        "time": "14:45:00",
+        "species": [
+            "9 pigget stingsild",
+            "Abbor",
+            "Hork",
+            "Karpefisk"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 118,
+        "name": "Mjøsa 5",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.65461,
+                60.93195
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.65313,
+                60.93427
+            ]
+        },
+        "date": "2021-06-16",
+        "time": "00:00:00",
+        "species": [
+            "Abbor",
+            "Karpefisk"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 119,
+        "name": "Mjøsa 6",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.65075,
+                60.93539
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.64816,
+                60.93721
+            ]
+        },
+        "date": "2021-06-16",
+        "time": "00:00:00",
+        "species": [
+            "Abbor",
+            "Gjedde"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 120,
+        "name": "Mjøsa 7",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.63854,
+                60.9504
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.63747,
+                60.9513
+            ]
+        },
+        "date": "2021-06-16",
+        "time": "00:00:00",
+        "species": [
+            "Hork",
+            "Lake",
+            "Ørekyte"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 121,
+        "name": "Mjøsa 8",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.6298,
+                60.95249
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.6298,
+                60.95372
+            ]
+        },
+        "date": "2021-06-16",
+        "time": "00:00:00",
+        "species": [
+            "Abbor",
+            "Gjedde",
+            "Hork",
+            "Karpefisk",
+            "Mort",
+            "Ørekyte",
+            "Vederbuk"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 122,
+        "name": "Mjøsa 9",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.55941,
+                60.98756
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.56579,
+                60.98595
+            ]
+        },
+        "date": "2021-06-16",
+        "time": "19:30:00",
+        "species": [
+            "Abbor",
+            "Harr",
+            "Hork",
+            "Ørekyte",
+            "Steinsmett"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 123,
+        "name": "Mjøsa 10",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.57582,
+                60.98276
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.58028,
+                60.98365
+            ]
+        },
+        "date": "2021-06-16",
+        "time": "00:00:00",
+        "species": [
+            "Abbor",
+            "Hork",
+            "Ørret"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 124,
+        "name": "Mjøsa 11",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.58593,
+                60.98259
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.58798,
+                60.98108
+            ]
+        },
+        "date": "2021-06-16",
+        "time": "00:00:00",
+        "species": [
+            "Abbor"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 125,
+        "name": "Mjøsa 12",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.60724,
+                60.9738
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.60618,
+                60.9731
+            ]
+        },
+        "date": "2021-06-16",
+        "time": "00:00:00",
+        "species": [
+            "Abbor",
+            "Gjedde",
+            "Ørekyte",
+            "Steinsmett",
+            "Vederbuk"
+        ],
+        "project_id": "None"
+    },
+    {
+        "id": 126,
+        "name": "Mjøsa 13",
+        "start_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.61765,
+                60.96723
+            ]
+        },
+        "end_pos": {
+            "type": "Point",
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:4326"
+                }
+            },
+            "coordinates": [
+                10.62165,
+                60.96507
+            ]
+        },
+        "date": "2021-06-16",
+        "time": "00:00:00",
+        "species": [
+            "9 pigget stingsild",
+            "Abbor",
+            "Hork",
+            "Vederbuk"
+        ],
+        "project_id": "None"
+    }
 ]

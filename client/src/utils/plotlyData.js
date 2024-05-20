@@ -153,7 +153,7 @@ function getObservationSpeciesCount (observations, allSpecies, includeOthers) {
     const otherSpecies = observations.filter(observation => !allSpecies.includes(observation.species))
     const count = amountOfFishInObservations(otherSpecies)
 
-    speciesCount.set('others', count)
+    speciesCount.set('andre', count)
   }
 
   return speciesCount
@@ -334,7 +334,7 @@ function createSpeciesDataForHistogramAndBoxplot (plotType, observations, allSpe
       ? getIntervalsForObservations(otherSpecies, interval)
       : getLengthsForObservations(otherSpecies)
 
-    speciesIntervals.set('others', plotData)
+    speciesIntervals.set('andre', plotData)
   }
 
   return speciesIntervals
