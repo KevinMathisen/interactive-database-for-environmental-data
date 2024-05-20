@@ -350,7 +350,7 @@
   .downloadPage {
     display: flex;
     flex-direction: column;
-    height: calc(100vh - var(--header-height));
+    min-height: calc(100vh - var(--header-height));
     width: 100%;
   }
 
@@ -394,8 +394,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 5rem;
-    margin-bottom: 5rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
   }
 
   /* Transformes the icon color to white */
