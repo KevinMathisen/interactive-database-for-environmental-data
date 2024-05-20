@@ -14,7 +14,6 @@
   export let dataType = DATATYPE_RIVER // DATATYPE_RIVER or DATATYPE_STATION
   export let aggregateData = false
 
-  export let selectedSpecies = [] // Species user has chosen
   export let includeOthers = false // If to include 'others' category in graphs
 
   export let showPlotA = true
@@ -26,12 +25,10 @@
   export let plotTypeB = 'histogram' // 'histogram' or 'boxplot'
   export let combineSpecies = false // Whether to combine species for each river/station in plot B
 
-  let chooseAll = true // If the user wants to choose all species
-  let customSpecies = [] // Species the user has chosen
-  let downloadRef = '' // Link to download page with selected rivers or stations
+  export let chooseAll = true // If the user wants to choose all species
+  export let customSpecies = [] // Species the user has chosen
 
-  // Species the user has choosen; either all or the custom ones
-  $: selectedSpecies = (chooseAll || customSpecies.length === 0) ? selectableSpecies : customSpecies
+  let downloadRef = '' // Link to download page with selected rivers or stations
 
   // Update download link when the user has selected rivers or stations
   $: if (selectedRivers || selectedStations) {

@@ -32,6 +32,9 @@
   let aggregateData // If to aggregate data for rivers/stations
   let plotData = new Map() // Data to plot
 
+  let chooseAll = true // If the user wants to choose all species
+  let customSpecies = [] // Species the user has chosen
+
   let showPlotA // Show the first plot
   let showValueA // 'absolute' or 'relative'
   let plotTypeA // 'barchart' or 'piechart'
@@ -58,6 +61,9 @@
 
   // Get selectable species
   $: selectableSpecies = dataType === DATATYPE_RIVER ? getSelectableSpecies(selectedRivers) : getSelectableSpecies(selectedStations)
+
+  // Species the user has choosen; either all or the custom ones
+  $: selectedSpecies = (chooseAll || customSpecies.length === 0) ? selectableSpecies : customSpecies
 
   // Set the data to plot if selected rivers or stations was modified, if new data was fetched or if the data type was changed
   $: if (dataUpdated && (selectedRivers || selectedSpecies) && dataType) {
@@ -245,7 +251,8 @@
         {selectableSpecies}
         bind:dataType
         bind:aggregateData
-        bind:selectedSpecies
+        bind:chooseAll
+        bind:customSpecies
         bind:includeOthers
         bind:showPlotA
         bind:showValueA
